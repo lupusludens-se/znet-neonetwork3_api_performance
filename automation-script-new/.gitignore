@@ -137,3 +137,7 @@ dist
 
 #MacUsers file
 .DS_Store
+
+# Performance test reports
+performance-tests/test-reports/
+C:/Users/SESA751855/Documents/GitHub/working_folder/znet-neonetwork3_api_performance/automation-script-new/performance-tests/test-reports/

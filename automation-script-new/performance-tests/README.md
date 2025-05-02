@@ -77,9 +77,6 @@ Invoke-Item "C:\Users\SESA751855\Documents\GitHub\working_folder\znet-neonetwork
 cd "C:\Users\SESA751855\Documents\GitHub\working_folder\znet-neonetwork3_api_performance\automation-script-new\performance-tests"
 Invoke-Item "test-reports\lighthouse-test-report.html"
 Invoke-Item "test-reports\lighthouse-preprod-report.html"
-
-# View JSON reports
-Invoke-Item "C:\Users\SESA751855\Documents\GitHub\working_folder\znet-neonetwork3_api_performance\automation-script-new\performance-tests\test-reports\lighthouse-test-report.json"
 ```
 
 ## Maintenance
