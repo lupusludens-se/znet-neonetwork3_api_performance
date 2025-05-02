@@ -1,0 +1,54 @@
+@use 'colors';
+
+.interests-wrapper {
+  background: rgba(148, 96, 164, 0.05);
+  border-radius: 8px;
+
+  .header {
+    color: colors.$dark-gray-350;
+    letter-spacing: 0.07em;
+  }
+
+  .sun-icon {
+    width: 46px;
+    height: 46px;
+    color: colors.$purple-400;
+  }
+
+  button {
+    padding: 8px 12px;
+    border-radius: 8px;
+    width: 105px;
+    height: 47px;
+    font-size: 14px;
+    font-family: 'Arial Rounded MT Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: colors.$dark-gray-590;
+
+    &:hover {
+      background: colors.$dark-gray-40;
+      border-radius: 8px;
+    }
+  }
+}
+
+.yes-btn {
+  color: colors.$white !important;
+  background: colors.$zeigo-purple;
+
+  &:hover {
+
+    background: colors.$purple-400 !important;
+  }
+} 
+
+.skip-bg {
+  background-color: colors.$dark-gray-450;
+
+  &:hover {
+    background: colors.$dark-gray-250 !important;
+  }
+}

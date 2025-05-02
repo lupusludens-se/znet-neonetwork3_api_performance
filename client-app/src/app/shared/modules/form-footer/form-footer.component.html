@@ -1,0 +1,66 @@
+<footer
+  [ngClass]="backButton || deleteButton ? 'flex-between' : 'justify-end'"
+  class="d-flex align-center pl-16 pr-16">
+  <div class="d-flex align-center">
+    <button
+      (click)="backButtonClick.emit()"
+      *ngIf="backButton"
+      class="btn-back blue-50-frame"
+      type="button">
+      <svg-icon
+        [key]="backButtonIcon"
+        [size]="iconSize"
+        class="mr-14"></svg-icon>
+      {{ 'general.backLabel' | translate }}
+    </button>
+
+    <button
+      (click)="deleteButtonClick.emit()"
+      *ngIf="deleteButton"
+      class="btn-delete blue-50-frame text-white"
+      type="button">
+      <svg-icon
+        [key]="deleteButtonIcon"
+        class="mr-14"
+        size="xxl"></svg-icon>
+      {{ deleteButtonText }}
+    </button>
+  </div>
+
+  <div class="controls-wrapper d-flex justify-end">
+    <button
+      (click)="cancel.emit(true)"
+      class="btn-cancel mr-16"
+      type="button">
+      {{ cancelButtonName | translate }}
+    </button>
+
+    <button
+      (click)="draftButtonClick.emit()"
+      *ngIf="draftButton"
+      [disabled]="draftButtonDisabled"
+      class="btn-draft mr-16 blue-50-frame"
+      type="button">
+      {{ draftButtonText }}
+    </button>
+
+    <button
+      (click)="save.emit(true)"
+      [disabled]="disabled ? true : null"
+      class="green btn-save flex-center">
+      <svg-icon
+        *ngIf="icon && iconOnLeftSide"
+        [key]="icon"
+        [size]="iconSize"
+        class="mr-14"></svg-icon>
+
+      {{ submitButtonName | translate }}
+
+      <svg-icon
+        *ngIf="icon && !iconOnLeftSide"
+        [key]="icon"
+        [size]="iconSize"
+        class="ml-14"></svg-icon>
+    </button>
+  </div>
+</footer>

@@ -1,0 +1,181 @@
+<div class="flex-column">
+  <button
+    (click)="goBack()"
+    class="btn-connect back-btn d-flex align-center pb-4">
+    <svg-icon
+      class="pr-4 back-btn-img-s"
+      key="left-arrow"></svg-icon>
+    Back
+  </button>
+  <h2 class="d-flex align-center text-neo-near-black new-messgae">
+    {{ 'messages.newMessageLabel' | translate }}
+  </h2>
+
+  <form [formGroup]="formGroup" class="flex-column new-message-form-wrapper p-32">
+    <div class="d-flex justify-between">
+      <label class="w-10 text-s text-neo-near-black mt-14" for="to">
+        {{ 'messages.toLabel' | translate }}
+      </label>
+
+      <div class="input flex-column w-90">
+        <neo-multiselect (inputChange)="userSearch$.next($event)" (selectionChange)="selectionChange($event)" class="user-search"
+          [error]="hasError('users', 'formGroup')" [maxSelection]="selectedConversationTypes" [results]="results"
+          [selectedResults]="selectedUsers" id="to">
+        </neo-multiselect>
+
+        <p *ngIf="hasError('users', 'formGroup')" class="text-error text-xs pt-8">
+          {{ 'general.fieldRequiredLabel' | translate }}
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="isAdmin(currentUser?.roles)" class="d-flex justify-between align-center align-self-end w-90 pt-24">
+      <div class="message-type-wrapper w-90 d-flex align-center">
+        <ng-container *ngFor="let item of conversationTypes | keyvalue | slice: 0:sendOptionCount">
+          <input [checked]="(selectedConversationTypes | number) === (item.key | number)" [value]="item.key | number"
+            id="{{ item.value + item.key }}" name="type" type="radio" />
+
+          <label class="c-pointer" (click)="selectType(item)" for="{{ item.value + item.key }}">
+            {{ 'messages.' + item.value.toLowerCase() + 'Label' | translate }}
+          </label>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="d-flex justify-between pt-24">
+      <label class="w-10 text-s text-neo-near-black mt-14" for="subject">
+        {{ 'messages.subjectLabel' | translate }}
+      </label>
+
+      <div class="input flex-column w-90">
+        <input [class.error]="hasError('subject', 'formGroup')" class="medium" formControlName="subject" id="subject"
+          placeholder="{{ 'messages.subjectLabel' | translate }}" [maxLength]="250" />
+
+        <p *ngIf="hasError('subject', 'formGroup')" class="text-error text-xs pt-8">
+          {{ 'messages.subjectLabel' | translate }}
+          {{ 'general.requiredLabel' | translate }}
+        </p>
+      </div>
+    </div>
+
+    <div class="d-flex justify-between align-start pt-24" formGroupName="message">
+      <label class="w-10 text-s text-neo-near-black" for="text">
+        {{ 'messages.messageLabel' | translate }}
+      </label>
+
+      <div class="input flex-column w-90">
+        <neo-message-control [displayAttachments]="false" [hasError]="hasError('message.text', 'formGroup')"
+          formControlName="text" maxHeight="140px" classes="p-0 text-s" placeholder="Message">
+        </neo-message-control>
+
+        <p *ngIf="hasError('message.text', 'formGroup')" class="text-error text-xs pt-8">
+          {{ 'messages.messageLabel' | translate }}
+          {{ 'general.requiredLabel' | translate }}
+        </p>
+      </div>
+    </div>
+
+    <div class="d-flex justify-between pt-24" *ngIf="!isSolutionProvider || !isCurrentUserSolutionProvider">
+      <label class="w-10 text-s text-neo-near-black pt-14" for="url">
+        {{ 'messages.projectUrl' | translate }}
+      </label>
+
+      <div class="input flex-column w-90">
+        <neo-search-bar (clearInput)="searchProject()" (inputChange)="searchProject($event)" class="new-message"
+          (selectedResult)="setProject($event)" [error]="hasError('projectId', 'formGroup')"
+          [results]="projects$ | async" id="url">
+        </neo-search-bar>
+
+        <p *ngIf="hasError('projectId', 'formGroup')" class="text-error text-xs pt-8">
+          {{ 'messages.projectUrl' | translate }}
+          {{ 'general.requiredLabel' | translate }}
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="links.length" class="d-flex flex-wrap align-center flex-wrap gap-12 w-90 align-self-end pt-24">
+      <span *ngFor="let link of links; let index = index"
+        class="d-flex align-center link-wrapper text-neo-near-black text-xs pl-12 pr-8 pt-4 pb-4 w-fit-content c-default">
+        {{ link.text }}
+        <svg-icon (click)="links.splice(index, 1)" class="remove-link-icon text-dark-gray-590 ml-10 mr-4 c-pointer" fontSize="10px"
+          height="10px" width="10px" key="close-thin"></svg-icon>
+      </span>
+    </div>
+
+    <div class="d-flex pt-24 justify-between align-self-end w-90">
+      <div class="flex-between align-center attachments-wrapper pt-12">
+        <div class="d-flex align-center gap-8">
+          <ng-container *ngFor="let attachment of attachments; let index = index">
+            <div class="attachment">
+              <svg-icon (click)="removeAttachment(index)" class="text-blue-400 close c-pointer" key="fill-close"
+                size="xxl">
+              </svg-icon>
+
+              <img [alt]="attachment.name" [src]="attachment.uri" class="c-pointer"
+                (click)="currentImageIndex = index; imageViewModal = true" />
+            </div>
+          </ng-container>
+
+          <div *ngIf="isLoading" class="loading flex-center">
+            <svg-icon class="text-sky-blue" key="loading" size="md">
+            </svg-icon>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex align-center gap-16">
+        <button type="button" (click)="linkModal = true" class="btn-square flex-center">
+          <svg-icon fontSize="20px" key="link">
+          </svg-icon>
+        </button>
+
+        <button type="button" class="btn-square flex-center" (click)="fileInput.click()">
+          <svg-icon fontSize="20px" class="c-pointer" key="media">
+          </svg-icon>
+        </button>
+
+        <input #fileInput (change)="onFileSelect($event)" (click)="fileInput.value = ''"
+          accept="image/png, image/gif, image/jpeg" class="d-none" type="file" />
+
+        <button type="button" (click)="createConversation()" class="btn-l green flex-center w-min-initial">
+          {{ 'messages.sendLabel' | translate }}
+          <svg-icon fontSize="14px" class="ml-10" key="send">
+          </svg-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<neo-modal size="medium" class="title-h2" (closed)="cancelLinkDialog()" *ngIf="linkModal" title="{{ 'messages.addLinkLabel' | translate }}">
+  <form [formGroup]="linkFormGroup" class="flex-column w-100" (submit)="saveLink()">
+    <div class="flex-column pt-20">
+      <neo-text-input formControlName="text" class="text-neo-near-black" [labelName]="'messages.linkTitleLabel' | translate"
+        [submitted]="hasError('text', 'linkFormGroup')">
+      </neo-text-input>
+    </div>
+
+    <div class="flex-column pt-16">
+      <neo-text-input formControlName="link" class="text-neo-near-black" [labelName]="'general.linkLabel' | translate"
+        [submitted]="hasError('link', 'linkFormGroup')">
+      </neo-text-input>
+    </div>
+
+    <div class="dialog-link-controls d-flex justify-end w-100 pt-32">
+      <button (click)="cancelLinkDialog()" type="button" class="btn-l cancel mr-16 w-min-initial w-50">
+        {{ 'general.cancelLabel' | translate }}
+      </button>
+
+      <button class="btn-l green w-min-initial w-50" type="submit">
+        {{ 'messages.addLinkLabel' | translate }}
+      </button>
+    </div>
+  </form>
+</neo-modal>
+
+<neo-leave-confirmation *ngIf="showLeaveConfirmation" (closed)="showLeaveConfirmation = false" (left)="leavePage()">
+</neo-leave-confirmation>
+
+<neo-image-view (closed)="imageViewModal = false" *ngIf="imageViewModal" [currentIndex]="currentImageIndex"
+  [images]="getAttachments()">
+</neo-image-view>

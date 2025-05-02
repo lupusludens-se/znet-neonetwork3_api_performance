@@ -1,0 +1,27 @@
+<label class="input-label d-flex mb-8" *ngIf='labelName && showLabel'>
+  {{ labelName }}
+
+  <span class="optional ml-4" *ngIf="optionalText">({{ optionalText }})</span>
+</label>
+
+<span class="number-input-wrapper" [style.width]='width'>
+  <input
+    #numberInput
+    type="number"
+    pattern="^([0-9]*)+(,[0-9]+)+$"
+    [(ngModel)]="value"
+    [id]="formControlName"
+    [tabindex]="tabInd"
+    [maxlength]="maxLength"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+		(keydown)="onKeyDown($event)"
+    (blur)="roundDecimalValue()"
+		[mask]="thousandsSeparator ? 'separator' : null"
+		thousandSeparator=","
+    autocomplete="off" />
+
+  <span class="sub-label flex-center" *ngIf="subLabel">{{ subLabel }}</span>
+</span>
+
+<neo-control-error [errors]="errors" [fieldName]="labelName" [submitted]="submitted"> </neo-control-error>

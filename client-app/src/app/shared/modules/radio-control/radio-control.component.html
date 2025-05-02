@@ -1,0 +1,25 @@
+<p class="input-label pb-12">{{ labelName }}</p>
+
+
+<div class="controls-wrapper flex-column">
+  <input *ngFor="let ctr of list; let i = index" type="radio" [id]="ctr.name + formControlName + i"
+    [name]="formControlName" [checked]="value === ctr.id && !cleared" (change)="value = ctr.id; valueChanged.emit(ctr)"
+    [disabled]="disabled || ctr.disabled" />
+
+
+  <div class="radio-controls-wrapper flex-column max-w-fit"
+    [ngClass]="{'flex-row justify-between' : flexDirection === 'row'}">
+    <label *ngFor="let item of list; let i = index" class="mb-6" [ngClass]="{'ml-label' : flexDirection === 'row'}"
+      [class.disabled]="disabled || item.disabled" [for]="item.name + formControlName + i"
+      [class.active]="value === item.id && !cleared">
+      <span class="pl-8 pt-4">{{ item.name }} <div *ngIf="item.toolTip" class="tooltip" style="cursor: help">
+          <svg-icon key="info-text"></svg-icon>
+          <span class="tooltiptext">{{ item.toolTip }}</span>
+        </div> </span>
+
+    </label>
+  </div>
+</div>
+
+<neo-control-error [errors]="errors" [fieldName]="labelForError ?? labelName" [submitted]="submitted">
+</neo-control-error>

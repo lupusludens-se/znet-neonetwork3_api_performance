@@ -1,0 +1,68 @@
+@use 'colors';
+@use 'breakpoints';
+@use 'variables';
+@use 'mixins';
+
+.testimonials-wrapper {
+  padding: 0px, 12px, 12px, 12px;
+  background-color: colors.$white;
+  gap: 8px;
+  padding-top: 8px;
+}
+.testimonials-title{
+    font-size: 14px;
+    line-height: 21px;
+    color: colors.$dark-gray-515;
+    font-family: 'Arial Rounded MT Bold', serif;
+    text-transform: uppercase;
+    gap: 8px;
+  }
+.testimonial-row {
+  border-bottom: 1px solid colors.$violet-5;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 4px;
+  margin-top: 20px;
+  gap: 8px;
+}
+
+.client-name{
+    font-size: 14px;
+    line-height: 18px;
+    color: colors.$dark-gray-750;
+    font-family: 'Arial Rounded MT Bold', serif;
+  }
+
+.height-auto{
+    height: auto;
+}
+
+.feedback-column{
+    padding: 0px, 10px, 10px, 10px;
+    gap: 8px;
+}
+
+.feedback-text {  
+  font-size: 16px;
+  line-height: 21px;
+  color: colors.$dark-gray-545;
+  font-weight: 700;
+  font-family: 'Arial Rounded MT', serif;
+
+}
+
+.align-left{
+    text-align: end;
+}
+
+.border-bottom {
+  border-bottom: 1px solid black;
+}
+
+.auto-margin{
+    margin: auto;
+}
+
+.w-95{
+  width: 95%;
+}

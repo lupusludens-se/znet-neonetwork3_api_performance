@@ -1,0 +1,36 @@
+<neo-user-avatar
+  *ngIf="user"
+  [user]="user"
+  class="pt-4"
+  imageSize="size32"></neo-user-avatar>
+
+<neo-text-editor
+  #editorComponent
+  (emitValue)="
+    respond.emit({
+      parentMessageId: this.parentMessageId ? this.parentMessageId : 0,
+      text: $event
+    })
+  "
+  [editorValue]="editorValue"
+  [placeholder]="placeholder"
+  class="max-w-82"
+  minHeight="37px"></neo-text-editor>
+
+<ng-container *ngIf="editorComponent">
+  <div
+    *ngIf="editorComponent?.hidePlaceholder || editorComponent?.editor?.nativeElement?.innerHTML?.length"
+    class="d-flex align-center gap-8 ml-26">
+    <button
+      (click)="cancelClick.emit(); editorComponent.editor.nativeElement.innerHTML = null"
+      class="btn-s btn-cancel">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+
+    <button
+      (click)="emitData(); editorComponent.editor.nativeElement.innerHTML = null"
+      class="btn-s btn-reply">
+      {{ 'forum.replyLabel' | translate }}
+    </button>
+  </div>
+</ng-container>

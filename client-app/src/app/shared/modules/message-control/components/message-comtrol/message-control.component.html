@@ -1,0 +1,78 @@
+<div
+  [class.error]="hasError"
+  class="message-wrapper p-16"
+  [class.disable]="!editable">
+  <input
+    (change)="valueChanged.emit(value)"
+    [(ngModel)]="value"
+    [id]="formControlName"
+    [name]="formControlName"
+    type="hidden" />
+
+  <neo-text-editor
+    (emitValue)="value = $event"
+    (emitSymbolsCount)="symbolsCount.emit($event)"
+    (emitLength)="length.emit($event)"
+    [clearOnEmit]="false"
+    [editorValue]="value"
+    [emitDataOnEnter]="false"
+    [maxHeight]="maxHeight"
+    [maxLength]="maxLength"
+    [minHeight]="height"
+    [placeholder]="placeholder"
+    [classes]="classes"
+    [editable]="editable">
+  </neo-text-editor>
+
+  <div
+    *ngIf="displayAttachments"
+    class="flex-between align-center attachments-wrapper pt-16">
+    <div class="d-flex align-center gap-8">
+      <ng-container *ngFor="let attachment of attachments; let index = index">
+        <div class="attachment">
+          <svg-icon
+            (click)="removeAttachment(index)"
+            class="text-blue-400 close"
+            key="fill-close"
+            size="xxl"></svg-icon>
+
+          <img
+            [alt]="attachment.name"
+            [src]="attachment.uri"
+            class="c-pointer"
+            (click)="currentImageIndex = index; imageViewModal = true" />
+        </div>
+      </ng-container>
+
+      <div
+        *ngIf="isLoading"
+        class="loading flex-center">
+        <svg-icon
+          class="text-sky-blue"
+          key="loading"
+          size="md"></svg-icon>
+      </div>
+    </div>
+
+    <svg-icon
+      (click)="fileInput.click()"
+      class="text-blue-200 c-pointer"
+      key="media" 
+      size="xxl"></svg-icon>
+
+    <input
+      #fileInput
+      (change)="onFileSelect($event)"
+      (click)="fileInput.value = ''"
+      accept="image/png, image/gif, image/jpeg"
+      class="d-none"
+      type="file" />
+  </div>
+</div>
+
+<neo-image-view
+  (closed)="imageViewModal = false"
+  *ngIf="imageViewModal && displayAttachments"
+  [currentIndex]="currentImageIndex"
+  [images]="getAttachments()">
+</neo-image-view>

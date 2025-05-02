@@ -1,0 +1,19 @@
+<div [class.disable]="disableClass" class="controls">
+  <button
+    (click)="statusChanged.emit(activeStatusValue)"
+    [class.active]="currentStatus === activeStatusValue"
+    class="btn-active"
+    type="button"
+  >
+    {{ 'status.activeStatusLabel' | translate }}
+  </button>
+
+  <button
+    (click)="statusChanged.emit(inactiveStatusValue)"
+    [class.active]="currentStatus === inactiveStatusValue"
+    class="btn-inactive"
+    type="button"
+  >
+    {{ 'status.inactiveStatusLabel' | translate }}
+  </button>
+</div>

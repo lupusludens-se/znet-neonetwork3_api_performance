@@ -1,0 +1,194 @@
+@use 'colors';
+@use 'breakpoints';
+@use 'variables';
+
+$padding-24: var(--Gap-24, 24px);
+$border-radius-8: 8px;
+$border-dark-gray-300: 1px solid colors.$dark-gray-300;
+
+.initiative-wrapper {
+  .top-panel-spacing {
+    padding: 38px 48px;
+  }
+
+  .btn-connect {
+    width: 250px;
+    padding: 14px 24px;
+  }
+
+  .need-help-label {
+    font-size: 16px;
+    line-height: 19px;
+    color: colors.$blue-10;
+  }
+}
+
+.progress-tracker,
+.beta-section,
+.row-col1,
+.row-col2 {
+  padding: 26px;
+  align-items: flex-start;
+  gap: 32px;
+  align-self: stretch;
+  border-radius: $border-radius-8;
+  border: $border-dark-gray-300;
+}
+
+.upcoming {
+  background: colors.$white;
+}
+
+.beta-section {
+  padding: 22px;
+  background: colors.$purple-20;
+  align-items: center;  
+  border: 1px solid colors.$purple-160;
+}
+
+.flex-row {
+  display: flex;
+  margin: 5px 0;
+  border-radius: $border-radius-8;
+}
+
+.row-col1,
+.row-col2 {
+  flex: 1;
+  margin-right: 1%;
+  margin-bottom: 1%;
+  display: flex;
+  width: 50%;
+  min-height: 360px;
+  padding: $padding-24 32px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $padding-24;
+  background: colors.$white;
+}
+
+.row-col2 {
+  margin-right: 0;
+}
+
+.initiative-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $padding-24;
+  padding: $padding-24 24px;
+  max-height: 360px;
+  overflow: auto;
+}
+
+.initiative-edit-left {
+  color: colors.$zeigo-dark-grey;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 150%;
+  width: 35%;
+  font-family: 'Arial Rounded MT Regular', sans-serif;
+}
+
+.initiative-edit-right {
+  font-family: 'Arial Rounded MT Bold', sans-serif;
+  flex: 1 0 0;
+}
+
+.edit-section {
+  border-bottom: 1px solid var(--Border-200, #e8e8ea);
+  width: 100%;
+}
+
+.edit-button {
+  color: colors.$zeigo-purple;
+  font-size: 15px;
+  border-radius: $border-radius-8;
+  border: 1px solid colors.$purple-300;
+  background: colors.$dark-gray-40;
+  display: flex;
+  padding: 10px 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-title-section {
+  flex: 1 0 0;
+}
+
+.edit-button-section {
+  font-family: 'Arial Rounded MT Bold', sans-serif;
+  flex: 0;
+}
+
+.options-menu {
+  width: 55px;
+}
+
+h2.header {
+  color: var(--Typography-Darker, #18191b);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 120%;
+  padding-left: 5px;
+}
+
+.beta {
+  color: colors.$white;
+  background: colors.$error-red;
+  border-radius: 58px;
+  margin: 7px;
+  padding: 9px 10px;
+  font-family: 'Arial Rounded MT Bold';
+}
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+
+	.tooltiptext {
+		visibility: hidden;
+		position: absolute;
+		width: 10rem;
+		top: 20px;
+		z-index: 1;
+		background: colors.$white-20;
+		border-radius: $border-radius-8;
+		font-family: 'Arial Rounded MT Bold';
+		font-weight: normal;
+		color: colors.$near-black-400;
+		box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+		padding: 10px;
+		line-height: 20px;
+		left: -350%;
+		white-space: normal !important;
+	}
+}
+
+.region-count {
+  background: colors.$light-blue-20;
+  padding: 0 4px;
+  border-radius: 4px;
+  white-space: nowrap;
+  color: #0f84b9;
+  cursor: pointer;
+  padding: 5px;
+  margin: 6px;
+  font-size: 14px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.file-section{
+  min-height: 300px;
+}
+
+.feedback-link:hover {
+  color: colors.$purple-400 !important;
+}
+
+.btn-connect {
+  padding-bottom: 10px;
+}

@@ -1,0 +1,57 @@
+<div class="control-wrapper flex-column">
+  <p class="label neo-arial">
+    <span>{{ 'events.moderatorsLabel' | translate }}</span>
+    <span>{{ 'events.companyLabel' | translate }}</span>
+  </p>
+
+  <div class="inputs-wrapper d-flex w-100 flex-column">
+    <ng-container *ngFor="let modForm of moderators?.controls; let i = index">
+      <div
+        [formGroup]="modForm"
+        class="row-wrapper d-flex">
+        <neo-users-search
+          [error]="formSubmitted && validateModeratorRow(i)"
+          (clearInput)="clearModeratorInput(i)"
+          (inputChange)="setModeratorName($event, i)"
+          (selectedResult)="addModeratorToForm($event, i)"
+          [preSelectedModerator]="modForm.value"
+          class="mr-12 mt-12"
+          [placeholder]="'events.mentionOrFreeformPlaceholder' | translate"
+          [showClearButton]="false">
+        </neo-users-search>
+
+        <input
+          (change)="setModeratorCompany($event?.target?.value, i)"
+          [class.disabled]="modForm.value.userId"
+          [ngClass]="{ 'disabled': modForm.value.userId }"
+          [placeholder]="'events.companyLabel' | translate"
+          formControlName="company"
+          class="ml-12 mt-12"
+          type="text" />
+
+        <button
+          (click)="removeModerator(i)"
+          class="btn-delete ml-24 mt-12">
+          <svg-icon
+            key="delete-icon"
+            [fontSize]="22"></svg-icon>
+        </button>
+      </div>
+    </ng-container>
+  </div>
+
+	<neo-control-error
+		[errors]="controlContainer.control.get('moderators')?.errors"
+		[fieldName]="'events.moderatorsLabel' | translate"
+		[submitted]="formSubmitted">
+	</neo-control-error>
+
+  <button
+    (click)="addModerator()"
+    class="btn-add w-100 mt-18 max-w-fit">
+    <svg-icon
+      class="mr-8"
+      key="plus-in-circle"></svg-icon>
+    {{ 'events.addModeratorLabel' | translate }}
+  </button>
+</div>

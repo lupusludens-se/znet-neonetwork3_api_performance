@@ -1,0 +1,42 @@
+<form [formGroup]="form" action="">
+  <div class="flex-column feedback-wrapper p-24 mt-10" [class.success-form]="formSubmitted">
+    <div class="d-flex">
+      <!-- <svg-icon class="feedback-icon" key="feedback"></svg-icon> -->
+      <div class="flex-column pl-20">
+        <ng-container *ngIf="!formSubmitted">
+          <div class="feedback-label text-uppercase neo-arial">{{ 'dashboard.userFeedbackLabel' | translate }}</div>
+          <h5 class="text-dark-gray-750 pt-6 pb-10">{{ 'dashboard.userFeedbackRateLabel' | translate }}</h5>
+          <div class="d-flex mb-10">
+            <svg-icon *ngFor="let star of stars" class="feedback-star"
+              [key]="star <= form.controls['rating'].value ? 'feedback-star-filled' : 'feedback-star'"
+              (click)="countStar(star)" [ngClass]="{ selected: star <= form.controls['rating'].value }"></svg-icon>
+          </div>
+          <h5 class="text-dark-gray-750 pt-6 pb-10">
+            {{ 'dashboard.userFeedBackExperienceImproveLabel' | translate }}
+          </h5>
+          <textarea formControlName="comments" class="text-area" id="comments" row="5"
+            [class.error]="(form.controls['comments'].value?.length > 1000)" [hasError]="
+              formSubmitted && (form.controls['comments'].value.length > 1000)
+            " [submitted]="formSubmitted"></textarea>
+          <p class="p-error" *ngIf="(form.controls['comments'].value?.length > 1000)">
+            {{'dashboard.feedbackCommentsError' | translate}}</p>
+        </ng-container>
+
+        <ng-container *ngIf="formSubmitted">
+          <div class="submitted-label neo-arial">{{ 'dashboard.userFeedbackSubmittedLabel' | translate }}</div>
+          <div class="submitted-description pt-20">{{ 'dashboard.userFeedbackSubmittedDescription' | translate }}</div>
+          <div class="submitted-description pt-10">
+            {{ 'dashboard.userFeedbackSubmittedSubDescription' | translate }}
+          </div>
+        </ng-container>
+      </div>
+      <svg-icon (click)="closeFeedback()" class="close-icon c-pointer" key="close"></svg-icon>
+    </div>
+    <button *ngIf="!formSubmitted" [disabled]="!(form.valid &&
+    form.controls['comments'].value?.length > 0 && 
+    form.controls['rating'].value > 0 && form.controls['rating'].value <=5)" class="btn-submit btn green" (click)="onSubmit()">
+      Submit
+    </button>
+  </div>
+
+</form>

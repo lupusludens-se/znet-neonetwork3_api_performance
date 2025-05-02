@@ -1,0 +1,69 @@
+<div class="projects-section-wrapper">
+  <div class="projects-section-header d-flex w-100">
+    <div class="w-50 d-flex">
+      <div class="ufo-icon">
+        <svg-icon class="ufo-icon" key="ufo-vector"></svg-icon>
+      </div>
+      <div class="projects-section-title">{{ 'title.projectsLabel' | translate }}</div>
+    </div>
+
+    <div class="w-50 d-flex justify-end" *ngIf="!isAdminOrTeamMember" (click)="viewProjects()">
+      <button class="view-all-btn d-flex btn-tertiary" [ngClass]="{'pr-10': projectsRecommendationsCounter === ''}">
+        <svg-icon key="eye" class="eye-icon"></svg-icon>
+        {{ savedProjects.dataList.length > 0 ? 
+          ('initiative.viewInitiative.viewAllLabel' | translate) : 
+          ('initiative.viewInitiative.viewRecommendationLabel' | translate) }}
+          <sup class="initiative-section-counter counter-p-4" *ngIf="projectsRecommendationsCounter!==''"><span>{{projectsRecommendationsCounter}}</span></sup>
+      </button>
+    </div>
+  </div>
+  <div class="projects-section-body">
+    <div class="load-content-wrapper justify-center" *ngIf="isLoading === true ; else projectsList">
+      <neo-section-spinner></neo-section-spinner>
+  </div>
+  <ng-template #projectsList>
+    <div *ngIf="savedProjects.dataList.length > 0">
+      <ng-container>
+        <div class="card" neoInfiniteSectionScroll infiniteScrollThreshold="90%" [infiniteScrollDisabled]="false" (loadMoreData)="onLoadMoreData()">
+          <div class="d-flex w-100 section pt-8 pb-8" *ngFor="let project of savedProjects.dataList">
+            <div class="flex-column w-90">
+              <a (click)="openProject(project)" target="_blank" class="title mb-2 neo-arial ellipsis">{{ project.title }}</a>
+              <p [innerHTML]="project.subTitle" class="text mb-4 two-lines-ellipsis"></p>
+              <div class="flex-between mt-8">
+                <div class="left d-flex align-center gap-16 w-100">
+                  <img *ngIf="project.company.image?.uri" [src]="project.company.image?.uri" alt="company logo" class="logo mr-8" />
+                  <div class="tags d-flex">
+                    <neo-content-tag fontSize="12"  [isOpenInNewTab]="true" [tag]="project.category" [type]="type.Category"></neo-content-tag>
+                  </div>
+                  <neo-content-location [regions]="project?.regions"  [isOpenInNewTab]="true"></neo-content-location>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!isAdminOrTeamMember" class="flex-column align-center justify-center three-dots w-10">
+              <button>
+                <neo-menu (optionClick)="optionClick(project?.id)" [options]="options" activeIcon="cross" class="projects-section" icon="vertical-three-dots"></neo-menu>
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-template>
+  </div>
+</div>
+<ng-container *ngIf="savedProjects?.dataList?.length <= 0 && isLoading === false">
+  <neo-initiative-no-content [section]="'title.projectsLabel' | translate" [subTitleSection]="'title.projectsLabel' | translate"[isAdminOrTeamMemberTemplate]="isAdminOrTeamMember"></neo-initiative-no-content>
+</ng-container>
+<neo-modal (closed)="closeDeletePopup()" *ngIf="showDeleteModal" size="medium" [title]="'initiative.viewInitiative.deleteSavedProjectPopUpTitle' | translate" class="title-h2">
+  <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+    {{ 'initiative.viewInitiative.deleteSavedContentPopUpSubTitle' | translate }}
+  </p>
+  <div class="popup-controls mt-10 d-flex">
+    <button (click)="closeDeletePopup()" class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button (click)="confirmDelete()" class="btn-confirm w-50">
+      {{ 'messages.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

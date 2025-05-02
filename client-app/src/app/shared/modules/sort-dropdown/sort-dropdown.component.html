@@ -1,0 +1,18 @@
+<div class="d-flex align-center">
+  <label class="text-s arial text-sort">Sort by:</label>
+  <div (click)="openList = !openList" class="click-wrapper d-flex align-center">
+    <span class="sort-name ml-4"> {{ option }}</span>
+
+    <svg-icon class="ml-8 text-purple-400" key="sort-down-arrow" *ngIf="!openList"></svg-icon>
+    <svg-icon class="ml-8 text-purple-400" key="sort-up-arrow" *ngIf="openList"></svg-icon>
+  </div>
+</div>
+
+<div *ngIf="openList" class="sorting-options">
+  <ul>
+    <li *ngFor="let option of sortingOptions" (click)="selectOption(option)" class="flex-between">
+      {{ option.value }}
+      <svg-icon *ngIf="selectedOption === option.key" class="text-blue-200" key="blue-checkmark" size="xxl"></svg-icon>
+    </li>
+  </ul>
+</div>

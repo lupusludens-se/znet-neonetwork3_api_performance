@@ -1,0 +1,139 @@
+<div class="initiative-content-wrapper">
+  <h3 class="text-neo-near-black mt-15">{{ basicInitiativeDetails?.title }}</h3>
+  <h2 class="text-neo-near-black mt-15">{{ 'initiative.createInitiative.addContent.subTitle' | translate }}</h2>
+  <p class="mt-15">{{ 'initiative.createInitiative.addContent.informationTextLine1' | translate }}</p>
+  <p class="mt-10 mb-15">{{ 'initiative.createInitiative.addContent.informationTextLine2' | translate }}</p>
+
+  <span class="mt-15 mb-15 note">
+    <svg-icon key="info" class="info-tag"></svg-icon>
+    <p>{{ 'initiative.createInitiative.addContent.note' | translate }}</p>
+  </span>
+
+  <h3 class="mt-15">{{ 'initiative.createInitiative.addContent.selectResourcesText' | translate }}</h3>
+
+  <div class="d-flex space-between">
+    <div class="pt-30">
+      <button [disabled]="activeTab === 0" class="d-flex btn-back d-flex align-center" (click)="onBackButtonClick()">
+        <svg-icon class="pr-4 svg-icon-back ml-4" key="left-arrow-thin"></svg-icon>
+        {{ 'general.backLabel' | translate }}
+      </button>
+    </div>
+    <div class="enclosing-tab mt-15">
+      <div class="tab-container mt-2 mb-2">
+        <div (click)="goToTab(i)" class="tab c-pointer" *ngFor="let tab of tabData; let i = index"
+          [ngClass]="{ active: i === activeTab }">
+          {{ tab.name }}
+          <div class="highlighted-text" [ngClass]="{purple:tab.counter>0 && tab.visited}">
+            <div class="counter">{{ tab.counter }}</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="pt-30">
+      <button class="continue-btn green d-flex align-center" (click)="nextTab()">
+        <ng-container *ngIf="activeTab !== 4; else submitTemplate">
+          {{ 'initiative.createInitiative.addContent.continueSelectionButtonText' | translate }}
+          
+        </ng-container>
+        <ng-template #submitTemplate>
+          <ng-container *ngIf="activeTab === 4">
+            {{ 'initiative.createInitiative.addContent.submitSelectionButtonText' | translate }}
+          </ng-container>
+        </ng-template>
+        <svg-icon *ngIf="activeTab!==4" class="pr-4  ml-4" key="right-arrow"></svg-icon>
+      </button>
+    </div>
+  </div>
+
+  <p class="mt-20">{{ 'initiative.createInitiative.addContent.suggestionText' | translate }}</p>
+  <div class="mt-15">
+    <ng-container *ngIf="activeTab === InitiativeModulesEnum.Learn">
+      <neo-learn [initiativeBasicDetails]="basicInitiativeDetails" [activeTab]="InitiativeModulesEnum.Learn"
+        (counterChange)="handleCounterChange($event)" (isVisited)="isModuleVisited($event)"></neo-learn>
+    </ng-container>
+    <ng-container *ngIf="activeTab === InitiativeModulesEnum.Community">
+      <neo-community [initiativeBasicDetails]="basicInitiativeDetails" [activeTab]="InitiativeModulesEnum.Community"
+        (counterChange)="handleCounterChange($event)" (isVisited)="isModuleVisited($event)"></neo-community>
+    </ng-container>
+    <ng-container *ngIf="activeTab === InitiativeModulesEnum.Projects">
+      <neo-project [initiativeBasicDetails]="basicInitiativeDetails" [activeTab]="InitiativeModulesEnum.Projects"
+        (counterChange)="handleCounterChange($event)" (isVisited)="isModuleVisited($event)"></neo-project>
+    </ng-container>
+    <ng-container *ngIf="activeTab === InitiativeModulesEnum.Tools">
+      <neo-tools [initiativeBasicDetails]="basicInitiativeDetails" [activeTab]="InitiativeModulesEnum.Tools"
+        (counterChange)="handleCounterChange($event)" (isVisited)="isModuleVisited($event)"></neo-tools>
+    </ng-container>
+    <ng-container *ngIf="activeTab === InitiativeModulesEnum.Messages">
+      <neo-message [initiativeBasicDetails]="basicInitiativeDetails" [activeTab]="InitiativeModulesEnum.Messages"
+        (counterChange)="handleCounterChange($event)" (isVisited)="isModuleVisited($event)"></neo-message>
+    </ng-container>
+  </div>
+
+  <div class="button-container mt-15" *ngIf="showButtons">
+    <div class="p-24 align-center">
+      <button class="skip btn-skip-all d-flex align-center" (click)="onSkipAll()" *ngIf="showButtons">
+        {{ 'initiative.createInitiative.addContent.skipAllButtonText' | translate }}
+        <svg-icon class="pl-8" width="18px" height="18px" key="doubleArrowRightIcon"></svg-icon>
+      </button>
+    </div>
+  </div>
+
+  <neo-modal (cancel)="showPopUp = false" *ngIf="showPopUp">
+    <svg-icon (click)="showPopUp = false" class="c-pointer text-blue-200 p-absolute top-20 right-20" height="30px"
+      key="close-snackbar" width="30px"></svg-icon>
+    <h3 class="mb-6 modal-title">{{ 'initiative.createInitiative.addContent.skipModal.titleLabel' | translate }}</h3>
+
+    <p class="text-m text-dark-gray-580 mb-24">
+      <ng-container *ngIf="activeTab !== 4 else msgTab">
+        {{ 'initiative.createInitiative.addContent.skipModal.subTextLabel1' | translate }} {{ tabData[activeTab].name }}
+        {{ 'initiative.createInitiative.addContent.skipModal.subTextLabel2' | translate }}
+      </ng-container>
+      <ng-template #msgTab>
+        <ng-container *ngIf="activeTab === 4 && whetherAnyItemSelected() else msgTabWithOnlyMessageSelected">
+          {{ 'initiative.createInitiative.addContent.skipModal.subTextLabelMsgTab' | translate }}
+        </ng-container>
+
+        <ng-template #msgTabWithOnlyMessageSelected>
+          {{ 'initiative.createInitiative.addContent.skipModal.subTextLabel1' | translate }} {{ tabData[activeTab].name
+          }} {{ 'initiative.createInitiative.addContent.skipModal.subTextLabel2' | translate }}
+
+        </ng-template>
+
+      </ng-template>
+    </p>
+    <div class="popup-controls pt-24 d-flex">
+      <button (click)="showPopUp = false" class="btn btn-cancel mr-16 w-50">{{ 'general.cancelLabel' | translate
+        }}</button>
+      <button (click)="onConfirmSkip()" class="btn btn-confirm w-50">{{
+        'initiative.createInitiative.addContent.skipModal.confirmLabel' | translate }}</button>
+    </div>
+  </neo-modal>
+
+  <neo-modal (cancel)="showSkipAllPopUp = false" *ngIf="showSkipAllPopUp">
+    <svg-icon (click)="showSkipAllPopUp = false" class="c-pointer text-blue-200 p-absolute top-20 right-20"
+      height="30px" key="close-snackbar" width="30px"></svg-icon>
+    <h3 class="mb-6 modal-title">{{ 'initiative.createInitiative.addContent.skipAllModal.titleLabel' | translate }}</h3>
+    <p class="text-m text-dark-gray-580 mb-24">{{ 'initiative.createInitiative.addContent.skipAllModal.subTextLabel' |
+      translate }}</p>
+    <div class="popup-controls pt-24 d-flex">
+      <button (click)="showSkipAllPopUp = false" class="btn btn-cancel mr-16 w-50">{{ 'general.cancelLabel' | translate
+        }}</button>
+      <button (click)="onConfirmSkipAll()" class="btn btn-confirm w-50">{{
+        'initiative.createInitiative.addContent.skipModal.confirmLabel' | translate }}</button>
+    </div>
+  </neo-modal>
+
+  <neo-modal *ngIf="showLeaveConfirmation" [title]="'general.leaveConfirmationModal.title' | translate" size="medium"
+    class="title-h2" (closed)="cancelLeavePage()">
+    <p class="text-dark-gray-580 text-m pt-6 pb-12">{{
+      'initiative.createInitiative.addContent.leaveConfirmationModal.subText' | translate }}</p>
+    <div class="separator"></div>
+    <div class="d-flex justify-end w-100 pt-26">
+      <button (click)="cancelLeavePage()" class="btn-m btn-cancel mr-16 w-min-initial w-50">{{ 'general.cancelLabel' |
+        translate }}</button>
+      <button (click)="leavePage()" class="btn-m delete w-min-initial w-50">{{
+        'general.leaveConfirmationModal.confirmationButton' | translate }}</button>
+    </div>
+  </neo-modal>
+</div>

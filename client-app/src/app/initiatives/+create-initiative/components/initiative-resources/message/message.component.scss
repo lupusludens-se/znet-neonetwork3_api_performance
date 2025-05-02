@@ -1,0 +1,54 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+.message-wrapper {
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-420; 
+  height: auto;
+  transition: all 0.05s ease-in-out;
+  border-radius: 8px;
+  margin-bottom: 5px;
+
+  &:hover {
+    background: colors.$blue-5; 
+
+    .message:hover {
+      background: colors.$white;
+    }
+  }
+
+  &.new {
+    border-left: 5px solid colors.$aqua-400;
+  }
+}
+
+.message-wrapper-first {
+  border-top: 1px solid colors.$dark-gray-420; 
+}
+
+
+
+.section-content {
+  background: colors.$white;
+  border-radius: 2px;
+  padding-left: 32px;
+  padding-right: 32px; 
+}
+
+.section-line {
+  height: 0px;
+  border-radius: 4px;
+  border-bottom: 6px solid colors.$violet-5;
+}
+.section-line-big {
+  max-width: 100%;
+}
+
+.section-line-first {
+  margin-top: 5%;
+}
+
+.section-content-5 {
+  padding-top: 40px;
+}

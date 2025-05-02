@@ -1,0 +1,32 @@
+<div
+  [ngClass]="{ checked: checked, disabled: disabled }"
+  class="checkbox-wrapper">
+  <label [for]="name + value + parentControlName" class="long-input">
+    <input
+      (change)="selectCheckbox.emit($event)"
+      [checked]="checked"
+      [id]="name + value + parentControlName"
+      [value]="value"
+      type="checkbox" />
+
+    <span
+      class="d-flex align-center"
+      [class.checked]="checked"
+      [ngClass]="textSize">
+      <svg-icon
+        class="check-icon"
+        key="blue-checkmark"></svg-icon>
+
+        <neo-user-avatar
+          *ngIf="user"
+          [imageSize]="imageSize"
+          [user]="user"
+          class="mr-8"></neo-user-avatar>
+      
+      <ng-container *ngIf="!nameContainsHTML && !hideLabel">{{ name }}</ng-container>    
+      <ng-container *ngIf="nameContainsHTML && !hideLabel"><div [innerHTML]="name"></div></ng-container> 
+      
+      <ng-container *ngIf="user?.company && !hideCompany">, {{ user?.company }} </ng-container>
+    </span>
+  </label>
+</div>

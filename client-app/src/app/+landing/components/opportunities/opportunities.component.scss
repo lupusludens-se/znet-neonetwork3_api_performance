@@ -1,0 +1,24 @@
+@use 'colors';
+
+.opportunities-wrapper {
+  background: colors.$white;
+  width: fit-content;
+
+  .opportunity-wrapper {
+    padding: 42px 47px;
+    max-width: 407px;
+
+    &.borders {
+      border-left: 1px solid #d4dde9;
+      border-right: 1px solid #d4dde9;
+    }
+
+    img {
+      width: 96px;
+    }
+
+    h3 {
+      font-family: 'Arial', sans-serif;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+@import 'colors';
+@import 'text';
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  width: 1092px; 
+  border: 1px solid $dark-gray-200;
+  border-radius: 2px;
+
+  .header {
+    padding: 12px 14px 12px 24px;
+    background: $dark-gray-450 ;
+    color: $purple-550;
+    font-style: normal;
+    line-height: 130%;
+    letter-spacing: 0.14px;
+    .order-direction {
+      transition: all 0.2s ease;
+      vertical-align: middle;
+      margin-bottom: 2px;
+
+      &.desc {
+        transform: rotate(180deg);
+        transition: all 0.2s ease;
+      }
+    }
+  }
+
+  neo-dropdown {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: nowrap;
+  }
+  .fg-7 {
+    flex-grow: 7;  
+  }
+  
+  .fg-2 {
+    flex-grow: 2;
+  }
+  .arial
+  {
+    font-family:Arial;
+  }
+  
+}
+

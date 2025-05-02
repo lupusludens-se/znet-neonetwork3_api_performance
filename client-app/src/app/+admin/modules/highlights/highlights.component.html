@@ -1,0 +1,15 @@
+<div class="control-wrapper">
+  <div class="label">
+    <div class="d-flex align-center">
+      <div class="d-flex align-center">{{ 'events.eventHighlightsLabel' | translate }}</div>
+      <div class="sub-label optional ml-6">({{ 'general.optionalLabel' | translate }})</div>
+    </div>
+
+    <textarea
+      (keyup)="checkValidity($event)"
+      (input)="handleInput($event)"
+      (paste)="onPaste($event)"
+      formControlName="highlights"
+      placeholder="Highlights"></textarea>
+  </div>
+</div>

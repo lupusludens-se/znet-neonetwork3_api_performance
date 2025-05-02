@@ -1,0 +1,53 @@
+@use 'variables';
+@use 'colors';
+@use 'breakpoints';
+
+h1 {
+  font-size: 36px;
+}
+
+.wrapper-height {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  background: colors.$white !important;
+
+  @media (breakpoints.$medium) {
+    width: 100%;
+  }
+
+  .green-separator {
+    width: 88px;
+    height: 3px;
+    background: colors.$purple-150;
+  }
+
+  .circle {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+
+    svg-icon {
+      width: 96px;
+      height: 96px;
+    }
+  }
+
+  p {
+    text-align: center;
+  }
+
+  .company {
+    width: 217px;
+    height: 120px;
+    background-color: colors.$white;
+    
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+    }
+  }
+
+  .text-xl {
+    max-width: 580px;
+  }
+}

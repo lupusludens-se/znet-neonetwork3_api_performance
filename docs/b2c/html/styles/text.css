@@ -1,0 +1,166 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 400;
+    font-family: 'Arial Rounded MT Bold', serif;
+}
+
+h1 {
+    font-size: 32px;
+    line-height: 38px;
+}
+
+h2 {
+    font-size: 28px;
+    line-height: 30px;
+}
+
+h3 {
+    font-size: 24px;
+    line-height: 28px;
+}
+
+h4 {
+    font-size: 18px;
+    line-height: 24px;
+}
+
+h5 {
+    font-size: 16px;
+    line-height: 20px;
+    color: #0b3b6b;
+}
+
+h6 {
+    font-size: 14px;
+    line-height: 18px;
+}
+
+/*text*/
+.text-xxxl {
+    font-size: 24px;
+    line-height: 32px;
+}
+
+.text-xxl {
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.text-xl {
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.text-m {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.text-s {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.text-xs {
+    font-size: 12px;
+    line-height: 17px;
+    letter-spacing: 0.01em;
+}
+
+.text-xxs {
+    font-size: 11px;
+    line-height: 16px;
+}
+
+/*text colors*/
+.text-white {
+    color: #fff;
+}
+
+.text-neo-blue {
+    color: #0b3b6b;
+}
+
+.text-blue-100 {
+    color: #bfc9d9;
+}
+
+.text-blue-200 {
+    color: #97a6be;
+}
+
+.text-blue-300 {
+    color: #7084a4;
+}
+
+.text-blue-400 {
+    color: #516a93;
+}
+
+.text-blue-500 {
+    color: #305283;
+}
+
+.text-blue-600 {
+    color: #2a4a7b;
+}
+
+.text-sky-blue {
+    color: #42b4e6;
+}
+
+.text-dark-green {
+    color: #009530;
+}
+
+.text-dark-green-hover {
+    color: #1fb04e;
+}
+
+.text-life-green {
+    color: #3dcd58;
+}
+
+.text-lime {
+    color: #9ee6ab;
+}
+
+.text-error {
+    color: #d25151;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-capitalize {
+    text-transform: capitalize !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.text-underline:hover {
+    text-decoration: underline;
+}
+
+.fw-700 {
+    font-weight: 700;
+}
+
+.fw-400 {
+    font-weight: 400;
+}

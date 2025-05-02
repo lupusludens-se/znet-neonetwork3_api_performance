@@ -1,0 +1,83 @@
+<ng-container>
+  <div class="dashboard-heading" *ngIf="loading">
+  <h2>{{'general.exploreZeigoNetworkLabel'|translate}}</h2>
+  </div>
+  <div class="w-100">
+    <neo-public-decarbonization-initiatives *ngIf="loading" [title]="'dashboard.publicDecarbonizationInitiativesText' | translate"
+      [subTitle]="'dashboard.publicDecarbonizationInitiativesSubText' | translate">
+
+    </neo-public-decarbonization-initiatives>
+  </div>
+  <div class="w-100">
+    <neo-public-project-carousel *ngIf="loading" [title]="'dashboard.trendingLabel' | translate"
+      [postsCountPerSlide]="3" [circlesArr]="trendingProgressPositions" [totalSlides]="3"
+      [subTitle]="'dashboard.trendingSubLabel' | translate" [postData]="posts"
+      [loading]="loading"></neo-public-project-carousel>
+  </div>
+  <div class="d-flex">
+    <div class="w-100 d-flex">
+      <div class="w-70">
+        <neo-title-section *ngIf="loadingDiscoverKeyContent"
+          class="title-section-wrapper-new-noteworthy public-noteworthy subTitle-new-noteworthy w-70 view-all-btn-new-noteworthy"
+          [linkText]="'general.viewAllLabel' | translate" [subTitle]="'dashboard.newAndNoteworthySubLabel' | translate"
+          [title]="'general.newAndNoteworthyLabel' | translate" [iconSize]="'md'" link="/learn"
+          (elementClick)="elementClick.emit($event)">
+        </neo-title-section>
+        <div class="container">
+          <div *ngFor="let article of newAndNoteworthyArticles; let i = index" [class.second]="i%2 != 0"
+            (click)="onArticleClick(article.id, 'learn/' + article?.id,article?.title,!!article?.isPublicArticle)">
+            <neo-public-discover-key-content [publicOrPrivateContent]="article" [isPublic]="!!article?.isPublicArticle">
+            </neo-public-discover-key-content>
+          </div>
+        </div>
+
+        <div class="w-100 pt-32">
+          <div *ngIf="loading && loadingDiscoverKeyContent && networknetworkStats | async as networkStats">
+            <neo-network-stats [title]="'community.networkStatsLabel' | translate" [networkStats]="networkStats"
+              class="public-dashboard"></neo-network-stats>
+          </div>
+        </div>
+      </div>
+
+      <ng-container>
+        <div class="events-wrapper w-30">
+          <ng-container *ngIf="announcement$ | async as announcement">
+            <div class="flex-between align-center pb-16">
+              <h4 class="text-neo-near-black">
+                {{ 'dashboard.featureLabel' | translate }}
+              </h4>
+            </div>
+
+            <neo-announcement [announcement]="announcement" [isPublicUser]="true" class="public-dashboard"
+              (announcementClick)="onAnnouncementClick(announcement.id)" cssClasses="mb-12"></neo-announcement>
+          </ng-container>
+
+          <ng-container *ngIf="events$ | async as events">
+            <div class="flex-between align-center pt-24 pb-12" *ngIf="events?.dataList?.length">
+              <h4 class="text-neo-near-black">
+                {{ 'dashboard.upcomingEventsLabel' | translate }}
+              </h4>
+
+              <button class="link text-s d-flex align-center" (click)="onEventAllClick()" routerLink="/events">
+                {{ 'general.viewAllLabel' | translate }}
+                <svg-icon class="arrow-icon text-neo-purple ml-6 rotate-180" key="arrow-thin-right"></svg-icon>
+              </button>
+            </div>
+            <div *ngIf="events?.dataList.length" class="gap-12 mb-12 wrapperside">
+              <neo-upcoming-events *ngFor="let event of events.dataList; let i = index" [event]="event"
+                (eventClick)="onEventClick(event.id)" cssClasses="mb-4" [isPublicUser]="true"></neo-upcoming-events>
+            </div>
+          </ng-container>
+
+        </div>
+      </ng-container>
+
+    </div>
+
+    <!-- <div class="w-30">
+      <ng-content></ng-content>
+    </div> -->
+  </div>
+  <ng-container>
+  </ng-container>
+</ng-container>

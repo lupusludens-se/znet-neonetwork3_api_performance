@@ -1,0 +1,63 @@
+<ng-container *ngIf="initiatives && initiatives.length > 0">
+  <neo-modal (closed)="closed.emit()" [title]="'initiative.attachContent.title' | translate" padding="p-32-48"
+    size="medium">
+    <div class="separator mt-16 mb-16"></div>
+
+    <div *ngFor="let initiative of initiatives; let index = index" class="substep">
+      <div>
+        <div class=" d-flex checkbox-wrapper"
+          [ngClass]="{ checked: initiative.isChecked, disabled: initiative.isAttached }">
+          <label class="w-80">
+            <input [id]="initiative.id" [value]="initiative.isChecked" [checked]="initiative.isChecked" type="checkbox"
+              (change)="initiative.isChecked = !initiative.isChecked;" />
+            <span class="d-flex align-center text-s" [class.checked]="initiative.isChecked">
+              <svg-icon class="check-icon" key="blue-checkmark"></svg-icon>
+            </span>
+            <div class="ellipsis" title="{{ initiative.initiativeName }}">{{ initiative.initiativeName}} </div>
+          </label>
+        </div>
+        <div *ngIf="initiative.isAttached" class="pl-32 mb-10 d-flex justify-between">
+          <span class="d-flex align-center justify-center saved">
+            <svg-icon key="check-in-blue"></svg-icon>
+            {{ 'general.savedLabel' | translate }}
+          </span>
+        </div>
+      </div>
+      <div *ngIf="index < initiatives.length -1  " class="separator mb-4"></div>
+    </div>
+    <div></div>
+
+    <p *ngIf="hasError" class="text-error text-xs pt-8">
+      {{ 'initiative.attachContent.selectionRequiredErrorLabel' | translate }}
+    </p>
+
+    <div class="d-flex mt-16" style="gap: 10px;">
+      <button *ngIf="initiatives.length < 3" (click)="createInitiative()" class="btn-create w-100 flex-center">
+        <svg-icon key="plus" [fontSize]="'14px'" class="mr-8"></svg-icon>
+        {{ 'initiative.dashboard.createInitiativeLabel' | translate }}
+      </button>
+      <button (click)="saveContent()" class="green w-100 align-center btn-save"
+        [ngClass]="{ disabled: saveButtonDisable }">
+        {{ 'general.saveLabel' | translate }}
+      </button>
+    </div>
+  </neo-modal>
+</ng-container>
+<ng-container *ngIf="initiatives?.length === 0">
+  <neo-modal (closed)="closed.emit()" [title]="'initiative.attachContent.noInitiativeTitle' | translate"
+    padding="p-32-48" size="medium">
+    <div class="separator mt-16 mb-16"></div>
+
+    <span class="text-dark-gray-515">
+      {{ 'initiative.attachContent.addMessage' | translate }}
+    </span>
+
+    <div class="d-flex mt-16" style="gap: 10px;">
+      <button (click)="createInitiative()" class="btn-create w-100 flex-center">
+        <svg-icon key="plus" [fontSize]="'13px'"  class="mr-8"></svg-icon>
+        {{ 'initiative.dashboard.createInitiativeLabel' | translate }}
+      </button>
+    </div>
+  </neo-modal>
+
+</ng-container>

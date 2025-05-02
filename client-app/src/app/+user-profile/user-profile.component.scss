@@ -1,0 +1,310 @@
+@use 'colors';
+
+.top-wrapper {
+  box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+  border-radius: 12px;
+}
+
+.top-banner {
+  background-color: colors.$aqua-400;
+  height: 192px;
+  padding: 48px 32px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.12);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+  .lines-decor {
+    position: absolute;
+    width: 761.41px;
+    height: 249px;
+    right: 35px;
+    z-index: 0;
+    top: 31px;
+  }
+
+  .name {
+    font-size: 28px;
+    line-height: 120%;
+    color: colors.$dark-gray-30;
+  }
+
+  .followers {
+    font-size: 14px;
+    line-height: 150%;
+    color: colors.$dark-gray-30;
+  }
+
+  .right {
+    z-index: 2;
+
+    .edit {
+      width: 131px;
+      height: 45px;
+      z-index: 1;
+    }
+  }
+}
+
+.light-green {
+  width: 32px;
+  height: 30px;
+  border-radius: 4px;
+}
+
+.info-wrapper {
+  padding: 32px 32px 36px;
+  color: colors.$dark-gray-30;
+
+  .company {
+    border-right: 1px solid colors.$blue-50;
+    border-left: 1px solid colors.$blue-50;
+  }
+
+  .responsibility {
+    border-left: 1px solid colors.$blue-50;
+  }
+
+  .label {
+    font-size: 14px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+    color: colors.$dark-gray-590;
+  }
+
+  .info-text {
+    font-size: 16px;
+    line-height: 130%;
+    color: colors.$near-black-400;
+    width: fit-content;
+  }
+}
+
+.main-content {
+  .left {
+    background: colors.$white;
+    border: 1px solid colors.$dark-gray-200;
+    border-radius: 2px;
+    padding: 24px 24px 32px;
+    width: 64%;
+
+    .section-title {
+      font-size: 16px;
+      line-height: 130%;
+      text-transform: capitalize;
+      color: colors.$near-black-400;
+    }
+
+    .text {
+      font-size: 16px;
+      line-height: 140%;
+      color: colors.$dark-gray-590;
+      word-wrap: break-word;
+    }
+
+    .links-wrapper {
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 0.01em;
+      text-decoration-line: underline;
+
+      a {
+        color: colors.$zeigo-purple;
+      }
+    }
+  }
+
+  .right {
+    min-width: 33.5%;
+    width: 308px;
+
+    .interests,
+    .geographies {
+      padding: 20px 20px 14px;
+      background-color: colors.$white;
+      border: 1px solid colors.$dark-gray-200;
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-weight: 400;
+      font-family: 'Arial Rounded MT Bold';
+      font-style: normal;
+      font-size: 12px;
+      line-height: 150%;
+      color: colors.$dark-gray-590;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .btn-add {
+      width: 28px;
+      height: 28px;
+      border: 1px solid colors.$aqua-400;
+      color: colors.$aqua-400;
+      border-radius: 8px;
+      background: colors.$blue-20;
+
+      &:hover {
+        background-color: colors.$light-blue-20;
+        transition: all 0.2s ease;
+      }
+    }
+
+    .btn-add-purple {
+      border: 1px solid colors.$zeigo-purple;
+      color: colors.$zeigo-purple;
+      background: colors.$off-white;
+
+      &:hover {
+        background-color: rgba(58, 36, 86, 0.05);
+        transition: all 0.2s ease;
+      }
+    }
+
+    .btn-add-red {
+      border: 1px solid colors.$red-80;
+      color: colors.$red-80;
+      background: colors.$red-15;
+
+      &:hover {
+        background-color: colors.$red-20;
+        transition: all 0.2s ease;
+      }
+    }
+  }
+}
+
+.geographic-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(134, 132, 141, 0.3);
+
+  .content {
+    position: relative;
+    width: 839px;
+    height: 650px;
+    border-radius: 2px;
+    background-color: colors.$white;
+    padding: 36px 32px 32px;
+
+    .btn-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: colors.$blue-200;
+    }
+
+    .modal-title {
+      font-size: 28px;
+      line-height: 120%;
+      color: colors.$dark-gray-900;
+    }
+
+    .modal-text {
+      font-size: 14px;
+      line-height: 130%;
+      letter-spacing: 0.01em;
+      color: colors.$blue-500;
+    }
+  }
+}
+
+.tooltip {
+  cursor: help;
+  position: relative;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: colors.$white;
+  color: colors.$near-black-400;
+  border-radius: 6px;
+  font-size: small;
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 50%;
+  transform: translate(-50%);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  padding: 12px;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip {
+  border-bottom: 1px dotted gray;
+  /* If you want dots under the hoverable text */
+}
+
+.fg-2 {
+  flex: 2 0 0;
+}
+
+.fg-3 {
+  flex: 3 0 0;
+}
+
+.btn-initiative {
+  font-family: Arial Rounded MT;
+  font-weight: 800;
+  text-align: left;
+  font-size: 14px;
+  color: colors.$purple-200;
+  line-height: 150%;
+  border: 1px solid colors.$purple-300;
+  box-shadow: 0 1px 3px rgba(0, 31, 81, 0.07);
+  border-radius: 8px;
+  padding: 6px;
+  gap: 8px;
+  cursor: pointer;
+
+  &.disabled {
+    pointer-events: none;
+  }
+
+  &:hover {
+    border: 1px solid colors.$purple-500;
+    color: colors.$purple-500;
+    background: colors.$white;
+  }
+}
+
+.members-wrapper {
+  height: 60vh;
+
+  .members {
+    max-height: calc(60vh - 91px);
+    min-height: 100px;
+    overflow-y: auto;
+    gap: 12px;
+
+    neo-member {
+      width: calc(50% - 8px);
+      background-color: #f4f2f4;
+      padding: 4px 10px;
+    }
+  }
+}
+
+.default-cursor {
+  cursor: pointer !important;
+}
+.disabled {
+  pointer-events: none;
+}

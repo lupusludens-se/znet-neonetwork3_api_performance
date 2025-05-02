@@ -1,0 +1,44 @@
+@use 'colors';
+
+:host {
+  display: flex;
+}
+
+.social {
+  width: 45px;
+  height: 45px;
+  border: 1px solid colors.$white;
+  border-radius: 8px;
+  color: colors.$white;
+  &:hover {
+    background: #3A9ABF;
+  }
+}
+
+.btn-follow {
+  width: 148px;
+  height: 45px;
+  text-transform: capitalize;
+  background: colors.$dark-gray-30;
+  color: colors.$zeigo-purple;
+  border-radius: 8px;
+  border: 1px solid colors.$dark-gray-30;
+
+  &:hover {
+    border-color: colors.$zeigo-purple;
+		background-color: colors.$blue-15;
+  }
+
+  &.following {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: colors.$white;
+    width: 134px;
+    border: 1px solid colors.$white;
+    border-radius: 8px;
+    text-transform: capitalize;
+
+    &:hover {
+      background: #3A9ABF;
+    }
+  }
+}

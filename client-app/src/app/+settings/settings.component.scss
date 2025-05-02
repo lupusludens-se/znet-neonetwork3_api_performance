@@ -1,0 +1,47 @@
+@use 'colors';
+
+.settings {
+  width: 98%;
+}
+
+.settings-wrapper {
+  background: colors.$dark-gray-30;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+
+  .separator {
+    border-color: colors.$blue-50;
+  }
+
+  .link {
+    color: colors.$blue-400;
+
+    &:hover {
+      color: colors.$dark-green;
+    }
+  }
+}
+
+.tab-active {
+  color: colors.$dark-gray-40;
+  background: colors.$zeigo-purple;   
+  min-height: 42px;
+
+  &:hover {
+    background: colors.$purple-400;
+    color: colors.$dark-gray-40;
+  }
+}
+
+.tab-in-active {
+  background: colors.$dark-gray-450;
+  color: colors.$dark-gray-590;
+  border: none;   
+  min-height: 44px;
+  
+  &:hover {
+    background: colors.$dark-gray-250;
+    color: colors.$dark-gray-590;    
+    border: none;
+  }
+}

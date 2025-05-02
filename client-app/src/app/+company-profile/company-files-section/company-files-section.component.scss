@@ -1,0 +1,121 @@
+@use 'colors';
+
+$border-color: colors.$dark-gray-300;
+$text-color: colors.$dark-gray-590;
+$font-family: 'Arial Rounded MT Bold';
+$font-size: 13px;
+$line-height: 15.6px;
+
+.files-container {
+  min-height: 257px;
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+  margin-left: 25px;
+  margin-top: 10px;
+  padding: 12px;
+
+  .file,
+  .scrollable-container .file {
+    padding: 36px 0;
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px solid $border-color;
+    justify-content: space-between;
+
+    .file-details{
+      width: 80%;
+    }
+
+    .file-type,
+    .file-size,
+    .file-name {
+      font-size: $font-size;
+      font-weight: 400;
+      line-height: $line-height;
+      text-align: left;
+      color: $text-color;
+    }
+
+    .file-name {
+      font-size: 15px;
+      line-height: 18.2px;
+      width: 255px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: colors.$near-black-400;
+    }
+
+    .file-actions {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px;
+      align-items: center;
+      width: 20%;
+
+      .action-button {
+        border: 1px solid colors.$purple-300;
+        height: 40px;
+        width: 48px;
+        border-radius: 8px;
+        margin: 10px;
+      }
+
+      .three-dots {
+        color: colors.$dark-gray-590;
+      }
+    }
+  }
+
+  .scrollable-container {
+    min-height: 210px;
+    overflow-y: scroll;
+    height: 210px;
+  }
+
+  .header {
+    margin: 2px;
+    padding-bottom: 10px;
+    margin-bottom: 2px;
+    border-bottom: 1px solid $border-color;
+
+    .title {
+      flex-grow: 1;
+      text-transform: capitalize;
+    }
+
+    .upload-button {
+      width: fit-content;
+      height: 39px;
+      font-size: 14px;
+      padding: 12px;
+      color: colors.$dark-gray-40;
+    }
+    .add-button {
+      width: fit-content;
+      height: 39px;
+      font-size: 14px;
+      padding: 12px;
+      color: colors.$dark-gray-40;
+    }
+  }
+
+  .content {
+    padding: 45px;
+
+    .file-icon {
+      color: colors.$purple-300;
+      width: 42px;
+      height: 42px;
+    }
+
+    .message {
+      font-family: $font-family;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20.8px;
+      text-align: center;
+    }
+  }
+}

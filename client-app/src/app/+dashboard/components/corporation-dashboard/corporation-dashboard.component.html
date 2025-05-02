@@ -1,0 +1,66 @@
+<ng-container>
+  <neo-dashboard-private-skeleton *ngIf="!loading"> </neo-dashboard-private-skeleton>
+  <ng-container *ngIf="loading && currentUser$ | async as currentUser">
+    <div class="w-100">
+      <neo-project-carousel class="top-carousel" [title]="'dashboard.trendingLabel' | translate"
+        [postsCountPerSlide]="3" [circlesArr]="trendingProgressPositions" [totalSlides]="3"
+        [subTitle]="'dashboard.trendingSubLabel' | translate" [postData]="posts"
+        [loading]="loading"></neo-project-carousel>
+    </div>
+    <div class="d-flex">
+      <div class="w-70">
+        
+        <neo-initiatives (elementClick)="elementClick.emit($event)"></neo-initiatives>
+
+
+        <ng-container *ngIf="newAndNoteworthyArticles.length > 0">
+          <neo-title-section *ngIf="loadArticles"
+            class="title-section-wrapper-new-noteworthy subTitle-new-noteworthy view-all-btn-new-noteworthy"
+            [linkText]="'general.viewAllLabel' | translate"
+            [subTitle]="'dashboard.newAndNoteworthySubLabel' | translate"
+            [title]="'general.newAndNoteworthyLabel' | translate" iconSize="md" link="/learn"
+            (elementClick)="elementClick.emit($event)">
+          </neo-title-section>
+
+        <div class="container">
+          <div [class.second]="i%2 != 0" 
+            *ngFor="let article of newAndNoteworthyArticles; index as i"
+            (click)="onArticleClick(article.id , article.title,  'learn/' + article?.id)">
+            <neo-new-and-noteworthy [newAndNoteworthyData]="article"> </neo-new-and-noteworthy>
+          </div>
+        </div>
+      </ng-container>
+
+        <ng-container *ngIf="forums$ | async as forums">
+          <neo-title-section *ngIf="forums?.dataList.length" [linkText]="'general.viewAllLabel' | translate"
+            [subTitle]="'dashboard.forumSubHeadLabel' | translate" [title]="'forum.forumLabel' | translate"
+            link="/forum" iconSize="md" (elementClick)="elementClick.emit($event)">
+          </neo-title-section>
+
+          <div *ngIf="forums?.dataList.length" class="gap-12">
+            <div class="flex-column gap-12">
+              <neo-forum-topic (liked)="onForumLikeClick(forum, $event)" (saveClick)="onForumSaveClick(forum, $event)"
+                (userFollowClick)="onForumUserFollowClick(forum, $event)"
+                (elementClick)="onForumElementClick(forum.id, $event)"
+                *ngFor="let forum of forums.dataList; let i = index" [topic]="forum">
+              </neo-forum-topic>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf=" recentlyViewedProjects?.length">
+          <div class="w-100 pt-32">
+            <neo-project-carousel *ngIf="loadArticles && loading" class="bottom-carousel"
+              [title]="'dashboard.recentlyViewedLabel' | translate"
+              [subTitle]="'dashboard.recentlyViewedSubLabel' | translate" [recentlyViewed]="true"
+              [circlesArr]="progressPositions" [postsCountPerSlide]="2" [totalSlides]="3"
+              [postData]="recentlyViewedProjects" [loading]="loading"></neo-project-carousel>
+          </div>
+        </ng-container>
+      </div>
+
+      <div *ngIf="loading && loadArticles" class="w-30">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </ng-container>

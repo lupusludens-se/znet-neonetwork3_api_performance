@@ -1,0 +1,76 @@
+<ng-container *ngIf="conversationUser(currentuser, conversation.users, selectedTab, direction) as user">
+  <div class="d-flex">
+    <!-- Individual Conversation -->
+    <ng-container *ngIf="conversation?.users?.length === 2 || (selectedTab === 'network' && direction === 'from')">
+      <neo-user-avatar
+        [user]="getUser(user)"
+        imageSize="size48"
+        class="c-pointer"
+        (click)="$event.stopPropagation(); openUserProfile(user)">
+      </neo-user-avatar>
+
+      <div class="flex-column pl-16 c-pointer">
+        <div class="d-flex align-center">
+          <span
+            class="user-name break-word text-neo-near-black fw-700"
+            (click)="$event.stopPropagation(); openUserProfile(user)">
+            {{ user?.statusId === userStatuses.Deleted ? 'Deleted User' : user?.name }}
+          </span>
+
+          <span
+            *ngIf="conversation?.unreadCount && selectedTab === 'inbox'"
+            class="unread-messages-count text-xxs fw-700 flex-center ml-6">
+            {{ conversation?.unreadCount }}
+          </span>
+        </div>
+        <div class="d-flex align-center">
+          <span
+            *ngIf="user.statusId !== userStatuses.Deleted"
+            class="text-s break-word text-blue-200 pt-2">
+            {{ user?.company }}
+          </span>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Group Conversation -->
+    <div
+      *ngIf="
+        (conversation?.users?.length > 2 && selectedTab === 'inbox') ||
+        (conversation?.users?.length > 2 && selectedTab === 'network' && direction === 'to')
+      "
+      class="flex-column">
+      <div class="d-flex align-center">
+        <div
+          class="user-image-wrapper c-pointer p-relative flex-center"
+          [style.z-index]="i"
+          *ngFor="let user of conversationUsers(currentuser, conversation.users, 0, 5); let i = index">
+          <neo-user-avatar
+            [user]="getUser(user)"
+            (click)="$event.stopPropagation(); openUserProfile(user)"
+            imageSize="size32">
+          </neo-user-avatar>
+
+          <p class="user-tooltip text-xs fw-700 text-white p-absolute">
+            <a routerLink="/user-profile/{{ user.id }}">
+              {{ user?.statusId === userStatuses.Deleted ? 'Deleted User' : user?.name }}
+            </a>
+          </p>
+        </div>
+
+        <div
+          *ngIf="conversation?.users?.length > 6"
+          class="user-image-wrapper z-index-6 c-pointer">
+          <div class="counter w-100 h-100 text-xxs text-neo-aqua fw-700 flex-center">
+            +{{ conversation?.users?.length - 6 }}
+          </div>
+        </div>
+        <div
+          *ngIf="conversation?.unreadCount && selectedTab === 'inbox'"
+          class="unread-messages-count text-xxs fw-700 flex-center ml-6">
+          {{ conversation?.unreadCount }}
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

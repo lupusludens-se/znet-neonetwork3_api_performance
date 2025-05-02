@@ -1,0 +1,141 @@
+@use 'colors';
+@use 'variables';
+
+
+.role {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 150px;
+  padding: 8px 16px 8px 16px;
+  border-radius: 500px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 140%;
+
+  &.corporation {
+    border: 1px solid rgba(112, 70, 164, 0.2);
+    color: colors.$purple-390
+  }
+
+  &.solution {
+    border: 1px solid rgba(0, 131, 188, 0.2);
+    color: colors.$aqua-600;
+  }
+
+  &.admin {
+    border: 1px solid rgba(103, 125, 160, 0.2);
+    color: colors.$blue-400;
+  }
+  &.spadmin {
+    border: 1px solid rgba(0, 131, 188, 0.2);
+    color: colors.$aqua-600;
+  }
+
+  &.internal {
+    border: 1px solid rgba(0, 149, 48, 0.2);
+    color: colors.$dark-green;
+  }
+  &.system {
+    border: 1px solid rgba(103, 125, 160, 0.2);
+    color: colors.$blue-400;
+  }
+}
+
+.title-wrapper {
+  .title {
+    font-size: 24px;
+    line-height: 110%;
+    color: colors.$near-black-400;
+  }
+
+  .top {
+    justify-content: flex-end;
+  }
+}
+
+
+.content-wrapper {
+  width: fit-content;
+  padding: 32px 32px 48px;
+  background-color: colors.$white;
+  margin-bottom: 114px;
+  .avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    padding: 7px;
+    border: 2px solid colors.$aqua-400;
+
+    &.inactive {
+      border-color: rgba(177, 0, 67, 0.06);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+
+form {
+  width: 652px;
+}
+
+.btn-view-profile {
+  width: 100%;
+  height: 47px;
+  background-color: #fcfcfc;
+  color: colors.$zeigo-purple;
+  border: none !important;
+  &:hover {
+    color: colors.$purple-200;
+    background: none;
+  }
+}
+
+
+.controls-row {
+  neo-text-input {
+    width: 314px;
+  }
+}
+.role-controls {
+  width: 314px;
+}
+
+neo-text-input {
+  display: block;
+}
+
+.text-input-label,
+.section-label {
+  font-size: 14px;
+  line-height: 130%;
+  color: colors.$dark-gray-590;
+  font-family: Arial Rounded MT Bold, serif;
+}
+
+.ratings {
+  div{
+    user-select: none;
+    pointer-events: none;
+    border: 1px solid colors.$dark-gray-280;
+    background: colors.$blue-10;
+    border-radius: 5px;
+    width: fit-content;
+    padding: 6px 12px 6px 12px;
+  }
+}
+
+.feedback-star {
+  width: 28px;
+  height: 25px;
+  color: #7958A4;
+  cursor: pointer;
+  &:hover{
+    color: colors.$dark-gray-590;
+  }
+}
+

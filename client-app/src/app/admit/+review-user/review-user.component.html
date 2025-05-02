@@ -1,0 +1,159 @@
+<ng-container *ngIf="!!user && user.id">
+  <div class="pl-32 pr-32">
+    <div class="title-wrapper flex-between mb-32 align-center">
+      <h1 class="title">{{ 'admitUsers.reviewUserLabel' | translate }}</h1>
+    </div>
+
+    <div class="content d-flex">
+      <form [formGroup]="form" class="p-24 flex-column">
+        <div class="d-flex flex-end">
+          <button (click)="denyUser()" [class.selected]="user?.isDenied" [class.denied]="user.isDenied"
+            class="blue-50-frame flex-center mr-12 w-deny" type="button">
+            {{ (user?.isDenied ? 'admitUsers.deniedLabel' : 'admitUsers.denyLabel') | translate }}
+          </button>
+          <button (click)="approveUser()" [class.selected]="!user?.isDenied" [disabled]="approveDisabled"
+            class="flex-center w-approve" [ngClass]="user.isDenied ? 'btn-approve' : 'blue-50-frame'"
+            [attr.disabled]="!user.company || user.company.statusId !== companyStatuses.Active ? true : null"
+            type="button">
+            {{ 'admitUsers.approveLabel' | translate }}
+          </button>
+        </div>
+        <div class="d-flex pt-12 mb-24">
+          <neo-text-input class="mr-24" [labelName]="'userManagement.form.firstNameLabel' | translate"
+            formControlName="firstName" [submitted]="formSubmitted">
+          </neo-text-input>
+
+          <neo-text-input [labelName]="'userManagement.form.lastNameLabel' | translate" formControlName="lastName"
+            [submitted]="formSubmitted">
+          </neo-text-input>
+        </div>
+
+        <neo-text-input class="mb-24" [labelName]="'userManagement.form.emailLabel' | translate" formControlName="email"
+          type="email" [submitted]="formSubmitted">
+        </neo-text-input>
+
+        <label class="mb-24 text-input-label neo-arial w-50" [ngClass]="[
+            internalRoleSelected ? 'label-disabled' : 'label-enabled',
+            companyNotExistError || companyStatusError ? 'error-label' : ''
+          ]">
+          {{ 'admitUsers.table.companyLabel' | translate }}
+
+          <neo-search-bar (clearInput)="
+              selectedCompany.name = null; selectedCompany.id = null; enteredCompanyName = null; aproveDisabled = true
+            " (inputChange)="getCompanies($event)" (selectedResult)="chooseCompany($event)"
+            [disabled]="internalRoleSelected" [errorIcon]="
+              companyStatusError || companyDeletedStatusError ? 'trash-can' : companyNotExistError ? 'alert-filled' : ''
+            " [error]="companyNotExistError || companyDeletedStatusError || companyStatusError || !selectedCompany?.id"
+            [results]="companiesList" [value]="selectedCompany?.name" class="mt-8 company-search">
+          </neo-search-bar>
+
+          <p *ngIf="companyNotExistError || companyDeletedStatusError || companyStatusError" class="error mt-4">
+            {{
+            companyNotExistError
+            ? ('admitUsers.companyNotExistError' | translate)
+            : companyDeletedStatusError
+            ? ('admitUsers.companyDeletedError' | translate)
+            : ('admitUsers.companyInactiveError' | translate)
+            }}
+
+            <a *ngIf="selectedCompany?.id && !companyDeletedStatusError"
+              [routerLink]="'../../../company-management/edit/' + selectedCompany?.id" class="company-link"
+              target="_blank">
+              {{ 'admitUsers.updateCompanyLabel' | translate }}
+            </a>
+
+            <a *ngIf="!selectedCompany?.id" [routerLink]="
+                '../../../company-management/add/' + (enteredCompanyName ? enteredCompanyName : selectedCompany.name)
+              " class="company-link" target="_blank">
+              {{ 'admitUsers.createCompanyLabel' | translate }}
+            </a>
+          </p>
+
+          <neo-control-error
+            [errors]="enteredCompanyName !== undefined && enteredCompanyName?.length > 0 ? null : { required: true }"
+            [fieldName]="'admitUsers.table.companyLabel' | translate" [submitted]="formSubmitted">
+          </neo-control-error>
+        </label>
+
+        <div class="controls-row flex-column mb-24">
+          <neo-radio-control [list]="rolesData" [labelName]="'form.userRoleLabel' | translate" formControlName="roleId" 
+            [submitted]="formSubmitted">
+          </neo-radio-control>
+        </div>
+
+        <label class="mb-24 text-input-label neo-arial w-50">
+          {{ 'userManagement.form.countryLabel' | translate }}
+
+          <neo-search-bar (clearInput)="chooseCountry(null)" (inputChange)="getCountries($event)"
+            (selectedResult)="chooseCountry($event)" [results]="countriesList" [value]="selectedCountry?.name"
+            [error]="formSubmitted && !selectedCountry?.name" class="mt-8">
+          </neo-search-bar>
+
+          <neo-control-error [errors]="countryError" [fieldName]="'userManagement.form.countryLabel' | translate"
+            [submitted]="formSubmitted">
+          </neo-control-error>
+        </label>
+
+        <label class="mb-24 text-input-label neo-arial w-50"
+          [ngClass]="internalRoleSelected ? 'label-disabled' : 'label-enabled'">
+          {{ 'userManagement.form.heardViaLabel' | translate }}
+          <neo-dropdown class="heard-via-dropdown" [disabled]="internalRoleSelected" [dropdownOptions]="heardViaList"
+            formControlName="heardViaId" dropdownSize="130px" [submitted]="formSubmitted">
+          </neo-dropdown>
+        </label>
+        <label class="text-input-label neo-arial display-inline flex-between" for="adminComments">
+          {{ 'userManagement.form.adminCommentsLabel' | translate }}
+          <span class="align-right counter-wrapper flex-between">
+            <span class="counter">{{ adminCommentsLength }}/{{ adminCommentsTextMaxLength }}</span>
+          </span>
+        </label>
+        <neo-message-control (symbolsCount)="onAdminCommentsLengthChanged($event)" class="mt-8"
+          [displayAttachments]="false" [hasError]="
+            formSubmitted &&
+            (form.controls['adminComments'].value === '<br>' || adminCommentsLength > adminCommentsTextMaxLength)
+          " formControlName="adminComments" id="adminComments"
+          (valueChanged)="onAdminCommentsLengthChanged($event); form.controls['adminComments'].updateValueAndValidity()"
+          maxHeight="200px" [maxLength]="adminCommentsMaxLength" classes="p-0 text-s">
+        </neo-message-control>
+
+        <neo-control-error class="mt-6"
+          [errors]="adminCommentsLength > adminCommentsTextMaxLength ? { maxlength: { requiredLength: 4000 } } : null"
+          [fieldName]="'userManagement.form.adminCommentsLabel' | translate" [submitted]="formSubmitted">
+        </neo-control-error>
+
+        <ng-container class="mt-6">
+          <neo-textarea-control class="text-input-label mt-10" formControlName="joiningInterestDetails" [disabled]="true"
+            [labelName]="'userManagement.form.userCommentsLabel' | translate" [submitted]="formSubmitted">
+          </neo-textarea-control>
+        </ng-container>
+      </form>
+    </div>
+
+    <neo-form-footer (cancel)="onCancel()" (save)="editUser()"
+      [submitButtonName]="'general.saveChangesLabel' | translate">
+    </neo-form-footer>
+  </div>
+
+  <neo-modal (cancel)="cancel()" *ngIf="showModal" size="medium"  padding="p-40">
+    <svg-icon (click)="cancel()" class="c-pointer p-absolute top-20 right-20" height="30px" key="close-snackbar"
+      width="30px"></svg-icon>
+  
+    <h3 class="mb-6">
+      {{ spAdminConfirmationTitle }}
+    </h3>
+  
+    <p class="text-label mb-24">
+      {{ 'userManagement.form.spAdminConfirmationSubTitle' | translate }}
+    </p>
+  
+    <div class="popup-controls pt-24 d-flex mt-12">
+      <button (click)="cancel()" class="btn-cancel blue-50-frame mr-16">
+        {{ 'general.cancelLabel' | translate }}
+      </button>
+  
+      <button class="btn-confirm" (click)="proceed()">
+        {{ 'general.yesProceedLabel' | translate }}
+      </button>
+    </div>
+  </neo-modal>
+</ng-container>

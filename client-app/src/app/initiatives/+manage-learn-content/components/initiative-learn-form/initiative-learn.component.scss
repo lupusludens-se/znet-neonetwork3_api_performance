@@ -1,0 +1,51 @@
+@use 'colors';
+
+.book-icon {
+  width: 25.33px;
+  height: 23.39px;
+  color: colors.$blue-380;
+}
+
+.subtext {
+  color: colors.$dark-gray-590;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.btn-tab {
+  max-height: 45px;
+  padding: 10px 34px;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: capitalize;
+  width: 18%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.active {
+  color: colors.$zeigo-purple;
+  border-bottom: 2px solid colors.$zeigo-purple;
+}
+
+.inactive {
+  color: colors.$purple-40;
+  border-bottom: 2px solid colors.$purple-40;
+}
+
+.btn-save-selection {
+  font-size: 14px;
+  background: colors.$dark-gray-40;
+  text-transform: capitalize;
+  border-radius: 8px;
+  border: 1px solid colors.$purple-300;
+  box-shadow: 0 1px 3px rgba(0, 31, 81, 0.07);
+  color: colors.$purple-200;
+  padding: 10px;
+
+  &:hover {
+    border: 1px solid colors.$purple-500;
+    color: colors.$purple-500;
+  }
+}

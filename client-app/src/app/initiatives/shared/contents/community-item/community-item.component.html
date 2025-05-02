@@ -1,0 +1,58 @@
+<div [ngClass]="{'no-padding section-height': parentModule === initiativeParentModuleEnum.InitiativeDashboard  }"
+  class="community-item state-wrapper">
+  <svg-icon key="selection-tick-mark" *ngIf="communityUser.isSelected" class="tick-mark"></svg-icon>
+  <div class="overlay-polygon" *ngIf="communityUser.isSelected"></div>
+  <div [ngClass]="{'p-12': parentModule !== initiativeParentModuleEnum.InitiativeDashboard}"
+    class="d-flex message-wrapper w-100 new mb-8 mt-8">
+    <div class="d-flex w-80">
+      <neo-user-avatar [imageSize]="'size56'" [user]="getUser" class="mt-8 mb-8"></neo-user-avatar>
+      <div class="flex-column pl-20 w-85">
+        <div class="d-flex align-center">
+          <h4 class="name c-pointer"
+            *ngIf="parentModule === initiativeParentModuleEnum.Create || parentModule === initiativeParentModuleEnum.ViewRecommended">
+            {{ communityUser?.firstName }} {{ communityUser?.lastName }}
+          </h4>
+          <div class="new-icon-corner" *ngIf="communityUser?.isNew">
+            <svg-icon (click)="$event.stopPropagation()" key="new-icon" class="new-icon"></svg-icon>
+          </div>
+        </div>
+        <a *ngIf="parentModule === initiativeParentModuleEnum.InitiativeDashboard || parentModule === initiativeParentModuleEnum.ViewSaved" (click)="openUserProfile($event)">
+          <h4 class="name c-pointer" [ngClass]="{'name-underline': parentModule === initiativeParentModuleEnum.InitiativeDashboard}" >
+            {{ communityUser?.firstName }} {{ communityUser?.lastName }}
+          </h4>
+        </a>
+        <span class="text-s pt-2 job-title">
+          {{ communityUser?.jobTitle }}{{ ', ' + communityUser?.companyName }}
+        </span>
+        <div class="d-flex flex-wrap pt-12 gap-4">
+          <div class="disabled default-cursor">
+            <div class="flex-center role-tag-purple pl-8 pr-8 pt-6 pb-6">
+              {{ communityUser?.roles[0].id === rolesEnum.SPAdmin ? spAdminRoleLabel :
+              communityUser?.roles[0].name }}
+            </div>
+          </div>
+          <neo-content-tag  [isOpenInNewTab]="true" *ngFor="let tag of communityUser?.categories.slice(0, 1)" [tag]="tag" [type]="type.Category"
+            fontSize="12"></neo-content-tag>
+          <a routerLink="/user-profile/{{ communityUser?.id }}" target="_blank"
+            (click)="$event.stopPropagation();">
+            <neo-content-tag *ngIf="communityUser?.tagsTotalCount > 1" [isOpenInNewTab]="true"
+              tagText="+{{ communityUser?.tagsTotalCount - 1 }}" fontSize="12"></neo-content-tag>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex buttons w-20 justify-end" *ngIf="parentModule === initiativeParentModuleEnum.Create || parentModule === initiativeParentModuleEnum.ViewRecommended">
+      <a class="purple pr-8" (click)="openUserProfile($event)">
+        <svg-icon key="eye" class="mr-5 eye-icon add-hover"></svg-icon>
+        <span class="view-link">{{ 'general.viewLabel' | translate }}</span>
+      </a>
+    </div>
+    <div class="three-dots w-20 d-flex justify-end mr-14" *ngIf="(parentModule === initiativeParentModuleEnum.ViewSaved || parentModule === initiativeParentModuleEnum.InitiativeDashboard) && !isAdminOrTeamMember">
+      <button>
+        <neo-menu (optionClick)="optionClick($event)" [options]="options" activeIcon="cross" cssClasses="flex-center"
+          class="saved-article" icon="vertical-three-dots">
+        </neo-menu>
+      </button>
+    </div>
+  </div>
+</div>

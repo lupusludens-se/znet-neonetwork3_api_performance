@@ -1,0 +1,40 @@
+fullnameOverride: neonetwork3-client
+
+image:
+  repository: acrsbsharedservices.azurecr.io/neonetwork3-client
+  tag: null
+  pullPolicy: Always
+
+ingress:
+  enabled: true
+  className: traefik
+  hosts:
+    - host: network-dev.zeigo.com
+      paths:
+        - path: /zeigonetwork/dev/
+          pathType: ImplementationSpecific
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+service:
+  port: 8080
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+
+application:
+  environment: dev
+  identityClientId: 617ea929-5877-4c63-980e-05a6eb040b9d # sa-neonetwork3-client-dev
+  livenessEndpoint: /
+  readinessEndpoint: /
+  otelServiceName: neonetwork3-client

@@ -1,0 +1,27 @@
+<ul class="d-flex" *ngIf="breadcrumbs$ | async as breadcrumbs">
+  <li 
+    class="c-pointer mr-16"
+    routerLink="/dashboard" [class]="breadcrumbs.length > 0 && breadcrumbs[0].url=== 'dashboard' ? 'notHover': ''">
+    <svg-icon
+      fontSize="18px"
+      class="text-neo-near-black"
+      key="house-frontdoor"></svg-icon>
+    <svg-icon
+      fontSize="18px"
+      class="text-neo-near-black"
+      key="house-frontdoor-hover"></svg-icon>
+  </li>
+  <li
+    class="mr-12"
+    *ngFor="let breadcrumb of breadcrumbs; let i = index">
+    <a [ngClass]="disableRedirection?'disableRedirection':''"
+      [class]="
+        isClickable(breadcrumb?.url) && i !== breadcrumbs.length - 1
+          ? 'text-s ellipsis'
+          : 'text-s ellipsis unclickable-route fw-400'
+      "
+      (click)="navigationHandling(breadcrumb?.url)">
+      {{ breadcrumb?.label }}
+    </a>
+  </li>
+</ul>

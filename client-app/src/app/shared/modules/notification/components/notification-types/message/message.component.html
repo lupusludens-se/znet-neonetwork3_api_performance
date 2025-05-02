@@ -1,0 +1,17 @@
+<p class="two-lines-ellipsis text-s pl-12 text-neo-near-black">
+  <span *ngIf="!notification?.details['count']">
+    {{ 'notificationType.messagesMeLabel' | translate }}
+  </span>
+
+  <span *ngIf="notification?.details['count']">
+    {{ 'notificationType.youHaveLabel' | translate }}
+    {{ notification?.details['count'] }}
+    {{ 'notificationType.messagesFromLabel' | translate }}
+  </span>
+
+  <a
+    class="text-neo-near-black fw-700 c-pointer"
+    routerLink="/messages/{{ notification?.details?.conversationId }}">
+    {{ notification?.details?.userName }}</a
+  >.
+</p>

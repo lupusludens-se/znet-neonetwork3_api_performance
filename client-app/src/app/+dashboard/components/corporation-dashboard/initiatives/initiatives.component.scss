@@ -1,0 +1,37 @@
+@use 'colors';
+
+.div-view-all{
+  .btn-ViewAll {
+    border-radius: 8px;
+    background: rgba(252, 252, 252, 0.00);
+    height: 35px;
+    color: colors.$zeigo-purple;
+    font-family: 'Arial Rounded MT Bold';
+    font-size: 14px;  
+    &:hover {
+      color: colors.$purple-200;
+      cursor: pointer;
+    }
+  }
+
+  svg-icon{
+    color: colors.$purple-200;
+    vertical-align: middle;
+    &:hover {
+      color: colors.$purple-200;
+      cursor: pointer;
+    }
+  }
+}
+
+
+.beta {
+	color: colors.$white;
+	background: colors.$error-red;
+	border-radius: 58px;
+	margin: 12px;
+	padding: 4px 15px 6px 15px;
+	font-family: "Arial", serif;
+	font-size: 15px;
+	font-weight: bold;
+}

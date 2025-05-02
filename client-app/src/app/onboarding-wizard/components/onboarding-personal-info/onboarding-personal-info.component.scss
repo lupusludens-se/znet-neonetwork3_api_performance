@@ -1,0 +1,37 @@
+@use 'colors';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: scroll;
+}
+
+textarea {
+  padding: 16px;
+}
+
+.add-skill-btn {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  line-height: 130%;
+  height: 37px;
+  width: fit-content;
+  padding: 8px 20px;
+  text-transform: capitalize;
+
+  &:hover {
+    border: 1px solid colors.$purple-500;
+    color: colors.$purple-500;
+  }
+}
+
+.error-msg {
+  font-family: 'Arial', sans-serif;
+  font-size: 12px;
+  margin-top: 2px;
+  line-height: 140%;
+  color: #e5484d;
+  margin-left: 20px;
+}

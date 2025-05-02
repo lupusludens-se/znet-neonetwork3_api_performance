@@ -1,0 +1,47 @@
+<div class="content flex-column">
+  <div class="top flex-between align-center mb-24">
+    <h2 class="title neo-arial">{{'onboarding.responsibilitiesStepLabel' | translate}}</h2>
+  </div>
+
+  <div class="controls-wrapper d-flex gap-24 flex-wrap">
+    <div
+      (click)="patchForm(it.id)"
+      *ngFor="let it of responsibilitiesList"
+      [class.selected]="it.id === controlContainer.control!.get('responsibilityId')!.value"
+      class="checkbox-wrapper">
+      <label [for]="it.id" class="flex-column flex-center neo-arial">
+        <svg-icon
+          *ngIf="it.id === controlContainer.control!.get('responsibilityId')!.value"
+          class="plus-icon"
+          height="24px"
+          key="check-in-blue"
+          width="24px">
+        </svg-icon>
+        <svg-icon
+        *ngIf="it.id !== controlContainer.control!.get('responsibilityId')!.value"
+        class="plus-icon"
+        height="24px"
+        key="plus"
+        width="24px">
+      </svg-icon>
+
+        <input [id]="it.name" name="responsibilityId" type="checkbox" />
+        <div class="main-icon mb-24">
+          <img src="assets/images/onboarding/{{it.name}}.svg">
+        </div>
+        {{ it.name }}
+      </label>
+    </div>
+
+		<neo-control-error
+			[errors]="!controlContainer.control!.get('responsibilityId')!.value ? {required: true} : null"
+			[fieldName]="'onboarding.responsibilitiesStepLabel' | translate"
+			[submitted]="formSubmitted">
+		</neo-control-error>
+  </div>
+</div>
+
+<neo-wizard-nav-controls
+  (goBack)="changeStep(stepsList.Role)"
+  (goNext)="goForward(stepsList.Location)">
+</neo-wizard-nav-controls>

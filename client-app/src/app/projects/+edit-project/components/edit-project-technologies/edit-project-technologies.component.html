@@ -1,0 +1,27 @@
+<div class="content flex-column technology-wrapper">
+  <div
+    *ngIf="technologiesList"
+    class="controls-wrapper d-flex flex-wrap gap-8 ">
+    <button
+      (click)="selectTechnology(tech)"
+      *ngFor="let tech of technologiesList"
+      [class.selected]="tech.selected"
+      class="d-flex flex-center neo-arial checkbox-wrapper">
+      <svg-icon
+        [key]="tech.selected ? 'cross' : 'plus'"
+        class="plus-icon mr-8"
+        height="12px"
+        width="12px"
+				fontSize='12px'>
+			</svg-icon>
+      {{ tech.name }}
+    </button>
+  </div>
+
+  <neo-control-error
+    [errors]="technologiesError"
+    fieldName="Technologies"
+    class="mb-24 mt-4"
+    [submitted]="formSubmitted">
+	</neo-control-error>
+</div>

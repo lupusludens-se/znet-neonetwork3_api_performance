@@ -1,0 +1,85 @@
+@use 'colors';
+
+.loading {
+  width: 48px;
+  height: 48px;
+}
+
+.attachment {
+  position: relative;
+
+  .close {
+    position: absolute;
+    top: -9px;
+    right: -9px;
+  }
+
+  //New message image icon
+  img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+}
+
+.loading {
+  background: colors.$blue-25;
+  border-radius: 2px;
+
+  svg-icon {
+    animation: load 1s infinite ease;
+  }
+}
+
+.btn-square {
+  //Adding below code on new message page icon near submit button
+  background: colors.$dark-gray-40;
+  border: 1px solid colors.$purple-300;
+  border-radius: 8px;
+  color: colors.$purple-300;
+
+  &:hover {
+    //background: colors.$gray-hover;
+    background: colors.$dark-gray-40;
+    border: 1px solid colors.$purple-500;
+    border-radius: 8px;
+    color: colors.$near-black-400;
+  }
+}
+
+.message-history {
+  .blue-100-frame {
+    color: colors.$blue-400;
+    background: transparent;
+
+    &:hover {
+      color: colors.$neo-blue;
+      background: transparent;
+    }
+  }
+}
+
+@-webkit-keyframes load {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes load {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

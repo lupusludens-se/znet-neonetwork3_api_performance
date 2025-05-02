@@ -1,0 +1,1 @@
+export const BADGE_DATA_RELOAD_TIME = 30 * 1000;

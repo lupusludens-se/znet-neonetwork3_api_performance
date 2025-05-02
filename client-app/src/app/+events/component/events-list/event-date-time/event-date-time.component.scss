@@ -1,0 +1,25 @@
+@use 'colors';
+@import 'events';
+
+.date-time {
+  font-weight: bold;
+  color: colors.$dark-gray-545; 
+
+  .date {
+    margin-right: 16px;
+  }
+
+  .date-icon {
+    min-width: 14px;
+    min-height: 14px;
+  }
+
+  .time-label {
+    min-width: 0;
+  }
+
+  .more-dates-count {
+    height: 18px;
+    padding: 0 5px;
+  }
+}

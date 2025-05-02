@@ -1,0 +1,123 @@
+@use 'breakpoints';
+@use 'colors';
+
+.top-panel {
+  height: 213px;
+  padding: 40px;
+  background-color: colors.$aqua-400;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0px 20px 30px rgba(0, 31, 81, 0.25);
+
+  .left {
+    color: colors.$white;
+
+    .title {
+      font-size: 28px;
+      line-height: 120%;
+      color: colors.$dark-gray-30;
+    }
+
+    .text {
+      width: 655px;
+      font-size: 14px;
+      line-height: 130%;
+      letter-spacing: 0.01em;
+      color: colors.$dark-gray-30;
+      padding-top: 10px;
+    }
+
+    .link{
+      padding-top: 8px;
+    }
+
+    a {
+      font-size: 14px;
+      line-height: 150%;
+      color: colors.$blue-10;
+      cursor: pointer;
+      font-family: 'Arial Rounded MT Bold';
+      text-decoration: underline;
+    }
+  }
+
+  .right {
+    z-index: 1;
+    height: fit-content;
+    margin-right: 80px;
+
+    .connect-wrapper {
+      color: colors.$white;
+
+      .grey-text {
+        font-size: 10px;
+        line-height: 120%;
+        text-transform: uppercase;
+        color: colors.$dark-gray-420;
+        letter-spacing: 0.05em;
+
+        @media (breakpoints.$medium) {
+          margin-bottom: 12px;
+        }
+      }
+
+      .white-text {
+        font-size: 16px;
+        line-height: 120%;
+        color: colors.$blue-10;
+
+        @media (breakpoints.$medium) {
+          margin-bottom: 24px;
+        }
+      }
+
+    }
+  }
+
+  .lines-decor {
+    position: absolute;
+    width: 897.41px;
+    height: 373.4px;
+    right: 0;
+    bottom: 0;
+    opacity: 0.22;
+    z-index: 0;
+  }
+}
+
+.tile {
+  width: calc((100% - 12px) / 2);
+  min-height: 175px;
+}
+
+.img{
+  position: absolute;
+  width: 599px;
+  height: 249px;
+  left: 220px;
+  top: 5px;
+}
+
+neo-modal {
+  .line{
+    border-top: 1px solid colors.$violet-5;
+    margin-top: 10px;
+  }
+  .scope-element {
+    padding: 24px 32px;
+    border: 1px solid colors.$zeigo-bight-gray;
+    border-radius: 2px;
+    background: colors.$dark-gray-30;
+  }
+  .text-scope-label{
+    color: colors.$dark-gray-590;
+    line-height: 130%;
+    margin-bottom: 4px;
+  }
+  .text-scope-description{
+    color: colors.$dark-gray-515;
+    font-size: 14px;
+    line-height: 150%;
+  }
+}

@@ -1,0 +1,144 @@
+@use 'colors';
+
+:host {
+  display: table-row;
+  vertical-align: middle;
+}
+
+.opaque {
+  opacity: 0.5;
+}
+
+.name-col {
+  font-weight: 700;
+  font-size: 14px;
+  color: colors.$near-black-400;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 1000px;
+  line-height: 130%;
+}
+
+.status {
+  background: rgba(61, 205, 88, 0.1);
+  border-radius: 500px;
+  font-size: 12px;
+  color: colors.$dark-green;
+  padding: 4px 10px;
+  width: fit-content;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    border-radius: 50%;
+    background-color: colors.$dark-green;
+    width: 4px;
+    height: 4px;
+    margin-right: 6px;
+  }
+
+  &.inactive {
+    background-color: transparent;
+    border: 1px solid rgba(210, 81, 81, 0.2);
+    color: colors.$red;
+
+    &::before {
+      background-color: colors.$red;
+    }
+  }
+}
+
+.audience {
+  border-radius: 500px;
+  font-size: 12px;
+  color: colors.$purple-390;
+  padding: 4px 10px;
+  width: fit-content;
+  border: 1px solid rgba(112, 70, 164, 0.2);
+
+  &.provider {
+    color: colors.$aqua-600;
+    border: 1px solid rgba(0, 131, 188, 0.2);
+  }
+
+  &.internal {
+    border: 1px solid rgba(0, 149, 48, 0.2);
+    color: colors.$dark-green;
+  }
+
+  &.all {
+    color: colors.$blue-400;
+    border: 1px solid rgba(103, 125, 160, 0.2);
+  }
+}
+
+.name-col {
+  width: 65%;
+  cursor: pointer;
+}
+
+.audience-col,
+.status-col {
+  width: 14%;
+  cursor: pointer;
+}
+
+.options-cell {
+  position: relative;
+  .btn-options {
+    width: 37px;
+    height: 37px;
+    border: 1px solid colors.$dark-gray-200;
+    border-radius: 2px;
+    color: colors.$neo-blue;
+  }
+}
+
+.delete-modal {
+  .title{
+    color: colors.$near-black-400;
+  }
+
+  .text{
+    color: colors.$dark-gray-515;
+    font-size: 16px;
+    line-height: 130%;
+    letter-spacing: 0.16px;
+  }
+  .controls {
+    border-top: 1px solid colors.$violet-5;
+    justify-content: flex-end;
+
+    .close-hover{
+      &:hover{
+        color: colors.$near-black-400;
+      }
+    }
+
+    .btn{
+      width: 266px;
+      height: 47px;
+      border-radius: 8px;
+      line-height: 150%;
+      font-size: 14px;
+
+      &.btn-cancel{
+         background: colors.$dark-gray-450;
+         color: colors.$purple-300;
+         &:hover{
+          background: colors.$dark-gray-250;
+         }
+      }
+
+      &.btn-confirm {
+        background:  colors.$zeigo-purple;      
+        color: colors.$dark-gray-40; 
+        &:hover {
+          background-color: colors.$purple-400;
+        }
+      }
+    }
+  
+  }
+}

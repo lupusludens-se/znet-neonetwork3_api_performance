@@ -1,0 +1,37 @@
+<div class="project-item-wrapper d-flex c-pointer">
+  <div class="w-90" [ngClass]="{'selection': project.isSelected}" (click)="openProject()">
+    <svg-icon key="selection-tick-mark" *ngIf="project.isSelected" class="tick-mark"></svg-icon>
+    <div class="overlay-polygon" *ngIf="project.isSelected"></div>
+    <div class="contents">
+      <div class="d-flex">
+        <h5 class="title">{{ project.title }}</h5>
+        <div class="new-project-tag-section ml-8" *ngIf="project.isNew">
+          <svg-icon (click)="$event.stopPropagation()" [key]="'new-icon'" class="new-project-tag">
+          </svg-icon>
+        </div>
+      </div>
+      <p [innerHTML]="project.subTitle" class="subTitle mb-12 mt-8"></p>
+      <div class="project-footer">
+        <img *ngIf="project.company.image?.uri" [src]="project.company.image?.uri" alt="company logo"
+          class="logo mr-8" />
+        <neo-content-tag  [isOpenInNewTab]="true" class="tags" fontSize="12" [tag]="project.category" [type]="type.Category"></neo-content-tag>
+        <neo-content-location  [isOpenInNewTab]="true" class="location" [regions]="project?.regions"></neo-content-location>
+      </div>
+    </div>
+  </div>
+  <a class="link"  *ngIf="!isSavedProject" (click)="trackProjectActivity();$event.stopPropagation();" href="projects/{{ project?.id }}" target="_blank">
+    <svg-icon key="eye" class="mr-5 eye-icon"></svg-icon>
+    <span class="view-link">{{ 'general.viewLabel' | translate }}</span>
+  </a>
+  <div class="flex-column align-center justify-center three-dots w-10" *ngIf="isSavedProject">
+    <button>
+      <neo-menu
+        (optionClick)="optionClick(project?.id)"
+        [options]="options"
+        activeIcon="cross"
+        class="projects-section"
+        icon="vertical-three-dots">
+      </neo-menu>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="p-relative fit-content">
+  <button (click)="menuActive = !menuActive; menuBtnClick = true" class="{{ cssClasses }}">
+    <!-- Zeigo Rebrand : to reduce the  icon size For Header Menu Arrow icons -->
+    <svg-icon *ngIf="!menuActive" [ngClass]="{'menu-active' : !menuActive}" [key]="icon" height="15px" width="15px"></svg-icon>
+
+    <svg-icon *ngIf="menuActive" [key]="activeIcon" height="13px" width="13px"></svg-icon>
+  </button>
+
+  <ul (click)="menuBtnClick = true" *ngIf="menuActive" class="p-absolute">
+    <ng-container *ngFor="let option of options">
+      <div *ngIf="option.appSeperatorForLastElement" class="separator"></div>
+      <li class="{{option.customClass}}" (click)="optionClick.emit(option); menuActive = !menuActive; menuBtnClick = false" *ngIf="!option.hidden" [ngClass]="{'disabled': option.disabled}" >
+        <svg-icon class="mr-8" key="{{ option.icon }}" fontSize="{{option.iconSize  ?? '17px'}}"></svg-icon>
+        {{ option.name.includes('Label') ? (option.name | translate) : option.name }}
+      </li>      
+    </ng-container>
+  </ul>
+</div>

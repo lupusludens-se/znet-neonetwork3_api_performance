@@ -1,0 +1,29 @@
+<div class="tile-container" *ngIf="responseData?.dataList?.length > 0">
+    <div
+      class="tile c-pointer"
+      *ngFor="let tile of responseData?.dataList; let i = index"
+      [class.selected]="tile.isSelected"
+      (click)="toggleSelection(tile)">
+      <neo-initiative-community-item [communityUser]="tile" [initiativeId]="initiativeId"
+                [parentModule]="initiativeParentModuleEnum.ViewRecommended" class="w-90">
+    </neo-initiative-community-item>
+    </div>
+  </div>
+  
+  <ng-container *ngIf="responseData?.count === 0">
+    <div class="flex-column no-saved-container">
+      <svg-icon class="community-icon" key="community"></svg-icon>
+      <h3 class="pt-20">{{ 'initiative.viewInitiative.emptyRecommendedCommunityMembersLabel' | translate }}</h3>
+      <div class="pt-20 no-saved-description">
+        {{ 'initiative.viewInitiative.emptyRecommendedCommunityMembersSubLabel' | translate }}
+      </div>
+    </div>
+  </ng-container>
+  
+  <neo-pagination
+    *ngIf="paging?.total > defaultPageItems"
+    (changePage)="changePage($event)"
+    [defaultItemPerPage]="12"
+    [paging]="paging"
+    class="pt-24 mb-64">
+  </neo-pagination>

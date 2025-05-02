@@ -1,0 +1,132 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+neo-search-bar {
+  width: 100%;
+}
+
+.btn-map {
+  width: 160px;
+  background: colors.$dark-gray-40;
+  border: 1px solid colors.$purple-300;
+  box-shadow: 0 1px 3px rgba(0, 31, 81, 0.07);
+  border-radius: 8px;
+  padding: 6px;
+  gap: 8px;
+
+  font-size: 14px;
+  color: colors.$purple-200;
+  line-height: 150%;
+
+  &.disabled {
+    pointer-events: none;
+  }
+
+  &:hover {
+    border: 1px solid colors.$purple-500;
+    color: colors.$purple-500;
+  }
+}
+
+.filters-width {
+  width: variables.$filters-forum-width;
+  height: 100%;
+  background: colors.$white;
+}
+
+.filters-map-width {
+  max-width: 80%;
+  height: 100%;
+  background: none;
+}
+
+
+
+.filters {
+  &.col-reverse {
+    display: flex;
+    flex-direction: column-reverse;
+
+    .filters-header {
+      width: fit-content;
+      margin-top: 12px;
+
+      .filters-title {
+        margin-right: 146px;
+      }
+    }
+
+    neo-taxonomy-filter,
+    neo-taxonomy-hierarchical-filter {
+      margin-right: 8px;
+      width: 168px;
+    }
+  }
+
+  .personal-filters {
+    width: 98%;
+    //border-bottom: 1px solid colors.$blue-50;
+    margin-left: 8px;
+
+    &.d-flex {
+      width: 459px;
+      border: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+
+      neo-filter-button {
+        width: 145px;
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+.project-title {
+  font-family: 'Arial Rounded MT Bold', serif;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: colors.$dark-gray-515;
+  line-height: 20px;
+}
+
+.clear-btn {
+  font-size: 12px;
+  color: colors.$blue-300;
+}
+
+.catalog {
+  width: 100%;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: colors.$blue-300;
+
+  &.short {
+    height: 690px;
+    overflow: auto;
+    scroll-behavior: smooth;
+  }
+}
+
+.list-width {
+  width: calc(100% - #{variables.$filters-forum-width});
+}
+
+.map-wrapper {
+  width: 530px;
+
+  @media (breakpoints.$medium) {
+    width: 890px;
+  }
+}
+
+neo-empty-page {
+  display: contents;
+}
+
+.seperator-near-full {
+  width: 93%;
+  border-top: 1px solid colors.$dark-gray-300;
+}

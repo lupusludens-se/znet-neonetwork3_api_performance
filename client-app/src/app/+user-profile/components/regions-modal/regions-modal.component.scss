@@ -1,0 +1,43 @@
+@use 'colors';
+
+.regions-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgb(42 42 42 / 40%);// dont change - user profile geogrpahy button click is affecting.
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(134, 132, 141, 0.3);
+
+  .btn-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: colors.$blue-200;
+
+    .close-icon {
+      &:hover {
+        color: colors.$near-black-400;
+      }
+    }
+  }
+
+  .content {
+    position: relative;
+    width: 839px;
+    border-radius: 2px;
+    background-color: colors.$white;
+    padding: 36px 32px 32px;
+
+    .btn-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: colors.$blue-200;
+    }
+  }
+}

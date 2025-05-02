@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "698660d6-b1e4-4588-b663-c3c4a2e1b895",
+		"name": "NEONetwork",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Microsoft Graph Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_secret",
+							"value": "<clientsecrit>",
+							"type": "default"
+						},
+						{
+							"key": "scope",
+							"value": "https://graph.microsoft.com/.default",
+							"type": "default"
+						},
+						{
+							"key": "client_id",
+							"value": "<clientid>",
+							"type": "default"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://login.microsoftonline.com/af2300c7-91af-4418-b50c-9b482630438b/oauth2/v2.0/token ",
+					"protocol": "https",
+					"host": [
+						"login",
+						"microsoftonline",
+						"com"
+					],
+					"path": [
+						"af2300c7-91af-4418-b50c-9b482630438b",
+						"oauth2",
+						"v2.0",
+						"token "
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Microsoft Graph Create User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"identities\": [\r\n        {\r\n            \"signInType\": \"emailAddress\",\r\n            \"issuer\": \"subnpb2c.onmicrosoft.com\",\r\n            \"issuerAssignedId\": \"kevinprice41@gmail.com\"\r\n        }\r\n    ],\r\n    \"accountEnabled\": true,\r\n    \"displayName\": \"Kevin Price\",\r\n    \"givenName\": \"Kevin\",\r\n    \"jobTitle\": \"Product Marketing Manager\",\r\n    \"mail\": \"kevinprice41@gmail.com\",\r\n    \"mailNickname\": \"primary\",\r\n    \"surname\": \"Price\",\r\n    \"passwordProfile\": {\r\n        \"forceChangePasswordNextSignIn\": true,\r\n        \"password\": \"xWwvJ]6NMw+bWH-d\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "https://graph.microsoft.com/v1.0/users",
+					"protocol": "https",
+					"host": [
+						"graph",
+						"microsoft",
+						"com"
+					],
+					"path": [
+						"v1.0",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Microsoft Graph Patch User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"extension_2422b45dd6874c33a4c84ac092bf1d19_mustResetPassword\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://graph.microsoft.com/v1.0/users/2767b515-2c23-4542-89ad-b5ed8b38f279",
+					"protocol": "https",
+					"host": [
+						"graph",
+						"microsoft",
+						"com"
+					],
+					"path": [
+						"v1.0",
+						"users",
+						"2767b515-2c23-4542-89ad-b5ed8b38f279"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

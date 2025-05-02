@@ -1,0 +1,116 @@
+<div class="div-section">
+  <div class="top flex-between">
+    <div class="left">
+      <h5 class="section-title neo-arial">{{ title | translate }}</h5>
+    </div>
+  </div>
+  <div
+    class="continents-wrapper d-flex flex-wrap"
+    *ngIf="geographicScaleValue !== scaleType.State">
+    <button
+      (click)="selectContinent(index)"
+      *ngFor="let continent of continents; let index = index"
+      [disabled]="continent.isInvited"
+      [class.disabled]="continent.isInvited"
+      [class.selected]="continent.selected"
+      class="select-button neo-arial">
+      <svg-icon
+        size="lg"
+        [class.selected]="continent.selected"
+        [key]="continent.isInvited ? 'block' : continent.selected ? 'cross' : 'plus'">
+      </svg-icon>
+      {{ continent.name }}
+
+      <span
+        *ngIf="
+          continent.selected &&
+          geographicScaleValue === scaleType.National &&
+          !!geographiesHelper.countSelectedCountriesInContinent(continent, selectedRegions)
+        "
+        class="ml-8 continent-count flex-center pt-4 pb-4 pl-8 pr-8">
+        {{
+          geographiesHelper.countSelectedCountriesInContinent(continent, selectedRegions) === 'All'
+            ? 0
+            : geographiesHelper.countSelectedCountriesInContinent(continent, selectedRegions)
+        }}
+      </span>
+    </button>
+  </div>
+
+  <div
+    class="main"
+    *ngIf="geographicScaleValue === scaleType.National || geographicScaleValue === scaleType.State">
+    <div
+      *ngIf="selectedRegions?.length || preSelectedRegions?.length || selectedContinents?.length"
+      class="list-wrapper d-flex">
+      <div class="list mr-24 list-initiative">
+        <div class="p-relative w-100 d-flex align-center search-wrapper">
+          <svg-icon
+            class="p-absolute search-icon"
+            key="search"
+            size="lg">
+          </svg-icon>
+
+          <input
+            (keyup)="searchCountries(searchInput.value)"
+            [formControl]="searchInput"
+            class="w-100 pl-32 search-input"
+            placeholder="{{
+              geographicScaleValue === scaleType.National
+                ? ('userProfile.searchPlaceholder' | translate)
+                : ('initiative.createInitiative.formContent.searchStatesPlaceholder' | translate)
+            }}"
+            type="text" />
+        </div>
+
+        <ng-container *ngIf="countries?.length; else noResults">
+          <div class="options-wrapper">
+            <neo-blue-checkbox
+              (selectCheckbox)="chooseCountry(country)"
+              *ngFor="let country of countries"
+              [checked]="country.selected"
+              [class.disabled]="country.isInvited || country.disabled"
+              [name]="country.name"
+              [value]="country.id"
+              class="mb-8">
+            </neo-blue-checkbox>
+          </div>
+        </ng-container>
+
+        <ng-template #noResults>
+          <p class="no-results mt-10 ml-32 mr-32">{{ 'general.regionSearchNoResultsLabel' | translate }}</p>
+        </ng-template>
+      </div>
+
+      <div class="selected">
+        <neo-filter-header
+          (clearFilters)="clearAll()"
+          [showClearButton]="!!selectedRegions?.length"
+          filterName="SELECTED GEOGRAPHY">
+        </neo-filter-header>
+
+        <div class="separator mb-8"></div>
+
+        <div class="options-wrapper selected-list d-flex flex-wrap gap-8">
+          <div
+            *ngFor="let country of selectedRegions"
+            [class.disabled]="country.isInvited"
+            class="option d-flex">
+            {{ country.name }}
+
+            <button
+              (click)="removeRegion(country)"
+              *ngIf="!country.isInvited"
+              class="btn-remove">
+              <svg-icon
+                class="ml-8"
+                key="cross"
+                [fontSize]="'10px'"
+                size="sm"></svg-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

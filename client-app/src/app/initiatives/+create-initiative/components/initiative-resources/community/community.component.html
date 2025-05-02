@@ -1,0 +1,31 @@
+<div class="tile-container content-wrapper" *ngIf="responseData && responseData?.dataList else communitySkeletonTemplate">
+  <div class="tile c-pointer" *ngFor="let tile of responseData?.dataList; let i = index" (click)="toggleSelection(tile)"
+    [class.selected]="tile.isSelected">
+    <neo-initiative-community-item [initiativeId]="initiativeId" [communityUser]="tile">
+    </neo-initiative-community-item> 
+  </div>
+</div>
+<ng-template #communitySkeletonTemplate>
+  <div class="d-flex gap-12 mb-10">
+    <div class="section-content section-content-5 flex-grow-1">
+      <div class="section-line section-line-big mb-24"></div>
+      <div class="section-line section-line-big mb-24"></div>
+    </div>
+    <div class="section-content section-content-5 flex-grow-1">
+      <div class="section-line section-line-big mb-24"></div>
+      <div class="section-line section-line-big mb-24"></div>
+    </div>
+  </div>
+  <div class="d-flex gap-12 mb-10">
+    <div class="section-content section-content-5 flex-grow-1">
+      <div class="section-line section-line-big mb-24"></div>
+      <div class="section-line section-line-big mb-24"></div>
+    </div>
+    <div class="section-content section-content-5 flex-grow-1">
+      <div class="section-line section-line-big mb-24"></div>
+      <div class="section-line section-line-big mb-24"></div>
+    </div>
+  </div>
+</ng-template>
+<neo-pagination *ngIf="paging && paging.total > defaultPageItems" (changePage)="changePage($event)"
+  [defaultItemPerPage]="12" [paging]="paging" class="pt-24 mb-64"></neo-pagination>

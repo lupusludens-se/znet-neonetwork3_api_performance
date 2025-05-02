@@ -1,0 +1,23 @@
+<div class="d-flex">
+  <div class="flex-column pb-16 w-70">
+    <div class="d-flex pb-4">
+      <h4 class="text-neo-near-black">{{ 'initiative.dashboard.initiativeTitle' | translate }}</h4>
+      <sup>
+        <span class="beta">beta</span>
+      </sup>
+    </div>
+    <p class="pt-2 subTitle text-blue-200">{{ 'initiative.dashboard.initiativeSubTitle' | translate }}</p>
+  </div>
+  <div class="d-flex justify-end w-30 pr-20 align-center">
+    <div class="div-view-all" (click)="openDecarbonizationInitiatives();">
+      <button class="btn-ViewAll">{{'general.viewAllLabel' | translate}}</button>
+      <svg-icon
+          class="ml-6"
+          iconSize="md"
+          fontSize="14px"
+          key="right-arrow"></svg-icon>
+    </div>
+
+  </div>
+</div>
+<neo-initiative-information [initiativeSource]="initiativeSource"></neo-initiative-information>

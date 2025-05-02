@@ -1,0 +1,136 @@
+<p class="two-lines-ellipsis text-s pl-12 text-dark-gray-590">
+  <span
+    *ngIf="
+      notification?.details['count'] &&
+      notification.type !== notificationType.MentionsMeInComment &&
+      notification.type !== notificationType.UserRegistered &&
+      notification.type !== notificationType.NewForumCreated &&
+      notification.type !== notificationType.NewPrivateForumCreated
+    "
+    class="text-neo-near-black fw-700">
+    {{ notification.details['count'] }}
+  </span>
+
+  <a
+    *ngIf="notification.type === notificationType.UserRegistered"
+    class="text-neo-near-black fw-700 c-pointer"
+    routerLink="/admin/admit-users/review-user/{{ notification?.details?.userId }}">
+    {{ notification?.details?.userName }}
+  </a>
+
+  <a
+    *ngIf="
+      notification.type !== notificationType.UserRegistered &&
+      notification.type !== notificationType.NewForumCreated &&
+      notification.type !== notificationType.NewPrivateForumCreated &&
+      notification.type !== notificationType.UserAutoApproved
+    "
+    class="text-neo-near-black fw-700 c-pointer"
+    [routerLink]="
+      notification?.details?.userStatusId === userStatuses.Deleted
+        ? []
+        : ['/user-profile/', notification?.details?.userId]
+    ">
+    {{ notification?.details?.userName }}
+  </a>
+
+  <ng-container [ngSwitch]="notification.type">
+    <span *ngSwitchCase="notificationType.CommentsMyTopic">
+      {{
+        (notification?.details['count']
+          ? 'notificationType.commentsMultipleMyTopicLabel'
+          : 'notificationType.commentsMyTopicLabel'
+        ) | translate
+      }}.
+    </span>
+
+    <span *ngSwitchCase="notificationType.NewForumCreated">
+      {{ 'notificationType.newForumCreatedLabel' | translate }}
+    </span>
+
+    <span *ngSwitchCase="notificationType.NewPrivateForumCreated">
+      {{ 'notificationType.newPrivateForumCreatedLabel' | translate }}
+    </span>
+
+    <span *ngSwitchCase="notificationType.RepliesToMyComment">
+      {{
+        (notification?.details['count']
+          ? 'notificationType.repliesToMyCommentLabel'
+          : 'notificationType.repliedToMyCommentLabel'
+        ) | translate
+      }}
+    </span>
+
+    <span *ngSwitchCase="notificationType.RepliesToTopicIFollow">
+      <ng-container>
+        {{
+          (notification?.details['count']
+            ? 'notificationType.repliesToTopicIFollowLabel'
+            : 'notificationType.repliedToTopicIFollowLabel'
+          ) | translate
+        }}
+      </ng-container>
+    </span>
+
+    <span *ngSwitchCase="notificationType.MentionsMeInComment">
+      <ng-container *ngIf="!notification?.details['count']">
+        {{ 'notificationType.mentionsMeInCommentLabel' | translate }}
+      </ng-container>
+
+      <ng-container *ngIf="notification?.details['count']">
+        {{ 'notificationType.youWereMentionedLabel' | translate }}
+
+        <span class="text-dark-gray-590 fw-700">
+          {{ notification?.details['count'] }}
+        </span>
+
+        {{ 'notificationType.timesOnLabel' | translate }}
+      </ng-container>
+    </span>
+
+    <span *ngSwitchCase="notificationType.UserRegistered">
+      <ng-container *ngIf="!notification.details['count']">
+        {{ 'notificationType.userRegisteredLabel' | translate }}
+      </ng-container>
+
+      <ng-container *ngIf="notification.details['count']">
+        <a
+          class="text-neo-near-black fw-700 c-pointer"
+          routerLink="/admin/admit-users/">
+          {{ notification.details['count'] }}
+          {{ 'notificationType.haveRegisteredLabel' | translate }}
+        </a>
+
+        {{ 'notificationType.forThePlatformLabel' | translate }}
+      </ng-container>
+    </span>
+
+    <span *ngSwitchCase="notificationType.LikesMyTopic">
+      {{ 'notificationType.likesMyTopicLabel' | translate }}
+    </span>
+
+    <span *ngSwitchCase="notificationType.UserAutoApproved">
+      {{ 'notificationType.userAutoApprovedLabels' | translate }}
+      <a
+        class="text-neo-near-black fw-700 c-pointer"
+        routerLink="/admin/user-management/edit/{{ notification?.details?.userId }}">
+        {{ notification?.details?.userName }}
+      </a>
+      {{ 'notificationType.fromLabel' | translate }}
+      {{ notification?.details?.companyName }}
+      {{ 'notificationType.userAutoApprovedLabel' | translate }}
+    </span>
+  </ng-container>
+
+  <ng-container *ngIf="notification?.details?.topicTitle">
+    <a
+      class="text-neo-near-black fw-700 c-pointer"
+      routerLink="/forum/topic/{{ notification?.details?.topicId }}">
+      {{ notification?.details?.topicTitle }}</a
+    >
+
+    <span *ngIf="!notification?.details?.topicTitle?.endsWith('?') && !notification?.details?.topicTitle?.endsWith('.')"
+      >.</span
+    >
+  </ng-container>
+</p>

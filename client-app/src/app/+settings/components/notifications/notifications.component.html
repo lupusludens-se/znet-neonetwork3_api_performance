@@ -1,0 +1,42 @@
+<div class="flex-column settings mb-96">
+  <div class="d-flex align-center justify-between pr-32 pl-32 pt-8 pb-8 header">
+    <div class="flex-column align-start fg-8">
+      {{ 'settings.emailAlertsLabel' | translate }}
+    </div>
+    <div class="flex-column align-start fg-2">
+      {{ 'settings.frequencyLabel' | translate }}
+    </div>
+  </div>
+  <div class="settings-wrapper pl-32 pr-32 py-10">
+    <form
+      class="flex-column"
+      [formGroup]="formGroup">
+      <ng-container *ngFor="let emailAlert of (emailAlerts$ | async)?.dataList; let last = last">
+        <div class="d-flex align-center justify-between">
+          <div class="flex-column fg-8">
+            <h4 class="text-black arial">{{ emailAlert.title }}</h4>
+            <p class="text-s text-dark-gray-515">{{ emailAlert.description }}</p>
+          </div>
+
+          <div class="flex-column pt-20 pb-10">
+            <neo-dropdown
+              spacing="m-0"
+              topPosition="50px"
+              rightPosition="16px"
+              dropdownWidth="272px"
+              [dropdownOptions]="dropdownOptions(emailAlert.title)"
+              [formControlName]="getControlName(emailAlert.title)"
+              (chosenOption)="updateSetting(emailAlert, $event)">
+            </neo-dropdown>
+          </div>
+        </div>
+      </ng-container>
+    </form>
+  </div>
+
+  <neo-form-footer
+    (cancel)="goBack()"
+    (save)="saveData()"
+    submitButtonName="general.saveChangesLabel">
+  </neo-form-footer>
+</div>

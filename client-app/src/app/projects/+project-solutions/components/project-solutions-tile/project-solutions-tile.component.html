@@ -1,0 +1,14 @@
+<div class="tile-item flex-between p-24 h-100" [routerLink]="['/solutions/' + solution.id]" (click)="onSolutionClick(solution.id)">
+  <div class="flex-column justify-between">
+    <div >
+      <h4 class="title">{{ solution.name }}</h4>
+      <p class="description pt-4">{{ solution.description }}</p>
+    </div>
+    <div class="w-100 line mr-16"></div>
+    <p class="scope neo-arial">{{ solution.scope }}</p>
+  </div>
+
+  <a class="light-green flex-center">
+    <svg-icon key="right-arrow" size="sm"></svg-icon>
+  </a>
+</div>

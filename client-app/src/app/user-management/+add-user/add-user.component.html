@@ -1,0 +1,121 @@
+<h1 class="title mb-24">{{ 'userManagement.addUserLabel' | translate }}</h1>
+
+<div class="content-wrapper">
+  <div class="content d-flex pb-16">
+    <form [formGroup]="form">
+      <h4 class="text-neo-near-black mb-20">{{ 'userManagement.form.PersonalInfoLabel' | translate }}</h4>
+      <div class="controls-row flex-between mb-20 flex-wrap">
+        <neo-text-input [labelName]="'userManagement.form.firstNameLabel' | translate" formControlName="firstName"
+          [placeholder]="'userManagement.form.firstNameLabel' | translate" [submitted]="formSubmitted">
+        </neo-text-input>
+
+        <neo-text-input [labelName]="'userManagement.form.lastNameLabel' | translate" formControlName="lastName"
+          [placeholder]="'userManagement.form.lastNameLabel' | translate" [submitted]="formSubmitted">
+        </neo-text-input>
+      </div>
+
+      <label class="mb-20 text-input-label">
+        {{ 'userManagement.form.companyLabel' | translate }}
+
+        <neo-search-bar class="mt-8"
+          [class.disabledState]="selectedCompany?.name === defaultCompany.name && form.controls['role'].value === rolesList.Internal"
+          (inputChange)="getCompanies($event)" (selectedResult)="chooseCompany($event)" [results]="companiesList"
+          (clearInput)="chooseCompany(null)" [value]="selectedCompany?.name"
+          [error]="formSubmitted && !selectedCompany?.name" [disabled]="
+            selectedCompany?.name === defaultCompany.name && form.controls['role'].value === rolesList.Internal
+          ">
+        </neo-search-bar>
+
+        <neo-control-error [errors]="companyError" [fieldName]="'userManagement.form.companyLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-control-error>
+      </label>
+
+      <neo-text-input [labelName]="'userManagement.form.emailLabel' | translate" formControlName="email"
+        [placeholder]="'userManagement.form.emailLabel' | translate" type="email" [submitted]="formSubmitted">
+      </neo-text-input>
+      <neo-dropdown class="pt-24" [dropdownOptions]="timeZonesList" formControlName="timeZonesId"
+        [submitted]="formSubmitted" [labelName]="'userManagement.form.timeZoneLabel' | translate">
+      </neo-dropdown>
+      <div class="flex-container flex-column controls-row bottom-part pt-32 mt-32">
+        <h4 class="text-neo-near-black mb-20">{{ 'userManagement.form.UserPermissionsLabel' | translate }}</h4>
+        <div class="flex-container">
+          <div class="flex-item-left">
+
+            <neo-radio-control [list]="rolesData" [labelName]="'form.userRoleLabel' | translate" formControlName="role"
+              (valueChanged)="changeUserRole($event)" [submitted]="formSubmitted">
+            </neo-radio-control>
+          </div>
+          <div class="flex-item-right flex-container-right" ngClass="{{ isEnablePrivateUser ? '' : 'permissions' }}">
+            <neo-blue-checkbox class="w-fit" [checked]="isChecked" (selectCheckbox)="isChecked = !isChecked">
+            </neo-blue-checkbox>
+
+            <label class="arial text-s text-neo-near-black pl-2 pt-4 pb-4 pr-4">
+              <div class="tooltip" style="cursor: help">
+                {{ 'userManagement.form.privateUserLabel' | translate
+                }}<span class="tooltiptext">Private users are not visible on community page and company profile
+                  page</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="permissions mb-32">
+          <p class="section-label mb-12">{{ 'userManagement.form.permissionsLabel' | translate }}</p>
+
+          <div class="controls-wrapper d-flex flex-wrap">
+            <neo-blue-checkbox [name]="permission.name" value="p{{ permission.id }}" [checked]="permission.checked"
+              [disabled]="permission.disabled" *ngFor="let permission of permissionsData"
+              (selectCheckbox)="changeUserPermissions(permission)">
+            </neo-blue-checkbox>
+          </div>
+        </div>
+        <h4 class="text-neo-near-black mb-20 bottom-part pt-28">{{ 'userManagement.form.LocationLabel' | translate }}
+        </h4>
+        <label class="mb-32 text-input-label neo-arial">
+          {{ 'userManagement.form.countryLabel' | translate }}
+
+          <neo-search-bar class="mt-8 bottom-width" (inputChange)="getCountries($event)"
+            (selectedResult)="chooseCountry($event)" (clearInput)="selectedCountry = null"
+            [error]="formSubmitted && !selectedCountry" [results]="countriesList"></neo-search-bar>
+
+          <neo-control-error [errors]="countryError" [fieldName]="'userManagement.form.countryLabel' | translate"
+            [submitted]="formSubmitted">
+          </neo-control-error>
+        </label>
+        <h4 class="text-neo-near-black mb-20 bottom-part pt-28">{{ 'userManagement.form.ReferencesLabel' | translate }}
+        </h4>
+        <neo-dropdown class="bottom-width" [dropdownOptions]="heardViaList" formControlName="heardViaId"
+          [submitted]="formSubmitted" [labelName]="'userManagement.form.heardViaLabel' | translate" [disabled]="
+            form.controls['heardViaId'].value?.id === defaultHeardVia.id &&
+            form.controls['role'].value === rolesList.Internal
+          ">
+        </neo-dropdown>
+      </div>
+    </form>
+  </div>
+</div> 
+
+<neo-form-footer (save)="saveUser()" (cancel)="onCancel()"></neo-form-footer>
+
+<neo-modal (cancel)="cancel()" *ngIf="showModal" size="medium" padding="p-40">
+  <svg-icon (click)="cancel()" class="c-pointer p-absolute top-20 right-20" height="30px" key="close-snackbar"
+    width="30px"></svg-icon>
+
+  <h3 class="mb-6">
+    {{ spAdminConfirmationTitle }}
+  </h3> 
+
+  <p class="text-label mb-24">
+    {{ 'userManagement.form.spAdminConfirmationSubTitle' | translate }}
+  </p>
+
+  <div class="popup-controls pt-24 d-flex mt-12">
+    <button (click)="cancel()" class="btn-cancel blue-50-frame mr-16">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+
+    <button class="btn-confirm" (click)="proceed()">
+      {{ 'general.yesProceedLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

@@ -1,0 +1,12 @@
+@use 'colors';
+
+.cancel {
+    background: colors.$dark-gray-450;
+    border-radius: 8px;
+    color: colors.$dark-gray-590;
+
+    &:hover {
+        background:colors.$dark-gray-250;
+        color: colors.$dark-gray-590;
+    }
+}

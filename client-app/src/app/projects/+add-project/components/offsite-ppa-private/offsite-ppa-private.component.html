@@ -1,0 +1,241 @@
+<div class="content flex-column mb-96">
+  <div class="top flex-between align-center mb-24">
+    <div class="text-wrapper">
+      <h3 class="text-neo-near-black mb-8">
+        {{
+          (this.controlContainer.control.get('categoryId').value?.slug === projectTypes.OffsitePpa
+            ? 'projects.addProject.offsitePpaLabel'
+            : 'projects.addProject.aggregatedPpaLabel'
+          ) | translate
+        }}
+      </h3>
+      <p class="text-m text-dark-gray-580">{{ 'projects.addProject.enterProjectPrivateDetailsLabel' | translate }}</p>
+
+      <p class="d-flex align-start text-s text-neo-near-black project-sub-label mt-8">
+        <span>
+          <svg-icon
+            class="text-neo-dark-green mr-8"
+            key="alert-filled"></svg-icon>
+        </span>
+
+        {{ 'projects.addProject.inputsVisiblePrivateLabel' | translate }}.
+      </p>
+    </div>
+  </div>
+
+  <div class="controls-wrapper">
+    <form [formGroup]="form">
+      <neo-dropdown
+        (chosenOption)="setControlValue($event, 'settlementTypeId'); hubLoadZoneCheck($event)"
+        [dropdownOptions]="settlementTypes"
+        [submitted]="formSubmitted"
+        [labelName]="'projects.addProject.settlementTypeLabel' | translate"
+        [optionalText]="'projects.addProject.optionalIfApplicableLabel' | translate"
+        class="mb-32 text-zeigo-near-black"
+        formControlName="settlementType">
+      </neo-dropdown>
+
+      <neo-dropdown
+        *ngIf="showHubLoadZoneControl"
+        (chosenOption)="setControlValue($event, 'settlementHubOrLoadZoneId')"
+        [dropdownOptions]="settlementHubsList"
+        [submitted]="formSubmitted"
+        [labelName]="'projects.addProject.settlementHubLabel' | translate"
+        [optionalText]="'projects.addProject.optionalIfApplicableLabel' | translate"
+        class="mb-32 text-zeigo-near-black full-width"
+        formControlName="settlementHubOrLoadZone">
+      </neo-dropdown>
+
+      <neo-dropdown
+        (chosenOption)="setControlValue($event, 'forAllPriceEntriesCurrencyId')"
+        [dropdownOptions]="currencyList"
+        [submitted]="formSubmitted"
+        [labelName]="'projects.addProject.currencyForPriceEntriesLabel' | translate"
+        class="mb-32 text-zeigo-near-black"
+        formControlName="forAllPriceEntriesCurrency">
+      </neo-dropdown>
+
+      <neo-number-input
+        formControlName="contractPricePerMWh"
+        class="mb-32 text-zeigo-near-black"
+        width="162px"
+        [labelName]="'projects.addProject.contractPriceLabel' | translate"
+        [optionalText]="'projects.addProject.perMWhLabel' | translate"
+        [subLabel]="'projects.addProject.perMWhUnitLabel' | translate"
+        [submitted]="formSubmitted"
+        [allowFloat]="true">
+      </neo-number-input>
+
+      <neo-text-input
+        class="mb-32 text-zeigo-near-black"
+        formControlName="floatingMarketSwapIndexDiscount"
+        width="340px"
+        [labelName]="'projects.addProject.floatingMarketSwapLabel' | translate"
+        [optionalText]="'projects.addProject.optionalIfApplicableLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-text-input>
+
+      <neo-text-input
+        class="mb-32 text-zeigo-near-black"
+        formControlName="floatingMarketSwapFloor"
+        placeholder="Text"
+        width="340px"
+        [labelName]="'projects.addProject.floatingMarketSwapFloorLabel' | translate"
+        [optionalText]="'projects.addProject.optionalIfApplicableLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-text-input>
+
+      <neo-text-input
+        class="mb-32 text-zeigo-near-black"
+        formControlName="floatingMarketSwapCap"
+        placeholder="Text"
+        width="340px"
+        [labelName]="'projects.addProject.floatingMarketSwapCapLabel' | translate"
+        [optionalText]="'projects.addProject.optionalIfApplicableLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-text-input>
+
+      <neo-dropdown
+        (chosenOption)="setControlValue($event, 'pricingStructureId'); upsideShareCheck($event.id)"
+        [dropdownOptions]="pricingStructureList"
+        [submitted]="formSubmitted"
+        [labelName]="'projects.addProject.pricingStructureLabel' | translate"
+        class="mb-32 text-zeigo-near-black"
+        formControlName="pricingStructure">
+      </neo-dropdown>
+
+      <ng-container *ngIf="upsideShareSelected">
+        <neo-number-input
+          formControlName="upsidePercentageToDeveloper"
+          class="mt-8 text-zeigo-near-black"
+          width="340px"
+          placeholder="Number"
+          [labelName]="'projects.addProject.pricingStructureLabel' | translate"
+          [showLabel]="false"
+          [subLabel]="'projects.addProject.upsidePercentDevLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-number-input>
+
+        <neo-number-input
+          formControlName="upsidePercentageToOfftaker"
+          class="mt-8 text-zeigo-near-black"
+          width="340px"
+          placeholder="Number"
+          [labelName]="'projects.addProject.pricingStructureLabel' | translate"
+          [showLabel]="false"
+          [subLabel]="'projects.addProject.upsidePercentOfftakerLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-number-input>
+
+        <neo-control-error
+          [errors]="upsideShareError"
+          fieldName="Upside share"
+          [submitted]="formSubmitted"></neo-control-error>
+      </ng-container>
+
+      <neo-number-input
+        *ngIf="fixedDiscountToMarketSelected"
+        formControlName="discountAmount"
+        class="mt-8 text-zeigo-near-black"
+        width="162px"
+        [labelName]="'projects.addProject.discountAmountLabel' | translate"
+        [optionalText]="'projects.addProject.inCurrencyProvidedLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-number-input>
+
+      <neo-dropdown
+        (chosenOption)="setControlValue($event, 'eacId'); eacTypeCheck($event.id)"
+        [dropdownOptions]="eacTypesList"
+        [submitted]="formSubmitted"
+        [labelName]="'projects.addProject.eacTypeLabel' | translate"
+        class="mb-32 mt-32"
+        formControlName="eac">
+      </neo-dropdown>
+
+      <neo-text-input
+        *ngIf="eacId === eacOtherId"
+        class="mb-32 text-zeigo-near-black"
+        formControlName="eacCustom"
+        [placeholder]="'projects.addProject.eacCustomLabel' | translate"
+        width="340px"
+        [labelName]="'projects.addProject.eacCustomLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-text-input>
+
+      <neo-text-input
+        class="mb-32 text-zeigo-near-black"
+        formControlName="eacValue"
+        placeholder="Text"
+        width="340px"
+        [labelName]="'projects.addProject.eacValueLabel' | translate"
+        [optionalText]="'projects.addProject.inCurrencyIndicatedOptionalLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-text-input>
+
+      <neo-dropdown
+        (chosenOption)="setControlValue($event, 'settlementPriceIntervalId'); settlementPriceIntervalCheck($event.id)"
+        [dropdownOptions]="settlementIntervalsList"
+        [submitted]="formSubmitted"
+        [labelName]="'projects.addProject.settlementPriceIntervalLabel' | translate"
+        class="mb-32 text-zeigo-near-black"
+        formControlName="settlementPriceInterval">
+      </neo-dropdown>
+
+      <neo-text-input
+        *ngIf="settlementPriceIntervalId === settlementIntervalsOtherId"
+        class="mb-32 text-zeigo-near-black"
+        formControlName="settlementPriceIntervalCustom"
+        [placeholder]="'projects.addProject.settlementPriceCustomIntervalLabel' | translate"
+        width="340px"
+        [labelName]="'projects.addProject.settlementPriceCustomIntervalLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-text-input>
+
+      <neo-dropdown
+        (chosenOption)="setControlValue($event, 'settlementCalculationIntervalId')"
+        [dropdownOptions]="settlementCalculationList"
+        [submitted]="formSubmitted"
+        [labelName]="'projects.addProject.settlementCalculationIntervalLabel' | translate"
+        class="mb-32 text-zeigo-near-black"
+        formControlName="settlementCalculationInterval">
+      </neo-dropdown>
+
+      <neo-number-input
+        class="mb-32 text-zeigo-near-black"
+        formControlName="projectMWCurrentlyAvailable"
+        width="340px"
+        [labelName]="'projects.addProject.projectMwAvailableLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-number-input>
+
+      <neo-textarea-control
+        class="text-zeigo-near-black"
+        formControlName="additionalNotesForSEOperationsTeam"
+        height="176px"
+        placeholder="Notes"
+        [labelName]="'projects.addProject.notesForTeamLabel' | translate"
+        [optionalText]="'general.optionalLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-textarea-control>
+    </form>
+  </div>
+</div>
+
+<neo-form-footer
+  (backButtonClick)="goBack(stepsList.OffsitePpa)"
+  (cancel)="addProjectService.exitFlow()"
+  (draftButtonClick)="saveDraft()"
+  (save)="changeStep(stepsList.Overview)"
+  [backButton]="true"
+  [draftButtonText]="'projects.addProject.saveAsDraftsLabel' | translate"
+  [draftButton]="true"
+  backButtonIcon="footer-left-arrow-thin"
+  icon="add-project-thin-right-arrow"
+  submitButtonName="Next"></neo-form-footer>
+
+<neo-draft-modal
+  (closeModal)="showDraftModal = false"
+  *ngIf="showDraftModal"
+  [projectTypeSlug]="projectTypes.OffsitePpa"
+  [title]= addProjectService.currentFlowData.project.title>
+</neo-draft-modal>

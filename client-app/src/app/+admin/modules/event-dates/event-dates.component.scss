@@ -1,0 +1,109 @@
+@use 'colors';
+
+.event-dates {
+  position: relative;
+  min-height: 54px;
+  width: 100%;
+  justify-content: space-between;
+  border: 1px solid colors.$dark-gray-410;
+  border-radius: 8px;
+  padding: 10px 16px;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+
+	&.error {
+		border-color: colors.$error-red;
+	}
+
+  .placeholder {
+    color: colors.$dark-gray-510;
+    font-size: 14px;
+  }
+
+  .btn-show-datepicker {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    color: colors.$blue-200;
+  }
+
+  .e-input-group.e-control-wrapper:not(.e-float-icon-left):not(.e-float-input)::before,
+  .e-input-group.e-control-wrapper:not(.e-float-icon-left):not(.e-float-input)::after {
+    background: transparent;
+  }
+
+  .date-picker {
+    border: none !important;
+
+    .e-input-group-icon.e-date-icon {
+      min-height: 16px;
+      min-width: 16px;
+      background: url('/assets/icons/caret-down.png') no-repeat center;
+      background-size: 9px 5px;
+      margin: 0;
+      transition: all 0.2s ease;
+
+      &.e-active {
+        transform: rotate(180deg);
+        transition: all 0.2s ease;
+      }
+
+      &:before {
+        content: '';
+      }
+
+      &.e-active {
+        color: transparent;
+      }
+    }
+  }
+
+  .calendar-wrapper {
+    position: relative;
+
+    .calendar {
+      position: absolute;
+      top: 36px;
+      right: 0;
+      z-index: 10;
+    }
+
+    .calendar-toggle {
+      width: 16px;
+      height: 16px;
+      color: colors.$blue-200;
+      transition: all 0.2s ease;
+
+      &.toggled {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+.sub-timezone-label{
+  color: colors.$dark-gray-590;
+  font-family: 'Arial Rounded MT Bold';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  margin-bottom: 5px;
+}
+
+neo-timezones-dropdown {
+  display: block;
+}
+
+.date {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  color: colors.$zeigo-purple;
+  font-family: 'Arial Rounded MT Bold';
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: colors.$dark-gray-200;
+  margin: 30px 0;
+}

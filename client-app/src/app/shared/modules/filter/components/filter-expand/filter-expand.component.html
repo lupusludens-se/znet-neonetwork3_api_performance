@@ -1,0 +1,41 @@
+<div class="filter-wrapper {{ expandedState }}">
+  <button
+    (click)="changeExpandingState()"
+    [ngClass]="{ active: isActive }"
+    class="filter-btn d-flex align-center justify-between"
+  >
+    <span class="d-flex align-center">
+      <span *ngIf="showIcon" class="icon-wrapper p-6 flex-center mr-10">
+        <svg-icon key="{{ icon }}"></svg-icon>
+      </span>
+
+      {{ name }}
+    </span>
+
+    <svg-icon class="text-blue-200" key="down-arrow" size="xxl"></svg-icon>
+  </button>
+
+  <div *ngIf="options?.length" [class.horizontal]="horizontalLayout" class="filter-body">
+    <ng-container *ngIf="type === 'checkbox'">
+      <neo-blue-checkbox
+        (selectCheckbox)="optionsChange.emit($event)"
+        *ngFor="let option of options; let index = index"
+        [checked]="option.selected"
+        [name]="option.name"
+        [value]="option.id"
+        class="pb-4 pt-4 d-flex align-center"
+      ></neo-blue-checkbox>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'radio'">
+      <div [formGroup]="radioForm">
+        <neo-radio-control
+          (valueChanged)="optionsChange.emit($event)"
+          [cleared]="!isActive"
+          [list]="options"
+          [formControlName]="parentControlName"
+        ></neo-radio-control>
+      </div>
+    </ng-container>
+  </div>
+</div>

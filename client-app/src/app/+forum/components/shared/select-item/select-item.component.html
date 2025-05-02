@@ -1,0 +1,26 @@
+<div
+  (click)="add.emit(item.id)"
+  [ngClass]="{
+    active: selectedItems?.includes(item.id),
+    disabled: selectedItems?.length >= maxSelectedItems && !selectedItems?.includes(item.id)
+  }"
+  class="flex-center item-wrapper c-pointer text-s neo-arial"
+>
+  <svg-icon *ngIf="selectedItems?.includes(item.id)" class="icon mr-12" key="close" size="sm"></svg-icon>
+
+  <svg-icon
+    *ngIf="!selectedItems?.includes(item.id) && !(selectedItems.length >= maxSelectedItems)"
+    class="icon mr-12"
+    key="plus"
+    size="sm"
+  ></svg-icon>
+
+  <svg-icon
+    *ngIf="!selectedItems?.includes(item.id) && selectedItems.length >= maxSelectedItems"
+    class="icon mr-12"
+    key="block"
+    size="sm"
+  ></svg-icon>
+
+  {{ item.name }}
+</div>

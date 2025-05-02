@@ -1,0 +1,14 @@
+<div class="flex-center carousel-container pb-20">
+  <div
+    [ngClass]="{ 'scroll-left': scrollActive }"
+    class="clients-carousel">
+    <div
+      *ngFor="let client of clients"
+      class="logo-item flex-center">
+      <img
+        alt=""
+        class="w-100"
+        src="assets/images/landing/clients/{{ client }}.png" />
+    </div>
+  </div>
+</div>

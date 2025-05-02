@@ -1,0 +1,21 @@
+.company {
+  &.small {
+    width: 104px;
+    height: 64px;
+    padding: 6px;
+  }
+  &.large {
+    width: 170px;
+    height: 116px;
+    padding: 12px;
+  }
+
+  .company-logo {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  h6 {
+    max-width: 100%;
+  }
+}

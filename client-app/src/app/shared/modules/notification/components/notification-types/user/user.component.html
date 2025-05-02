@@ -1,0 +1,26 @@
+<p class="two-lines-ellipsis text-s pl-12 text-neo-near-black">
+  <a
+    class="text-neo-near-black fw-700 c-pointer"
+    [routerLink]="
+      notification?.details?.followerUserStatusId === userStatuses.Deleted
+        ? []
+        : ['/user-profile/', notification?.details?.followerUserId]
+    ">
+    {{ notification?.details?.followerName }}
+  </a>
+
+  <span *ngIf="notification?.details['count']">
+    {{ 'general.andLabel' | translate }}
+    {{ notification?.details['count'] - 1 }}
+    {{
+      (notification?.details['count'] === 2
+        ? 'notificationType.twoUsersFollowsMeLabel'
+        : 'notificationType.multipleFollowsMeLabel'
+      ) | translate
+    }}
+  </span>
+
+  <span *ngIf="!notification?.details['count']">
+    {{ 'notificationType.followsMeLabel' | translate }}
+  </span>
+</p>

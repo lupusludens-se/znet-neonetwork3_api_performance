@@ -1,0 +1,207 @@
+<ng-container *ngIf="currentUser$ | async as currentUser">
+  <div
+    class="p-relative"
+    [class.disabled]="!isMember(currentUser?.id) && !isAdmin(currentUser.roles)"
+    [class.pinned]="topic?.isPinned"
+    class="topic {{ cssClasses }}">
+    <div class="flex-between pb-12">
+      <div class="d-flex align-center">
+        <div class="text-xs fw-700 d-flex align-center">
+          <neo-user-avatar
+            [user]="getUser()"
+            class="mr-8"
+            imageSize="size24"></neo-user-avatar>
+
+          <div
+            class="text-xs fw-700"
+            (click)="elementClick.emit('user')">
+            <a
+              *ngIf="topic?.firstMessage?.user?.company"
+              class="text-dark-gray-580"
+              [class.c-default]="topic?.firstMessage?.user?.statusId === userStatuses.Deleted"
+              [routerLink]="
+                topic?.firstMessage?.user?.statusId === userStatuses.Deleted
+                  ? []
+                  : ['/user-profile/', topic?.firstMessage?.user?.id]
+              ">
+              {{
+                topic?.firstMessage?.user?.statusId === userStatuses.Deleted
+                  ? 'Deleted User'
+                  : topic?.firstMessage?.user?.name
+              }}{{
+                topic?.firstMessage?.user?.statusId === userStatuses.Deleted
+                  ? ''
+                  : ', ' + topic?.firstMessage?.user?.company
+              }}
+            </a>
+
+            <a
+              *ngIf="!topic?.firstMessage?.user?.company"
+              class="text-blue-400"
+              routerLink="/user-profile/{{ topic?.firstMessage?.user?.id }}">
+              {{ topic?.firstMessage?.user?.name }}
+            </a>
+          </div>
+        </div>
+
+        <ng-container
+          *ngIf="
+            topic?.firstMessage?.user?.id !== currentUser?.id &&
+            topic?.firstMessage?.user?.statusId !== userStatuses.Deleted
+          ">
+
+        </ng-container>
+        <neo-vertical-line-decor class="forum-thread"></neo-vertical-line-decor>
+        <span class="text-xs fw-400 text-dark-gray-580">{{ topic?.modifiedOn | date: 'M/d/yy' }}</span>
+        <span class="fw-400 text-xs italic text-dark-gray-580" *ngIf="topic?.firstMessage?.createdOn !== topic?.modifiedOn"> &nbsp; Edited</span>
+      </div>
+
+      <div class="actions d-flex align-center gap-12">
+        <button
+          (click)="pin()"
+          *ngIf="topic?.isPinned || isAdmin(currentUser.roles)"
+          [disabled]="!isAdmin(currentUser.roles)"
+          [class.active]="topic?.isPinned"
+          class="action">
+            <svg-icon
+            [key]="topic?.isPinned ? 'pin-active' : 'pin-inactive'" size="xl" ></svg-icon>
+        </button>
+
+        <button
+          (click)="toggleModal()"
+          *ngIf="isAdmin(currentUser.roles) && showControls"
+          class="action remove">
+          <div>
+            <svg-icon
+            class="remove-item-icon"
+            key="trash-can"
+            size="xl"></svg-icon>
+          </div>
+        </button>
+
+        <button
+          (click)="save()"
+          class="action">
+          <svg-icon
+            class="save-item-icon thin"
+            fontSize="20px"
+            [key]="'star-outline'"
+            [ngClass]="{saved: topic?.isSaved }"
+            size="xl">
+          </svg-icon>
+        </button>
+
+        <button
+        *ngIf="topic?.isPrivate"
+        class="c-default">
+        <div class="icon-bg">
+          <svg-icon
+          key="lock-closed" class="lock-icon"></svg-icon>
+        </div>
+      </button>
+      </div>
+    </div>
+
+    <h4
+      [routerLink]="'../forum/topic/' + topic?.id"
+      (click)="elementClick.emit('title')"
+      class="text-dark-gray-750 mb-8 c-pointer word-wrap">
+      {{ topic?.subject }}
+    </h4>
+
+    <div
+      [innerHTML]="
+        topic?.firstMessage?.text.length > 173 ? (topic?.firstMessage?.text | slice: 0:173) : topic?.firstMessage?.text
+      "
+      class="text-dark-gray-580 inner-title"></div>
+
+    <div class="bottom flex-between mt-16 pt-16 w-100">
+      <div class="d-flex align-center gap-16 w-80">
+        <div class="tags d-flex gap-4">
+          <neo-content-tag
+            *ngFor="let tag of topic?.categories.slice(0, 2)"
+            [tag]="tag"
+            [type]="type.Category"
+            (tagClicked)="elementClick.emit('category')"
+            fontSize="12">
+          </neo-content-tag>
+
+          <a [routerLink]="'../forum/topic/' + topic?.id">
+            <neo-content-tag
+              *ngIf="topic?.categories.length > 2"
+              tagText="+{{ topic?.categories.length - 2 }}"
+              (tagClicked)="elementClick.emit('category')"
+              fontSize="12">
+            </neo-content-tag>
+          </a>
+        </div>
+
+        <neo-content-location
+          (clicked)="elementClick.emit('region')"
+          [regions]="topic?.regions"></neo-content-location>
+      </div>
+
+      <div class="text-s text-blue-400 d-flex align-center c-pointer">
+        <div
+          [routerLink]="'/forum/topic/' + topic?.id"
+          (click)="elementClick.emit('comment')"
+          class="d-flex align-center text-dark-gray-750 rounded-bold">
+          <div class="parent-icon text-dark-gray-590">
+          <svg-icon width="30px"
+          height="19px"
+            class="mr-8 " 
+            key="lines-in-message"></svg-icon>
+            </div>
+          {{ topic?.responsesCount }}
+        </div>
+
+        <div
+          (click)="like()"
+          class="ml-12 d-flex align-center c-pointer rounded-bold text-dark-gray-750" >
+          <div class="parent-icon text-dark-gray-590">
+            <svg-icon     
+            width="30px"
+            [key]="topic?.firstMessage.isLiked ? 'hands-thumps-up-filled' : 'finger-up'"
+            class="mr-16"
+            [ngClass]="{likeactive: topic?.firstMessage.isLiked }"></svg-icon>
+          </div>
+          {{ topic?.firstMessage?.likesCount }}
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<neo-modal
+  *ngIf="deleteModal"
+  padding="p-32"
+  (closed)="toggleModal()"
+  class="modal">
+  <svg-icon
+    key="close"
+    size="xxl"
+    class="p-absolute top-20 right-20 c-pointer text-blue-200 close-icon"
+    (click)="toggleModal()">
+  </svg-icon>
+
+  <h3 class="delete-label pr-24">{{ 'forum.discussionDeleteLabel' | translate }}</h3>
+
+  <p class="description-label pt-8">{{ 'forum.discussionDeleteDescriptionLabel' | translate }}</p>
+
+  <div class="separator mt-20 mb-32"></div>
+
+  <div class="d-flex align-center justify-end gap-16">
+    <button
+      class="btn btn-cancel"
+      (click)="toggleModal()">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button
+      class="btn btn-delete"
+      (click)="delete()">
+      {{ 'general.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+
+
+</neo-modal>

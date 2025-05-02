@@ -1,0 +1,387 @@
+@use 'breakpoints';
+
+@import 'colors';
+@import 'spacing';
+@import 'fonts';
+@import 'flexbox';
+
+button {
+  font-weight: 400;
+  border-radius: 2px;
+  border: none;
+  font-family: 'Arial Rounded MT Bold', serif;
+  box-shadow: none;
+  background: none;
+  outline: none;
+  padding: 0;
+}
+
+button,
+a {
+  user-select: none;
+  outline: none;
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.btn-l {
+    max-height: 45px;
+    padding: 14px 24px;
+    font-size: 14px;
+    line-height: 17px;
+    text-transform: capitalize;
+  }
+
+  &.btn-m {
+    max-height: 42px;
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &.btn-s {
+    max-height: 37px;
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 400;
+
+    @media (breakpoints.$medium) {
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+
+  &.btn-xs {
+    max-height: 32px;
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  &.btn-square {
+    width: 48px;
+    height: 48px;
+    border: 1px solid $blue-300;
+    border-radius: 2px;
+  }
+
+  &.green {
+    background: $zeigo-purple;
+    color: $dark-gray-40;
+    border-radius: 8px;
+
+    &:hover,
+    &:focus {
+      background: $purple-400;
+    }
+  }
+
+  // TODO: remove during refactoring if not used
+  &.gray {
+    background: $lime;
+    color: $neo-blue;
+
+    &:hover {
+      background: $gray-hover;
+    }
+  }
+
+  &.light-green {
+    background: rgba(148, 96, 164, 0.05);
+    color: $zeigo-purple;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    
+    &:hover {
+      background: rgba(148, 96, 164, 0.15);
+    }
+
+    &.plain:hover {
+      background: $light-green;
+    }
+  }
+
+  &.sky-blue {
+    background: $sky-blue;
+    color: $white;
+  }
+
+  &.white {
+    background: $white;
+    color: $blue-500;
+
+    &:hover {
+      color: $dark-green;
+    }
+  }
+
+  &.dark-green {
+    background: $dark-green;
+    color: $white;
+
+    &:hover {
+      background: $dark-green-hover;
+    }
+  }
+
+  &.green-frame {
+    //Zeigo: Buttons in Admin section
+    background: $dark-gray-40;
+    color: $purple-200;
+    border: 1px solid $purple-300;
+    border-radius: 8px;
+  }
+
+  &.lime-frame-green {
+    background: $white;
+    border: 2px solid $lime;
+    color: $dark-green;
+  }
+
+  &.blue-100-frame {
+    background: transparent;
+    border: 1px solid $blue-100;
+    color: $blue-400;
+
+    &:hover,
+    &:focus {
+      color: $neo-blue;
+      background: $gray-hover;
+    }
+  }
+
+  &.blue-50-frame {
+    // Zeigo - For Back Buttons
+    background: $dark-gray-40;
+    border: 1px solid $purple-300;
+    border-radius: 8px;
+    color: $purple-200;
+
+    &:hover {
+      color: $purple-500;
+      background: $dark-gray-40;
+      border: 1px solid $purple-500;
+    }
+  }
+
+  &.blue-50-frame-green {
+    background: transparent;
+    border: 1px solid $blue-50;
+    color: $dark-green;
+
+    &:hover {
+      color: $dark-green-hover;
+      background: $light-green;
+    }
+  }
+
+  &.plain:hover {
+    cursor: default;
+  }
+
+  &.circle {
+    width: 36px;
+    height: 36px;
+    background: $white;
+    border: 1px solid $dark-gray-420; //header icon (search, notifications etc.)
+    border-radius: 50%;
+    color: $dark-gray-590; //header icon (search, notifications etc.)
+
+    &:hover {
+      background: $off-white;
+      border: 1px solid $zeigo-purple; //header icon (search, notifications etc.)
+    }
+
+    &.active {
+      border: 1px solid $purple-400; //header icon (search, notifications etc.)
+      background: $purple-400;
+      color: $white;
+    }
+
+    .badge {
+      min-width: 19px;
+      height: 19px;
+      padding: 0px 0px; //header icon (notifications counter oval to round from 4px to 0px for header section)
+      background: $red-100; //header icon (notifications counter.)
+      border: 1.5px solid $white;
+      color: $white;
+      border-radius: 25px;
+      position: absolute;
+      top: -7px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Arial', serif;
+      line-height: 16px;
+    }
+  }
+
+  &.link {
+    background: transparent;
+    font-family: Arial, serif;
+  }
+
+  &.filter-btn {
+    background: $white; // forum, commuting listing filters
+    color: $near-black-400;
+    padding: 10px 12px;
+    width: 100%;
+    height: 52px;
+    font-size: 14px;
+    line-height: 18px;
+    //font-family: 'Arial Rounded MT Bold', serif;// forum, commuting listing filters font-family to be arial
+    border-radius: 4px;
+    border: 1px solid $violet-5;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+      border: none;
+    }
+
+    &.active {
+      color: $black; //Foryou button state active in forum listing page
+      background: #F0F0F0; //Foryou button state active in forum listing page
+      border-right: 4px solid $zeigo-purple;
+
+      .icon-wrapper {
+        color: $white;
+        //background: $sky-blue;
+        background: rgba(58, 36, 86, 0.8);//Foryou button state active in forum listing page
+        border-radius: 4px;//Foryou button state active in forum listing page
+      }
+    }
+
+    .icon-wrapper {
+      //icon inside the forum, project filter
+      width: 32px;
+      height: 32px;
+      color: $dark-green;
+      background: $dark-gray-450;
+      color: $zeigo-purple;
+      border-radius: 4px;
+    }
+  }
+
+  &.delete {
+    background: #FFEFEF;
+    color: #CD2B31;
+    border-radius: 8px;
+
+    &:hover {
+      background: #FFE5E5;
+      color: #CD2B31;
+      transition: all 0.1s ease;
+    }
+  }
+
+  &.sync {
+    background: $zeigo-purple;
+    color: $dark-gray-30;
+    border-radius: 8px;
+
+    &:hover {
+      background-color: $purple-400;
+      color: $white;
+      transition: all 0.1s ease;
+    }
+  }
+
+  &.tab {
+    @extend .btn-s;
+    border: 1px solid $blue-50;
+    color: $blue-400;
+
+    &.active {
+      background-color: $blue-400;
+      color: $white;
+    }
+  }
+}
+
+.continent {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: $neo-blue;
+
+  &.selected {
+    background-color: $blue-400;
+    color: $white;
+  }
+
+  &.disabled {
+    background-color: $dark-gray-200;
+    opacity: 0.7;
+    color: $neo-blue;
+    pointer-events: none;
+  }
+}
+
+.select-button {
+  @extend .neo-arial, .mr-8, .mb-8, .flex-center;
+  font-size: 14px;
+  color: $zeigo-purple;
+  padding: 12px 16px;
+  background: $dark-gray-40;
+  border: 1px solid $red-10;
+  border-radius: 4px;
+
+  &:hover {
+    background: $dark-gray-40;
+    color: $zeigo-purple;
+    border: 1px solid $zeigo-purple;
+    box-shadow: 0px 2px 8px rgba(111, 110, 119, 0.5);
+  }
+
+  &:not(.disabled).selected {
+    color: $zeigo-purple;
+    background-color: $violet-10;
+    border: 1px solid $purple-300;
+
+    svg-icon {
+      margin-left: 1px;
+      margin-right: 13px;
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+      margin-top: -2px;
+      color: $zeigo-purple;
+    }
+  }
+
+  &.disabled {
+    background-color: $dark-gray-450;
+    border: 1px solid $red-10;
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  svg-icon {
+    @extend .mr-12;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.back-btn {
+  border-radius: 8px;
+  width: auto;
+  color: #3a2456;
+  font-size: 12px;
+  text-decoration: underline;
+  &:hover {
+    background: $dark-gray-200;
+  }
+}
+
+.back-btn-img-s {
+  font-size: 12px !important;
+}

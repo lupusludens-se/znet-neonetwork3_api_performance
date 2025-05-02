@@ -1,0 +1,91 @@
+<neo-modal
+  (closed)="closed.emit()"
+  [title]="existingFileName ? ('uploadFile.editFileUploadHeader' | translate) : ('uploadFile.fileUploadHeader' | translate)"
+  class="contact-us title-h2"
+  padding="p-32-48"
+  size="extra-medium">
+  <span
+    class="mt-15 mb-15 note"
+    *ngIf="infoTitle">
+    <svg-icon
+      key="info"
+      class="info-tag"></svg-icon>
+    <p [innerHTML]="infoTitle | translate"></p>
+  </span>
+
+  <div
+    class="file-description"
+    [innerHTML]="fileDescription | translate"></div>
+
+  <div class="pt-24 pb-24 border">
+    <div class="d-flex flex-between align-center">
+      <label class="text-m text-near-black-400 fw-700 pb-8">
+        {{ 'uploadFile.uploadFileTitleLabel' | translate }}
+      </label>
+      <span class="counter">{{ fileTitle.value?.length ?? 0 }}/{{ titleMaxLength }}</span>
+    </div>
+
+    <input
+      type="text"
+      class="p-16"
+      [formControl]="fileTitle"
+      [maxlength]="100"
+      placeholder="{{ 'uploadFile.meaningfulPlaceholderLabel' | translate }}" />
+    <span
+      class="errorMessage"
+      *ngIf="isSaveButtonClicked && fileTitle.invalid && fileTitle.errors.required">
+      {{ 'uploadFile.fileNameRequiredLabel' | translate }}
+    </span>
+    <span
+      class="errorMessage"
+      *ngIf="fileTitle.invalid && fileTitle.errors.pattern">
+      {{ 'uploadFile.specialCharactersError' | translate }}
+    </span>
+  </div>
+  <div class="d-flex flex-wrap gap-8 p-10 border">
+    <div
+      *ngIf="(isFileSelected || existingFileName) && selectedFileName"
+      class="filter-state-wrapper flex-center text-xs text-neo-aqua c-pointer">
+      {{ selectedFileName }}
+      <svg-icon
+        *ngIf="!existingFileName"
+        (click)="clearFileSelection()"
+        class="ml-4 c-pointer"
+        key="close"
+        size="sm"></svg-icon>
+    </div>
+    <input
+      #fileInput
+      (change)="onFileSelect($event)"
+      (click)="fileInput.value = ''"
+      accept="image/png, image/gif, image/jpeg, image/jpg, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx"
+      class="d-none"
+      type="file" />
+    <button
+      class="btn-tertiary w-100"
+      (click)="fileInput.click()"
+      [disabled]="isFileSelected && selectedFileName && existingFileName">
+      {{ 'uploadFile.uploadFileLabel' | translate }}
+    </button>
+    <span
+      class="errorMessage"
+      *ngIf="!isFileSelected && !existingFileName">
+      {{ fileRequiredError | translate }}
+    </span>
+  </div>
+
+  <div
+    class="d-flex mt-16"
+    style="gap: 10px">
+    <button
+      class="btn-cancel mr-16 w-50"
+      (click)="closed.emit()">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button
+      class="btn-l green w-50"
+      (click)="saveFile()">
+      {{ 'general.saveLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

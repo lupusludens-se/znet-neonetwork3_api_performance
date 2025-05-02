@@ -1,0 +1,72 @@
+@use 'colors';
+
+:host.avatar-sky-blue {
+  .avatar {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.avatar {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 96px;
+  height: 96px;
+  background-color: colors.$dark-gray-510;
+  font-size: 28px;
+  line-height: initial;
+  color: colors.$dark-gray-30;
+  text-transform: uppercase;
+
+  &.size16 {
+    width: 16px;
+    height: 16px;
+
+    font-size: 12px;
+  }
+
+  &.size20 {
+    width: 20px;
+    height: 20px;
+  }
+
+  &.size24 {
+    width: 24px;
+    height: 24px;
+
+    font-size: 12px;
+  }
+
+  &.size32 {
+    width: 32px;
+    height: 32px;
+
+    font-size: 12px;
+  }
+
+  &.size48 {
+    width: 48px;
+    height: 48px;
+
+    font-size: 16px;
+  }
+
+  &.size56 {
+    width: 56px;
+    height: 56px;
+
+    font-size: 18px;
+  }
+
+  &.size96 {
+    width: 96px;
+    height: 96px;
+
+    font-size: 28px;
+  }
+
+  img {
+    object-fit: cover;
+    min-height: 100%;
+    width: 100%;
+  }
+}

@@ -1,0 +1,33 @@
+@use 'colors';
+@use 'breakpoints';
+
+.top {
+  width: 600px;
+
+  @media (breakpoints.$medium) {
+    width: 852px;
+  }
+
+  .btn-all {
+    width: 100px;
+    min-width: 116px;
+    height: 43px;
+    font-size: 14px;
+    color: colors.$purple-200;
+    border: 1px solid colors.$purple-300;
+
+    &:hover {
+      border-color: colors.$purple-500;
+      color: colors.$purple-500;
+    }
+
+    &.selected-all {
+      background-color: colors.$zeigo-purple;
+      color: colors.$white;
+      border: none;
+    }
+    &.selected-all:hover {
+      background-color: colors.$purple-400;
+    }
+  }
+}

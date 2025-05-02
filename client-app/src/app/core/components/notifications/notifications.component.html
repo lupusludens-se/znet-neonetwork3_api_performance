@@ -1,0 +1,64 @@
+<div class="p-relative d-flex justify-center">
+  <button
+    (click)="toggleMenu(); preventCloseOnClick()"
+    [ngClass]="{ active: isActive }"
+    class="circle p-relative">
+    <svg-icon key="notification"></svg-icon>
+
+    <span
+      *ngIf="badgeCount > 0"
+      class="badge">
+      {{ badgeCount }}
+    </span>
+  </button>
+
+  <div
+    (click)="preventCloseOnClick()"
+    *ngIf="menuOpen"
+    class="flex-column p-absolute notification-wrapper">
+    <div class="flex-between align-center pt-26 pb-26 pl-24 pr-24">
+      <h4 class="text-neo-near-black">
+        {{ 'notification.notificationsLabel' | translate }}
+      </h4>
+
+      <div
+        class="d-flex"
+        *ngIf="notifications?.dataList?.length">
+        <button
+          class="text-neo-purple link text-s fw-700 d-flex align-center justify-center"
+          (click)="clearNotifications()">
+          {{ 'onboarding.clearAllLAbel' | translate }}
+        </button>
+
+        <neo-vertical-line-decor></neo-vertical-line-decor>
+
+        <button
+          (click)="toggleMenu()"
+          class="text-neo-purple link text-s fw-700 d-flex align-center justify-center"
+          routerLink="./notifications">
+          {{ 'general.viewAllLabel' | translate }}
+
+          <svg-icon
+            class="ml-10"
+            key="right-arrow"
+            size="md"></svg-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <div
+      #notificationsWrapper
+      [class.justify-center]="!notifications?.dataList?.length && loading === false"
+      class="flex-column notifications pl-24 mr-10 mt-24 mb-24">
+      <neo-notification-loader
+        *ngIf="loading"
+        class="mt-20"></neo-notification-loader>
+      <neo-notifications-list
+        [shortVersion]="shortVersion"
+        (notificationClick)="markAsRead($event)"
+        [notifications]="notifications?.dataList" class="h-100"></neo-notifications-list>      
+    </div>
+  </div>
+</div>

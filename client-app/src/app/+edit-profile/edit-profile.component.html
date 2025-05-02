@@ -1,0 +1,198 @@
+<h2 class="title neo-arial mb-24">
+  {{ 'userProfile.edit.editProfileLabel' | translate }}
+</h2>
+
+<main class="main d-flex">
+  <div class="avatar-wrapper flex-column mr-32">
+    <input #fileInput (change)="onFileSelect($event)" (click)="fileInput.value = ''" accept="png, jpg, svg"
+      class="file-input" name="picture" type="file" />
+
+    <div class="avatar-container flex-center mb-24">
+      <neo-user-avatar imageSize="size96" *ngIf="user" [user]="user"></neo-user-avatar>
+    </div>
+
+    <div class="btn-wrapper flex-column">
+      <button (click)="fileInput.click()" class="btn-add flex-center green">
+        <svg-icon *ngIf="(authService.currentUser() | async)?.image" class="mr-10" key="refresh-arrow"
+          size="lg"></svg-icon>
+        <svg-icon *ngIf="
+            (authService.currentUser() | async)?.image === null ||
+            (authService.currentUser() | async)?.image === undefined
+          " class="mr-10" key="upload-icon" size="lg"></svg-icon>
+        {{
+        ((authService.currentUser() | async)?.image
+        ? 'userProfile.edit.changeImageLabel'
+        : 'userProfile.edit.uploadImageLabel'
+        ) | translate
+        }}
+      </button>
+
+      <p class="text flex-center mt-16">
+        PNG, JPG
+        <br />
+        {{ 'userManagement.fileUploadLabel' | translate }}
+      </p>
+
+      <button (click)="removeImg()" *ngIf="imageFormData || user?.image"
+        class="btn-remove blue-50-frame flex-center mt-16">
+        <svg-icon class="mr-10" key="trash-can" size="lg"></svg-icon>
+        {{ 'userProfile.edit.removeImageLabel' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="controls-row flex-between mb-24">
+      <neo-text-input [labelName]="'userManagement.form.firstNameLabel' | translate" formControlName="firstName"
+        [submitted]="formSubmitted">
+      </neo-text-input>
+
+      <neo-text-input [labelName]="'userManagement.form.lastNameLabel' | translate" formControlName="lastName"
+        [submitted]="formSubmitted">
+      </neo-text-input>
+    </div>
+
+    <neo-text-input class="mb-24" [labelName]="'form.titleLabel' | translate" formControlName="jobTitle"
+      [submitted]="formSubmitted">
+    </neo-text-input>
+
+    <neo-dropdown [dropdownOptions]="responsibilityList" dropdownSize="150px" formControlName="responsibilityId"
+      [submitted]="formSubmitted" [labelName]="'userManagement.form.responsibilityLabel' | translate"
+      *ngIf="corporationRole">
+    </neo-dropdown>
+
+    <neo-text-input class="mb-24 mt-24 disabledLabel" [labelName]="'userManagement.form.emailLabel' | translate"
+      formControlName="email" [submitted]="formSubmitted">
+    </neo-text-input>
+
+    <neo-text-input class="mb-24 disabledLabel" [labelName]="'userProfile.companyLabel' | translate"
+      formControlName="company" [submitted]="formSubmitted">
+    </neo-text-input>
+
+    <div class="controls-row mb-24 flex-between">
+      <label class="label">
+        {{ 'userProfile.edit.countryLabel' | translate }}
+
+        <neo-search-bar (clearInput)="chooseCountry(null)" (inputChange)="getCountries($event)"
+          (selectedResult)="chooseCountry($event)" [results]="countriesList" [value]="user?.country.name"
+          [error]="formSubmitted && !form.get('countryId')?.value" class="mt-8">
+        </neo-search-bar>
+
+        <neo-control-error [errors]="form.controls['countryId'].errors"
+          [fieldName]="'userManagement.form.countryLabel' | translate" [submitted]="formSubmitted">
+        </neo-control-error>
+      </label>
+
+      <label *ngIf="showStatesControl || user?.userProfile?.state?.name" class="label">
+        {{ 'userProfile.edit.stateLabel' | translate }}
+
+        <neo-search-bar (clearInput)="statesList = []; selectState(null)" (inputChange)="getStates($event)"
+          (selectedResult)="selectState($event)" [results]="statesList" [value]="user?.userProfile?.state?.name"
+          [error]="formSubmitted && !form.get('stateId')?.value" class="mt-8">
+        </neo-search-bar>
+
+        <neo-control-error [errors]="form.controls['stateId'].errors"
+          [fieldName]="'userProfile.edit.stateLabel' | translate" [submitted]="formSubmitted">
+        </neo-control-error>
+      </label>
+    </div>
+
+    <ng-container class="mb-24" *ngIf="isSPRole || corporationRole" formArrayName="skillsByCategory">
+      <h4 class="section-title label mb-8">
+        {{ 'userProfile.edit.skillsLabel' | translate }}
+
+      </h4>
+      <ng-container *ngFor="let skillsGroup of form.get('skillsByCategory').controls; let i = index">
+        <div [formGroup]="skillsGroup" class="controls-row d-flex url-wrapper mb-12">
+          <neo-dropdown class="w-85 set-width" (ngModelChange)="onProjectTypeChange(skillsGroup)"
+            [dropdownOptions]="categories" dropdownSize="150px" formControlName="projectTypeId"
+            [placeholderText]="'userProfile.edit.selectProjectTypesLabel'|translate" [submitted]="formSubmitted">
+          </neo-dropdown>
+          <neo-dropdown (click)="onSkillsChange(i,$event)" [disabled]="!skillsGroup.get('projectTypeId').value"
+            class="ml-8 set-width" [dropdownOptions]="filteredSkills" dropdownSize="150px" formControlName="skillId"
+            [placeholderText]="'userProfile.edit.selectSkillsTypeLabel'|translate" [submitted]="formSubmitted">
+          </neo-dropdown>
+          <button (click)="removeSkill(i)" class="mb-12 btn-remove-link ml-20">
+            <svg-icon height="24px" key="trash-can" width="24px"></svg-icon>
+          </button>
+        </div>
+        <div
+          *ngIf="skillsByCategory.length === maxSkills && !isSkillRequired && !setDuplicateSkillsError && skillsGroup.get('skillId').value && i === 4"
+          class="ml-20 mb-20 error">
+          {{ 'userProfile.edit.limitReachedText' | translate }}
+        </div>
+      </ng-container>
+
+    </ng-container>
+    <div class="ml-20 mb-20 error" *ngIf="isSkillRequired && !isSkillandCatetegoryRequired">{{
+      'userProfile.edit.skillRequiredText' | translate }}</div>
+    <div class="ml-20 mb-20 error" *ngIf="isSkillandCatetegoryRequired">{{
+      'userProfile.edit.projectTypeandSkillRequiredText' |
+      translate }}</div>
+    <div *ngIf="setDuplicateSkillsError" class="ml-20 mb-20 error">
+      {{ 'userProfile.edit.duplicateSkillsErrorLabel' | translate }}
+    </div>
+    <button *ngIf="skillsByCategory.length < maxSkills && (corporationRole||isSPRole)" (click)="addSkill()"
+      class="add-link-btn green-frame mb-20" type="button">
+      {{ 'userProfile.edit.addSkillsLabel' | translate }}
+      <svg-icon class="ml-8" key="thin-plus" size="lg"></svg-icon>
+    </button>
+
+
+
+    <neo-text-input class="mb-24" [labelName]="'userProfile.edit.linkedInLabel' | translate"
+      formControlName="linkedInUrl" [submitted]="formSubmitted">
+    </neo-text-input>
+
+    <label class="label mb-24">
+      {{ 'userProfile.edit.aboutLabel' | translate }}
+
+      <neo-message-control [displayAttachments]="false" class="mt-8" formControlName="about"
+        classes="p-0 text-s"></neo-message-control>
+    </label>
+
+    <ng-container formArrayName="urlLinks">
+      <h4 class="section-title label mb-8">
+        {{ 'userProfile.edit.linkLabel' | translate }}
+      </h4>
+
+      <ng-container *ngFor="let linkForm of urlLinks.controls; let i = index">
+        <div [formGroup]="linkForm" class="controls-row d-flex url-wrapper mb-12">
+          <neo-text-input formControlName="urlName" [submitted]="formSubmitted" placeholder="Link Name"
+            labelName="Link Name" [showLabel]="false" class="mr-24">
+          </neo-text-input>
+
+          <neo-text-input formControlName="urlLink" [submitted]="formSubmitted" placeholder="URL" labelName="URL"
+            [showLabel]="false" class="mr-24">
+          </neo-text-input>
+
+          <button (click)="removeLink(i)" class="mb-12 btn-remove-link">
+            <svg-icon height="24px" key="trash-can" width="24px"></svg-icon>
+          </button>
+        </div>
+      </ng-container>
+
+      <div *ngIf="linksError" class="error">
+        {{ 'events.nameAndUrlShouldBeFilledLabel' | translate }}
+      </div>
+    </ng-container>
+
+    <button (click)="addLink()" class="add-link-btn green-frame" type="button">
+      {{ 'userProfile.edit.addContentUrlLabel' | translate }}
+      <svg-icon class="ml-8" key="thin-plus" size="lg"></svg-icon>
+    </button>
+
+    <div class="permissions mt-32" *ngIf="userIsAdmin">
+      <p class="section-title label mb-12">{{ 'userManagement.form.permissionsLabel' | translate }}</p>
+      <div class="d-flex flex-wrap permissions-wrapper">
+        <neo-blue-checkbox class="mb-6 permissions-checkbox" [name]="permission.name" value="p{{ permission.id }}"
+          [checked]="permission.checked" [disabled]="permission.disabled" *ngFor="let permission of permissionsData">
+        </neo-blue-checkbox>
+      </div>
+    </div>
+  </form>
+</main>
+
+<neo-form-footer class="edit-profile-footer" (cancel)="goBack()" (save)="saveData()"
+  submitButtonName="general.saveChangesLabel">
+</neo-form-footer>

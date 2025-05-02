@@ -1,0 +1,32 @@
+@use 'colors';
+@use 'breakpoints';
+
+.map {
+  width: 534px;
+  height: 282px;
+  box-shadow: 0 1px 3px rgba(0, 31, 81, 0.07);
+
+	@media(breakpoints.$medium) {
+		width: 788px;
+	}
+}
+
+.top-wrapper {
+	width: 600px;
+
+	@media(breakpoints.$medium) {
+		width: 852px;
+	}
+}
+
+.short-input {
+  width: 162px;
+}
+
+.long-input {
+  width: 340px;
+}
+
+.notes-control {
+  height: 160px;
+}

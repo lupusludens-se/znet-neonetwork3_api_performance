@@ -1,0 +1,40 @@
+@use 'colors';
+@use 'breakpoints';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content {
+	width: 500px;
+
+	@media(breakpoints.$small) {
+		width: 812px;
+	}
+}
+
+.control-wrapper {
+  .checkbox-wrapper {
+    position: relative;
+    width: fit-content;
+    height: 42px;
+    background: colors.$white;
+    border: 1px solid colors.$blue-50;
+    border-radius: 2px;
+
+    .continent {
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      font-size: 14px;
+      color: colors.$neo-blue;
+      padding: 12px 16px 12px 19px;
+    }
+  }
+}
+
+.middle {
+  border-top: 1px solid colors.$dark-gray-200;
+}

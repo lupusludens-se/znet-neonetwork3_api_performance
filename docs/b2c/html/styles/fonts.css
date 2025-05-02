@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Arial Rounded MT Bold';
+    src: local('Arial Rounded MT Bold'),
+    url('../assets/fonts/arial-rounded-mt-bold.otf') format('truetype');
+}
+
+.neo-arial {
+    font-family: 'Arial Rounded MT Bold', serif;
+}

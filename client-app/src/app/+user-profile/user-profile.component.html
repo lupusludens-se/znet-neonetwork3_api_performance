@@ -1,0 +1,265 @@
+<ng-container *ngIf="!!userProfile">
+  <div class="d-flex m-8 mr-0">
+    <div class="flex-column w-50">
+      <button
+        (click)="back()"
+        class="btn-connect back-btn d-flex align-center pb-4">
+        <svg-icon
+          class="pr-4 back-btn-img-s"
+          key="left-arrow"></svg-icon>
+        Back
+      </button>
+    </div>
+    <div
+      class="flex-column w-50 align-end"
+      *ngIf="
+        isCorporateUser &&
+        isNotInternalOrAdminUserRole &&
+        userProfile?.userId !== (authService.currentUser() | async)?.id
+      ">
+      <button
+        (click)="attachToInitiative = true; trackAttachToInitiativeActivity()"
+        class="btn-initiative align-center">
+        <span class="ml-8 mr-8 btn-text flex-center">
+          {{ 'initiative.attachContent.attachCommunityLabel' | translate }}
+          <svg-icon
+            class="ml-8"
+            fontSize="16px"
+            key="idea-bulb"></svg-icon>
+        </span>
+      </button>
+    </div>
+  </div>
+  <h3 class="text-neo-near-black pb-16">
+    {{ 'title.userProfileLabel' | translate }}
+  </h3>
+  <div class="top-wrapper mb-24">
+    <div class="top-banner flex-between">
+      <div class="left d-flex align-center">
+        <div class="avatar mr-24 flex-center">
+          <ng-container *ngIf="userProfile">
+            <neo-user-avatar
+              imageSize="size96"
+              class="avatar-sky-blue"
+              [user]="userProfile.user"></neo-user-avatar>
+          </ng-container>
+        </div>
+        <div class="name-wrapper">
+          <p class="name mb-8 neo-arial">{{ userProfile?.user?.firstName }} {{ userProfile?.user?.lastName }}</p>
+          <p
+            (click)="showfollowersModal()"
+            *ngIf="userProfile?.followersCount"
+            class="followers c-pointer underline">
+            {{ userProfile.followersCount }}
+            {{ (userProfile.followersCount > 1 ? 'userProfile.followers' : 'userProfile.follower') | translate }}
+          </p>
+        </div>
+      </div>
+ 
+      <div class="right d-flex align-center">
+        <neo-profile-socials-controls (followClick)="changeFollowing()" *ngIf="
+            (authService.currentUser() | async)?.id &&
+            (authService.currentUser() | async)?.id !== userProfile?.userId &&
+            userProfile.user.statusId !== userStatuses.Deleted
+          " [following]="userProfile?.isFollowed" [linkedInLink]="userProfile?.linkedInUrl"
+          [userId]="userProfile?.userId">
+        </neo-profile-socials-controls>
+
+        <button *ngIf="
+            (authService.currentUser() | async)?.id &&
+            (authService.currentUser() | async)?.id === userProfile?.userId &&
+            userProfile.user.statusId !== userStatuses.Deleted
+          " [routerLink]="'/user-profile/' + userProfile?.userId + '/edit'"
+          class="edit flex-center top-panel-btn-white">
+          <svg-icon
+            class="mr-10"
+            key="pencil"
+            size="lg"></svg-icon>
+          {{ 'actions.editLabel' | translate }}
+        </button>
+      </div>
+
+      <svg-icon
+        class="lines-decor"
+        key="top-lines-vector"></svg-icon>
+    </div>
+
+    <div class="info-wrapper d-flex">
+      <div class="title fg-2">
+        <p class="label mb-4">{{ 'userProfile.titleLabel' | translate }}</p>
+        <p class="info-text neo-arial">{{ userProfile?.jobTitle }}</p>
+      </div>
+
+      <div
+        *ngIf="corporationRole"
+        class="responsibility pl-32 ml-34 fg-2">
+        <p class="label mb-4">{{ 'userProfile.responsibilityLabel' | translate }}</p>
+        <p class="info-text neo-arial">{{ userProfile?.responsibilityName }}</p>
+      </div>
+
+      <div class="company pr-32 pl-32 mr-32 ml-34 fg-2">
+        <p class="label mb-4">{{ 'userProfile.companyLabel' | translate }}</p>
+        <a [routerLink]="'../../company-profile/' + userProfile?.user?.company?.id"
+          class="info-text neo-arial d-flex align-center">
+          {{ userProfile?.user?.company?.name }}
+          <!-- <svg-icon class="ml-6" key="right-arrow-in-circle-filled" size="xxl"></svg-icon> -->
+          <div class="flex-center">
+            <button class="light-green d-flex align-center justify-center rotate-180 ml-6">
+              <svg-icon
+                size="sm"
+                fontSize="14px"
+                key="arrow-thin-right"></svg-icon>
+            </button>
+          </div>
+        </a>
+      </div>
+
+      <div class="location fg-2">
+        <p class="label mb-4">{{ 'userProfile.locationLabel' | translate }}</p>
+        <p class="info-text neo-arial">
+          {{ userProfile?.user.country.name }}<ng-container *ngIf="userProfile?.state?.name">,</ng-container>
+          {{ userProfile?.state?.name }}
+        </p>
+      </div>
+      <div
+        *ngIf="IsPrivateUser"
+        class="responsibility pl-32 ml-34 fg-2">
+        <br />
+        <p class="info-text neo-arial tooltip">
+          {{ 'userProfile.privateUserLabel' | translate }}
+          <span class="tooltiptext">Private users are not visible on community page and company profile page</span>
+        </p>
+      </div>
+      <div class="fg-3">
+        <br />
+      </div>
+    </div>
+  </div>
+
+  <main class="main-content flex-between">
+    <div class="left">
+      <h3 class="section-title neo-arial mb-8">
+        {{ 'userProfile.aboutLabel' | translate }}
+      </h3>
+
+      <p
+        [innerHTML]="userProfile?.about"
+        class="text"></p>
+
+      <div class="links-wrapper flex-column mt-16">
+        <a *ngFor="let link of userProfile?.urlLinks" (click)="onExternalLinkClick(link.urlLink, link.urlName)"
+          [href]="link.urlLink.startsWith('www') ? '//' + link.urlLink : link.urlLink" class="mb-16" rel="noreferrer"
+          target="_blank">{{ link.urlName }}
+        </a>
+      </div>
+    </div>
+
+    <div class="right flex-column">
+      <div *ngIf="skillsCount>0" class="interests flex-column mb-12">
+        <p class="section-title mb-12">
+          {{ 'userProfile.skillsLabel' | translate }}
+        </p>
+
+        <div class="tags-wrapper d-flex flex-wrap gap-6">
+          <button (click)="showSkills = true" *ngIf="(authService.currentUser() | async)?.id === userProfile?.userId"
+            class="btn-add btn-add-red flex-center">
+            <svg-icon key="plus" size="sm"></svg-icon>
+          </button>
+
+          <neo-content-tag class="disabled default-cursor" [skipGoToTopics]="true" *ngFor="let skills of skillsByCategory" [tag]="skills" classCustom="tag-red" fontSize="12">
+          </neo-content-tag>
+        </div>
+      </div>
+
+      <div class="interests flex-column mb-12">
+        <p class="section-title mb-12">
+          {{ 'userProfile.interestedIn' | translate }}
+        </p>
+
+        <div class="tags-wrapper d-flex flex-wrap gap-6">
+          <button (click)="showInterests = true" *ngIf="(authService.currentUser() | async)?.id === userProfile?.userId"
+            class="btn-add flex-center">
+            <svg-icon
+              key="plus"
+              size="sm"></svg-icon>
+          </button>
+
+          <neo-content-tag *ngFor="let category of userProfile?.categories" [tag]="category" [type]="type.Category"
+            fontSize="12">
+          </neo-content-tag>
+        </div>
+      </div>
+
+      <div class="geographies flex-column">
+        <p class="section-title mb-12">
+          {{ 'userProfile.geographiesOfInterest' | translate }}
+        </p>
+
+        <div class="tags-wrapper d-flex flex-wrap gap-6">
+          <button (click)="showRegions = true" *ngIf="(authService.currentUser() | async)?.id === userProfile?.userId"
+            class="btn-add flex-center btn-add-purple">
+            <svg-icon
+              key="plus"
+              size="sm"></svg-icon>
+          </button>
+
+          <neo-content-tag *ngFor="let geography of userProfile?.regions" [tag]="geography" [type]="type.Region"
+            classCustom="tag-purple" fontSize="12">
+          </neo-content-tag>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <neo-interests-modal (saveChanges)="closeInterests(true)" (closeModal)="closeInterests(false)" *ngIf="showInterests"
+    [userProfile]="userProfile">
+  </neo-interests-modal>
+
+  <neo-regions-modal
+    (closeModal)="showRegions = false"
+    (updatedRegions)="updateRegions($event)"
+    *ngIf="showRegions"
+    [preSelectedGeographies]="userProfile?.regions">
+  </neo-regions-modal>
+
+  <neo-skills-modal (saveChanges)="closeSkills(true)" (closeModal)="closeSkills(false)" *ngIf="showSkills">
+  </neo-skills-modal>
+
+</ng-container>
+<neo-attach-to-initiative
+  (closed)="attachToInitiative = false"
+  [initiativeContentType]="contentType"
+  [contentId]="userId"
+  [typeName]="'general.communityLabel' | translate"
+  *ngIf="attachToInitiative"></neo-attach-to-initiative>
+
+<neo-modal
+  (closed)="clear(); followersModal = false"
+  *ngIf="followersModal"
+  [badgeNumber]="userProfile.followers?.length"
+  [showBadge]="true"
+  [title]="'userProfile.FollowersLabel' | translate" 
+  size="large"
+  class="title-h2 title-badge">
+  <div class="pt-24 h-100 members-wrapper">
+    <neo-search-bar [placeholder]="'general.searchLabel' | translate"
+      (clearInput)="clear()"
+      (inputChange)="searchMembers($event)"
+      class="search-border-radius-large search-border"></neo-search-bar>
+
+    <div class="d-flex flex-wrap members mt-16">
+      <ng-container *ngFor="let user of followers">
+        <neo-member class="user-followers"
+          (followClick)="followUser($event)"
+          (profileClick)="followersModal = false"
+          [showActions]="currentUser.id !== user.id"
+          [isCompanyProfile]="false"
+          [user]="user"></neo-member> 
+      </ng-container>
+      <neo-no-results
+        *ngIf="followers?.length == 0 && search"
+        [searchedStr]="search"
+        class="modal-no-results-label modal-ul-li"></neo-no-results>
+    </div>
+  </div>
+</neo-modal>

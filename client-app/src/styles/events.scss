@@ -1,0 +1,20 @@
+@use 'colors';
+
+.more-dates-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 500px;
+
+  font-family: 'Arial';
+  font-weight: 700;
+  font-size: 11px;
+  border-radius: 25px;
+  background: #C9E9F6;
+  color: colors.$aqua-400;;
+
+  &.inverted-colors {
+    background: #48678d;
+    color: colors.$white;
+  }
+}

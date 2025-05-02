@@ -1,0 +1,23 @@
+@use 'breakpoints';
+
+.events-view-wrapper {
+  neo-event-item {
+    &:nth-child(2n + 2) {
+      margin-right: 0;
+    }
+
+    @media (breakpoints.$medium) {
+      &:nth-child(2n + 2) {
+        margin-right: 24px;
+      }
+
+      &:nth-child(3n + 3) {
+        margin-right: 0;
+      }
+    }
+  }
+
+  neo-pagination {
+    margin: 24px auto;
+  }
+}

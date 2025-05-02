@@ -1,0 +1,45 @@
+<div class="mt-16">
+  <div
+    class="mb-8"
+    *ngIf="upcomingEventsList?.dataList?.length > 0">
+    <h5 class="title c-pointer text-m text-dark-gray-750 mb-16 arial-rounded-mt-bold">
+      {{ 'events.PublicUpcomingEventsHeading' | translate }}
+    </h5>
+    <div class="events-view-wrapper d-flex flex-wrap">
+      <ng-container *ngFor="let upcomingEvent of upcomingEventsList?.dataList">
+        <neo-event-item
+          (click)="openDetails(upcomingEvent.id)"
+          [attendanceEnable]="false"
+          [publicReadMore]="true"
+          [eventData]="upcomingEvent"
+          [currentUser]="currentUser"
+          class="c-pointer width-30">
+        </neo-event-item>
+      </ng-container>
+    </div>
+  </div>
+  <div *ngIf="pastEventsList?.length > 0">
+    <h5 class="title c-pointer text-m text-dark-gray-750 mb-16 arial-rounded-mt-bold">
+      {{ 'events.PublicUPastEventsHeading' | translate }}
+    </h5>
+    <div class="events-view-wrapper d-flex flex-wrap">
+      <ng-container *ngFor="let pastEvent of pastEventsList">
+        <neo-event-item
+          (click)="openDetails(pastEvent.id)"
+          [attendanceEnable]="false"
+          [eventData]="pastEvent"
+          [currentUser]="currentUser"
+          [publicReadMore]="true"
+          class="c-pointer width-30">
+        </neo-event-item>
+      </ng-container>
+      <neo-scroll-loader (loadMoreData)="onLoadMoreData($event)"></neo-scroll-loader>
+    </div>
+  </div>
+  <neo-empty-page
+    class="empty-page"
+    *ngIf="upcomingEventsList?.dataList?.length === 0 && pastEventsList?.length  === 0"
+    [headlinePart1]="'events.noPublicEventsLabel' | translate"
+    iconKey="events">
+  </neo-empty-page>
+</div>

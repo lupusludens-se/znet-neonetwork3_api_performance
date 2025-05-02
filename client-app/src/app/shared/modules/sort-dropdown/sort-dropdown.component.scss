@@ -1,0 +1,55 @@
+@use 'colors';
+
+:host {
+  position: relative;
+}
+
+.text-sort{
+   color: #57595E;
+   line-height: 130%;
+   letter-spacing: 0.14px;
+}
+
+.sort-name {
+  font-weight: bold;
+  font-size: 14px;
+  color: colors.$purple-400;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.sorting-options {
+  padding: 6px 6px 16px;
+  position: absolute;
+  right: 0;
+  top: 23px;
+  width: 196px;
+  height: fit-content;
+  background: colors.$white;
+  box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+  border-radius: 2px;
+  z-index: 1;
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    padding: 8px 12px;
+    border-radius: 2px;
+
+    font-size: 14px;
+    line-height: 140%;
+    letter-spacing: 0.01em;
+    color: colors.$dark-gray-515;
+    cursor: pointer;
+    text-transform: none;
+
+    &:hover {
+      background: rgba(58, 36, 86, 0.05);
+    }
+
+    &.selected {
+    }
+  }
+}

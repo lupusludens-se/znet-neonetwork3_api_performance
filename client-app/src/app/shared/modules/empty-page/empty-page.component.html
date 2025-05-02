@@ -1,0 +1,14 @@
+<div class="flex-column justify-center align-center" [class]="heightClass">
+  <div [ngClass]="{'empty-state-circle': circleBackground}" class="flex-center">
+    <svg-icon [key]="iconKey" width="40px" height="40px" class="text-blue-200"></svg-icon>
+  </div>
+  <!--Changing from 64px to 45px because of icon size issue-->
+  <h3 class="text-neo-near-black text-center pt-32">{{ headlinePart1 }}</h3>
+  <div [class]="line2TextClass" class="description text-blue-200 text-m mt-12">
+    {{ headlinePart2 }}
+  </div>
+  <button *ngIf="buttonText && link" class="green btn flex-center mt-32" [routerLink]="link">
+    <svg-icon class="mr-12" height="18px" key="plus" width="18px"></svg-icon>
+    {{ buttonText }}
+  </button>
+</div>

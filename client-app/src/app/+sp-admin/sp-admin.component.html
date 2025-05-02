@@ -1,0 +1,19 @@
+<h2 class="text-neo-near-black pb-24 pt-10">
+    {{ 'spAdmin.adminManagementPageTitle' | translate }}
+</h2>
+
+<div class="d-flex flex-wrap gap-24">
+    <div *ngFor="let navigation of adminNavigation" class="navigation-item flex-column flex-center">
+        <div class="icon flex-center">
+            <svg-icon [key]="navigation.icon" class="text-aqua-400"></svg-icon>
+        </div>
+
+        <h4 class="text-dark-gray-800 pt-8 pb-24">{{ navigation.title | translate }}</h4>
+        <button [routerLink]="navigation.addButtonLink" *ngIf="!navigation.addButtonLink.includes('message')" class="btn-m green-frame flex-center">
+            {{ navigation.addButtonName | translate }}
+        </button>
+        <button (click)="goToMessages()" *ngIf="navigation.addButtonLink.includes('message')" class="btn-m green-frame flex-center">
+            {{ navigation.addButtonName | translate }}
+        </button>
+    </div>
+</div>

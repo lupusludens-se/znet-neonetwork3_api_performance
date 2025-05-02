@@ -1,0 +1,66 @@
+@use 'colors';
+
+.announcement-wrapper {
+  min-height: 150px;
+  border-radius: 2px;  background-size: cover !important;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  border-radius: 8px;
+  height: 181px;
+
+  .overlay {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+    border-radius: 8px;
+  }
+
+  .btn-xs {
+    &:hover {
+      color: colors.$white;
+    }
+  }
+}
+
+.blue-100-frame {
+  color: colors.$white;
+
+  &:hover {
+    background: colors.$blue-400;
+    border-color: colors.$blue-400;
+  }
+}
+
+.text-xxs {
+  letter-spacing: 0.07em;
+}
+
+
+.ann-view-btn {
+  color: colors.$white;
+  background: rgba(252, 252, 252, 0.1);
+  border: 1px solid colors.$white;
+  border-radius: 8px;
+  width: fit-content;
+  padding: 18px;
+
+  &:hover{
+    background: rgba(252, 252, 252, 0.3);
+    cursor: pointer;
+  }
+}
+
+:host.public-dashboard{
+  .ann-view-btn { 
+    padding: 12px;
+    max-height: 32px;
+    padding: 18px 14px;
+    font-size: 12px;
+    line-height: 15px;
+
+    span{
+      padding: 2px;
+      padding-top: 5px;
+      padding-right: 0px;
+      padding-left: 9px;
+    }
+   }
+
+}

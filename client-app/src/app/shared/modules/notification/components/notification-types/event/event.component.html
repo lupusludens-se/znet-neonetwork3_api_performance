@@ -1,0 +1,37 @@
+<p class="two-lines-ellipsis text-s pl-12 text-neo-near-black">
+  <ng-container
+    *ngIf="notification?.details?.fieldName || notification.type === notificationType.InvitesMeToEvent"
+    [ngSwitch]="notification.type">
+    <span *ngSwitchCase="notificationType.InvitesMeToEvent">
+      {{ 'notificationType.invitesMeToEventLabel' | translate }}
+    </span>
+
+    <span *ngSwitchCase="notificationType.ChangesToEventInvited">
+      <span class="text-neo-near-black fw-700">
+        {{ notification?.details?.fieldName }}
+      </span>
+
+      {{ 'notificationType.changesToEventInvitedLabel' | translate }}
+    </span>
+  </ng-container>
+
+  <ng-container *ngIf="notification?.details?.eventTitle">
+    <a
+      class="text-neo-near-black fw-700 c-pointer"
+      routerLink="/events/{{ notification.details.eventId }}">
+      {{ notification?.details?.eventTitle }}</a
+    ><span
+      *ngIf="
+        (notification.type === notificationType.ChangesToEventInvited &&
+          notification?.details?.type === changeEventNotificationDetails) ||
+        (notification.type === notificationType.InvitesMeToEvent &&
+          notification?.details?.type === eventNotificationDetails)
+      "
+      >.</span
+    >
+  </ng-container>
+
+  <span *ngIf="notification.type === notificationType.ChangesToEventInvited && !notification?.details?.fieldName">
+    {{ 'notificationType.changesToEventInvitedMultipleLabel' | translate }}
+  </span>
+</p>

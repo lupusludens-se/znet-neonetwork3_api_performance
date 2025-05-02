@@ -1,0 +1,38 @@
+input,
+textarea {
+    border: 1px solid #dae1ec;
+    border-radius: 2px;
+    background: #fff;
+    font-size: 14px;
+    color: #0b3b6b;
+    padding: 16px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #97a6be;
+    font-size: 14px;
+}
+
+input:hover,
+textarea:hover {
+    border-color: #97a6be;
+}
+
+input:disabled,
+textarea:disabled {
+    opacity: 0.5;
+    background-color: #f3f6fc;
+    user-select: none;
+    pointer-events: none;
+}
+
+input.error,
+textarea.error {
+    border-color: #f9a4a4;
+}
+
+
+input {
+    height: 48px;
+}

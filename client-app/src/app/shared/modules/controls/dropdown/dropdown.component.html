@@ -1,0 +1,65 @@
+<label
+  class="input-label d-flex"
+  *ngIf="labelName && showLabel"
+  [class]="spacing">
+  {{ labelName }} <span class="text-asterisk">{{applyAsterisk ? '*' : ''}}</span>
+
+  <span
+    class="optional ml-4"
+    *ngIf="optionalText"
+    >({{ optionalText }})</span
+  >
+</label>
+
+<div
+  class="dropdown-input-wrapper d-flex c-pointer"
+  #parent
+  (click)="inputClick(parent)"
+  [class.error]="(errors || error) && submitted">
+  <input
+    [(ngModel)]="value.name"
+    [class]="{
+      invalid: false,
+      opened: showDropdown
+    }"
+    [disabled]="disabled"
+    [placeholder]="placeholderText ?? 'general.selectOneLabel' | translate"
+    [readonly]="readonly"
+    [style.width]="dropdownWidth"
+    class="app-dropdown"
+    type="text" />
+
+  <svg-icon
+    [class.opened]="showDropdown"
+    class="chevron-icon d-flex"[class.gray-out]="disabled"
+    key="caret-down"
+    (click)="inputClick(parent)">
+  </svg-icon>
+</div>
+
+<div
+  [class.opened]="showDropdown"
+  class="dropdown-wrapper"
+  [style.width]="dropdownWidth"
+  [style.top]="topPosition"
+  [style.right]="rightPosition">
+  <div class="dropdown-container">
+    <div
+      [style.max-height]="dropdownSize"
+      class="scroll-container scroll-list-default">
+      <div
+        (click)="chooseOption(item)"
+        *ngFor="let item of dropdownOptions; trackBy: trackOptionsById"
+        [class.selected]="item.id === value.id"
+        class="dropdown-item">
+        {{ item.name.includes('Label') ? (item.name | translate) : item.name }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<neo-control-error
+  [errors]="errors"
+  [fieldName]="labelForError ?? labelName"
+  [submitted]="submitted">
+</neo-control-error>

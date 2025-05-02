@@ -1,0 +1,46 @@
+@use 'breakpoints';
+@use 'colors';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.page-header {
+  @media (breakpoints.$medium) {
+    margin-top: 8px;
+  }
+}
+
+.tools-container {
+  gap: 12px;
+  background: colors.$white;
+
+  @media (breakpoints.$medium) {
+    gap: 24px;
+  }
+
+  neo-tool {
+    width: calc(50% - 6px);
+
+    @media (breakpoints.$medium) {
+      width: calc(50% - 12px);
+    }
+  }
+}
+.tools-wrapper {
+  
+  .top-panel-spacing {
+    padding: 38px 48px;
+  }
+.tools-icon {
+  width: 65px;
+  height: 60px;
+  margin-right: 28.5px;
+}
+}
+
+
+
+

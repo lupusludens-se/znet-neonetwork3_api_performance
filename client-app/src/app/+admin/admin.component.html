@@ -1,0 +1,71 @@
+<h2 class="text-neo-near-black pb-24 pt-10">
+  {{ 'admin.adminManagementLabel' | translate }}
+</h2>
+
+<div class="d-flex flex-wrap gap-24">
+  <div *ngFor="let navigation of adminNavigation" class="navigation-item flex-column flex-center">
+    <div class="icon flex-center" [ngClass]="{'pt-6' : navigation.icon === 'feedback'}">
+      <svg-icon [key]="navigation.icon" class="text-aqua-400" [ngClass]="{'feedback-icon-size' : navigation.icon === 'feedback'}"></svg-icon>
+    </div>
+
+    <h4 class="text-dark-gray-800 pt-8 pb-24">{{ navigation.title | translate }}</h4>
+
+    <a *ngIf="navigation?.isExternalLink && !navigation?.addButtonDisable" [href]="navigation.addButtonLink"
+      class="btn-m green-frame flex-center neo-arial btn" rel="noopener" target="_blank"> {{ navigation.addButtonName |
+      translate }}
+      <svg-icon key="arrow-thin-right" class="rotate-180" fontSize="14px"></svg-icon>
+
+    </a>
+
+    <button *ngIf="!navigation?.isExternalLink && !navigation?.addButtonDisable" [routerLink]="navigation.addButtonLink"
+      class="btn-m green-frame flex-center">
+      <svg-icon key="plus" fontSize="13px" *ngIf="!navigation?.enableArrowIcon"></svg-icon>
+      {{ navigation.addButtonName | translate }}
+      <svg-icon key="arrow-thin-right" class="rotate-180" fontSize="14px" *ngIf="navigation?.enableArrowIcon"></svg-icon>
+    </button>
+
+    <div class="tile-controls d-flex pt-16">
+      <button [routerLink]="navigation.viewButtonLink" class="text-xs neo-arial text-neo-purple">
+        {{ navigation.viewButtonName | translate }}
+      </button>
+
+      <ng-container *ngIf="navigation.secondButtonName">
+        <neo-vertical-line-decor class="admin-management"></neo-vertical-line-decor>
+
+        <button *ngIf="!navigation.isSecondButtonRequest" [routerLink]="navigation.secondButtonLink"
+          class="text-xs text-neo-purple d-flex align-center neo-arial ">
+          {{ navigation.secondButtonName | translate }}
+
+          <ng-container *ngIf="admitUsersBadge$ | async as admitUsersBadge">
+            <div *ngIf="navigation.isSecondBadgeEnabled" class="badge ml-6 d-flex align-center justify-center">
+              {{ admitUsersBadge.pendingUserCount }}
+            </div>
+          </ng-container>
+        </button>
+
+        <button *ngIf="navigation.isSecondButtonRequest" (click)="showModal = true"
+          class="text-xs text-neo-purple d-flex align-center neo-arial">
+          {{ navigation.secondButtonName | translate }}
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<neo-modal (closed)="showModal = false" *ngIf="showModal" class="title-h2"
+  [title]="'admin.wordPressDataSyncModal.titleLabel' | translate">
+  <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+    {{ 'admin.wordPressDataSyncModal.textLabel' | translate }}
+  </p>
+
+  <div class="separator"></div>
+
+  <div class="pt-24 d-flex align-center justify-end w-100">
+    <button (click)="showModal = false" class="btn-m cancel mr-16 w-min-initial w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button (click)="dataSync()" class="btn-m sync btn-m w-min-initial w-50">
+      {{ 'admin.wordPressDataSyncModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

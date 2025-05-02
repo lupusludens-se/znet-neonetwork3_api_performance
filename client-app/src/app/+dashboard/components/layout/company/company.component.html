@@ -1,0 +1,14 @@
+<div class="company-wrapper p-relative flex-column flex-center p-24 w-100 h-100 c-pointer">
+  <img [class.empty]="!image" alt="{{ title }}" class="company-image w-100"
+    src="{{ image ? image : 'assets/images/default-company-icon.svg' }}" />
+
+  <h5
+    *ngIf="title && !image && !tags"
+    class="text-dark-gray-750 pt-8 text-center">
+    {{ title }}
+  </h5>
+
+  <div *ngIf="tags?.length" class="d-flex flex-wrap pt-16 gap-4">
+    <neo-content-tag *ngFor="let tag of tags" [tag]="tag" [type]="type.Category" fontSize="16"></neo-content-tag>
+  </div>
+</div>

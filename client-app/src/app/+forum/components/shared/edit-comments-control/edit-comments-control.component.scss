@@ -1,0 +1,47 @@
+@import 'colors';
+
+:host {
+  width: 100%;
+  min-height: 59px;
+  font-size: 16px;
+  background: $white;
+  border: 1px solid $blue-100;
+  border-radius: 2px;
+  display: flex;
+  align-items: flex-start;
+  line-height: 24px;
+  padding: 16px;
+
+  .upload {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 20px;
+    right: 22px;
+  }
+}
+
+.btn-action{
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Arial Rounded MT Bold';
+  line-height: 150%;
+
+  &.cancel{
+     background: $dark-gray-450;
+     color: $dark-gray-590;
+
+     &:hover{
+      background: $dark-gray-250;
+     }
+  }
+
+  &.update{
+    background: $zeigo-purple;
+    color: $dark-gray-40;
+
+    &:hover{
+      background: $purple-400;
+     }
+ }
+}

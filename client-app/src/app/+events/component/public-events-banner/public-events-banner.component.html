@@ -1,0 +1,23 @@
+<div class="top-panel flex-between">
+  <img
+  alt="headline-background-image"
+  class="img"
+  src="assets/images/project-category-background-image.svg" />
+  <div class="left d-flex">
+    <div class="justify-center">
+      <svg-icon
+        class="events-icon"
+        key="events"></svg-icon>
+    </div>
+    <div class="flex-column">
+      <h2 class="title neo-arial">{{ 'events.PublicEventsTitle' | translate }}</h2>
+      <p class="text pt-20 w-100">
+        {{ 'events.PublicEventsDescription' | translate }}
+      </p>
+      <span class="mt-16 ft-14" >{{ 'events.PublicEventsInterest1' | translate }}
+        <a class="banner-create-account-link"[routerLink]="['/sign-up']"[queryParams]="{ source: signTrackingSourceEnum }">{{ 'events.PublicEventsInterest2' | translate }}</a>
+        {{ 'events.PublicEventsInterest3' | translate }}</span>
+      </div>
+    </div>
+</div>
+    

@@ -1,0 +1,51 @@
+@import 'colors';
+
+.search-input {
+    background: $white !important;
+    border: 1px solid $dark-gray-420;
+    border-radius: 8px;
+    color: $dark-gray-510;
+
+    &:hover {
+      background: $off-white;
+      border: 1px solid $zeigo-purple;
+    }
+
+    .search-icon {
+      left: 35px;
+    }
+
+    input {
+      border: none;
+    }
+  
+    ::placeholder {
+      color: $dark-gray-510;
+      opacity: 1;
+    }
+  }
+
+  .results-wrapper {   
+    top: 50px;       
+    width: 100%;
+    .results {  
+      border: 1px solid $dark-gray-590;
+      border-radius: 8px;
+      background-color: $white;
+      .result{
+        padding: 10px 12px;
+        &:hover{
+          background-color: $purple-20;
+          border-radius: 8px;
+        }
+      }
+    }   
+    
+  }
+  .text-zeigo-purple {
+    color: $zeigo-purple;
+    font-family: Arial Rounded MT Bold;
+    font-weight:700;
+    font-size: 14px;
+    line-height: 21px;
+  }

@@ -1,0 +1,20 @@
+<div *ngIf="responseData?.dataList?.length > 0">
+  <div class="tile c-pointer" [class.message-wrapper-first]="i === 0"
+    *ngFor="let tile of responseData.dataList; let i = index">
+    <neo-message-item [currentUser]="currentUser" class="overlay-polygon-recommended-left" [message]="tile"
+      [class.selected]="tile.isSelected" (selectedMessage)="toggleSelection(tile)"
+      [initiativeId]="initiativeId"></neo-message-item>
+  </div>
+</div>
+
+<ng-container *ngIf="responseData?.count === 0">
+  <div class="flex-column no-saved-container">
+    <svg-icon class="communication-bubble-icon" key="communication-bubble"></svg-icon>
+    <h3 class="pt-20">
+      {{ 'initiative.viewInitiative.emptyRecommendedMessagesLabel' | translate }}
+    </h3>
+  </div>
+</ng-container>
+
+<neo-pagination *ngIf="paging?.total > defaultPageItems" (changePage)="changePage($event)" [defaultItemPerPage]="12"
+  [paging]="paging" class="pt-24 mb-64"></neo-pagination>

@@ -1,0 +1,69 @@
+<header class="d-flex align-center justify-between">
+  <ng-container *ngIf="currentUser">
+    <div class="d-flex justify-between flex-grow-1" [class.pl-32]="!showSearch">
+      <neo-breadcrumb class="flex-column justify-center" *ngIf="!showSearch"></neo-breadcrumb>
+      <neo-global-search-bar *ngIf="hideSearch" class="flex-column p-relative justify-center w-100 mr-12"></neo-global-search-bar>
+       
+    </div>
+
+    <div class="d-flex align-center gap-16 pr-16" *ngIf="currentUser">
+      <neo-notifications [shortVersion]="true" (badgeCountRefresh)="badgeCountRefresh()"
+        [badgeCount]="badgeCount?.notificationsCount">
+      </neo-notifications>
+
+      <neo-saved-content-widget> </neo-saved-content-widget>
+
+      <div class="d-flex align-center pl-20">
+        <neo-user-avatar [user]="currentUser" imageSize="size32" class="c-pointer"
+          routerLink="/user-profile/{{ currentUser.id }}">
+        </neo-user-avatar>
+
+        <div class="flex-column pl-16">
+          <div class="d-flex flex-row">
+            <h6 class="text-dark-gray-800 c-pointer" routerLink="/user-profile/{{ currentUser.id }}">
+              {{ currentUser.firstName }} {{ currentUser.lastName }}
+            </h6>
+            <neo-menu (optionClick)="optionClick($event)" [options]="menuOptions(currentUser)"
+              activeIcon="profile-up-arrow" cssClasses="link flex-center ml-10 text-neo-blue" icon="profile-down-arrow">
+            </neo-menu>
+          </div>
+
+          <span class="text-xs text-dark-gray-545 pt-2 c-pointer"
+            routerLink="/company-profile/{{ currentUser.companyId }}">
+            {{ currentUser.company.name }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!currentUser && !auth.isLoggedIn() && isSkeletonHidden">
+    <div class="d-flex">
+      <neo-breadcrumb class="pl-32"></neo-breadcrumb>
+    </div>
+    <div class="d-flex">
+      <div class="pr-12">
+        <button class="btn-tertiary p-12" (click)="login()">{{ 'header.logInBtnLabel' | translate }}</button>
+      </div>
+      <div class="pr-12 vert-line">
+      </div>
+      <div class="pr-12">
+        <button class="green p-12 h-47" [routerLink]="['sign-up']" [queryParams]="{ source: signTrackingSourceEnum }">{{
+          'header.createAccBtnLabel' | translate}}</button>
+      </div>
+      <div class="pr-12">
+        <button class="green p-12 h-47 d-flex justify-center align-center gap-6" (click)="showScheduleDemo(true)">{{ 'header.scheduleDemoBtnLabel' | translate }}
+          <svg-icon [key]="'calendar'" size="xl" fontSize="20px" class="svgIcon"></svg-icon>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <neo-header-skeleton *ngIf="(!currentUser && (auth.isLoggedIn() || auth.needSilentLogIn()))"></neo-header-skeleton>
+  <neo-public-header-skeleton
+    *ngIf="!currentUser && !auth.isLoggedIn() && !isSkeletonHidden"></neo-public-header-skeleton>
+</header>
+<neo-modal (closed)="showScheduleDemoModal = false" *ngIf="showScheduleDemoModal" key="cross" class="title-h2-purple modal-schedule-demo"
+  title="{{modalTitle}}"
+  size="{{modalTitle?.length > 5 ? 'extra-medium' : 'small'}}"><!--Adding 5 to just check if the title has value but not just empty characters-->
+  <neo-schedule-demo (output)="showScheduleDemo(false)" (titleEmitter)="modalTitle=' '"></neo-schedule-demo>
+</neo-modal>

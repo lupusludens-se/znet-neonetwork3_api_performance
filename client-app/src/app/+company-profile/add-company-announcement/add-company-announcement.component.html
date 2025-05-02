@@ -1,0 +1,105 @@
+<div class="modal">
+  <div
+    class="modal-content"
+    flex-column>
+    <div class="top flex-between align-center">
+      <div class="modal-header">
+        <svg-icon
+          (click)="close()"
+          class="text-blue-200 c-pointer p-absolute top-20 right-20 close-hover"
+          height="16px"
+          key="modal-close"
+          width="16px">
+        </svg-icon>
+        <h3 class="text-neo-near-black mb-12">{{ 'companyProfile.formContent.title' | translate }}</h3>
+      </div>
+    </div>
+    <p class="description">{{ 'companyProfile.formContent.subtitle' | translate }}</p>
+    <div class="content-wrapper">
+      <div class="controls-wrapper">
+        <form [formGroup]="form">
+          <div class="div-section">
+            <label>
+              {{ 'companyProfile.formContent.announcementFields.titleInput.label' | translate }}
+              <span
+                class="counter"
+                [ngClass]="{ 'limit-reached': form.get('title')?.value?.length === maxTitleLength }">
+                {{ form.get('title')?.value?.length || 0 }}/{{ maxTitleLength }}
+              </span>
+              <neo-text-input
+                class="text-zeigo-near-black"
+                formControlName="title"
+                [maxLength]="maxTitleLength"
+                [placeholder]="'companyProfile.formContent.announcementFields.titleInput.placeholder' | translate"
+                [labelForError]="'companyProfile.formContent.validationMessages.name' | translate"
+                [submitted]="formSubmitted">
+              </neo-text-input>
+            </label>
+          </div>
+
+          <div class="div-section">
+            <div class="form-group">
+              <label class="mb-8">{{
+                'companyProfile.formContent.announcementFields.linkInput.label' | translate
+              }}</label>
+              <neo-text-input
+                [placeholder]="'companyProfile.formContent.announcementFields.linkInput.placeholder' | translate"
+                [showLabel]="false"
+                formControlName="link"
+                [labelName]="'companyProfile.formContent.announcementFields.linkInput.label' | translate"
+                [submitted]="formSubmitted">
+              </neo-text-input>
+            </div>
+          </div>
+
+          <div class="div-section">
+            <neo-dropdown
+              (chosenOption)="onScaleChange($event)"
+              [submitted]="formSubmitted"
+              [dropdownOptions]="announcementScalesList"
+              [labelName]="'companyProfile.formContent.scaleLabel' | translate"
+              [placeholderText]="'companyProfile.formContent.selectAnnouncementScaleLabel' | translate"
+              [labelForError]="'companyProfile.formContent.validationMessages.scale' | translate"
+              class="long-input text-zeigo-near-black"
+              dropdownSize="150px"
+              formControlName="scale">
+            </neo-dropdown>
+          </div>
+          <div #modalContent>
+            <div id="regionsListControl">
+              <neo-initiative-geographic-scale
+                formControlName="regions"
+                class="initiative-content-wrapper"
+                *ngIf="form.get('scale').value.length !== 0"
+                [continents]="continents"
+                [title]="announcementScaleCustomTitle"
+                [geographicScaleValue]="form.get('scale').value.id"
+                (selectedRegionsChange)="updateRegions($event)">
+              </neo-initiative-geographic-scale>
+
+              <div
+                *ngIf="form.get('scale').value.length !== 0 && announcementRegions?.length === 0 && formSubmitted"
+                class="error-msg">
+                {{ 'companyProfile.formContent.validationMessages.region' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="button-group">
+            <button
+              type="button"
+              class="btn-cancel"
+              (click)="close()">
+              {{ 'general.cancelAndDiscardLabel' | translate }}
+            </button>
+            <button
+              type="submit"
+              class="btn-save"
+              (click)="save()">
+              {{ 'general.saveLabel' | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

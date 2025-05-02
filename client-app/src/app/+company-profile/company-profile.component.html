@@ -1,0 +1,220 @@
+<ng-container *ngIf="currentUser$ | async as currentUser">
+  <button
+    (click)="goBack()"
+    class="btn-connect back-btn d-flex align-center pb-4">
+    <svg-icon
+      class="pr-4 back-btn-img-s"
+      key="left-arrow"></svg-icon>
+    Back
+  </button>
+  <h3 class="text-neo-near-black pb-16">
+    {{ 'title.companyProfileLabel' | translate }}
+  </h3>
+  <neo-top-panel imageCssClasses="right-40 top-40 w-50">
+    <div class="flex-between w-100 p-32 h-200px">
+      <div class="left d-flex align-center">
+        <div
+          [class.default]="!company?.image"
+          class="avatar flex-center p-12 mr-32">
+          <img
+            [alt]="company?.name"
+            [src]="company?.image ? company?.image.uri : 'assets/images/default-company-icon.svg'" />
+        </div>
+
+        <div class="name-wrapper flex-column">
+          <h2 class="text-dark-gray-30 mb-8 neo-arial">
+            {{ company?.name }}
+          </h2>
+
+          <div class="d-flex align-center">
+            <div class="text-m text-white-20 d-flex align-center">
+              {{ company?.industryName }}
+              <neo-vertical-line-decor *ngIf="company?.followersCount > 0" class="white-line"></neo-vertical-line-decor>
+              <span
+                class="c-pointer underline" *ngIf="company?.followersCount > 0"
+                (click)="showfollowersModal()">
+                {{ company?.followersCount }}
+                {{ (company?.followersCount === 1 ? 'userProfile.follower' : 'userProfile.followers') | translate }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right d-flex align-center">
+        <a
+          *ngIf="company?.companyUrl"
+          [href]="company?.companyUrl.startsWith('www') ? '//' + company?.companyUrl : company?.companyUrl"
+          class="btn-square mr-12 flex-center"
+          rel="noreferrer"
+          target="_blank">
+          <svg-icon
+            key="planet"
+            size="xxl">
+          </svg-icon>
+        </a>
+
+        <neo-profile-socials-controls
+          (followClick)="followCompany(company?.isFollowed)"
+          [following]="company?.isFollowed"
+          [linkedInLink]="company?.linkedInUrl"
+          [message]="false">
+        </neo-profile-socials-controls>
+      </div>
+    </div>
+  </neo-top-panel>
+
+  <main class="main-content d-flex pt-32">
+    <div class="left w-left-section w-60">
+      <div class="about-wrapper mb-12">
+        <h3 class="section-title neo-arial mb-8">
+          {{ 'userProfile.aboutLabel' | translate }}
+        </h3>
+
+        <p
+          [innerHTML]="company?.about"
+          class="text-m text-dark-gray-590"></p>
+
+        <div class="links-wrapper flex-column mt-16">
+          <a
+            *ngFor="let link of company?.urlLinks"
+            (click)="onExternalLinkClick(link.urlLink, link.urlName)"
+            [href]="link.urlLink.startsWith('www') ? '//' + link.urlLink : link.urlLink"
+            class="mb-16"
+            target="_blank">
+            {{ link.urlName }}
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="live-projects-wrapper"
+        *ngIf="
+          company?.typeId === companyTypes.SolutionProvider ||
+          (company?.typeId === companyTypes.SolutionProvider && projectsList?.length > 0)
+        ">
+        <div
+          class="mb-48"
+          *ngIf="enableLiveProjectsSection">
+          <div class="top flex-between mb-20">
+            <h3 class="section-title neo-arial mb-8">
+              {{ 'companyProfile.liveProjectsLabel' | translate }}
+            </h3>
+            <button
+              class="link-btn text-s fw-700 d-flex align-center"
+              *ngIf="!isInRole(currentUser, userRoles.SolutionProvider) && !isInRole(currentUser, userRoles.SPAdmin)"
+              (click)="viewProjects()">
+              {{ 'userProfile.viewAllProjects' | translate }}
+              <svg-icon
+                class="ml-8"
+                key="right-arrow"
+                size="sm">
+              </svg-icon>
+            </button>
+          </div>
+          <neo-company-live-projects-section
+            [projectsList]="projectsList"
+            [companyId]="company?.id"
+            [user]="currentUser"
+            (removeProjectFromSavedEvent)="deleteSavedProject($event)"
+            (saveProjectEvent)="saveProject($event)"></neo-company-live-projects-section>
+          <neo-pagination
+            (changePage)="updatePaging($event)"
+            *ngIf="paging?.total > paging?.take"
+            [defaultItemPerPage]="3"
+            [paging]="paging">
+          </neo-pagination>
+        </div>
+        <div *ngIf="company?.typeId === companyTypes.SolutionProvider">
+          <div class="top flex-between mb-20">
+            <h3 class="section-title neo-arial mb-8">
+              {{ 'userProfile.projectTypesLabel' | translate }}
+            </h3>
+          </div>
+
+          <div class="d-flex flex-wrap align-center gap-8">
+            <neo-content-tag
+              [fontSize]="'13'"
+              *ngFor="let solution of company?.categories"
+              [tag]="solution"
+              [type]="type.Category"
+              class="w-fit-content">
+            </neo-content-tag>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-40">
+      <neo-members-list
+        [iconKey]="'user-unavailable'"
+        (followClick)="followUser($event)"
+        [members]="employees"
+        [noMembersMessage]="'userProfile.noEmployeesYetLabel' | translate"
+        [title]="'general.employeesLabel' | translate"
+        [isCompanyProfile]="true">
+      </neo-members-list>
+      <ng-container>
+        <neo-company-announcements-section></neo-company-announcements-section>
+      </ng-container>
+
+      <ng-container *ngIf="company && company.typeId === companyTypes.SolutionProvider">
+        <neo-company-files-section
+          *ngIf="
+            isInRole(currentUser, userRoles.Admin) ||
+            (isInRole(currentUser, userRoles.SPAdmin) && currentUser.companyId.toString() === company.id.toString()) ||
+            publicFiles?.length > 0
+          "
+          [type]="('general.publicLabel' | translate).toLowerCase()"
+          [allFiles]="publicFiles"
+          (fileUploadEmitter)="loadFiles($event)"></neo-company-files-section>
+
+        <neo-company-files-section
+          *ngIf="
+            isInRole(currentUser, userRoles.Admin) ||
+            (isInRole(currentUser, userRoles.SPAdmin) && currentUser.companyId.toString() === company.id.toString()) ||
+            (isInRole(currentUser, userRoles.SolutionProvider) &&
+              currentUser.companyId.toString() === company.id.toString() &&
+              privateFiles?.length > 0)
+          "
+          [type]="('general.privateLabel' | translate).toLowerCase()"
+          [allFiles]="privateFiles"
+          (fileUploadEmitter)="loadFiles($event)"></neo-company-files-section>
+      </ng-container>
+    </div>
+  </main>
+  <neo-modal
+    (closed)="clear(); followersModal = false"
+    *ngIf="followersModal"
+    [badgeNumber]="company.followers?.length"
+    [showBadge]="true"
+    [title]="'userProfile.FollowersLabel' | translate"
+    size="large"
+    class="title-h2 title-badge">
+    <div class="pt-24 h-100 members-wrapper">
+      <neo-search-bar
+        (clearInput)="clear()"
+        (inputChange)="searchMembers($event)"
+        class="search-border-radius-large search-border"></neo-search-bar>
+
+      <div class="d-flex flex-wrap members mt-16">
+        <ng-container *ngIf="companyFollowers?.length">
+          <neo-member
+            (followClick)="followUser($event)"
+            (profileClick)="followersModal = false"
+            [isCompanyProfile]="true"
+            [isCompanyFollowers]="true"
+            *ngFor="let follower of companyFollowers"
+            [bordered]="true"
+            [showActions]="currentUser.id !== follower.id"
+            [user]="follower"></neo-member>
+        </ng-container>
+
+        <neo-no-results
+          *ngIf="!companyFollowers?.length && search"
+          [searchedStr]="search"
+          class="modal-no-results-label modal-ul-li"></neo-no-results>
+      </div>
+    </div>
+  </neo-modal>
+</ng-container>

@@ -1,0 +1,48 @@
+<div class="footer-container flex-between px-24 w-100">
+  <div class="d-flex align-center copyright-hide">
+    <p class="text-s text-dark-gray-505">&copy; {{ year }} {{'general.copyrightLabel' | translate }}</p>
+  </div>
+
+  <div *ngIf="forRegistration">
+    <img alt="Zeigo Network" src="assets/images/landing/zeigo-network-logo.png" />
+  </div>
+
+  <ng-container *ngIf="currentUser !== null && auth.isLoggedIn()">
+    <div class="d-flex align-center privacy-terms">
+      <a class="link text-s text-dark-gray-505" target="_blank" href="https://www.se.com/ww/en/about-us/legal/data-privacy.jsp">
+        {{ 'landing.footer.privacyPolicyLabel' | translate }}
+      </a>
+  
+      <neo-vertical-line-decor></neo-vertical-line-decor>
+  
+      <button (click)="termOfUseModal = true" class="link text-s text-dark-gray-505">
+        {{ 'landing.footer.termsOfUseLabel' | translate }}
+      </button>
+    </div>
+  </ng-container>
+  
+
+
+  <div *ngIf="!removeLogo">
+    <img alt="Zeigo Network" src="assets/images/landing/zeigo-network-logo.png" />
+  </div>
+ 
+    <ng-container *ngIf="!currentUser && !auth.isLoggedIn()">
+    <div class="d-flex align-center privacy-terms">
+      <a class="link text-s text-dark-gray-505" target="_blank" href="https://www.se.com/ww/en/about-us/legal/data-privacy.jsp">
+        {{ 'landing.footer.privacyPolicyLabel' | translate }}
+      </a>
+    </div>
+  </ng-container>
+  
+</div>
+
+<neo-privacy-policy (closed)="privacyPolicyModal = false; privacyPolicyModalClosed.emit()"
+  *ngIf="privacyPolicyModal"></neo-privacy-policy>
+
+<neo-term-of-use (closed)="termOfUseModal = false; termOfUseModalClosed.emit()"
+  *ngIf="termOfUseModal"></neo-term-of-use>
+
+<div class="d-flex align-center copyright-show">
+  <p class="text-s text-dark-gray-505">&copy; {{ year }} {{'general.copyrightLabel' | translate }}</p>
+</div>

@@ -1,0 +1,282 @@
+<ng-container *ngIf="currentUser">
+  <div class="flex-column">
+    <div class="d-flex flex-between align-center">
+      <h3 class="text-neo-near-black">
+        {{ 'messages.messagesLabel' | translate }}
+      </h3>
+
+      <button
+        class="btn-l green d-flex align-center"
+        routerLink="new-message">
+        <svg-icon
+          class="mr-10"
+          fontSize="13px"
+          key="new-messages"
+          size="xxl"></svg-icon>
+
+        {{ 'messages.newMessageLabel' | translate }}
+      </button>
+    </div>
+
+    <ng-container *ngIf="paging.total || search || hasPermission(currentUser)">
+      <neo-search-bar
+        (clearInput)="conversationSearch(null)"
+        (inputChange)="conversationSearch($event)"
+        class="pt-32">
+      </neo-search-bar>
+
+      <div
+        class="d-flex gap-12 pt-16"
+        [ngClass]="{
+          'pb-4 justify-end': !hasPermission(currentUser),
+          'pb-26 justify-between': hasPermission(currentUser)
+        }">
+        <div
+          class="d-flex gap-12"
+          *ngIf="hasPermission(currentUser)">
+          <button
+            (click)="changeTab('inbox')"
+            [ngClass]="{ active: selectedTab === 'inbox', inactive: selectedTab === 'network' }"
+            class="inbox-btn btn-l neo-arial text-neo-purple d-flex align-center">
+            {{ 'messages.inboxLabel' | translate }}
+          </button>
+
+          <button
+            (click)="changeTab('network')"
+            [ngClass]="{ inactive: selectedTab === 'inbox', active: selectedTab === 'network' }"
+            class="network-btn btn-l neo-arial text-neo-purple d-flex align-center">
+            {{ 'messages.networkLabel' | translate }}
+          </button>
+        </div>
+
+        <div         
+          *ngIf="selectedTab === 'network'">
+          <div class="d-flex" *ngIf="isUserAdmin">
+            <div>
+              <label class="text-s arial label-filter pb-4">{{ 'messages.filterLabel' | translate }}</label>
+              <neo-static-dropdown
+                class="ml-8 msgFilter"
+                icon="communication-bubble"
+                (optionSelected)="ConversationTypeChange($event)"
+                [name]="'filter.conversationTypesLabel' | translate"
+                [horizontalLayout]="true"
+                [taxonomy]="conversationBtwnType">
+              </neo-static-dropdown>
+            </div>
+            <div class="pl-12 pt-4">
+              <label class="text-s arial label-filter pb-4">&nbsp;</label>
+              <neo-taxonomy-filter
+                class="mt-8 msgFilter"
+                icon="category"
+                [name]="'filter.categoryLabel' | translate"
+                [horizontalLayout]="true"
+                [taxonomy]="taxonomyEnum.categories"
+                [filterLayout]="'msg'">
+              </neo-taxonomy-filter>
+            </div>
+          </div>
+          <div class="message-lable" *ngIf="!isUserAdmin">
+            {{ 'messages.companyNetworkMessage' | translate }}<br>
+            {{ 'messages.spAdminMessage' | translate }}
+          </div>
+        </div>
+
+        <div
+          class="d-flex sortInput"
+          *ngIf="selectedTab === 'inbox'">
+          <neo-sort-dropdown
+            [sortingOptions]="messageSortingOptions"
+            [selectedOption]="inboxSortOrder"
+            (optionSelected)="onInboxSortChange($event)"></neo-sort-dropdown>
+        </div>
+        <div
+          class="d-flex sortInput"
+          *ngIf="selectedTab === 'network'">
+          <neo-sort-dropdown
+            [sortingOptions]="messageNetworkSortingOptions"
+            [selectedOption]="networkSortOrder"
+            (optionSelected)="OnNetworkSortChange($event)"></neo-sort-dropdown>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div
+    [class.pt-26]="!hasPermission(currentUser)"
+    [ngClass]="{
+      'justify-center': pageData && !pageData?.dataList?.length && !search,
+      'list-min-full-height flex-column': paging.total || search,
+      'flex-center w-100 mt-8': !paging.total && !search
+    }">
+    <div
+      class="w-100 d-flex align-center text-center header"
+      *ngIf="paging.total && selectedTab === 'network'">
+      <div class="w-30">From</div>
+      <div class="w-50">Message</div>
+      <div class="w-30 align-center">To</div>
+      <div class="align-end pl-16 w-20">Time</div>
+    </div>
+    <div
+      *ngFor="let conversation of pageData?.dataList; let first = first"
+      [ngClass]="{
+        new: conversation.unreadCount > 0,
+        'pb-24': conversation.sourceTypeId === discussionSourceType.ProviderContact,
+        'disabled': isAllowedOnDetailPage === false
+      }"
+      [class.message-wrapper-first]="first"
+      routerLink="{{ conversation?.id }}"
+      class="d-flex message-wrapper pb-16 pl-24 w-100 c-pointer">
+      <neo-message-user-detail
+        [currentuser]="currentUser"
+        [conversation]="conversation"
+        [selectedTab]="selectedTab"
+        [direction]="'from'"
+        class="d-flex w-30 align-center mr-56 mt-24"></neo-message-user-detail>
+
+      <div class="message-block d-flex flex-column w-40 mt-24">
+        <div class="d-flex mb-4">
+          <label
+            for="subject"
+            class="subject-label flex-column">
+            {{ 'messages.subjectMessageLabel' | translate }}&nbsp;</label
+          >
+          <span
+            class="subject"
+            *ngIf="conversation.sourceTypeId === discussionSourceType.ProviderContact; else subjectTitle">
+            {{
+              conversation?.subject?.length > 71
+                ? (conversation?.project?.title | slice : 0 : 71) + '...'
+                : conversation?.project?.title
+            }}</span
+          >
+        </div>
+
+        <ng-template #subjectTitle>
+          <span class="subject">
+            {{
+              conversation?.subject?.length > 71
+                ? (conversation?.subject | slice : 0 : 71) + '...'
+                : conversation?.subject
+            }}</span
+          >
+        </ng-template>
+
+        <div class="max-w-100 d-flex">
+          <div class="message flex-column">
+            <span class="text-xs fw-700 text-neo-near-black">
+              {{ getLastMessageUser(currentUser, conversation) + ':' }}
+            </span>
+
+            <span
+              *ngIf="conversation?.lastMessage?.text?.length > 0"
+              [ngClass]="{
+                'pt-2': conversation?.lastMessage?.text?.length,
+                'width: 468px': selectedTab === 'inbox',
+                'width: 368px': selectedTab === 'network'
+              }"
+              class="message-content text-blue-200 text-s mt-2" [class.italic]="conversation?.lastMessage?.statusId == 0"
+              [innerHTML]="conversation?.lastMessage?.statusId == 1 ? conversation?.lastMessage?.text :  'messages.messageDeletedLabel' | translate "></span>
+            <span
+              *ngIf="conversation?.lastMessage?.text?.length <= 0"
+              [ngClass]="{
+                'width: 468px': selectedTab === 'inbox',
+                'width: 368px': selectedTab === 'network'
+              }"
+              [class.italic]="conversation?.lastMessage?.statusId == 0"
+              class="message-content text-blue-200 text-s mt-2 align-center">
+              <ng-container *ngIf="conversation?.lastMessage?.statusId == 1">{{ 'messages.attachmentLable' | translate }}</ng-container>
+              <ng-container *ngIf="conversation?.lastMessage?.statusId == 0">{{ 'messages.messageDeletedLabel' | translate }}</ng-container>
+              <svg-icon *ngIf="conversation?.lastMessage?.statusId == 1"
+                class="text-s mt-2 link-align"
+                key="pin"
+                size="m"></svg-icon>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <neo-message-user-detail
+        *ngIf="selectedTab === 'network'"
+        [currentuser]="currentUser"
+        [conversation]="conversation"
+        [selectedTab]="selectedTab"
+        [direction]="'to'"
+        class="d-flex w-30 align-center mr-26 mt-24 ml-38"></neo-message-user-detail>
+
+      <div
+        class="right-block d-flex flex-column pl-16 w-34"
+        [ngClass]="{
+          'mt-24 justify-center': conversation.sourceTypeId !== discussionSourceType.ProviderContact,
+          'w-24': selectedTab === 'network'
+        }">
+        <div
+          class="d-flex justify-end text-center"
+          *ngIf="conversation.sourceTypeId === discussionSourceType.ProviderContact">
+          <div class="lead-label">
+            <svg-icon
+              class="mr-4 p-relative top-2"
+              fontSize="12px"
+              key="dot"></svg-icon>
+            <label for="leadlabel">{{ 'messages.leadMessageLabel' | translate }}</label>
+          </div>
+        </div>
+        <div
+          class="d-flex pl-12 pr-24"
+          [ngClass]="{
+            'pt-40': conversation.sourceTypeId === discussionSourceType.ProviderContact,
+            'justify-center': selectedTab === 'network',
+            'justify-between': selectedTab === 'inbox'
+          }">
+          <div class="d-flex align-center">
+            <svg-icon
+              class="timer-icon text-blue-200"
+              key="message-timer"
+              size="md">
+            </svg-icon>
+
+            <span class="text-xs text-blue-200 pl-8">
+              {{ conversation.lastMessage.createdOn | timeAgo }}
+            </span>
+          </div>
+
+          <div
+            class="pl-48"
+            *ngIf="selectedTab === 'inbox'">
+            <button
+              class="lead-btn btn-s w-min-initial d-flex align-center"
+              routerLink="{{ conversation?.id }}">
+              {{ 'messages.viewLabel' | translate }}
+
+              <svg-icon
+                class="ml-8"
+                key="right-arrow">
+              </svg-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <neo-pagination
+      (changePage)="changePage($event)"
+      *ngIf="paging && paging.total > defaultItemPerPage"
+      [defaultItemPerPage]="defaultItemPerPage"
+      [paging]="paging"
+      class="pt-24 mb-64">
+    </neo-pagination>
+
+    <neo-empty-page
+      *ngIf="pageData && !pageData?.dataList?.length && !search"
+      [headlinePart1]="'messages.emptyStateLabel' | translate"
+      iconKey="messages-communication-bubble">
+    </neo-empty-page>
+    <div
+      class="d-flex justify-start mt-24 ml-8"
+      *ngIf="!pageData?.dataList?.length && search">
+      <neo-no-results
+        *ngIf="!pageData?.dataList?.length && search"
+        [searchedStr]="search">
+      </neo-no-results>
+    </div>
+  </div>
+</ng-container>

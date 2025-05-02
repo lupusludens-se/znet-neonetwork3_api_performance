@@ -1,0 +1,22 @@
+<div class="forbidden-wrapper w-100 h-100 flex-column">
+  <img alt="Zeigo Network" class="c-pointer" routerLink="/" src="assets/images/zeigo-purple-logo.jpg" />
+
+  <div class="flex-column pt-64 z-index-3">
+    <img alt="user forbidden" class="user-forbidden" src="assets/images/400s/user-forbidden.svg" />
+
+    <div class="flex-column pt-32">
+      <h1 class="not-active-label pb-32 w-50">
+        {{ 'general.accountNotActiveLabel' | translate }}
+      </h1>
+
+      <button (click)="back()" class="btn-l green d-flex align-center w-fit-content">
+        <svg-icon class="mr-14" key="left-arrow"></svg-icon>
+        {{ 'general.backLabel' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <img alt="Zeigo Network" class="p-absolute bottom-0 right-0 vector" src="assets/images/400s/vector.svg" />
+
+  <img alt="Zeigo Network" class="p-absolute top-0 right-0 background" src="assets/images/400s/423.png" />
+</div>

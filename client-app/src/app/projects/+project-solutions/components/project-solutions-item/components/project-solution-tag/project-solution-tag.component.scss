@@ -1,0 +1,19 @@
+@use 'colors';
+
+.tag {
+  font-size: 12px;
+  line-height: 130%;
+  height: 32px;
+  max-width: 600px;
+  background-color: colors.$blue-20;
+  border-radius: 2px;
+  color: colors.$aqua-400;
+
+	&:hover {
+		background: colors.$light-blue-20;
+		transition: all 0.1s ease;
+	}
+}
+.svg-no-pointer-events{
+  pointer-events: none;
+}

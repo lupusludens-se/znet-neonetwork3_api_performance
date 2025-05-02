@@ -1,0 +1,30 @@
+<div class="no-content-wrapper flex-column">
+  <div>
+    <svg-icon class="add-icon" key="add-icon"></svg-icon>
+  </div>
+
+  <div *ngIf="!isAdminOrTeamMemberTemplate; else adminOrTeamMemberTemplate" class="title">
+    {{'initiative.viewInitiative.noContentAddLabel' | translate}} {{section}}</div>
+  <ng-template #adminOrTeamMemberTemplate>
+    <div class="title">{{section}}</div>
+  </ng-template>
+
+  <div *ngIf="section !== 'Files' && !isAdminOrTeamMemberTemplate " class="sub-title">
+    {{'initiative.viewInitiative.noContentSubTitle' | translate}}
+    {{subTitleSection | lowercase}}{{'.'}}
+  </div>
+
+  <div *ngIf="section!=='Files' && isAdminOrTeamMemberTemplate">
+    <div *ngIf="section==='Learn Content'; else commonModulesTemplate" class="sub-title">
+      {{'initiative.viewInitiative.adminOrTeamMember.learnContent.noContentSubTitle1'|translate}} {{section}}
+      {{'initiative.viewInitiative.adminOrTeamMember.noContentSubTitle2'|translate}}
+    </div>
+    <ng-template #commonModulesTemplate>
+      <div class="sub-title">{{'initiative.viewInitiative.adminOrTeamMember.noContentSubTitle1'|translate}} {{section}}
+        {{'initiative.viewInitiative.adminOrTeamMember.noContentSubTitle2'|translate}}</div>
+    </ng-template>
+  </div>
+
+  <div *ngIf="section === 'Files'" class="sub-title"
+    [innerHtml]="'initiative.viewInitiative.permittedFileDescription' | translate"></div>
+</div>

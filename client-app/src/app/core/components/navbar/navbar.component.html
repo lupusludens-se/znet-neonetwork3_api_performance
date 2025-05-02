@@ -1,0 +1,79 @@
+<div class="navbar-wrapper flex-column">
+  <div class="flex-column align-center pt-20">
+    <div class="c-pointer d-flex justify-center">
+      <img
+        alt=""
+        class="w-80"
+        src="assets/images/nav-zeigo-logo.svg"
+        routerLink="/dashboard" />
+    </div>
+  </div>
+
+  <div class="navbar-items-block flex-center flex-column">
+    <ng-container *ngIf="userType !== ''">
+      <ng-container *ngFor="let item of navbarItems">
+        <a
+          *ngIf="(userType === 'Public' && item.lockForPublic === undefined) || userType === 'Private'"
+          class="nav-menu-item btn-l link-icon text-left text-capitalize d-flex align-center"
+          [ngClass]="item.cssClass"
+          [routerLinkActive]="item.lockForPublic && !auth.isLoggedIn() ? '' : 'active'"
+          [routerLink]="
+            item.lockForPublic && !auth.isLoggedIn()
+              ? []
+              : !auth.isLoggedIn()
+              ? [item.publicPath ?? item.path]
+              : [item.path]
+          "
+          (click)="onNavItemClick(item.name)">
+          <svg-icon
+          class="nav-icon"
+          key="{{ item.icon }}"
+          size="xxl"></svg-icon>
+        {{ item.name }}
+        
+        <span
+          *ngIf="item.cssClass && badgeCount?.messagesCount > 0"
+          class="badge flex-center">
+          {{ badgeCount?.messagesCount > 99 ? '99+' : badgeCount?.messagesCount }}
+        </span>
+        </a>
+        <a 
+          class="nav-menu-item btn-l link-icon text-left text-capitalize d-flex align-center"
+          [ngClass]="item.cssClass"
+          *ngIf="item.lockForPublic && userType === 'Public'" href="javascript:void(0)">
+          <ng-container>
+            <span
+              class="lock-icon d-flex w-100"
+              [src]="activityTypeEnum"
+              neoLockClick>
+              <span class="d-flex align-center w-90">
+                <svg-icon
+                  class="nav-icon"
+                  key="{{ item.icon }}"
+                  size="xxl"></svg-icon>
+                {{ item.name }}
+              </span>
+              <span class="align-right w-10">
+                <svg-icon
+                  key="lock-private-content"
+                  class="{{ item.isLockColorWhite ? 'text-aqua-400' : 'text-dark-gray-30' }}"></svg-icon>
+              </span>
+            </span>
+          </ng-container>
+        </a>
+      </ng-container>
+    </ng-container>
+    <neo-navbar-skeleton *ngIf="!navbarItems"></neo-navbar-skeleton>
+  </div>
+  <a class="btn-l feedback ml-10 feedback" href="javascript:void(0)" (click)="toggleFeedbackPopup('')"
+    *ngIf="userType == 'Private' && navbarItems">
+    <ng-container>
+      <span class="lock-icon">
+        <span class="d-flex align-center">
+          <svg-icon key="feedback-menu" class="nav-icon" fontSize="17px"></svg-icon>
+          {{ 'general.feedbackMenuLabel' | translate }}
+        </span>
+      </span>
+    </ng-container>
+  </a>
+</div>

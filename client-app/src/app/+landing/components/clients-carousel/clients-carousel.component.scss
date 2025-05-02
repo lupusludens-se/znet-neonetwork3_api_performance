@@ -1,0 +1,44 @@
+.carousel-container {
+  .clients-carousel {
+    display: flex;
+    align-items: center;
+
+    &.scroll-left {
+      animation: scroll-left 0.4s infinite linear;
+    }
+  }
+
+  .logo-item {
+    width: 225px;
+    padding: 0 20px;
+    transition: padding 0.4s ease-out;
+
+    &.scroll-active {
+      transition: padding 0.4s ease-in;
+    }
+
+    &.scrolled {
+      transition: padding 0.4s ease-in;
+    }
+  }
+}
+
+@keyframes scroll-left {
+  from {
+    transform: translateX(0px);
+  }
+
+  to {
+    transform: translateX(-225px);
+  }
+}
+
+@keyframes scroll-left-mobile {
+  from {
+    transform: translateX(0px);
+  }
+
+  to {
+    transform: translateX(-225px);
+  }
+}

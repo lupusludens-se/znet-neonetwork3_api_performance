@@ -1,0 +1,224 @@
+<div class="content flex-column mb-96">
+  <div class="top flex-between align-center mb-24">
+    <div class="text-wrapper">
+      <h3 class="text-neo-near-black">{{ 'projects.addProject.overviewLabel' | translate }}</h3>
+      <p class="d-flex align-start text-s text-neo-near-black project-sub-label mt-14">
+        <svg-icon
+          class="text-neo-dark-green mr-8"
+          key="alert-filled"></svg-icon>
+
+        {{ 'projects.addProject.projectDetailsInformationLabel' | translate }}
+      </p>
+    </div>
+  </div>
+
+  <div class="controls-wrapper general-wrapper mb-24">
+    <div
+      class="general-wrapper-inner"
+      [ngClass]="{
+        noscroll:
+          controlContainer.control.get('categoryId').value.slug !== projectTypes.AggregatedPpa &&
+          controlContainer.control.get('categoryId').value.slug !== projectTypes.OffsitePpa
+      }">
+      <label>
+        {{ 'settings.generalLabel' | translate }}
+      </label>
+      <ul class="ml-16">
+        <li class="text-xs text-dark-gray-580 mt-8">{{ 'projects.addProject.generalLine1Label' | translate }}</li>
+        <li class="text-xs text-dark-gray-580 mt-8">{{ 'projects.addProject.generalLine2Label' | translate }}</li>
+        <li class="text-xs text-dark-gray-580 mt-8">{{ 'projects.addProject.generalLine3Label' | translate }}</li>
+        <li class="text-xs text-dark-gray-580 mt-8">{{ 'projects.addProject.generalLine4Label' | translate }}</li>
+        <li class="text-xs text-dark-gray-580 mt-8">{{ 'projects.addProject.generalLine5Label' | translate }}</li>
+      </ul>
+      <label
+        class="mt-16"
+        *ngIf="
+          controlContainer.control.get('categoryId').value.slug === projectTypes.AggregatedPpa ||
+          controlContainer.control.get('categoryId').value.slug === projectTypes.OffsitePpa
+        ">
+        {{ 'projects.addProject.prohibitedContentLabel' | translate }}
+      </label>
+      <ul
+        class="ml-16"
+        *ngIf="
+          controlContainer.control.get('categoryId').value.slug === projectTypes.AggregatedPpa ||
+          controlContainer.control.get('categoryId').value.slug === projectTypes.OffsitePpa
+        ">
+        <li class="text-xs text-dark-gray-580 mt-8">
+          {{ 'projects.addProject.prohibitedContentLine1Label' | translate }}
+        </li>
+        <li class="text-xs text-dark-gray-580 mt-8">
+          {{ 'projects.addProject.prohibitedContentLine2Label' | translate }}
+        </li>
+        <li class="text-xs text-dark-gray-580 mt-8">
+          {{ 'projects.addProject.prohibitedContentLine3Label' | translate }}
+        </li>
+        <li class="text-xs text-dark-gray-580 mt-8">
+          {{ 'projects.addProject.prohibitedContentLine4Label' | translate }}
+        </li>
+        <li class="text-xs text-dark-gray-580 mt-8">
+          {{ 'projects.addProject.prohibitedContentLine5Label' | translate }}
+        </li>
+        <li class="text-xs text-dark-gray-580 mt-8">
+          {{ 'projects.addProject.prohibitedContentLine6Label' | translate }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="controls-wrapper">
+    <form [formGroup]="form">
+      <label
+        class="mb-32"
+        *ngIf="permissionToAddPublisher">
+        {{ 'projects.addProject.publishedByLabel' | translate }}
+
+        <neo-users-search
+          placeholder="Select user"
+          [searchWithMention]="false"
+          (clearInput)="clearSearch()"
+          (selectedResult)="chooseUser($event)"
+          [displayName]="generateUserDisplayName(publishedByUser)"
+          [displayImage]="publishedByUser?.image?.uri"
+          [showOnlyProjectPublishers]="true"
+          [companyCategoryId]="controlContainer.control.get('categoryId').value?.id"
+          class="mt-8">
+        </neo-users-search>
+      </label>
+
+      <label class="mb-32">
+        {{ 'projects.addProject.titleLabel' | translate }}
+        <span class="counter-wrapper flex-between mb-8 mt-6">
+          <p class="hint-info arial">
+            {{ 'projects.addProject.titleDescriptionLabel' | translate }}
+          </p>
+          <span class="counter">{{ form.controls['title'].value?.length ?? 0 }}/{{ titleMaxLength }}</span>
+        </span>
+
+        <neo-text-input
+          formControlName="title"
+          placeholder="Text"
+          [showLabel]="false"
+          [labelName]="'projects.addProject.titleLabel' | translate"
+          [submitted]="formSubmitted"
+          [maxLength]="titleMaxLength">
+        </neo-text-input>
+      </label>
+
+      <label class="mb-32">
+        {{ 'projects.addProject.subTitleLabel' | translate }}
+        <span class="counter-wrapper flex-between mb-8 mt-6">
+          <p class="hint-info arial">
+            {{ 'projects.addProject.useWordsLabel' | translate }}
+          </p>
+          <span class="counter">{{ form.controls['subTitle'].value?.length ?? 0 }}/{{ subTitleMaxLength }}</span>
+        </span>
+
+        <neo-textarea-control
+          formControlName="subTitle"
+          height="176px"
+          [showLabel]="false"
+          [labelName]="'projects.addProject.subTitleLabel' | translate"
+          [submitted]="formSubmitted"
+          [maxLength]="subTitleMaxLength">
+        </neo-textarea-control>
+      </label>
+
+      <label>
+        {{ 'projects.addProject.opportunityLabel' | translate }}
+        <span class="counter-wrapper flex-between mb-8 mt-6">
+          <p class="hint-info arial">
+            {{ 'projects.addProject.opportunityAdditionalDetailsLabel' | translate }}
+          </p>
+          <span class="counter">{{ opportunityLength }}/{{ opportunityTextMaxLength }}</span>
+        </span>
+
+        <neo-message-control
+          (symbolsCount)="onOpportunityLengthChanged($event)"
+          class="opportunity-control mt-8"
+          [displayAttachments]="false"
+          formControlName="opportunity"
+          [labelName]="'projects.addProject.opportunityLabel' | translate"
+          [hasError]="
+            formSubmitted && (!form.controls['opportunity'].value || form.controls['opportunity'].value === '<br>')
+          "
+          id="opportunity"
+          [maxLength]="opportunityMaxLength"
+          classes="p-0 text-s">
+        </neo-message-control>
+
+        <neo-control-error
+          class="mt-6"
+          [errors]="
+            this.opportunityLength > this.opportunityTextMaxLength
+              ? { maxlength: { requiredLength: 4000 } }
+              : !form.controls['opportunity'].value || form.controls['opportunity'].value === '<br>'
+              ? { required: true }
+              : null
+          "
+          [fieldName]="'projects.addProject.opportunityLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-control-error>
+      </label>
+
+      <label class="mb-32 mt-32">
+        {{ 'projects.addProject.aboutLabel' | translate }}
+        <span class="counter-wrapper flex-between mb-8 mt-6">
+          <p class="hint-info arial">
+            {{ 'projects.addProject.leaveDescriptionLabel' | translate }}
+          </p>
+          <span class="counter">{{ descriptionLength }}/{{ descriptionTextMaxLength }}</span>
+        </span>
+
+        <neo-message-control
+          (symbolsCount)="onDescriptionLengthChanged($event)"
+          class="mt-8"
+          id="about"
+          formControlName="description"
+          [hasError]="
+            formSubmitted && (!form.controls['description'].value || form.controls['description'].value === '<br>')
+          "
+          [displayAttachments]="false"
+          (valueChanged)="onDescriptionLengthChanged($event); form.controls['description'].updateValueAndValidity()"
+          maxHeight="200px"
+          [maxLength]="descriptionMaxLength"
+          classes="p-0 text-s">
+        </neo-message-control>
+
+        <neo-control-error
+          class="mt-6"
+          [errors]="
+            this.descriptionLength > this.descriptionTextMaxLength
+              ? { maxlength: { requiredLength: 4000 } }
+              : !form.controls['description'].value || form.controls['description'].value === '<br>'
+              ? { required: true }
+              : null
+          "
+          [fieldName]="'projects.addProject.aboutLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-control-error>
+      </label>
+    </form>
+  </div>
+</div>
+
+<neo-form-footer
+  (backButtonClick)="goBack()"
+  (cancel)="addProjectService.exitFlow()"
+  (save)="proceed()"
+  [backButton]="true"
+  [draftButton]="true"
+  backButtonIcon="footer-left-arrow-thin"
+  [draftButtonText]="'projects.addProject.saveAsDraftsLabel' | translate"
+  (draftButtonClick)="addProjectService.updateProjectGeneralData(form.value); showDraftModal = true"
+  icon="add-project-thin-right-arrow"
+  submitButtonName="Publish">
+</neo-form-footer>
+
+<neo-draft-modal
+  *ngIf="showDraftModal"
+  [title]="form.get('title').value"
+  (closeModal)="showDraftModal = false"
+  (projectTitle)="form.controls['title'].setValue($event)"
+  [projectTypeSlug]="controlContainer.control?.get('categoryId')?.value?.slug">
+</neo-draft-modal>

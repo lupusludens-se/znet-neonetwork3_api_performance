@@ -1,0 +1,154 @@
+@use 'colors';
+
+.title {
+  //?? put in common
+  font-size: 24px;
+  line-height: 120%;
+  color: colors.$near-black-400;
+}
+
+.main {
+  width: 920px;
+  background-color: colors.$white;
+  padding: 28px 32px 38px;
+  margin-bottom: 114px;
+
+  .avatar-wrapper {
+    align-items: center;
+    width: 180px;
+
+    .file-input {
+      display: none;
+    }
+
+    .text {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 140%;
+      color: colors.$dark-gray-590;
+      text-align: center;
+    }
+
+    .btn-remove {
+      width: 100%;
+      height: 37px;
+      font-family: Arial, serif;
+      background-color: colors.$dark-gray-450;
+      color: colors.$dark-gray-590;
+      border-radius: 8px;
+      border: none;
+
+      &:hover {
+        background-color: colors.$dark-gray-250;
+        color: colors.$dark-gray-590;
+      }
+    }
+
+    .btn-add {
+      height: 37px;
+      padding: 8px 20px;
+      border-radius: 8px;
+    }
+  }
+
+  form {
+    width: 636px;
+
+    textarea {
+      height: 128px;
+    }
+  }
+
+  .label {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial Rounded MT Bold, serif;
+    font-size: 14px;
+    line-height: 130%;
+    color: colors.$dark-gray-590;
+  }
+
+  textarea {
+    margin-top: 8px;
+
+    &:disabled {
+      background-color: colors.$dark-gray-100;
+    }
+  }
+
+  .controls-row {
+
+    neo-text-input,
+    .label {
+      width: 306px;
+    }
+  }
+
+  .url-wrapper {
+    .text-input {
+      width: 276px;
+    }
+
+    .btn-remove-link {
+      color: colors.$blue-200;
+    }
+  }
+}
+
+.add-link-btn {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  line-height: 130%;
+  height: 37px;
+  width: fit-content;
+  padding: 8px 20px;
+  text-transform: capitalize;
+
+  &:hover {
+    border: 1px solid colors.$purple-500;
+    color: colors.$purple-500;
+  }
+}
+
+.controls-wrapper {
+  background: rgba(28, 55, 99, 0.85);
+  height: 74px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.error {
+  color: colors.$red;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+neo-text-input {
+  display: block;
+}
+
+.permissions-wrapper {
+  opacity: 0.5;
+  pointer-events: none;
+
+  neo-blue-checkbox {
+    width: 50%;
+  }
+}
+
+.avatar-container {
+  height: 110px;
+  width: 110px;
+  border: 2px solid colors.$aqua-400;
+  border-radius: 50%;
+}
+
+.ml-20{
+  margin-left: 20px;
+}
+.w-85{
+  width: 85%;
+}

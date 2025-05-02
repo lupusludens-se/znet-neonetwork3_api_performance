@@ -1,0 +1,34 @@
+@use 'colors';
+
+:host {
+  background: colors.$dark-gray-20;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 38px;
+}
+
+.optionalText {
+  margin-left: 4px;
+  color: colors.$dark-gray-70;
+}
+
+.ml-4-percent {
+  margin-left: 4%;
+}
+
+.mt-mb-3-percent {
+  margin-top: 3%;
+  margin-bottom: 2%;
+}
+
+.text-subtitle {
+  color: colors.$dark-gray-590;
+}
+
+.separator {
+  width: 92%;
+  height: 1px;
+  border-top: 1px solid colors.$dark-gray-300;
+}

@@ -1,0 +1,5 @@
+<div class="filters-header flex-between p-10 pb-0">
+  <span class="filters-title">{{ filterName }}</span>
+  <ng-content></ng-content>
+  <button (click)="clearFilters.emit(true)" *ngIf="showClearButton" class="clear-btn">Clear All</button>
+</div>

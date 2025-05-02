@@ -1,0 +1,18 @@
+export const ProjectApiRoutes = {
+  projectsList: 'projects',
+  projectsView: 'views',
+  batteryStorage: '/battery-storage',
+  fuelCells: '/fuel-cells',
+  carbonOffset: '/carbon-offset-purchasing',
+  communitySolar: '/community-solar',
+  eacPurchasing: '/eac-purchasing',
+  efficiencyAuditAndConsulting: '/efficiency-audits-consulting',
+  efficiencyEquipmentMeasures: '/efficiency-equipment-measures',
+  emergingTechnologies: '/emerging-technologies',
+  evCharging: '/ev-charging-fleet-electrification',
+  onsiteSolar: '/onsite-solar',
+  renewableRetail: '/renewable-retail-electricity',
+  greenTariff: '/utility-green-tariff',
+  offsitePpa: '/offsite-power-purchase-agreement',
+  projectResourcesById: 'project-resources',
+};

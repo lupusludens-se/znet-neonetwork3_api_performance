@@ -1,0 +1,42 @@
+<div class="community-wrapper">
+  <div class="flex-column">
+    <neo-top-panel imageCssClasses="l-250px w-599px h-249px t-28px text-dark-gray-30"
+      imageUrl="assets/images/project-category-background-image.svg">
+      <div class="top-panel-spacing d-flex z-index-1 w-100">
+        <div class="flex-column w-100">
+          <div class="d-flex  align-center">
+            <div class="left d-flex">
+              <svg-icon class="community-icon" key="community"></svg-icon>
+            </div>
+            <div class="flex-column title">
+              <h2>{{ 'community.communityLabel' | translate }}</h2>
+
+              <p class="pt-8 text-s w-100">
+                {{ 'community.communityDescription' | translate }}
+              </p>
+              <p class="mt-10 pt-8 text-s w-100">{{ 'community.communityInterest1' | translate }}
+                <a class="banner-create-account-link" [routerLink]="['/sign-up']"
+                [queryParams]="{ source: signTrackingSourceEnum }">{{ 'community.communityInterest2' | translate }}</a>
+                {{ 'community.communityInterest3' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </neo-top-panel>
+  </div>
+</div>
+<div *ngIf="!networkStats" class="d-flex gap-12  top-panel-spacing mt-32">
+  <div class="section-content section-content-5 flex-grow-1">
+      <div class="section-line section-line-extra-big mb-24"></div>
+      <div class="section-line section-line-big"></div>
+  </div>
+</div>
+<div class="stats-height" *ngIf="networkStats">
+  <neo-network-stats [networkStats]="networkStats"></neo-network-stats>
+</div>
+<div class="mt-32">
+  <neo-community-testimonial></neo-community-testimonial>
+</div>
+<div class="mt-32">
+  <neo-client-list></neo-client-list>
+</div>

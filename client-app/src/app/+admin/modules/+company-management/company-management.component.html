@@ -1,0 +1,116 @@
+<div class="top flex-between align-center mb-24">
+  <h2 class="title text-neo-near-black">
+    {{ 'companyManagement.pageTitleLabel' | translate }}
+  </h2>
+
+  <div
+    *ngIf="showAdd"
+    class="buttons-wrapper d-flex">
+    <button
+      class="green btn-add-company flex-center pr-24 pl-24"
+      routerLink="./add">
+      <svg-icon
+        class="mr-8"
+        key="plus">
+      </svg-icon>
+
+      {{ 'companyManagement.addCompanyLabel' | translate }}
+    </button>
+  </div>
+</div>
+
+<neo-search-bar
+  (clearInput)="searchString = ''; updatePaging(1)"
+  (inputChange)="searchString = $event; updatePaging(1)">
+</neo-search-bar>
+
+<div class="content mt-32 d-flex">
+  <div class="table-wrapper flex-column">
+    <ng-container *ngIf="companiesList?.length || companiesList === undefined; else noResults">
+      <table class="table mb-24">
+        <thead>
+          <tr>
+            <td class="company-col pl-24 ellipsis">
+              <div
+                (click)="sortCriteriaSelection('nameAsc', sortingCriteria.name, 'typeAsc', 'statusAsc')"
+                class="click-area">
+                {{ 'userManagement.table.companyCol' | translate }}
+                <svg-icon
+                  [class.sorthighlight]="nameAsc"
+                  class="text-blue-200 ml-6 caret"
+                  key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon
+                  [class.sorthighlight]="tdTitleClick === sortingCriteria.name && !nameAsc"
+                  class="text-blue-200 ml-1 caret"
+                  key="table-row-sort-down"
+                  size="md"></svg-icon>
+              </div>
+            </td>
+            <td class="pl-24 type ellipsis">
+              <div
+                (click)="sortCriteriaSelection('typeAsc', sortingCriteria.type, 'nameAsc', 'statusAsc')"
+                class="click-area">
+                {{ 'userManagement.table.roleCol' | translate }}
+
+                <svg-icon
+                  [class.sorthighlight]="typeAsc"
+                  class="text-blue-200 ml-6 caret"
+                  key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon
+                  [class.sorthighlight]="tdTitleClick === sortingCriteria.type && !typeAsc"
+                  class="text-blue-200 ml-1 caret"
+                  key="table-row-sort-down"
+                  size="md"></svg-icon>
+              </div>
+            </td>
+            <td class="pl-24 status ellipsis">
+              <div
+                (click)="sortCriteriaSelection('statusAsc', sortingCriteria.status, 'nameAsc', 'typeAsc')"
+                class="click-area">
+                {{ 'userManagement.table.statusCol' | translate }}
+
+                <svg-icon
+                  [class.sorthighlight]="statusAsc"
+                  class="text-blue-200 ml-6 caret"
+                  key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon
+                  [class.sorthighlight]="tdTitleClick === sortingCriteria.status && !statusAsc"
+                  class="text-blue-200 ml-1 caret"
+                  key="table-row-sort-down"
+                  size="md"></svg-icon>
+              </div>
+            </td>
+            <td
+              *ngIf="showAdd"
+              class="pl-24 options"></td>
+          </tr>
+        </thead>
+
+        <tbody>
+          <neo-company-table-row
+            (deleteCompanies)="updateCompaniesList()"
+            (updateCompanies)="loadCompanies$.next()"
+            *ngFor="let company of companiesList"
+            [company]="company"
+            [showMenu]="showAdd"
+            class="row">
+          </neo-company-table-row>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <ng-template #noResults>
+      <neo-no-results [searchedStr]="searchString"></neo-no-results>
+    </ng-template>
+
+    <neo-pagination
+      (changePage)="updatePaging($event)"
+      *ngIf="paging && paging.total > defaultItemPerPage"
+      [defaultItemPerPage]="defaultItemPerPage"
+      [paging]="paging">
+    </neo-pagination>
+  </div>
+</div>

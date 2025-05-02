@@ -1,0 +1,59 @@
+@use 'colors';
+
+.controls {
+	width: 164px;
+	height: 34px;
+	background-color: colors.$dark-gray-450;
+	padding: 2px;
+	border-radius: 500px;
+
+	&.disable {
+		pointer-events: none;
+	}
+
+	.btn-active,
+	.btn-inactive {
+		font-family: Arial;
+		color: colors.$near-black-400;
+		font-weight: 700;
+		font-size: 12px;
+		background-color: transparent;
+		height: 100%;
+		width: 80px;
+		border-radius: 500px;
+		background: #F2F2F2;
+	}
+
+	.btn-active {
+		&.active {
+			background: #30A46C;
+			color: colors.$dark-gray-30;
+		}
+	}
+
+	.btn-inactive {
+		&.active {
+			background: colors.$error-red;
+			color: colors.$white;
+		}
+	}
+
+	&.disable {
+		.btn-active {
+			color: #9fa0a4;
+
+			&.active {
+				border-radius: 500px;
+				background: var(--neutral-light-gray, #9FA0A4);
+				color: colors.$near-black-400;
+			}
+		}
+	}
+}
+
+:host.project-active-inactive {
+  .controls {
+    background: var(--neutral-light-gray-20, rgba(159, 160, 164, 0.2));
+  }
+}
+

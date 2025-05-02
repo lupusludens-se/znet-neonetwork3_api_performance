@@ -1,0 +1,77 @@
+@use 'colors';
+
+:host {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin: auto auto 0;
+}
+
+.page {
+  width: 47px;
+  height: 47px;
+  font-size: 12px;
+  color: colors.$dark-gray-510;
+  border-radius: 2px;
+
+
+  &:hover {
+    background: colors.$dark-gray-250;
+    border: 1px solid colors.$dark-gray-250;
+    color: colors.$dark-gray-510;
+  }
+
+  &.fake {
+    &:hover {
+      background: colors.$dark-gray-250;
+      color: initial;
+      border: none;
+      cursor: default;
+    }
+  }
+
+  &.prev,
+  &.next {
+    width: 83px;
+    height: 47px;
+    background: colors.$dark-gray-450;
+    border-radius: 8px;
+
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      background:colors.$dark-gray-450;
+    }
+
+    &:hover {
+      background: colors.$dark-gray-250;
+      border: 1px solid colors.$dark-gray-250;
+      color: colors.$dark-gray-515;
+    }
+  }
+
+  &.current {
+    border: 2px solid colors.$dark-gray-420;
+    border-radius: 2px;
+    color: colors.$near-black-400;
+
+    &:hover {
+      background: colors.$dark-gray-250;
+      border: 1px solid colors.$dark-gray-250;
+      color: colors.$dark-gray-510;
+    }
+  }
+
+  &.next {
+    svg-icon {
+      transform: rotate(-180deg);
+    }
+  }
+
+  &.prev {
+    svg-icon {
+      //transform: rotate(90deg);
+    }
+  }
+}

@@ -1,0 +1,53 @@
+@use 'colors';
+
+.tile-item {
+  background-color: colors.$dark-gray-30;
+  border-radius: 2px;
+  min-height: 162px;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+    cursor: pointer;
+
+    .light-green {
+      display: flex;
+    }
+  }
+
+  .flex-column {
+    width: calc(100% - 40px);
+  }
+
+  .title{
+    color: colors.$dark-gray-750;
+    line-height: 130%;
+  }
+
+  .description{
+    font-size: 16px;
+    line-height: 130%;
+    color: colors.$dark-gray-580;
+  }
+
+  .scope{
+    font-size: 16px;
+    line-height: 130%;
+    color: colors.$blue-350;
+    padding-top: 10px;
+  }
+  
+  .light-green {
+		display: none;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 8px;
+		color: colors.$dark-gray-590;
+		background: colors.$dark-gray-450;
+  }
+
+  .line{
+    border-top: 1px solid colors.$dark-gray-200;
+    margin-top: 10px;
+  }
+
+}

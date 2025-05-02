@@ -1,0 +1,165 @@
+<neo-top-panel>
+  <div class="top-panel flex-between align-center w-100 z-index-1">
+    <div class="d-flex align-center">
+      <div class="p-relative">
+        <svg-icon height="53px" key="dashboard-communication-bubble" width="53px"></svg-icon>
+
+        <ng-container *ngIf="(coreService.badgeCount$ | async) as noOfBadges">
+          <ng-container *ngIf="noOfBadges?.messagesCount > 0">
+            <span class="flex-center badge text-xs p-absolute">
+              {{noOfBadges?.messagesCount > 99 ? "99+" : noOfBadges?.messagesCount}} </span>
+          </ng-container> </ng-container>
+      </div>
+
+      <h2 class="text-near-white-color ml-20">
+        {{ 'dashboard.newMessagesLabel' | translate }}
+      </h2>
+    </div>
+
+    <button class="btn-l w-min-initial flex-center top-panel-btn-white" (click)="onMessagesAllClick()"
+      routerLink="/messages">
+      {{ 'general.viewAllLabel' | translate }}
+      <svg-icon class="ml-12 rotate-180" key="arrow-thin-right"></svg-icon>
+    </button>
+  </div>
+</neo-top-panel>
+
+<neo-title-section (buttonClick)="onCustomizeToolsClick()" [linkText]="'dashboard.customizeLabel' | translate"
+  [title]="'dashboard.pinnedToolsLabel' | translate" icon="plus" iconSize="md">
+</neo-title-section>
+
+<div class="d-flex">
+  <ng-container *ngIf="pinnedTools$ | async as pinnedTools">
+    <div *ngIf="!pinnedTools?.length" class="tools-empty-wrapper pt-32 pb-32 w-100 flex-center">
+      <button (click)="onAddToolsClick()" class="link text-dark-gray-545 text-s fw-400 flex-center">
+        <svg-icon class="text-blue-200 mr-14" key="plus-in-transparent-circle" size="l"></svg-icon>
+
+        {{ 'dashboard.pinToolToDashboard' | translate }}
+      </button>
+    </div>
+
+    <div *ngIf="pinnedTools?.length" class="d-flex gap-12 w-100">
+      <neo-tool *ngFor="let pinnedTool of pinnedTools" (toolClick)="onToolClick(pinnedTool.id)" [id]="pinnedTool.id"
+        [icon]="pinnedTool?.icon ? pinnedTool?.icon.uri : 'assets/images/default-tool-icon.png'"
+        [showButton]="pinnedTools?.length < 3" [size]="pinnedTools?.length < 3 ? 'wide' : 'medium'"
+        [titleCenter]="pinnedTools?.length >= 3" [title]="pinnedTool?.title"
+        [tileHeight]="pinnedTools?.length < 3 ? '70px' : '109px'"
+        [titleSize]="pinnedTools?.length < 3 ? '16px' : '12px'" [wrapTitle]="true" class="w-100">
+      </neo-tool>
+    </div>
+  </ng-container>
+</div>
+
+<neo-modal (closed)="showToolsModal = false" *ngIf="showToolsModal" class="title-h2-purple custom-modal-height-tool"
+  [title]="'dashboard.pinnedToolsLabel' | translate" size="large">
+  <ng-container *ngIf="tools$ | async as tools">
+
+    <div class="flex-between w-100 pb-12 pt-12">
+      <span class="text-s text-subtitle" *ngIf="selectedItems?.length !== 5">
+        {{ 'dashboard.selectUpTo5' | translate }}
+      </span>
+      <span class="text-s text-subtitle" *ngIf="selectedItems?.length === 5">
+        {{ 'dashboard.maxLimitReached' | translate }}
+      </span>
+
+      <span class="text-s text-dark-gray-505">0{{ selectedItems.length }}/05</span>
+    </div>
+
+
+    <div class="separator"></div>
+    <div class="d-flex flex-wrap pt-32 pb-32 gap-8 inner-wrapper">
+      <div (click)="pinTool(i)" *ngFor="let tool of tools.dataList; let i = index" [ngClass]="{
+            active: tool.isPinned,
+            disabled: selectedItems.length >= 5 && !tool.isPinned
+          }" class="flex-center tool-wrapper c-pointer text-s neo-arial">
+        <svg-icon *ngIf="tool.isPinned" class="icon mr-12" key="thin-close-icon" size="sm"></svg-icon>
+
+        <svg-icon *ngIf="!tool.isPinned && !(selectedItems.length >= 5)" class="icon mr-12" key="plus"
+          size="sm"></svg-icon>
+
+        <svg-icon *ngIf="!tool.isPinned && selectedItems.length >= 5" class="icon mr-12" key="block"
+          size="sm"></svg-icon>
+
+        {{ tool.title }}
+      </div>
+    </div>
+
+
+    <div class="separator"></div>
+
+    <div class="d-flex justify-end w-100 pt-32">
+      <button (click)="closed()" class="btn-m btnCancel mr-16 w-100">
+        {{ 'general.cancelLabel' | translate }}
+      </button>
+
+      <button (click)="savePinnedTools()" class="btn-m green w-100">
+        {{ 'general.saveLabel' | translate }}
+      </button>
+    </div>
+  </ng-container>
+</neo-modal>
+
+<div class="separator mt-32"></div>
+
+<ng-container *ngIf="forums$ | async as forums">
+  <neo-title-section *ngIf="forums?.dataList.length" [linkText]="'general.viewAllLabel' | translate"
+    [subTitle]="'dashboard.forumSubHeadLabel' | translate" [title]="'forum.forumLabel' | translate" link="/forum"
+    iconSize="md" (elementClick)="elementClick.emit($event)">
+  </neo-title-section>
+
+  <div *ngIf="forums?.dataList.length" class="gap-12">
+    <div class="flex-column gap-12">
+      <neo-forum-topic (deleted)="forums.dataList.splice(i, 1)" (liked)="onForumLikeClick(forum, $event)"
+        (pinClick)="onForumPinClick(forum, $event)" (saveClick)="onForumSaveClick(forum, $event)"
+        (userFollowClick)="onForumUserFollowClick(forum, $event)" (elementClick)="onForumElementClick(forum.id, $event)"
+        *ngFor="let forum of forums.dataList; let i = index" [topic]="forum">
+      </neo-forum-topic>
+    </div>
+  </div>
+</ng-container>
+
+<neo-title-section [linkText]="'general.viewAllLabel' | translate" [queryParams]="{ followingType: 0 }"
+  [title]="'dashboard.companiesFollowingLabel' | translate" link="/community" iconSize="md"
+  (elementClick)="elementClick.emit($event)">
+</neo-title-section>
+
+<ng-container *ngIf="companies$ | async as companies">
+  <div *ngIf="!companies?.dataList.length" class="p-24 gap-8 empty-wrapper flex-center flex-column">
+    <div class="text-dark-gray-545 text-s text-center w-50">
+      {{ 'dashboard.companiesNotFollowingText1' | translate }}
+    </div>
+    <div class="text-dark-gray-545 text-s pb-12 text-center w-50">
+      {{ 'dashboard.companiesNotFollowingText2' | translate }}
+    </div>
+
+    <div class="flex-center">
+      <button class="green btn-browse-company text-s flex-center w-fit-content" routerLink="/community"
+        (click)="onBrowseCompaniesClick()">
+        {{ 'dashboard.browseCompaniesLabel' | translate }}
+        <svg-icon key="arrow-thin-right" class="rotate-180 text-white mr-10 ml-10"></svg-icon>
+      </button>
+
+    </div>
+  </div>
+
+  <div *ngIf="companies?.dataList.length" class="d-flex flex-wrap gap-8">
+    <neo-company (click)="redirectToCompany(company.id)" *ngFor="let company of companies.dataList.slice(0, 8)"
+      [image]="company?.image?.uri" [title]="company?.name">
+    </neo-company>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="newAndNoteworthyArticles !== null && newAndNoteworthyArticles.length > 0">
+  <neo-title-section class="title-section-wrapper-new-noteworthy subTitle-new-noteworthy view-all-btn-new-noteworthy"
+    [linkText]="'general.viewAllLabel' | translate" [subTitle]="'dashboard.newAndNoteworthySubLabel' | translate"
+    [title]="'general.newAndNoteworthyLabel' | translate" iconSize="md" link="/learn"
+    (elementClick)="elementClick.emit($event)">
+  </neo-title-section>
+
+  <div class="container">
+    <div [class.second]="i%2 != 0" *ngFor="let article of newAndNoteworthyArticles; index as i"
+      (click)="onArticleClick(article.id, article.title, 'learn/' + article?.id)">
+      <neo-new-and-noteworthy [newAndNoteworthyData]="article"> </neo-new-and-noteworthy>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,13 @@
+@use 'breakpoints';
+
+.text-wrapper {
+  width: 600px;
+
+  @media (breakpoints.$medium) {
+    width: 852px;
+  }
+}
+
+.full-width {
+  width: 52% !important;
+}

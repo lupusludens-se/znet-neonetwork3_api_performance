@@ -1,0 +1,71 @@
+<div class="initiative-details-wrapper">
+    <div class="flex-column">
+        <div imageCssClasses="l-250px w-599px h-249px t-28px text-dark-gray-30"
+            imageUrl="assets/images/project-category-background-image.svg">
+            <div class="d-flex w-100 top-panel-wrapper text-white align-center p-relative">
+                <div class="top-panel-spacing d-flex z-index-1 w-100">
+                    <div class="flex-column w-80">
+                        <div class="d-flex justify-center align-center">
+                            <div class="flex-column title">
+                                <h2>{{ 'initiative.publicDashboard.progressTracker.title' | translate }}</h2>
+                                <p class="pt-20 text-s w-100">
+                                    {{ 'initiative.publicDashboard.progressTracker.description1' | translate }}
+                                </p>
+                                <span class="pt-10 text-s w-100">
+                                    {{ 'initiative.publicDashboard.progressTracker.description2' | translate }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-column w-20">
+                        <div class="d-flex justify-center">
+                            <img alt="" class="w-70" src="assets/images/nav-zeigo-logo.svg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-20 ng-star-inserted">
+    <div class="tracker-layout">
+        <div class="title mb-32">{{ 'initiative.progressTrackerLabel' | translate }}</div>
+        <neo-initiative-progress-tracker></neo-initiative-progress-tracker>
+        <div class="mt-20">
+            <div class="substeps-title mb-32">{{ 'initiative.publicDashboard.progressTracker.substepTitle' | translate
+                }}</div>
+            <span class="substep substep-background d-flex justify-start">
+                {{ 'initiative.publicDashboard.progressTracker.substep' | translate }}
+            </span>
+            <div class="d-flex substep">
+                <div class="flex-column justify-center w-90">
+                    <span> {{ 'initiative.contentMessage' | translate }} </span>
+                </div>
+                <div class="w-10 align-end flex-column justify-center checkbox-wrapper">
+                    <neo-blue-checkbox class="w-fit" [disabled]="true" [checked]="false">
+                    </neo-blue-checkbox>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex pt-24">
+            <div class="lock-icon flex-column align-start w-50">
+                <button class="btn-confirm btn p-10 green flex-center" (click)="onPreviousButtonClick()" neoLockClick>
+                    <svg-icon key="lock-private-content" class="mr-4 svg-icon-arrow-left"> </svg-icon> {{
+                    'general.previousStepLabel' | translate }}
+                </button>
+            </div>
+            <div class="lock-icon flex-column align-end w-50">
+                <button class="btn-confirm btn p-10 green flex-center" (click)="onNextButtonClick()" neoLockClick>
+                    <svg-icon key="lock-private-content" class="mr-4 svg-icon-arrow-left"> </svg-icon>{{
+                    'general.nextStepLabel' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tracker-layout mt-20 w-100">
+    <h1 class="video-title">
+        {{ 'initiative.publicDashboard.initiativeDetailsContentHeading' | translate }}
+    </h1>
+    <div  [innerHTML]="videoContent | safe" class="post-content mt-20"></div>
+</div>

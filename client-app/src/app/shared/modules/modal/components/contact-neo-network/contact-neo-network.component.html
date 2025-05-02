@@ -1,0 +1,54 @@
+<ng-container *ngIf="!isMessageSent">
+  <neo-modal
+    (closed)="closed.emit()"
+    [title]="'landing.contact.contactNeoLabel' | translate"
+    class="contact-us title-h2"
+    padding="p-32-48"
+    size="extra-medium">
+    <p class="description pt-12 pb-16">
+      {{ 'landing.contact.descriptionLabel' | translate }}
+    </p>
+
+    <div class="separator"></div>
+
+    <div class="flex-column pt-24 pb-24">
+      <label class="text-s text-dark-gray-590 fw-700 pb-8 message">
+        {{ 'messages.messageLabel' | translate }}
+      </label>
+
+      <textarea
+        [(ngModel)]="message"
+        class="p-16" [class.input-error]="message?.length > requiredLength"
+        rows="5"
+        placeholder="{{ 'landing.contact.placeholderLabel' | translate }}"></textarea>
+        <span class="errorMessage" *ngIf="message?.length > requiredLength && isMessage===true">
+          {{'messages.errorMessageLabel'|translate}}
+    </span>
+    </div>
+
+    <button (click)="sendMessage()" [disabled]="!message || validateInput()" class="btn-l green w-100">
+      {{ 'landing.contact.sendMessageLabel' | translate }}
+    </button>
+  </neo-modal>
+</ng-container>
+
+<ng-container *ngIf="!!isMessageSent">
+  <neo-modal (closed)="closed.emit()" [title]="' '" class="sent" size="extra-medium">
+    <div class="sent-content-wrapper flex-center flex-column">
+      <svg-icon class="sent-icon" key="email-sent"></svg-icon>
+      <div class="mt-32">
+        <div class="flex-center sent-label neo-arial">
+          {{ 'landing.contact.sentLabel' | translate }}
+        </div>
+
+        <div class="message-receive mt-12">
+          {{ 'landing.contact.messageReceivedLabel' | translate }}
+        </div>
+      </div>
+      <button (click)="closed.emit()" class="btn-l btn-back green mt-32 d-flex justify-center">
+        {{ 'landing.contact.backHomeLabel' | translate }}
+        <svg-icon class="ml-14" key="right-arrow"></svg-icon>
+      </button>
+    </div>
+  </neo-modal>
+</ng-container>

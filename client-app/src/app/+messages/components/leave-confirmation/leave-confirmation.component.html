@@ -1,0 +1,16 @@
+<neo-modal [title]="'messages.leaveConfimationTitle' | translate" size="medium" class="title-h2" (closed)="closed.emit()">
+    <p class="text-dark-gray-580 text-m pt-6 pb-12">
+        {{ 'messages.leaveConfimationDescription' | translate }}
+    </p>
+
+    <div class="separator"></div>
+    <div class="d-flex justify-end w-100 pt-26">
+        <button (click)="closed.emit()" class="btn-m cancel mr-16 w-min-initial w-50">
+            {{ 'general.cancelLabel' | translate }}
+        </button>
+
+        <button (click)="left.emit()" class="btn-m delete w-min-initial w-50">
+            {{ 'messages.leaveConfimationButton' | translate }}
+        </button>
+    </div>
+</neo-modal>

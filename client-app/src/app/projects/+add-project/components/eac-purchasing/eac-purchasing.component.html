@@ -1,0 +1,114 @@
+<div class="content flex-column mb-96">
+  <div class="top flex-between align-center mb-24">
+    <div class="text-wrapper">
+      <h3 class="text-neo-near-black mb-8">{{ 'projects.addProject.eacPurchasingLabel' | translate }}</h3>
+      <p class="text-m text-dark-gray-580">{{ 'projects.addProject.enterProjectDetailsLabel' | translate }}</p>
+    </div>
+  </div>
+
+  <div class="controls-wrapper">
+    <form [formGroup]="form">
+      <neo-number-input
+        formControlName="minimumPurchaseVolume"
+        class="mb-32 text-zeigo-near-black"
+        width="162px"
+        [labelName]="'projects.addProject.minimumPurchaseVolumeLabel' | translate"
+        [subLabel]="'projects.addProject.mwhlabel' | translate"
+        [allowDecimal]="true"
+        [submitted]="formSubmitted">
+      </neo-number-input>
+
+      <div class="long-input mb-24">
+        {{ 'projects.addProject.stripLengthLabel' | translate }}
+
+        <span class="checkboxes-wrapper mt-12 flex-column">
+          <neo-blue-checkbox
+            (selectCheckbox)="chooseStripLength(val, val.selected); val.selected = !val.selected"
+            *ngFor="let val of stripLengthList"
+            [checked]="val.selected"
+            [name]="val.name"
+            [value]="val.id"
+            class="mb-8">
+          </neo-blue-checkbox>
+        </span>
+
+        <neo-control-error
+          [errors]="form.controls['stripLengths'].errors"
+          [fieldName]="'projects.addProject.stripLengthErrorLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-control-error>
+      </div>
+
+      <neo-number-input
+        formControlName="minimumTermLength"
+        class="mb-32 text-zeigo-near-black"
+        width="162px"
+        [labelName]="'projects.addProject.minimumTermLengthAvailableLabel' | translate"
+        [optionalText]="'projects.addProject.optionalIfApplicableLabel' | translate"
+        [subLabel]="'projects.addProject.yearsLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-number-input>
+
+      <div class="long-input mb-24">
+        <h6 class="text-neo-near-black text-m pb-12">
+          {{ 'projects.addProject.valueProvidedLabel' | translate }}
+        </h6>
+
+        <neo-blue-checkbox
+          (selectCheckbox)="
+            chooseCheckboxControlVal(val, !!val.selected, 'valuesProvided'); val.selected = !val.selected
+          "
+          *ngFor="let val of valueProvidedList; let last = last"
+          [checked]="val.selected"
+          [class.mb-8]="!last"
+          [name]="val.name"
+          [value]="val.id"
+          class="arial fw-400 mb-8">
+        </neo-blue-checkbox>
+
+        <neo-control-error
+          [errors]="form.controls['valuesProvided'].errors"
+          [fieldName]="'projects.addProject.valueProvidedLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-control-error>
+      </div>
+
+      <neo-text-input
+        class="mb-32 text-zeigo-near-black"
+        formControlName="timeAndUrgencyConsiderations"
+        [labelName]="'projects.addProject.timeAndUrgencyLabel' | translate"
+        [optionalText]="'general.optionalLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-text-input>
+
+      <neo-textarea-control
+        class="text-zeigo-near-black"
+        formControlName="additionalComments"
+        height="176px"
+        [labelName]="'projects.addProject.additionalCommentsForInternalLabel' | translate"
+        [optionalText]="'general.optionalLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-textarea-control>
+    </form>
+  </div>
+</div>
+
+<neo-form-footer
+  (backButtonClick)="goBack(stepsList.ProjectGeography)"
+  (cancel)="addProjectService.exitFlow()"
+  (draftButtonClick)="saveDraft()"
+  (save)="changeStep(stepsList.Overview)"
+  [backButton]="true"
+  [draftButtonText]="'projects.addProject.saveAsDraftsLabel' | translate"
+  [draftButton]="true"
+  backButtonIcon="footer-left-arrow-thin"
+  icon="right-arrow"
+  submitButtonName="Next">
+</neo-form-footer>
+
+<neo-draft-modal
+  (closeModal)="showDraftModal = false"
+  *ngIf="showDraftModal"
+  [projectTypeSlug]="projectTypes.EacPurchasing"
+  [title]= addProjectService.currentFlowData.project.title>
+</neo-draft-modal>

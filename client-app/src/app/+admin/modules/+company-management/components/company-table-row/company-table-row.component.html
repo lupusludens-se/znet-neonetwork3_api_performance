@@ -1,0 +1,43 @@
+<td [class.transparent]="company.statusId === companyStatuses.Deleted" class="company-cell pl-24">
+  <div class="company p-12 d-flex align-center">
+    <neo-company-logo [company]="company" [imageSize]="'small'"></neo-company-logo>
+    <div [routerLink]="'./edit/' + company.id" class="company-name pl-24 ellipsis">
+      {{ company.name }}
+    </div>
+  </div>
+</td>
+
+<td [class.transparent]="company.statusId === companyStatuses.Deleted" class="role-cell pl-24">
+  <span class="role ellipsis {{ company.typeName | lowercase }}">
+    {{ company.typeName?.split(' ').pop() }}
+  </span>
+</td>
+
+<td class="status-cell pl-24">
+  <span class="status {{ company.statusName | lowercase }}">
+    {{ company.statusName }}
+  </span>
+</td>
+
+<td *ngIf="showMenu" class="pl-24 options-cell pr-24">
+  <neo-menu (optionClick)="optionClick($event)" [options]="getOptions()" activeIcon="cross" cssClasses="flex-center"
+    icon="three-dots">
+  </neo-menu>
+</td>
+
+<neo-modal (closed)="showModal = false" *ngIf="showModal" [title]="'general.deleteModal.titleLabel' | translate"
+  class="title-h2">
+  <p class="text-m text-dark-gray-515 mb-24 mt-6">
+    {{ 'general.deleteModal.textLabel' | translate }}
+  </p>
+
+  <div class="popup-controls pt-24 d-flex">
+    <button (click)="showModal = false" class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+
+    <button (click)="deleteCompany()" class="btn-confirm w-50">
+      {{ 'general.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

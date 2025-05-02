@@ -1,0 +1,30 @@
+<div class="flex-column wrapper">
+  <div class="d-flex flex-between">
+    <h3 class="text-neo-near-black pb-24">
+      {{ 'notification.notificationsLabel' | translate }}
+    </h3>
+    <b
+      (click)="clearNotifications()"
+      class="c-pointer link text-s text-neo-purple mt-8"
+      >{{ 'onboarding.clearAllLAbel' | translate }}</b
+    >
+  </div>
+
+  <div
+    #notificationsWrapper
+    [class.flex-center]="notifications?.dataList?.length"
+    class="flex-column notifications-wrapper">
+    <neo-notifications-list
+      (notificationClick)="markAsRead($event)"
+      [notifications]="notifications.dataList"
+      [showWrapper]="true"
+      class="w-100"
+      [class.h-100]="notifications.dataList"
+      spaceBetween="mt-8"></neo-notifications-list>
+
+    <neo-notification-loader
+      *ngIf="loading"
+      [showWrapper]="true"
+      class="mt-20 w-100"></neo-notification-loader>
+  </div>
+</div>

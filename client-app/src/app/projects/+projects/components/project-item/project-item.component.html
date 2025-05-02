@@ -1,0 +1,65 @@
+<ng-container *ngIf="currentUser$ | async as currentUser"
+  ><div
+    (mouseenter)="onHover(project)"
+    id="project-item-{{ project.id }}"
+    class="d-flex flex-column project-item"
+    [class.pinned]="project.isPinned">
+    <div class="actions flex-center">
+      <button
+        class="action"
+        [class.pinned-item]="project.isPinned"
+        *ngIf="project?.isPinned || isAdmin(currentUser.roles) || hasPermissionToPin(currentUser)"
+        [class.active]="project.isPinned"
+        [disabled]="!isAdmin(currentUser.roles) && !hasPermissionToPin(currentUser)">
+        <svg-icon
+          fontSize="20px"
+          [key]="project.isPinned ? 'pin-active' : 'pin-inactive'"
+          (click)="project.isPinned ? unpinProject() : pinProject()"></svg-icon>
+      </button>
+
+      <button
+        class="action"
+        *ngIf="hasPermissionToSave(currentUser)"
+        [class.active]="project.isSaved">
+        <svg-icon
+          class="save-item-icon thin"
+          fontSize="20px"
+          [key]="'star-outline'"
+          [ngClass]="{ saved: project.isSaved }"
+          (click)="project.isSaved ? deleteSavedProject() : saveProject()"></svg-icon>
+      </button>
+    </div>
+
+    <a
+      [routerLink]="['/projects/' + project?.id]"
+      class="title mb-8 neo-arial"
+      >{{ project.title }}</a
+    >
+
+    <p
+      [innerHTML]="project.subTitle"
+      class="text mb-12 mt-8"></p>
+
+    <div class="bottom flex-between mt-16">
+      <div class="left d-flex align-center gap-16 w-100">
+        <img
+          *ngIf="project.company.image?.uri"
+          [src]="project.company.image?.uri"
+          alt="company logo"
+          class="logo mr-8" />
+
+        <div class="tags d-flex">
+          <neo-content-tag
+            fontSize="12"
+            [tag]="project.category"
+            [type]="type.Category"
+            *ngIf="!showMap"></neo-content-tag>
+        </div>
+
+        <neo-content-location
+          [regions]="project?.regions"
+          *ngIf="!showMap"></neo-content-location>
+      </div>
+    </div>
+  </div>
+</ng-container>

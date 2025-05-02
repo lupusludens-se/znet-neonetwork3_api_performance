@@ -1,0 +1,49 @@
+<div class="d-flex" >
+	<ng-container *ngIf="!isLanding; else home">
+		<div class="sidebar-wrapper">
+			<neo-navbar></neo-navbar>
+		</div>
+
+		<div class="flex-column content-wrapper w-100" (click)="closeFeedback()">
+			<neo-header *ngIf="!isLanding"></neo-header>
+
+			<div [class.p-0]="isDashboard || isAuthRedirect" class="container h-100 p-relative"
+				[class.disabled-footer]="disableFooter" [class.reduce-padding]="reducePadding">
+				<neo-element-not-found *ngIf="notFoundData" [data]="notFoundData">
+				</neo-element-not-found>
+
+				<div class="w-100 h-100" [class.d-none]="notFoundData">
+					<router-outlet></router-outlet>
+				</div>
+				<neo-modal (closed)="isModalVisible = false" *ngIf="isModalVisible" key="cross"
+					[logoPath]="'assets/images/zeigo-thankyou.jpg'" class="title-h2 modal-thankyou"
+					title="{{ 'thankyouInterest.title' | translate }}" size="medium">
+
+					<neo-thank-you-interest-modal-popup
+						[isVisible]="isModalVisible"></neo-thank-you-interest-modal-popup>
+
+				</neo-modal>
+				<neo-snackbar></neo-snackbar>
+			</div>
+			<neo-footer *ngIf="!disableFooter && (footerService.isFooterDisabled() | async) === false"></neo-footer>
+		</div>
+	</ng-container>
+
+	<ng-template #home>
+		<div class="d-flex w-100">
+			<router-outlet></router-outlet>
+		</div>
+	</ng-template>
+</div>
+
+<neo-spinner [isLoading]="true"></neo-spinner>
+<div class="d-flex justify-end versionUpdate" *ngIf="enableRefreshPopup">
+	<span>{{'general.refreshDescription' | translate }}<a href="javascript: void(0)" (click)="refreshBrowser()"
+			class="ml-8 underline text-neo-purple">{{ 'general.refreshLabel' | translate}}</a>
+	</span>
+</div>
+<neo-user-feedback class="feedback-popup" *ngIf="isFeedbackModalVisible"></neo-user-feedback>
+
+
+<neo-onboarding-wizard
+	*ngIf="(neoAuthService.currentUser() | async)?.statusId === userStatuses.Onboard || (neoAuthService.currentUser() | async)?.statusId === userStatuses.Expired"></neo-onboarding-wizard>

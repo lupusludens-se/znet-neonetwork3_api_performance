@@ -1,0 +1,142 @@
+<ng-container *ngIf="!!projectInfo">
+  <div class="d-flex m-8 mr-0">
+    <div class="flex-column w-50">
+      <button (click)="goBack()" class="btn-connect back-btn d-flex align-center pb-4">
+        <svg-icon class="pr-4 back-btn-img-s" key="left-arrow"></svg-icon>
+        Back
+      </button>
+    </div>
+    <div class="flex-column w-50 align-end" *ngIf="isCorporateUser">
+      <button (click)="attachToInitiative = true;trackAttachToInitiativeActivity();"
+        class="btn-initiative align-center">
+        <span class="ml-8 mr-8 btn-text flex-center">
+          {{ 'initiative.attachContent.attachProjectLabel' | translate }}
+          <svg-icon class="ml-8" fontSize="16px" key="idea-bulb"></svg-icon>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="content flex-between">
+    <div class="left mr-40">
+      <div class="banner p-relative" style="background-image: url('{{ backgroundUrl }}')">
+        <div class="banner-overlay p-absolute h-100 w-100 top-0 left-0 z-index-1"></div>
+        <h2 class="title mb-12 neo-arial z-index-2 p-relative">{{ projectInfo?.title }}</h2>
+        <p class="sub-title z-index-2 p-relative">{{ projectInfo?.subTitle }}</p>
+      </div>
+
+      <div class="opportunity-wrapper mt-32 p-24">
+        <p class="section-title neo-arial">
+          {{
+          isOffsitePPAProject
+          ? projectInfo?.company?.about + ' - ' + ('projects.projectDetails.opportunityLabel' | translate)
+          : ('projects.projectDetails.opportunityLabel' | translate)
+          }}
+        </p>
+        <div class="text-s mt-8 text-blue-200" [innerHTML]="projectInfo?.opportunity"></div>
+      </div>
+      <div style="border: 1px solid #E1E3E9;" class="mt-16"></div>
+      <div class="provider-wrapper mt-16 p-24">
+        <p class="section-title neo-arial">
+          {{ 'projects.projectDetails.aboutProviderLabel' | translate }}
+        </p>
+        <p class="text-s mt-8 text-blue-200" [innerHTML]="projectInfo?.description"></p>
+      </div>
+
+      <ul *ngIf="isOffsitePPAProject" class="mt-24">
+        <li *ngFor="let offsitePPA of projectInfo?.company?.offsitePPAs" class="text-m d-flex">
+          <svg-icon key="check" class="mr-16 check-icon" width="14" height="10"></svg-icon>
+          {{ offsitePPA.name }}
+        </li>
+      </ul>
+
+      <div class="resources mt-32">
+        <p class="section-title mb-12 neo-arial">
+          {{ 'projects.projectDetails.resourcesLabel' | translate }}
+        </p>
+
+        <div class="links-wrapper d-flex flex-wrap" *ngIf="projectResources else loader">
+          <ng-container *ngFor="let resource of projectResources">
+            <ng-container *ngIf="!resource.referenceUrl && !resource.articleId && !resource.toolId; else resourceLink">
+              <span class="link flex-center mr-8 mb-12">
+                <svg-icon [key]="resource.typeId | resourceTypeToIcon" class="mr-8 text-neo-aqua"></svg-icon>
+                {{ resource.contentTitle }}
+              </span>
+            </ng-container>
+            <ng-template #resourceLink>
+              <a target="_blank" class="link flex-center mr-8 mb-12" (click)="onResourceClick(resource.id)"
+                [href]="generateResourceLink(resource)">
+                <svg-icon [key]="resource.typeId | resourceTypeToIcon" class="mr-8 text-neo-aqua"></svg-icon>
+                {{ resource.contentTitle }}
+              </a>
+            </ng-template>
+          </ng-container>
+        </div>
+        <ng-template #loader>
+          <div class="d-flex gap-12 mb-10">
+            <div class="section-content section-content-5 flex-grow-1">
+              <div class="section-line section-line-big mb-24"></div>
+            </div>
+            <div class="section-content section-content-5 flex-grow-1">
+              <div class="section-line section-line-big mb-24"></div>
+            </div>
+            <div class="section-content section-content-5 flex-grow-1">
+              <div class="section-line section-line-big mb-24"></div>
+            </div>
+            <div class="section-content section-content-5 flex-grow-1">
+              <div class="section-line section-line-big mb-24"></div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+      <p class="text-dark-gray-590 line-of-legal mt-32">
+        {{ 'projects.projectDetails.lineOfLegalText' | translate }} <br />
+        <br />
+      </p>
+
+      <ng-container *ngIf="
+          projectInfo?.category.slug === projectTypes.AggregatedPpa ||
+          projectInfo?.category.slug === projectTypes.OffsitePpa
+        ">
+        <p class="text-dark-gray-590 line-of-legal mt-16">
+          {{ 'projects.projectDetails.lineOfLegalLine2Text' | translate }}
+        </p>
+        <p class="text-dark-gray-590 line-of-legal mt-16">
+          {{ 'projects.projectDetails.lineOfLegalLine3Text' | translate }}
+        </p>
+        <p class="text-dark-gray-590 line-of-legal mt-16">
+          {{ 'projects.projectDetails.lineOfLegalLine4Text' | translate }}
+        </p>
+        <p class="text-dark-gray-590 line-of-legal mt-16">
+          {{ 'projects.projectDetails.lineOfLegalLine5Text' | translate }}
+        </p>
+      </ng-container>
+
+      <div class="connect p-24 mt-32 flex-between">
+        <div class="d-flex logo-wrapper">
+          <img src="assets/images/nav-zeigo-logo2.svg" alt="zeigo logo" />
+        </div>
+
+        <button class="btn-l w-min-initial flex-center top-panel-btn-white" type="button"
+          (click)="showContactModal = true">
+          {{ 'projects.projectDetails.connectNetworkLabel' | translate }}
+          <svg-icon class="ml-12 rotate-180" key="arrow-thin-right"></svg-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="right">
+      <neo-project-side-panel *ngIf="projectInfo" [projectDetails]="projectInfo" [conversationId]="conversationId"
+        (updateProjectInfo)="onProjectSidePanelUpdateProjectInfo()" (contactProvider)="onContactProviderClick()">
+      </neo-project-side-panel>
+    </div>
+  </div>
+
+  <neo-contact-modal *ngIf="showSolutionProviderModal" (closeModal)="closeContactModal($event)" [project]="projectInfo">
+  </neo-contact-modal>
+
+  <neo-contact-neo-network *ngIf="showContactModal" (closed)="modalClosed()"> </neo-contact-neo-network>
+</ng-container>
+<neo-attach-to-initiative (closed)="attachToInitiative = false" [initiativeContentType]="contentType"
+  [contentId]="projectId" [typeName]="'general.projectLabel' | translate"
+  *ngIf="attachToInitiative"></neo-attach-to-initiative>

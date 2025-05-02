@@ -1,0 +1,130 @@
+@use 'colors';
+
+@use 'variables';
+@use 'breakpoints';
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 1000;
+    
+  }
+  
+  .modal-content {
+    background-color: colors.$white;
+    width: 90%;
+    max-width: 900px;
+    margin-top: 94px;
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    
+     padding: 30px;
+    height: 550px;
+    overflow: auto;
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+      
+  
+      label {
+        display: flex;
+        flex-direction: column;
+        font-family: 'Arial Rounded MT Bold', serif;
+        font-size: 16px;
+        line-height: 130%;
+        color: colors.$near-black-400;
+        position: relative;
+  
+        .counter {
+          font-size: 16px;
+          color: colors.$dark-gray-590;
+          background: none;
+          position: absolute;
+          right: 0;
+          font-family: 'Arial', sans-serif;
+          font-weight: 700;
+          letter-spacing: 0.16px;
+          line-height: 130%;
+        }
+      }
+      .div-section {
+        background-color: colors.$white;
+        padding: 24px 32px 24px 32px;
+        margin-bottom: 25px;
+        margin-top: 20px;
+        border: 1px solid #efebeb;
+      }
+    }
+  }
+  
+  .modal-header {
+    padding-right: 20px;
+    padding-top: 20px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    margin-bottom: 0; /* Remove bottom margin */
+    
+    
+  }
+  h3 {
+    font-size: 26px;
+    line-height: 28px;
+}
+  
+  .description {
+    color: colors.$dark-gray-590;;
+    font-size: 14px;
+    margin: 0 0 20px 0;
+  }
+  
+  /* Button group styles */
+  .button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+  }
+  
+  .btn-cancel {
+    background-color: colors.$dark-gray-450;
+    color: colors.$dark-gray-590;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    height: 45px;
+  }
+  
+  .btn-save {
+    background-color: #3A2456;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    &:hover {
+      background: #684299;
+  }
+  height: 45px;
+  }
+
+  .error-msg {
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    margin-top: 2px;
+    line-height: 140%;
+    color: #e5484d;
+    margin-left: 20px;
+  } 

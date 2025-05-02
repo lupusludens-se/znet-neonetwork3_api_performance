@@ -1,0 +1,58 @@
+@use 'colors';
+@use 'breakpoints';
+
+.tile-container {
+  gap: 12px;
+  justify-content: flex-start;
+
+  @media (breakpoints.$medium) {
+    gap: 8px;
+  }
+
+  .item.selected {
+    border: 2px solid colors.$purple-300;
+  }
+
+  neo-tool-item {
+    width: calc(50% - 6px);
+
+    @media (breakpoints.$medium) {
+      width: calc(50% - 12px);
+    }
+  }
+}
+
+.tile {
+  width: calc(25% - 12px);
+  height: 283px;
+  overflow: hidden;
+  position: relative;
+  background: colors.$white-10;
+  margin: 6px;
+
+  &.selected {
+    border: 2px solid colors.$purple-300;
+  }
+}
+
+.no-saved-container {
+  padding: 80px;
+  align-items: center;
+  background-color: colors.$purple-20;
+  border: 1px solid colors.$purple-160;
+  border-radius: 12px;
+
+  .no-saved-description {
+    color: colors.$dark-gray-545;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+
+  .tools-icon {
+    color: colors.$purple-300;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+

@@ -1,0 +1,88 @@
+@use 'colors';
+
+input,
+textarea {
+  border: 1px solid colors.$dark-gray-410;
+  border-radius: 8px;
+  background: colors.$white;
+  font-size: 14px;
+  line-height: 20px;
+  color: colors.$dark-gray-750;
+  padding: 16px;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+
+  &::placeholder {
+    color: colors.$dark-gray-515;
+    font-size: 14px;
+  }
+
+  &:not(:disabled):not(:read-only):hover {
+    border-color: colors.$dark-gray-510;
+  }
+
+  &:not(:disabled):not(:read-only):focus {
+    background: colors.$white;
+    border: 1.5px solid colors.$zeigo-purple;
+    /* Shadow/xs */
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    user-select: none;
+    pointer-events: none;
+    border: 1px solid colors.$dark-gray-280;
+    background: colors.$blue-10;
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    color: colors.$dark-gray-510;
+  }
+
+  &.error {
+    border-color: colors.$error-input;
+  }
+}
+
+input {
+  height: 48px;
+  width: 100%;
+
+  &.medium {
+    height: 48px;
+  }
+
+  &.small {
+    height: 33px;
+  }
+
+  &.error {
+    border-color: colors.$error-input;
+  }
+}
+
+.input-label {
+  display: flex;
+  font-family: Arial Rounded MT Bold, serif;
+  font-size: 14px;
+  line-height: 130%;
+  color: colors.$dark-gray-590;
+
+  input {
+    margin-top: 8px;
+    height: 56px;
+    width: 100%;
+  }
+
+  .optional {
+    color: colors.$dark-gray-70;
+    font-family: Arial, serif;
+  }
+}
+
+
+@media only screen and (max-width: 950px) {
+  input {
+    &:disabled {
+      color:#2f2d35;
+    }
+  }
+}

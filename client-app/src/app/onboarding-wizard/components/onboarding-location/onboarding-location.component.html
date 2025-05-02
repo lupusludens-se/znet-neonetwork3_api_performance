@@ -1,0 +1,57 @@
+<div class="content flex-column">
+  <h2 class="title mb-32 neo-arial">{{ 'onboarding.locationStepLabel' | translate }}</h2>
+
+  <div class="control-wrapper d-flex gap-24">
+    <label class="label neo-arial-regular">
+      {{ 'userProfile.edit.countryLabel' | translate }}
+
+      <neo-search-bar
+        class="mt-12"
+        [value]="controlContainer?.control?.get('country')?.value?.name"
+        (inputChange)="searchCountries($event)"
+        (selectedResult)="chooseCountry($event)"
+        [results]="countriesList"
+        [error]="formSubmitted && !!controlContainer.control.get('countryId').errors"
+        [submitted]="formSubmitted"
+        (enterEvent)="goForward()"
+        (clearInput)="clearCountry()">
+      </neo-search-bar>
+
+      <neo-control-error
+        [errors]="controlContainer.control.get('countryId').errors"
+        [fieldName]="'userProfile.edit.countryLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-control-error>
+    </label>
+
+    <label
+      class="label neo-arial-regular"
+      *ngIf="showStatesControl || !!controlContainer?.control?.get('stateId')?.value">
+      {{ 'userProfile.edit.stateLabel' | translate }}
+
+      <neo-search-bar
+        #searchStateRef
+        class="mt-12"
+        [value]="controlContainer?.control.get('state')?.value?.name"
+        (inputChange)="searchStates($event)"
+        [results]="statesList"
+        (selectedResult)="chooseState($event)"
+        [error]="formSubmitted && !controlContainer.control.get('stateId').value"
+        [submitted]="formSubmitted"
+        (enterEvent)="goForward()"
+        (clearInput)="clearState()">
+      </neo-search-bar>
+
+      <neo-control-error
+        [errors]="!controlContainer.control.get('stateId').value ? { required: true } : null"
+        [fieldName]="'userProfile.edit.stateLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-control-error>
+    </label>
+  </div>
+</div>
+
+<neo-wizard-nav-controls
+  (goNext)="goForward()"
+  (goBack)="goBack()">
+</neo-wizard-nav-controls>

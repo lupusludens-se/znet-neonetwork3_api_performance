@@ -1,0 +1,21 @@
+<label class="input-label d-flex mb-8" *ngIf="showLabel">
+  {{ labelName }}<span class="text-asterisk">{{applyAsterisk ? '*' : ''}}</span>
+
+  <span class="optional ml-4" *ngIf="optionalText">({{ optionalText }})</span>
+</label>
+
+<input
+  [type]="type"
+  [class.error]="errors && submitted"
+  [(ngModel)]="value"
+  [style.width]="width"
+  [tabindex]="tabInd"
+  [minlength]="minLength"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  (focus)="onFocus()"
+  (blur)="onBlur()"
+  autocomplete="off"
+  [maxlength]="maxLength > 0 ? maxLength : null" />
+
+<neo-control-error [errors]="errors" [fieldName]="labelForError ?? labelName" [submitted]="submitted"> </neo-control-error>

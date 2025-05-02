@@ -1,0 +1,107 @@
+@use 'colors';
+@media only screen and (max-width: 920px) {
+    .sign-up-background-wrapper {
+        display:none;       
+      }
+      .background-mobile-wrapper{
+        display: flex !important;
+      }
+      #mobile-sign-up-form-wrapper
+      {
+        padding-top: 20%;
+        display: flex !important;
+        neo-footer {
+            left: 0;
+            bottom: 0;
+            position: fixed;
+         }
+      }
+      body {
+        position: relative;
+        font-weight: 400;
+        background-color: colors.$dark-gray-20;
+        min-width: 320px;
+        margin: 0;
+        columns: colors.$blue-500;
+      }
+      #sign-up-form{
+        display: none;
+      }
+      .set-password{
+        width:10vh;
+        height:5vh;
+    }
+    .align-start {
+        align-items: center;
+    }
+    .justify-center {
+        justify-content: center;
+    }
+    .sign-up-form-wrapper{
+        width: 100%;
+    }
+}
+@media only screen and (max-height:500px) and ( max-width:920px)  {
+    #mobile-sign-up-form-wrapper
+      {
+        display: flex !important;
+        padding-top: 10%;  
+        neo-footer {
+            left: 0;
+            bottom: 0;
+            position: relative;
+         }      
+      }
+    .background-mobile-wrapper{
+        display: flex !important;
+        height: 35vh !important;
+      }
+      .logo {
+        width: 40vh !important;
+        height: 30vh !important;
+        padding-top: 10px;
+        }
+        .set-password{
+            width:40vh;
+            height:10vh;
+        }
+        .align-start {
+            align-items: center;
+        }
+        .justify-center {
+            justify-content: center;
+        }
+        .sign-up-form-wrapper{
+            width: 100%;
+        }
+        
+         body .p-relative{
+            position: absolute;}
+}
+.background-mobile-wrapper {
+    display: none;
+    width: 100%;
+    text-align: center;
+    height: 25vh;
+    background-image: url('../../../../assets/images/zeigob2c-background-mobile.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .logo {
+    width: 22vh;
+    height: 14vh;
+   
+  }
+  #mobile-sign-up-form-wrapper{
+    display: none;
+  }
+  .w-80{
+    width: 80% !important;
+  }
+  .m-1{
+    margin: 1px;
+  }
+  .font-heading{
+    font-size: 2rem !important;
+    line-height: 38.4px !important;
+  }

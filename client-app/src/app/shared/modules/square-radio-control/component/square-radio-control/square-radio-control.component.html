@@ -1,0 +1,21 @@
+<input
+  (change)="value = ctr.id; valueChanged.emit(ctr)"
+  *ngFor="let ctr of list; let i = index"
+  [checked]="value === ctr.id"
+  [disabled]="disabled"
+  [id]="ctr.name + formControlName + i"
+  [name]="formControlName"
+  type="radio"
+/>
+
+<div class="d-flex gap-8 input-wrapper">
+  <label
+    *ngFor="let item of list; let i = index"
+    [class.active]="value === item.id"
+    [for]="item.name + formControlName + i"
+    [style.height]="height + 'px'"
+    class="flex-center text-s text-dark-gray-590 c-pointer"
+  >
+    {{ item.name }}
+  </label>
+</div>

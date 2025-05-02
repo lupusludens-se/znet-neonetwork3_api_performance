@@ -1,0 +1,45 @@
+fullnameOverride: neonetwork3-api
+
+image:
+  repository: acrsbsharedservices.azurecr.io/neonetwork3-api
+  tag: preprod
+  pullPolicy: Always
+
+publicIngress:
+  enabled: true
+  className: traefik
+  hosts:
+  - host: network-pre.zeigo.com
+    paths:
+    - path: /zeigonetwork/preprod/api/
+      pathType: ImplementationSpecific
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 150
+  vpa:
+    enabled: true
+    mode: "Off"
+
+service:
+  port: 8080
+
+resources:
+  limits:
+    cpu: 1
+    memory: 2Gi
+  requests:
+    cpu: .5
+    memory: 1Gi
+
+application:
+  environment: preprod
+  identityClientId: 2066bb52-13cc-45ef-9e4e-d8015961fc0f # sa-neonetwork3-api-preprod
+  livenessEndpoint: /api/health
+  readinessEndpoint: /api/health
+  otelServiceName: neonetwork3-api
+  preUpgrade:
+    enabled: true
+    image: acrsbsharedservices.azurecr.io/neonetwork3-migration

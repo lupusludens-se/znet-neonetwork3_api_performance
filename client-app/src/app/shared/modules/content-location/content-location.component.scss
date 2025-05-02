@@ -1,0 +1,35 @@
+
+@use 'breakpoints';
+@import 'colors';
+
+:host {
+  width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info,
+.country,
+.state {
+  font-size: 12px;
+  font-family: 'Arial';
+  color: $dark-gray-580; //forum listing states
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+.default-cursor {
+  cursor: default !important;
+}
+
+:host.company-ellipsis {
+  overflow: hidden;
+  width: 80% !important;
+  @media (breakpoints.$medium) {
+    width: 90% !important;
+  }
+  text-overflow: ellipsis;
+  overflow-wrap: anywhere !important;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}

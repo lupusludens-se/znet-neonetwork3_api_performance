@@ -1,0 +1,32 @@
+@use 'colors';
+
+.filters-title {
+  font-family: 'Arial Rounded MT Bold', serif;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: colors.$dark-gray-750;
+  line-height: 20px;
+}
+
+.clear-btn {
+  font-size: 12px;
+  line-height: 140%;
+  color: colors.$zeigo-purple;
+
+  &:hover {
+    color: colors.$purple-400;
+  }
+}
+
+:host.align-title-centered{
+  .filters-header {
+    align-items: center;
+    justify-content: start !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .clear-btn {
+    white-space:nowrap;
+  }
+}

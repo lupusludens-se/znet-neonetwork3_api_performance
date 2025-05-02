@@ -1,0 +1,44 @@
+@use 'colors';
+@use 'breakpoints';
+@use 'variables';
+@use 'mixins';
+
+.client-list-wrapper {
+    padding: 0px, 12px, 12px, 12px;
+    background-color: colors.$white;
+    gap: 8px;
+  }
+
+.client-row {
+    border-bottom: 1px solid colors.$violet-5;
+    gap: 8px;
+    height: 60px;   
+  }
+
+  .client-name{
+    font-size: 14px;
+    line-height: 18px;
+    color: colors.$dark-gray-750;
+    font-family: 'Arial Rounded MT Bold', serif; 
+    cursor: pointer;
+  }
+
+  .company-title{
+    font-size: 14px;
+    line-height: 21px;
+    color: colors.$dark-gray-515;
+    font-family: 'Arial Rounded MT Bold', serif;
+    text-transform: uppercase;
+  }
+
+  .logo-height{
+    height: auto;     
+    cursor: pointer;
+  }
+
+  .lock-icon {
+    svg-icon {
+      pointer-events: none !important;
+    }
+    cursor: pointer;
+  }

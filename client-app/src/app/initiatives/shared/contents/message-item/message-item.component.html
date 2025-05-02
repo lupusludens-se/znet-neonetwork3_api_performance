@@ -1,0 +1,125 @@
+<div class="justify-center list-min-full-height flex-column flex-center w-100">
+    <div class="d-flex message-wrapper pb-12 pl-24 w-100 c-pointer" [ngClass]="{
+            new: message.unreadCount > 0}">
+
+        <ng-container *ngIf="conversationUser(currentUser, message.users) as user">
+            <svg-icon key="selection-tick-mark" *ngIf="message.isSelected" class="tick-mark"></svg-icon>
+            <div class="overlay-polygon overlay-polygon-left" *ngIf="message.isSelected"></div>
+            <div class="d-flex align-center w-40" (click)="optionClick();">
+                <!-- Individual message -->
+                <ng-container *ngIf="message?.users?.length === 2">
+                    <neo-user-avatar [user]="getUser(user)" imageSize="size48" class="c-pointer"
+                        (click)="openUserProfile(user);$event.stopPropagation();"></neo-user-avatar>
+                    <div class="flex-column pl-16 c-pointer">
+                        <div class="d-flex align-center">
+                            <span class="user-name break-word text-neo-near-black fw-700"
+                                (click)="openUserProfile(user);">
+                                {{ user?.statusId === userStatuses.Deleted ? 'Deleted User' : user?.name }}
+                            </span>
+                            <span *ngIf="message?.unreadCount > 0"
+                                class="unread-messages-count text-xxs fw-700 flex-center ml-6">
+                                {{ message?.unreadCount }}
+                            </span>
+                        </div>
+                        <div class="d-flex align-center">
+                            <span *ngIf="user.statusId !== userStatuses.Deleted"
+                                class="text-s break-word text-blue-200 pt-2">
+                                {{ user?.company }}
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!-- Group message -->
+                <div class="flex-column" *ngIf="message?.users?.length > 2">
+                    <div class="d-flex align-center">
+                        <div class="user-image-wrapper c-pointer p-relative flex-center" [style.z-index]="i"
+                            *ngFor="let user of conversationUsers(currentUser, message.users, 0, 5); let i = index">
+                            <neo-user-avatar [user]="getUser(user)" (click)="openUserProfile(user);$event.stopPropagation();"
+                                imageSize="size32"></neo-user-avatar>
+                            <p class="user-tooltip text-xs fw-700 text-white p-absolute">
+                                <a (click)="openUserProfile(user);">
+                                    {{ user?.statusId === userStatuses.Deleted ? 'Deleted User' : user?.name }}
+                                </a>
+                            </p>
+                        </div>
+                        <div *ngIf="message?.usersCount > 6" class="user-image-wrapper z-index-6 c-pointer">
+                            <div class="counter w-100 h-100 text-xxs text-neo-aqua fw-700 flex-center">
+                                +{{ message?.usersCount - 6 }}
+                            </div>
+                        </div>
+                        <div *ngIf="message?.unreadCount"
+                            class="unread-messages-count text-xxs fw-700 flex-center ml-6">
+                            {{ message?.unreadCount }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <div class="message-block d-flex flex-column w-40 mt-18" (click)="optionClick();">
+            <div class="d-flex mb-4">
+                <label for="subject" class="subject-label flex-column">
+                    {{ 'messages.subjectMessageLabel' | translate }}&nbsp;
+                </label>
+                <span class="subject">
+                    {{
+                    message?.subject?.length > messageLength
+                    ? (message?.subject | slice : 0 : messageLength) + '...'
+                    : message?.subject
+                    }}
+                </span>
+            </div>
+            <div class="max-w-100 d-flex">
+                <div class="message flex-column">
+                    <span class="text-xs fw-700 text-neo-near-black">
+                        {{ getLastMessageUser(currentUser, message) + ':' }}
+                    </span>
+                    <span *ngIf="message?.lastMessage?.text?.length > 0" [ngClass]="{
+                              'pt-2': message?.lastMessage?.text?.length
+                          }" class="message-content text-blue-200 text-s mt-2"
+                        [class.italic]="message?.lastMessage?.statusId === 0"
+                        [innerHTML]="message?.lastMessage?.statusId === 1 ? message?.lastMessage?.text :  'messages.messageDeletedLabel' | translate ">
+                    </span>
+                    <span *ngIf="message?.lastMessage?.text?.length <= 0" [class.italic]="message?.lastMessage?.statusId === 0"
+                        class="message-content text-blue-200 text-s mt-2 align-center">
+                        <ng-container *ngIf="message?.lastMessage?.statusId === 1">
+                            {{ 'messages.attachmentLable' | translate }}
+                        </ng-container>
+                        <ng-container *ngIf="message?.lastMessage?.statusId === 0">
+                            {{ 'messages.messageDeletedLabel' | translate }}
+                        </ng-container>
+                        <svg-icon *ngIf="message?.lastMessage?.statusId === 1" class="text-s mt-2 link-align" key="pin"
+                            size="m"></svg-icon>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-block d-flex flex-column pl-16 w-34" (click)="optionClick();"
+            [ngClass]="{ 'justify-center': message.sourceTypeId !== discussionSourceType.ProviderContact}">
+            <div class="d-flex justify-end text-center"
+                *ngIf="message.sourceTypeId === discussionSourceType.ProviderContact">
+                <div class="lead-label d-flex">
+                    <svg-icon class="mr-4 p-relative top-2" fontSize="10px" key="dot"></svg-icon>
+                    <label for="leadlabel">{{ 'messages.leadMessageLabel' | translate }}</label>
+                </div>
+            </div>
+            <div class="d-flex pl-12 pr-24 justify-between"  [ngClass]="{ 'mt-26': message.sourceTypeId !== discussionSourceType.ProviderContact}"
+                [ngClass]="{ 'pt-24': message.sourceTypeId === discussionSourceType.ProviderContact}">
+                <div class="d-flex align-center">
+                    <svg-icon class="timer-icon text-blue-200" key="message-timer" size="md"></svg-icon>
+                    <span class="text-xs text-blue-200 pl-8">
+                        {{ message.lastMessage.createdOn | timeAgo }}
+                    </span>
+                </div>
+                <div class="pl-48">
+                    <button class="lead-btn btn-s w-min-initial d-flex align-center" (click)="openMessage($event)">
+                        {{ 'messages.viewLabel' | translate }}
+                        <svg-icon class="ml-8" key="right-arrow" [fontSize]="'14px'"></svg-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

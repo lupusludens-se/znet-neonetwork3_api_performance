@@ -1,0 +1,124 @@
+<div class="content flex-column">
+  <h2 class="title mb-32 neo-arial">{{ 'onboarding.sidebar.personalInfoLabel' | translate }}</h2>
+
+  <div class="control-wrapper">
+    <ng-container
+      *ngIf="isUserCorporate || isUserSolutionProvider"
+      formArrayName="skillsByCategory">
+      <label class="neo-arial flex-column">
+        <p>
+          {{ 'userProfile.edit.skillsLabel' | translate }}
+          <small class="neo-arial-regular">({{ 'general.optionalLabel' | translate }})</small>
+        </p>
+        <ng-container
+          *ngFor="let skillsGroup of skillsByCategory.controls; let i = index">
+          <div
+            [formGroup]="skillsGroup"
+            class="controls-row d-flex url-wrapper mt-12">
+            <neo-dropdown
+              [dropdownOptions]="categories"
+              dropdownSize="150px"
+              formControlName="projectType"
+              class="w-90"
+              (ngModelChange)="onProjectTypeChange(skillsGroup)"
+              [placeholderText]="'userProfile.edit.selectProjectTypesLabel' | translate"
+              [submitted]="formSubmitted">
+            </neo-dropdown>
+            <neo-dropdown
+              (click)="onSkillsChange(i, $event)"
+              [disabled]="!skillsGroup.get('projectType').value"
+              class="ml-20"
+              [dropdownOptions]="filteredSkills"
+              dropdownSize="150px"
+              formControlName="skill"
+              [placeholderText]="'userProfile.edit.selectSkillsTypeLabel' | translate"
+              [submitted]="formSubmitted">
+            </neo-dropdown>
+            <button
+              (click)="removeSkill(i)"
+              class="mb-12 btn-remove-link ml-20">
+              <svg-icon
+                height="24px"
+                key="trash-can"
+                width="24px"></svg-icon>
+            </button>
+          </div>
+          <div
+            *ngIf="
+              skillsByCategory.length === maxSkills &&
+              !isSkillRequired &&
+              !setDuplicateSkillsError &&
+              skillsGroup.get('skill').value &&
+              i === 4
+            "
+            class="ml-20 mb-20 error">
+            {{ 'userProfile.edit.limitReachedText' | translate }}
+          </div>
+        </ng-container>
+      </label>
+    </ng-container>
+    <div
+      class="ml-20 mb-20 error-msg"
+      *ngIf="isSkillRequired && !isSkillandCatetegoryRequired">
+      {{ 'userProfile.edit.skillRequiredText' | translate }}
+    </div>
+    <div
+      class="ml-20 mb-20 error-msg"
+      *ngIf="isSkillandCatetegoryRequired">
+      {{ 'userProfile.edit.projectTypeandSkillRequiredText' | translate }}
+    </div>
+    <div
+      *ngIf="setDuplicateSkillsError"
+      class="ml-20 mb-20 error-msg">
+      {{ 'userProfile.edit.duplicateSkillsErrorLabel' | translate }}
+    </div>
+    <div
+      *ngIf="skillsByCategory.length === maxSkills"
+      class="ml-20 mb-20 error-msg">
+      {{ 'userProfile.edit.limitReachedText' | translate }}
+    </div>
+    <button
+      *ngIf="skillsByCategory.length < maxSkills && (isUserCorporate || isUserSolutionProvider)"
+      (click)="addSkill()"
+      class="add-skill-btn green-frame mb-20 mt-12"
+      type="button">
+      {{ 'userProfile.edit.addSkillsLabel' | translate }}
+      <svg-icon
+        class="ml-8"
+        key="thin-plus"
+        size="lg"></svg-icon>
+    </button>
+    <label class="neo-arial flex-column">
+      <p>
+        {{ 'userProfile.aboutLabel' | translate }}
+        <small class="neo-arial-regular">({{ 'general.optionalLabel' | translate }})</small>
+      </p>
+      <textarea
+        cols="30"
+        rows="10"
+        placeholder="Personal info/bio"
+        class="mt-12"
+        formControlName="about"></textarea>
+    </label>
+
+    <label class="neo-arial flex-column mt-24 pb-12">
+      <p>
+        {{ 'companyManagement.form.linkedinUrlLabel' | translate }}
+        <small class="neo-arial-regular">({{ 'general.optionalLabel' | translate }})</small>
+      </p>
+
+      <neo-text-input
+        [submitted]="formSubmitted"
+        placeholder="www.linkedin.com/in/johndoe"
+        formControlName="linkedInUrl"
+        class="mt-12"
+        [labelName]="'companyManagement.form.linkedinUrlLabel' | translate"
+        [showLabel]="false"></neo-text-input>
+    </label>
+  </div>
+</div>
+
+<neo-wizard-nav-controls
+  (goNext)="goForward(stepsList.GeographicalPurview)"
+  (goBack)="changeStep(stepsList.Location)">
+</neo-wizard-nav-controls>

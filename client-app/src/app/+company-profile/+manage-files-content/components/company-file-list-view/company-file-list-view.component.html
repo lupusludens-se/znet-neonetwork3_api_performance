@@ -1,0 +1,274 @@
+<div *ngIf="currentUser">
+  <button
+    (click)="goBack()"
+    class="btn-connect back-btn d-flex align-center pb-4">
+    <svg-icon
+      class="pr-4 back-btn-img-s"
+      key="left-arrow"></svg-icon>
+    {{ 'general.backLabel' | translate }}
+  </button>
+
+  <div class="d-flex mt-24">
+    <div class="d-flex w-50 align-center">
+      <svg-icon
+        class="file-icon mr-10 mt-2"
+        key="file"></svg-icon>
+      <h2 class="header">{{ sectionTitle }}</h2>
+      <p
+        class="info-text neo-arial tooltip"
+        *ngIf="isCurrentUserAdminOrSPAdmin()">
+        <svg-icon
+          class="file-info-icon"
+          key="info-text"></svg-icon>
+        <span
+          class="tooltiptext"
+          [innerHTML]="'community.permittedFileDescription' | translate">
+        </span>
+      </p>
+    </div>
+    <div
+      class="justify-end d-flex w-50"
+      *ngIf="companyFiles.dataList?.length > 0">
+      <button
+        class="upload-button green btn-add flex-center pr-10 ml-8 btn-upload"
+        (click)="selectedFile = null; fileUploadModal = true"
+        *ngIf="isCurrentUserAdminOrSPAdmin()">
+        <svg-icon
+          key="upload-icon"
+          class="mr-10"></svg-icon>
+        {{ 'general.uploadLabel' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-12">
+    <p class="subtext">{{ sectionDescription }}</p>
+  </div>
+  <div>
+    <div class="d-flex">
+      <button
+        *ngIf="
+          checkIfUserCanAccess(('general.publicLabel' | translate).toLowerCase()) &&
+          checkIfUserCanAccess(('general.privateLabel' | translate).toLowerCase())
+        "
+        (click)="changeTab(0)"
+        [ngClass]="{ active: selectedFileTab === 0, inactive: selectedFileTab === 1 }"
+        class="btn-tab neo-arial d-flex align-center mr-4 mt-24">
+        {{ 'general.publicLabel' | translate }}
+      </button>
+      <button
+        *ngIf="checkIfUserCanAccess(('general.privateLabel' | translate).toLowerCase())"
+        (click)="changeTab(1)"
+        [ngClass]="{ inactive: selectedFileTab === 0, active: selectedFileTab === 1 }"
+        class="btn-tab neo-arial d-flex align-center mt-24">
+        {{ 'general.privateLabel' | translate }}
+      </button>
+    </div>
+    <div
+      class="content mt-32 d-flex"
+      *ngIf="isLoading">
+      <div class="table-wrapper flex-column">
+        <ng-container *ngIf="companyFiles.count > 0; else noRecordsFound">
+          <table class="table mb-24">
+            <thead>
+              <tr>
+                <td class="width-10"></td>
+                <td class="w-40">
+                  <div
+                    class="click-area"
+                    (click)="sortCriteriaSelection('nameAsc', sortingCriteria.name)">
+                    {{ 'community.fileManagement.table.nameCol' | translate }}
+                    <svg-icon
+                      [class.sorthighlight]="nameAsc"
+                      class="text-blue-200 ml-6 caret"
+                      key="table-row-sort-up"
+                      size="md"></svg-icon>
+                    <svg-icon
+                      [class.sorthighlight]="tdTitleClick === sortingCriteria.name && !nameAsc"
+                      class="text-blue-200 ml-1 caret"
+                      key="table-row-sort-down"
+                      size="md"></svg-icon>
+                  </div>
+                </td>
+                <td class="w-10">
+                  <div
+                    class="click-area"
+                    (click)="sortCriteriaSelection('typeAsc', sortingCriteria.type)">
+                    {{ 'community.fileManagement.table.typeCol' | translate }}
+                    <svg-icon
+                      [class.sorthighlight]="typeAsc"
+                      class="text-blue-200 ml-6 caret"
+                      key="table-row-sort-up"
+                      size="md"></svg-icon>
+                    <svg-icon
+                      [class.sorthighlight]="tdTitleClick === sortingCriteria.type && !typeAsc"
+                      class="text-blue-200 ml-1 caret"
+                      key="table-row-sort-down"
+                      size="md"></svg-icon>
+                  </div>
+                </td>
+                <td class="w-10">
+                  <div
+                    class="click-area"
+                    (click)="sortCriteriaSelection('sizeAsc', sortingCriteria.size)">
+                    {{ 'community.fileManagement.table.sizeCol' | translate }}
+                    <svg-icon
+                      [class.sorthighlight]="sizeAsc"
+                      class="text-blue-200 ml-6 caret"
+                      key="table-row-sort-up"
+                      size="md"></svg-icon>
+                    <svg-icon
+                      [class.sorthighlight]="tdTitleClick === sortingCriteria.size && !sizeAsc"
+                      class="text-blue-200 ml-1 caret"
+                      key="table-row-sort-down"
+                      size="md"></svg-icon>
+                  </div>
+                </td>
+                <td class="w-15">
+                  <div
+                    class="click-area"
+                    (click)="sortCriteriaSelection('dateAsc', sortingCriteria.date)">
+                    {{ 'community.fileManagement.table.dateCol' | translate }}
+                    <svg-icon
+                      [class.sorthighlight]="dateAsc"
+                      class="text-blue-200 ml-6 caret"
+                      key="table-row-sort-up"
+                      size="md"></svg-icon>
+                    <svg-icon
+                      [class.sorthighlight]="tdTitleClick === sortingCriteria.date && !dateAsc"
+                      class="text-blue-200 ml-1 caret"
+                      key="table-row-sort-down"
+                      size="md"></svg-icon>
+                  </div>
+                </td>
+                <td
+                  *ngIf="isUserIsAdminOrSpAdminUserFromSameCompany()"
+                  class="w-15">
+                  <div
+                    class="click-area"
+                    (click)="sortCriteriaSelection('modifiedByAsc', sortingCriteria.modifiedBy)">
+                    {{ 'community.fileManagement.table.modifiedByCol' | translate }}
+                    <svg-icon
+                      [class.sorthighlight]="modifiedByAsc"
+                      class="text-blue-200 ml-6 caret"
+                      key="table-row-sort-up"
+                      size="md"></svg-icon>
+                    <svg-icon
+                      [class.sorthighlight]="tdTitleClick === sortingCriteria.modifiedBy && !modifiedByAsc"
+                      class="text-blue-200 ml-1 caret"
+                      key="table-row-sort-down"
+                      size="md"></svg-icon>
+                  </div>
+                </td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <neo-company-file-table-row
+                *ngFor="let file of companyFiles.dataList"
+                [isAdmin]="isAdmin"
+                [currentUser]="currentUser"
+                [fileDetails]="file"
+                [tabSelected]="selectedFileTab"
+                class="row"
+                (deleteFileClick)="deleteFile($event)"
+                (editFileClick)="editFile($event)"
+                (downloadFileClick)="downloadFile(file.blobName, file.actualFileTitle, file.extension)">
+              </neo-company-file-table-row>
+            </tbody>
+          </table>
+
+          <neo-pagination
+            *ngIf="paging && paging.total > defaultItemPerPage"
+            (changePage)="changePage($event)"
+            [defaultItemPerPage]="defaultItemPerPage"
+            [paging]="paging"
+            class="pt-24 mb-64">
+          </neo-pagination>
+        </ng-container>
+
+        <ng-template #noRecordsFound>
+          <div class="flex-column no-file-container w-100">
+            <ng-container *ngIf="isCurrentUserAdminOrSPAdmin() else noUploadBtn">
+              <svg-icon
+                class="file-icon"
+                key="file"></svg-icon>
+              <h3 class="pt-20">{{ 'community.addFilesLabel' | translate }}</h3>
+              <div
+                class="pt-20 file-description"
+                [innerHTML]="'community.permittedFileDescription' | translate"></div>
+              <button
+                class="btn-upload mt-10 d-flex p-10"
+                (click)="fileUploadModal = true; trackFileActivity()">
+                <svg-icon
+                  key="upload-icon"
+                  class="mr-4"></svg-icon
+                >{{ 'general.uploadLabel' | translate }}
+              </button>
+            </ng-container>
+            <ng-template #noUploadBtn>
+              <svg-icon
+              class="file-icon"
+              key="company-file"></svg-icon>
+            <div class="message mt-6">{{ getNoFilesMessage() }}</div>
+            </ng-template>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<neo-modal
+  (closed)="showDeleteModal = false"
+  *ngIf="showDeleteModal"
+  size="medium"
+  [title]="'community.deletePopupMessageTitle' | translate"
+  class="title-h2">
+  <div class="popup-controls mt-10 d-flex">
+    <button
+      (click)="showDeleteModal = false"
+      class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button
+      (click)="confirmDelete()"
+      class="btn-confirm w-50">
+      {{ 'messages.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>
+
+<neo-modal
+  (closed)="showFileDuplicateModal = false"
+  *ngIf="showFileDuplicateModal"
+  class="primary-scope"
+  size="medium"
+  title=" ">
+  <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+    {{ 'community.fileDuplicate1Label' | translate }} <b> {{ this.fileName }}.{{ fileExtension }} </b>.
+    {{ 'community.fileDuplicate2Label' | translate }}
+  </p>
+  <div class="popup-controls mt-10 d-flex">
+    <button
+      (click)="replaceFile()"
+      class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.replaceLabel' | translate }}
+    </button>
+    <button
+      (click)="keepBothTheFiles()"
+      class="btn-confirm w-50">
+      {{ 'general.keepBothLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>
+
+<neo-file-upload
+  (closed)="fileUploadModal = false; selectedFile = null"
+  (fileSelected)="onFileSelect($event)"
+  *ngIf="fileUploadModal"
+  class="secondary-scope"
+  [infoTitle]="infoTitle"
+  [existingFileTile]="selectedFile?.actualFileTitle"
+  [existingFileName]="selectedFile?.actualFileName"
+  [fileDescription]="fileDescription"></neo-file-upload>

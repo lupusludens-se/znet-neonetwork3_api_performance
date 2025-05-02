@@ -1,0 +1,44 @@
+<form
+  [formGroup]="formGroup"
+  class="flex-column">
+  <div class="flex-column customControl">
+    <label class="text-m text-neo-near-black fw-700">
+      {{ 'solarQuote.interestsLabel' | translate }}
+    </label>
+
+    <neo-blue-checkbox
+      (selectCheckbox)="setCheckboxStatus(quoteInterestsOptions[key])"
+      *ngFor="let key of getKeys(quoteInterestsOptions)"
+      [checked]="formGroup.get('interests').value.includes(quoteInterestsOptions[key])"
+      [name]="'solarQuote.options.interests.' + key | translate"
+      [value]="quoteInterestsOptions[key]"
+      [textSize]="'text-m'"
+      class="pt-8 text-zeigo-near-black">
+    </neo-blue-checkbox>
+
+    <neo-control-error
+      [errors]="formGroup.get('interests').errors"
+      [fieldName]="'solarQuote.interestsErrorLabel' | translate"
+      [submitted]="formSubmitted">
+    </neo-control-error>
+  </div>
+
+  <div class="flex-column mt-12 customControl">
+    <label class="text-m text-neo-near-black fw-700 pb-8">
+      {{ 'solarQuote.additionalCommentsLabel' | translate }}
+    </label>
+
+    <neo-textarea-control
+      class="innerInp text-zeigo-near-black"
+      formControlName="additionalComments"
+      [submitted]="formSubmitted"
+      rows="5"></neo-textarea-control>
+  </div>
+</form>
+
+<neo-form-footer
+  (cancel)="onCancel()"
+  (save)="save()"
+  icon="right-arrow"
+  submitButtonName="solarQuote.requestQuoteLabel">
+</neo-form-footer>

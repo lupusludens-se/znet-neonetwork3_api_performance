@@ -1,0 +1,242 @@
+<div class="learn-wrapper">
+  <div class="flex-column">
+    <neo-top-panel imageCssClasses="l-250px w-599px h-249px t-28px text-dark-gray-30" imageUrl="assets/images/project-category-background-image.svg">
+      <div class="top-panel-spacing d-flex z-index-1 w-100" [ngClass]="{'top-panel-public' : isPublicUser}">
+        <div class="flex-column" [ngClass]="currentUser?'w-60':'w-80'">
+          <div class="d-flex">
+            <div>
+              <svg-icon
+                class="book-icon text-blue-10"
+                key="book"></svg-icon>
+            </div>
+            <div class="flex-column title" *ngIf="currentUser">
+              <h2>{{ 'learn.learnLabel' | translate }}</h2>
+
+              <p class="pt-8 text-s w-100">
+                {{ 'learn.learnDescriptionLabel' | translate }}
+              </p>
+
+              <div
+                class="d-flex pt-20"
+                *ngIf="notSolutionUser">
+                <a
+                  [routerLink]="['/technologies']"
+                  (click)="onTechnologiesSolutionsClick('technologies')"
+                  class="z-index-1 fw-700 p-0 text-left mr-32 d-flex align-center learn-catalog-link">
+                  {{ 'learn.aboutTechnologiesLabel' | translate }}
+                  <svg-icon
+                    class="ml-8"
+                    key="right-arrow-in-circle"
+                    size="xxl"></svg-icon>
+                </a>
+
+                <a
+                  [routerLink]="['/solutions']"
+                  (click)="onTechnologiesSolutionsClick('solutions')"
+                  class="z-index-1 fw-700 p-0 text-left d-flex align-center learn-catalog-link">
+                  {{ 'learn.aboutSolutionsLabel' | translate }}
+                  <svg-icon
+                    class="ml-8"
+                    key="right-arrow-in-circle"
+                    size="xxl"></svg-icon>
+                </a>
+              </div>
+            </div>
+            <div class="flex-column title" *ngIf="isPublicUser">
+              <h2>{{ 'learn.learnPublicLabel' | translate }}</h2>
+
+              <p class="pt-8 text-s w-100">
+                {{ 'learn.learnPublicDescriptionLabel' | translate }}</p>
+                <p class="pt-15 text-s w-100 mt-5">
+                {{ 'learn.learnPublicInterestLabel' | translate }}
+                <a class="banner-create-account-link" [routerLink]="['/sign-up']"[queryParams]="{ source: signTrackingSourceEnum }">
+                {{ 'learn.learnPublicLoginLabel1' | translate }}</a>
+                {{ 'learn.learnPublicLoginLabel2' | translate }}
+              </p> 
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-end w-40" *ngIf="currentUser">
+
+          <div class="flex-column pl-40 pt-14">
+            <span class="text-xs neo-arial text-uppercase strategic-assistance-label">
+              {{ 'learn.strategicAssistanceLabel' | translate }}
+            </span>
+
+            <h4 class="pt-12 pb-24 need-help-label">
+              {{ 'learn.needStrategyLabel' | translate }}
+            </h4>
+
+            <div>
+              <button
+                (click)="onContactNEONetworkClick()"
+                class="btn-connect top-panel-btn-white d-flex align-center">
+                {{ 'messages.connectNEONetworkLabel' | translate }}
+                <svg-icon
+                  class="ml-10"
+                  key="right-arrow"></svg-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-end w-20" *ngIf="isPublicUser">
+          <div class="flex-column learn-count-bg w-100 justify-center" *ngIf="networkStats">
+            <span class="learn-count">{{ articleCount }}+</span>  
+            <span class="article-text">{{ 'learn.articlesLabel' | translate }}</span>         
+        </div>
+        </div>
+      </div>
+    </neo-top-panel>
+
+    <neo-search-bar
+      (clearInput)="search(null)"
+      (inputChange)="search($event)"
+      [allowedCharactersRegExp]="searchRegExp"
+      [value]="filters.searchStr"
+      class="d-flex search-bar-spacing">
+    </neo-search-bar>
+  </div>
+
+  <div class="d-flex pt-32 w-100">
+    <div class="flex-column filters-wrapper" *ngIf="currentUser">
+      <neo-filter-header *ngIf="currentUser"
+        (clearFilters)="clearFilters()"
+        [filterName]="'learn.filtersLabel' | translate"
+        [showClearButton]="showClearButton">
+      </neo-filter-header>
+
+      <neo-filter-state *ngIf="currentUser"></neo-filter-state>
+
+      <div class="flex-column">
+        <neo-filter-button
+          (clicked)="setMainFilterCategory($event)"
+          [isActive]="filters.title"
+          icon="filter-user-checked"
+          name="{{ 'general.forYouLabel' | translate }}">
+        </neo-filter-button>
+
+        <neo-filter-button
+          (clicked)="setMainFilterCategory($event)"
+          [isActive]="filters.title"
+          class="mt-8"
+          icon="filter-star"
+          name="{{ 'general.savedLabel' | translate }}">
+        </neo-filter-button>
+
+        <neo-filter-button
+          (clicked)="setMainFilterCategory($event)"
+          [isActive]="filters.title"
+          class="mt-8"
+          icon="learn"
+          name="{{ 'learn.allArticlesLabel' | translate }}">
+        </neo-filter-button>
+
+        <div class="seperator-near-full mt-20 mb-20"></div>
+
+        <neo-taxonomy-filter
+          [name]="'filter.solutionsLabel' | translate"
+          [taxonomy]="taxonomyEnum.solutions"
+          icon="flash">
+        </neo-taxonomy-filter>
+
+        <neo-taxonomy-filter
+          [name]="'filter.categoryLabel' | translate"
+          [taxonomy]="taxonomyEnum.categories"
+          class="mt-8"
+          icon="projects">
+        </neo-taxonomy-filter>
+
+        <neo-taxonomy-filter
+          [name]="'filter.technologyLabel' | translate"
+          [taxonomy]="taxonomyEnum.technologies"
+          class="mt-8"
+          icon="sun">
+        </neo-taxonomy-filter>
+
+        <neo-taxonomy-hierarchical-filter
+          [name]="'filter.regionLabel' | translate"
+          [taxonomy]="taxonomyEnum.regions"
+          class="mt-8 mb-12 text-grey"
+          icon="filter-location">
+        </neo-taxonomy-hierarchical-filter>
+      </div>
+    </div>
+
+    <div class="flex-column" [ngClass]="currentUser ?'content-wrapper content-wrapper-width':'w-100'">
+      <h4
+        class="pb-16 pb-16 filter-title"
+        *ngIf="!resultPending && filters.title !== ('general.forYouLabel' | translate)">
+        {{ filters.title }}
+      </h4>
+
+      <div class="flex-column w-100 h-100" [ngClass]="{'learn-bg' : showBorder}" >
+        <neo-for-you (removeParentCssEmitter)="showBorder = true" 
+          *ngIf="filters.title === ('general.forYouLabel' | translate)"
+          [currentUser]="currentUser"
+          class="h-100">
+        </neo-for-you>
+
+        <div
+          *ngIf="filters.title !== ('general.forYouLabel' | translate)"
+          class="d-flex flex-wrap">
+          <neo-post-link
+            (saveClick)="$event ? (post.isSaved = $event) : postData?.dataList?.splice(index, 1)"
+            (postClick)="postClicked()"
+            *ngFor="let post of postData?.dataList; let index = index"
+            [post]="post"
+            class="pb-24 pr-24 learn-post-wrapper">
+          </neo-post-link>
+        </div>
+
+        <neo-pagination
+          (changePage)="changePage($event)"
+          *ngIf="postData?.count > defaultPerPage && filters.title !== ('general.forYouLabel' | translate)"
+          [defaultItemPerPage]="defaultPerPage"
+          [paging]="{
+            skip: filters.initialFiltersState?.skip,
+            take: filters.initialFiltersState?.take,
+            total: postData?.count
+          }"
+          class="pt-24">
+        </neo-pagination>
+
+        <neo-no-results
+          *ngIf="
+            !resultPending &&
+            !postData?.count &&
+            !postData?.dataList?.length &&
+            filters.initialFiltersState?.search &&
+            filters.title !== ('general.forYouLabel' | translate)
+          "
+          [searchedStr]="filters.initialFiltersState?.search">
+        </neo-no-results>
+
+        <neo-empty-page
+          *ngIf="
+            postData &&
+            !postData?.dataList?.length &&
+            !filters.initialFiltersState?.search &&
+            filters.title !== ('general.forYouLabel' | translate)
+          "
+          [headlinePart1]="
+            (filters.title === ('general.savedLabel' | translate) ? 'saved.emptyTitleLabel' : 'general.emptyStateLabel')
+              | translate
+          "
+          [headlinePart2]="
+            (filters.title === ('general.savedLabel' | translate)
+              ? 'saved.emptyDescriptionLabel'
+              : 'topics.emptyStateSubLabel'
+            ) | translate
+          "
+          class="h-100"
+          iconKey="star-outline">
+        </neo-empty-page>
+      </div>
+    </div>
+  </div>
+</div>
+
+<neo-contact-neo-network
+  (closed)="contactUsModal = false"
+  *ngIf="contactUsModal"></neo-contact-neo-network>

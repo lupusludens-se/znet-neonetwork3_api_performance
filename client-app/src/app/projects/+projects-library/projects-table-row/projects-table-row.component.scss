@@ -1,0 +1,216 @@
+@use 'colors';
+@use 'breakpoints';
+
+:host {
+  display: table-row;
+}
+
+.title-col {
+  display: block;
+  font-weight: 700;
+  color: colors.$near-black-400;
+  cursor: default;
+  width: 149px;
+  font-size: 17px;
+  /*
+    Not sure how setting min-width to 100% works to make title expand to fill all
+    available space when width and max-width are set to something else, but... it *does*.
+  */
+  min-width: 100%;
+
+  @media (breakpoints.$medium) {
+    max-width: 90%;
+  }
+}
+
+.draftTitle {
+  display: block;
+  font-weight: 400;
+  cursor: default;
+  width: 149px;
+  font-size: 14px;
+  /*
+    Not sure how setting min-width to 100% works to make title expand to fill all
+    available space when width and max-width are set to something else, but... it *does*.
+  */
+  min-width: 100%;
+
+  @media (breakpoints.$medium) {
+    max-width: 90%;
+  }
+}
+
+.location-col,
+.posted {
+  max-width: 1%;
+}
+
+.publishedBy {
+  display: block;
+  width: 110px;
+}
+
+.type,
+.location,
+.company {
+  display: block;
+  width: 130px;
+
+  @media (breakpoints.$medium) {
+    max-width: 90%;
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+
+  .tooltiptext {
+    visibility: hidden;
+    position: absolute;
+    top: 20px;
+    left: -50px;
+    z-index: 1;
+    width: 222px;
+    height: 60px;
+    background: colors.$white-20;
+    border-radius: 8px;
+    font-family: 'Arial Rounded MT Bold';
+    font-style: normal;
+    font-weight: normal;
+    color: colors.$near-black-400;
+    box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+    padding: 10px 10px;
+    line-height: 20px;
+  }
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+
+  a {
+    color: colors.$near-black-400;
+    text-decoration: underline;
+  }
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 4px 12px;
+  //background: colors.$light-green;
+  border-radius: 25px;
+  font-size: 12px;
+  gap: 4px;
+  justify-content: center;
+  width: 69px;
+  height: 32px;
+
+  background: #d9f3ee;
+  color: #0e9888;
+  //color: colors.$dark-green;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    //background: colors.$dark-green;
+    margin-right: 1px;
+    background: #0e9888;
+  }
+
+  &.inactive {
+    background: #ffe5e5;
+    color: colors.$red-100;
+    padding: 8px;
+    width: 78px;
+    height: 32px;
+
+    &:before {
+      background: colors.$red-100;
+    }
+  }
+
+  &.draft {
+    background: rgba(66, 180, 230, 0.1);
+    color: colors.$aqua-400;
+
+    &:before {
+      //background: colors.$blue-300;
+      background: colors.$aqua-400;
+    }
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.options-cell {
+  position: relative;
+}
+
+td {
+  vertical-align: middle;
+
+  &.transparent {
+    opacity: 0.5;
+    background: colors.$blue-10;
+    color: colors.$dark-gray-510;
+  }
+
+  &.midlight-column {
+    opacity: 1;
+  }
+  &.midlight-column:not(.transparent):not(.transparent1) {
+    opacity: 1;
+    background: #fcfbfc;
+    color: colors.$dark-gray-510;
+    //background: #F9F8F9;
+    //color: #908E96;
+  }
+}
+
+.btn-options {
+  width: 37px;
+  height: 37px;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+  color: colors.$neo-blue;
+  font-size: 24px;
+}
+
+.text-error {
+  color: colors.$error-red;
+}
+
+.draft {
+  //background: colors.$blue-10;
+}
+
+.lightText {
+  color: #908e96;
+}
+
+.transparent1 {
+  opacity: 1 !important;
+  background: #fcf8f9 !important;
+}
+
+.counter {
+  font-family: 'Arial';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 130%;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.01em;
+  color: colors.$dark-gray-590;
+}

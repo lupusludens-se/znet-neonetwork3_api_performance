@@ -1,0 +1,29 @@
+<div class="pb-8"><span class="testimonials-title">{{'community.testimonialsLable' | translate}}</span></div>
+<div class="testimonials-wrapper w-100">
+  <div
+    *ngFor="let feedback of clientFeedbacks"
+    class="flex-between">
+    <div class="testimonial-row w-100 d-flex pt-16 pb-16">
+      <div class="flex-column w-20 auto-margin">
+        <div class="d-flex w-100">
+          <div class="flex-column pl-20 w-50">
+            <img
+              [src]="feedback.companyLogo"
+              alt="client logo" />
+          </div>
+          <div class="flex-column w-50 auto-margin">
+            <span class="client-name pl-20">{{ feedback.companyName }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex-column feedback-column w-95 pl-24">
+        <div class="w-95">
+          <p class="feedback-text italic">"{{ feedback.feedback }}"</p>
+        </div>
+        <div class="w-95 feedback-text align-left">
+          - <span>{{ feedback.name }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

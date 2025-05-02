@@ -1,0 +1,78 @@
+<div class="d-flex message-wrapper p-24 w-100 new">
+  <div class="d-flex w-fit-content">
+    <neo-user-avatar
+      [imageSize]="'size56'"
+      [user]="getUser"
+      class="mt-8 mb-8">
+    </neo-user-avatar>
+
+    <div class="flex-column pl-20">
+      <h4
+        class="name c-pointer"
+        (click)="userClick.emit()"
+        routerLink="/user-profile/{{ communityUser.id }}/">
+        {{ communityUser.firstName }} {{ communityUser.lastName }}
+      </h4>
+
+      <span class="text-s pt-2 job-title">
+        {{ communityUser.jobTitle
+        }}{{ communityUser.statusId === userStatuses.Deleted ? '' : ', ' + communityUser.companyName }}
+      </span>
+
+      <div class="d-flex flex-wrap pt-12 gap-4">
+        <div class="disabled default-cursor">
+          <div class="flex-center role-tag-purple pl-8 pr-8 pt-6 pb-6">
+            {{ getRoleLabel(communityUser?.role.id) | translate }}
+          </div>
+        </div>
+        <neo-content-tag
+          *ngFor="let tag of communityUser?.categories.slice(0, 2)"
+          [tag]="tag"
+          [type]="type.Category"
+          fontSize="12">
+        </neo-content-tag>
+
+        <a
+          routerLink="/user-profile/{{ communityUser.id }}"
+          (click)="userClick.emit()">
+          <neo-content-tag
+            *ngIf="communityUser?.categories.length > 2"
+            tagText="+{{ communityUser?.categories.length - 2 }}"
+            fontSize="12">
+          </neo-content-tag>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="communityUser.statusId !== userStatuses.Deleted"
+    class="d-flex buttons">
+    <ng-container *ngIf="communityUser.isFollowed">
+      <svg-icon
+        (click)="follow('delete')"
+        class="ml-8 text-aqua-400 c-pointer icon24"
+        key="check-circle"></svg-icon>
+    </ng-container>
+
+    <ng-container *ngIf="!communityUser.isFollowed">
+      <svg-icon
+        (click)="follow('post')"
+        class="ml-8 add-hover c-pointer"
+        key="add-circle"
+        size="xxl">
+      </svg-icon>
+    </ng-container>
+
+    <svg-icon
+      [queryParams]="{
+        userId: communityUser.id
+      }"
+      class="ml-8 add-hover c-pointer"
+      key="chat"
+      routerLink="/messages/new-message"
+      (click)="userClick.emit()"
+      size="xxl">
+    </svg-icon>
+  </div>
+</div>

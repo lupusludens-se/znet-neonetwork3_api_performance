@@ -1,0 +1,133 @@
+<div class="top flex-between align-center mb-24">
+  <h1 class="title">{{ 'userManagement.pageTitleLabel' | translate }}</h1>
+
+  <div class="buttons-wrapper d-flex">
+    <button
+      class="btn-export-user flex-center mr-12"
+      (click)="exportModal = true">
+      <svg-icon
+        key="upload-square"
+        class="mr-8"
+        size="xl"></svg-icon>
+      {{ 'userManagement.exportUsersLabel' | translate }}
+    </button>    
+  </div>
+</div>
+
+<div class="content mt-32 d-flex">
+  <div class="table-wrapper flex-column">
+    <ng-container *ngIf="usersList?.length || usersList === undefined; else noResults">
+      <table class="table mb-24">
+        <thead>
+          <tr>
+            <td class="pl-24 user">
+              <div
+                class="click-area"
+                (click)="sortCriteriaSelection('lastNameAsc', sortingCriteria.lastname, 'emailAsc', 'statusNameAsc')">
+                {{ 'userManagement.table.userCol' | translate }}
+                <svg-icon
+                  [class.sorthighlight]="lastNameAsc"
+                  class="text-blue-200 ml-6 caret"
+                  key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon
+                  [class.sorthighlight]="tdTitleClick === sortingCriteria.lastname && !lastNameAsc"
+                  class="text-blue-200 ml-1 caret"
+                  key="table-row-sort-down"
+                  size="md"></svg-icon>
+              </div>
+            </td>
+
+            <td class="pl-24 user-title">
+              <div
+                class="click-area"
+                (click)="sortCriteriaSelection('titleAsc', sortingCriteria.title, 'lastnameAsc', 'statusNameAsc')">
+                {{ 'userManagement.table.title' | translate }}
+                <svg-icon
+                  [class.sorthighlight]="titleAsc"
+                  class="text-blue-200 ml-6 caret"
+                  key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon
+                  [class.sorthighlight]="tdTitleClick === sortingCriteria.title && !titleAsc"
+                  class="text-blue-200 ml-1 caret"
+                  key="table-row-sort-down"
+                  size="md"></svg-icon>
+              </div>
+            </td>
+
+            <td class="pl-24 email">
+              <div
+                class="click-area"
+                (click)="sortCriteriaSelection('emailAsc', sortingCriteria.email, 'lastnameAsc', 'statusNameAsc')">
+                {{ 'userManagement.table.email' | translate }}
+                <svg-icon
+                  [class.sorthighlight]="emailAsc"
+                  class="text-blue-200 ml-6 caret"
+                  key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon
+                  [class.sorthighlight]="tdTitleClick === sortingCriteria.email && !emailAsc"
+                  class="text-blue-200 ml-1 caret"
+                  key="table-row-sort-down"
+                  size="md"></svg-icon>
+              </div>
+            </td>          
+
+            <td class="pl-24 status status-cell">
+              <div
+                class="click-area"
+                (click)="
+                  sortCriteriaSelection('statusNameAsc', sortingCriteria.statusname, 'companyAsc', 'lastNameAsc')
+                ">
+                {{ 'userManagement.table.statusCol' | translate }}
+                <svg-icon
+                  [class.sorthighlight]="statusNameAsc"
+                  class="text-blue-200 ml-6 caret"
+                  key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon
+                  [class.sorthighlight]="tdTitleClick === sortingCriteria.statusname && !statusNameAsc"
+                  class="text-blue-200 ml-1 caret"
+                  key="table-row-sort-down"
+                  size="md"></svg-icon>
+              </div>
+            </td>
+            <td class="pl-24"></td>
+          </tr>
+        </thead>
+
+        <tbody>
+          <neo-table-row
+            *ngFor="let user of usersList"
+            [user]="user"
+            (updateUsers)="getUsersList()"
+            class="row">
+          </neo-table-row>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <ng-template #noResults>
+      <neo-no-results></neo-no-results>
+    </ng-template>
+
+    <neo-pagination
+      *ngIf="paging && paging.total > defaultItemPerPage"
+      [paging]="paging"
+      (changePage)="updatePaging($event)">
+    </neo-pagination>
+  </div>
+</div>
+
+<neo-export-modal
+  *ngIf="exportModal"
+  [subText]="'userManagement.startExportUsersLabel' | translate"
+  [title]="'userManagement.exportUsersLabel' | translate"
+  (closeModal)="exportModal = false"
+  [recordsCount]="paging.total"
+  [params]="requestParams"
+  [exportModule]="exportModule"
+  itemsFoundDesc="users"
+  [isCompanyUsersExport]= "true">
+</neo-export-modal>

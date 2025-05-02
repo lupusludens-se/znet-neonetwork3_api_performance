@@ -1,0 +1,103 @@
+@use 'colors';
+
+.new-messgae {
+	font-size: 24px;
+	line-height: 250%;
+}
+
+.new-message-form-wrapper {
+	background: colors.$dark-gray-30;
+	border: 1px solid colors.$dark-gray-200;
+	border-radius: 2px;
+	max-width: 85%;
+
+	label {
+		font-weight: 700;
+	}
+
+	textarea,
+	input {
+		width: 100%;
+	}
+
+	textarea {
+		height: 110px;
+	}
+
+	.message-type-wrapper {
+		input[type='radio'] {
+			opacity: 0;
+			position: fixed;
+			width: 0;
+		}
+
+		label {
+			padding: 10px 20px;
+			font-family: 'Arial Rounded MT Bold', serif;
+			font-weight: 400;
+			font-size: 14px;
+			border-radius: 8px;
+			color: colors.$zeigo-purple;
+			margin-right: 12px;
+
+			&:last-of-type {
+				margin-right: 0;
+				border-radius: 8px;
+
+				text-transform: capitalize;
+			}
+		}
+
+		label:hover {
+			border: 1px solid colors.$zeigo-purple;
+		}
+
+		input[type='radio']:checked+label {
+			border: none;
+			background: colors.$zeigo-purple;
+			border-radius: 8px;
+			line-height: 150%;
+			color: colors.$dark-gray-40;
+
+			&:hover {
+				background: colors.$purple-400;
+			}
+		}
+	}
+}
+
+
+.cancel {
+	background: colors.$dark-gray-450;
+	border-radius: 8px;
+	color: colors.$dark-gray-590;
+
+	&:hover {
+		background: colors.$dark-gray-250;
+		color: colors.$dark-gray-590;
+	}
+}
+
+.link-wrapper {
+	border-radius: 500px;
+	background-color: colors.$gray;
+	height: 26px;
+	background: colors.$dark-gray-250;
+	border-radius: 2px;
+	font-size: 14px;
+
+	.remove-link-icon {
+		margin-top: -4px;
+		background-color: colors.$dark-gray-250;
+
+		&:hover {
+			color: colors.$near-black-400;
+		}
+	}
+}
+
+
+.btn-square {
+	width: 60px !important;
+	height: 46px !important;
+}

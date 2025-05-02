@@ -1,0 +1,56 @@
+@import 'colors';
+@import 'text';
+@import 'flexbox';
+
+:host.modal-ul-li {
+  ul {
+    li {
+      font-size: 14px;
+      padding: 0px;
+    }
+  }
+}
+
+:host.modal-no-results-label {
+  .no-results-label {
+    color: $near-black-400;
+    font-weight: 400;
+    //Zeigo Rebrand : Project Catalog Changes
+    line-height: 120%;
+    font-family: 'Arial Rounded MT Bold';
+    font-size: 18px;
+  }
+}
+
+.no-results-label {
+  color: $near-black-400;
+  font-weight: 400;
+  //Zeigo Rebrand : Project Catalog Changes
+  line-height: 120%;
+  font-family: 'Arial Rounded MT Bold';
+  font-size: 24px;
+}
+
+ul {
+  list-style: none;
+
+  li {
+    @extend .text-blue-200;
+    @extend .d-flex;
+    @extend .align-center;
+
+    //Zeigo Rebrand : Project Catalog Changes
+    line-height: 150%;
+    font-size: 16px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: $dark-gray-590;
+      margin-right: 8px;
+    }
+  }
+}

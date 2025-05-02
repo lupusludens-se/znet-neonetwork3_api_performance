@@ -1,0 +1,258 @@
+﻿@using SE.Neo.Common.Extensions
+@using SE.Neo.EmailTemplates.Models
+@model UndeliveredMailTemplatedModel
+@{
+    var emptyText = "<span>&#160;</span>";
+}
+<!DOCTYPE HTML PUBLIC>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:v="urn:schemas-microsoft-com:vml"
+      xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>...</title>
+    <!-- CSS Reset -->
+    <!--[if (gte mso 9)|(IE)]>
+        <style type="text/css">
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+    <![endif]-->
+    <!--[if gte mso 9]>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:AllowPng/>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    <![endif]-->
+    <style type="text/css">
+        @@font-face {
+            ffont-family: 'Arial Rounded MT';
+            mso-font-alt: 'Arial';
+            src: url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.eot"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.woff") format("woff"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.svg#Arial Rounded MT Std") format("svg");
+        }
+
+        @@font-face {
+            ffont-family: 'Arial Rounded MT Bold' !important;
+            mso-font-alt: 'Arial';
+            src: url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.eot"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.woff") format("woff"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.svg#Arial Rounded MT Bold") format("svg");
+        }
+
+        .zeigo-arial-rounded-bold {
+            font-family: "Arial Rounded MT Bold", "Arial" !important;
+            font-weight: 400 !important;
+        }
+
+        .zeigo-arial-rounded {
+            font-family: "Arial Rounded MT", "Arial" !important;
+            font-weight: 400 !important;
+        }
+
+        .zeigo-arial {
+            font-family: "Arial Rounded MT";
+        }
+
+        img {
+            user-select: none !important;
+            object-fit: fill !important;
+        }
+
+        h2, h4, h5, p, span {
+            margin: 0 !important;
+        }
+
+        h2 {
+            font-size: 28px !important;
+            line-height: 30px !important;
+            font-weight: 400 !important;
+        }
+
+        h4 {
+            font-size: 18px !important;
+            line-height: 24px !important;
+            font-weight: 400 !important;
+        }
+
+        h5 {
+            font-size: 16px !important;
+            line-height: 20px !important;
+        }
+
+        .text-s {
+            font-size: 14px !important;
+            line-height: 20px !important;
+        }
+
+        .text-xs {
+            font-size: 12px !important;
+            line-height: 17px !important;
+            letter-spacing: 0.01em !important;
+        }
+
+        .text-xss {
+            font-size: 10px !important;
+            line-height: 15px !important;
+            letter-spacing: 0.01em !important;
+        }
+
+        .h-6 {
+            height: 6px !important;
+            line-height: 6px !important;
+        }
+
+        .h-8 {
+            height: 8px !important;
+            line-height: 8px !important;
+        }
+
+        .w-8 {
+            width: 8px !important;
+        }
+
+        .h-16 {
+            height: 16px !important;
+        }
+
+        .h-24 {
+            height: 24px !important;
+            line-height: 24px !important;
+        }
+
+        .w-32 {
+            width: 32px !important;
+        }
+
+        .h-32 {
+            height: 32px !important;
+            line-height: 32px !important;
+        }
+
+        .body {
+            width: 100% !important;
+            font-family: "Arial" !important;
+            background-color: #FAFAFA !important;
+        }
+
+        .container {
+            background-color: #FFFFFF !important;
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            border-top-left-radius: 4px !important;
+            border-top-right-radius: 4px !important;
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+
+        .button-border {
+            border-bottom-left-radius: 8px !important;
+            border-bottom-right-radius: 8px !important;
+            border-top-left-radius: 8px !important;
+            border-top-right-radius: 8px !important;
+            padding-top: 12px !important;
+            padding-bottom: 12px !important;
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+            background-color: #3A2456 !important;
+            text-transform: capitalize !important;
+        }
+
+        .icon {
+            width: 20px !important;
+            height: 20px !important;
+        }
+
+        .content a {
+            text-decoration: none !important;
+            color: #171717 !important;
+        }
+
+        #innerTbl {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            #innerTbl th, #innerTbl td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            #innerTbl tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+    </style>
+</head>
+<body>
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%" class="body ">
+        <tr>
+            <td align="center" valign="top">
+                <div class="h-32">@emptyText</div>
+                <table cellpadding="0" cellspacing="0" border="0" class="container" width="100%">
+                    <tr >
+                        <td class="w-32"></td>
+                        <td align="left" valign="top">
+                            <div class="h-24">@emptyText</div>
+                            <img width="240" height="110" src="@Model.LogoUrl" alt="zeigo logo" />
+                            <div class="h-24">@emptyText</div>
+                        </td>
+                        <td class="w-32"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="w-32"></td>
+                        <td>
+                            <div class="h-24">@emptyText</div>
+                            <h2 class="zeigo-arial-rounded" style="color: #171717;letter-spacing: normal; font-size: 14px; ">
+                                Hello,
+                            </h2>
+                            <h4 class="zeigo-arial-rounded" style="color: #171717;letter-spacing: normal; font-size: 10px; padding-top: 12px;">
+                                Please find the list of undelivered mail users
+                            </h4>
+                        </td>
+                        <td class="w-32">@emptyText</td>
+                    </tr>
+                    <tr>
+                        <td class="w-32">@emptyText</td>
+                        <br />
+                        <table width="100%" border="1" cellpadding="1" id="innerTbl" class="container" style="text-align: center;">
+                            <tr>
+                                <td width="30%"><b>Subject</b></td>
+                                <td><b>To Address</b></td>
+                                <td><b>Message Id(Sendgrid)</b></td>
+                                <td><b>Time</b></td>
+                            </tr>
+
+                            @foreach (var item in Model.messages)
+                            {
+                                <tr>
+                                    <td width="30%">@item.subject</td>
+                                    <td>@item.to_email</td>
+                                    <td>@item.msg_id</td>
+                                    <td>@item.last_event_time.ToLongTimeString()</td>
+                                </tr>
+                            }
+                        </table>
+                        <td class="w-32"></td>
+                    </tr>
+
+                    <tr class="h-32"></tr>
+
+                    <tr class="h-32" style="background: #F3F3F3;">
+                        <td class="zeigo-arial h-32 ">
+                            <p class="text-s"
+                               style="color: #171717;">
+                                &copy; @DateTime.Now.Year Zeigo by Schneider Electric
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="h-32">@emptyText</div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<div class="container w-100 flex-column">
+  <div class="section-header d-flex w-100">
+    <div class="w-50 d-flex">
+      <div class="community-icon">
+        <svg-icon class="community-icon" key="community"></svg-icon>
+      </div>
+      <div class="section-title">{{ 'title.communityLabel' | translate }}</div>
+    </div>
+
+    <div class="w-50 d-flex justify-end" *ngIf="!isAdminOrTeamMember" (click)="viewAllCommunityRecommendations()">
+      <button class="view-all-btn d-flex btn-tertiary" [ngClass]="{'pr-10': communityUsersRecommendationsCounter === ''}">
+        <svg-icon key="eye" class="eye-icon"></svg-icon>
+        {{ savedCommunityUsers.dataList.length > 0 
+          ? ('initiative.viewInitiative.viewAllLabel' | translate) 
+          : ('initiative.viewInitiative.viewRecommendationLabel' | translate) }}
+          <sup class="initiative-section-counter" *ngIf="communityUsersRecommendationsCounter!==''"><span>{{communityUsersRecommendationsCounter}}</span></sup>
+      </button>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <div class="load-content-wrapper justify-center" *ngIf="isLoading === true ; else usersList">
+      <neo-section-spinner></neo-section-spinner>
+    </div>
+    <ng-template #usersList>
+    <div *ngIf="savedCommunityUsers.dataList.length > 0">
+      <ng-container>
+        <div class="card" neoInfiniteSectionScroll infiniteScrollThreshold="90%"
+          [infiniteScrollDisabled]="false" (loadMoreData)="onLoadMoreData()">
+          <div class="flex-column section pt-8" *ngFor="let user of savedCommunityUsers.dataList">
+            <div class="c-pointer">
+              <neo-initiative-community-item [communityUser]="user" [initiativeId]="initiativeId" (selectedUser)="optionClick($event)"
+                [parentModule]="initiativeParentModuleEnum.InitiativeDashboard" [isAdminOrTeamMember]="isAdminOrTeamMember" class="disableHover">
+              </neo-initiative-community-item>
+            </div>
+            <div class="splitter"></div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-template>
+  </div>
+</div>
+
+<ng-container *ngIf="savedCommunityUsers?.dataList?.length <= 0  && isLoading === false">
+  <neo-initiative-no-content
+    [section]="'initiative.viewInitiative.communityMembersTitle' | translate" [subTitleSection]="'initiative.viewInitiative.communityMembersTitle' | translate" [isAdminOrTeamMemberTemplate]="isAdminOrTeamMember">
+  </neo-initiative-no-content>
+</ng-container>
+
+<neo-modal (closed)="closeDeletePopup()" *ngIf="showDeleteModal" size="medium"
+  [title]="'initiative.viewInitiative.deleteSavedCommunityPopUpTitle' | translate" class="title-h2">
+  <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+    {{ 'initiative.viewInitiative.deleteSavedContentPopUpSubTitle' | translate }}
+  </p>
+
+  <div class="popup-controls  mt-10 d-flex">
+    <button (click)="closeDeletePopup()" class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+
+    <button (click)="confirmDelete()" class="btn-confirm w-50">
+      {{ 'messages.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

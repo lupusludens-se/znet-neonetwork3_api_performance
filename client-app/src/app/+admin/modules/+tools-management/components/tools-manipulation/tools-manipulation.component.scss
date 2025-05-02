@@ -1,0 +1,163 @@
+@use 'colors';
+@use 'variables';
+
+.title{
+  font-size: 24px;
+  line-height: 120%;
+  color: colors.$near-black-400;
+}
+
+.label{
+  font-size: 16px;
+  line-height: 20px;
+  color: colors.$dark-gray-590;
+}
+
+.sub-label{
+  font-size: 12px;
+  color: colors.$dark-gray-590;
+  line-height: 20px;
+}
+
+.btn-upload{
+  color: colors.$purple-200;
+  border-radius: 8px;
+  border: 1px solid colors.$purple-300;
+  background: colors.$dark-gray-40; 
+  font-weight: 400;
+  line-height: 150%;
+  &:hover{
+    border: 1px solid  colors.$purple-500;
+    color: colors.$purple-500;
+  }
+}
+
+.btn-remove{
+  color: colors.$red;
+  font-family: 'Arial Rounded MT Bold';
+}
+
+.form-wrapper {
+  padding: 24px 32px;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+  background: colors.$white;
+  max-width: 874px;
+  width: 100%;
+}
+
+.btn-s,
+.blue-100-frame {
+  width: 156px;
+  padding: 12px 20px;
+}
+
+.blue-100-frame {
+  color: colors.$blue-300;
+}
+
+.icon-wrapper {
+  border-radius: 2px;
+  background: colors.$blue-10;
+  width: 150px;
+  img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+  }
+}
+
+textarea {
+  height: 120px;
+}
+
+.companies-filter-wrapper {
+  border: 1px solid colors.$blue-50;
+  border-radius: 2px;
+  max-width: 292px;
+
+  .search-bar-wrapper {
+    padding: 10px 12px;
+    border-bottom: 1px solid colors.$dark-gray-200;
+
+    .search-input {
+      .search-icon {
+        left: 10px;
+      }
+
+      .close-icon {
+        right: 10px;
+      }
+    }
+  }
+
+ 
+
+  .flex-column {
+    padding: 8px 12px;
+    max-height: 116px;
+    overflow-y: scroll;
+  }
+}
+
+.text-image{
+  color: colors.$dark-gray-590;
+  font-size: 12px;
+  line-height: 140%;
+}
+
+.selected-companies {
+  max-height: 148px;
+  overflow-y: auto;
+  .filter-state {
+    padding: 5px 8px;
+    background: colors.$blue-20;
+    border-radius: 2px;
+    user-select: none;
+    color: colors.$aqua-400;
+
+    svg-icon {
+      color: colors.$aqua-400;
+    }
+
+    &:hover {
+      background: colors.$light-blue-20;
+    }
+  }
+}
+
+.flex-between .btn-l {
+  text-transform: capitalize;
+  font-family: Arial, serif;
+  padding: 16px;
+  min-width: fit-content;
+}
+
+.controls-wrapper {
+  .btn-save,
+  .btn-cancel {
+    font-size: 14px;
+  }
+}
+
+form {
+  .disabled {
+    user-select: none;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
+.separator{
+  border-top : 1px solid colors.$dark-gray-590;
+}
+
+.separator-light{
+  border-bottom: 1px solid  rgba(159, 160, 164, 0.20);
+}
+
+.dropdown-hover{
+  &:hover{
+    background: var(--brand-main-purple-5, rgba(58, 36, 86, 0.05));
+  }
+}

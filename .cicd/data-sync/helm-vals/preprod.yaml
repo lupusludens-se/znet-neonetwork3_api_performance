@@ -1,0 +1,32 @@
+fullnameOverride: neonetwork3-data-sync
+
+replicaCount: 2
+
+image:
+  repository: acrsbsharedservices.azurecr.io/neonetwork3-data-sync
+  tag: null
+  pullPolicy: Always
+
+serviceAccount:
+  create: false
+  name: neonetwork3-api
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+cronjob:
+  namespace: znet-preprod
+  environment: preprod
+  schedule: "0 2 * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3  
+  concurrencyPolicy: Forbid
+  restartPolicy: OnFailure
+  workingDir: /app
+  entrypoint: ["dotnet", "SE.Neo.DataSync.dll"]
+  otelServiceName: neonetwork3-data-sync

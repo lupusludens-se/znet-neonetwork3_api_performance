@@ -1,0 +1,45 @@
+replicaCount: 1
+
+fullnameOverride: neonetwork3-api
+
+image:
+  repository: acrsbsharedservices.azurecr.io/neonetwork3-api
+  tag: dev
+  pullPolicy: Always
+
+publicIngress:
+  enabled: true
+  className: traefik
+  hosts:
+  - host: network-dev.zeigo.com
+    paths:
+    - path: /zeigonetwork/dev/api/
+      pathType: ImplementationSpecific
+
+autoscaling:
+  enabled: false
+  vpa:
+    enabled: true
+    mode: "Off"
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources:
+  limits:
+    cpu: 1.5
+    memory: 2Gi
+  requests:
+    cpu: 1
+    memory: 512Mi
+
+application:
+  environment: dev
+  identityClientId: 275b41c9-9669-461e-8779-ed4f38272df4 # sa-neonetwork3-api-dev
+  livenessEndpoint: /api/health
+  readinessEndpoint: /api/health
+  otelServiceName: neonetwork3-api
+  preUpgrade:
+    enabled: true
+    image: acrsbsharedservices.azurecr.io/neonetwork3-migration

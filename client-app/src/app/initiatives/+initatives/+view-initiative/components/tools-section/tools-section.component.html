@@ -1,0 +1,79 @@
+<div class="tools-section-wrapper">
+  <div class="tools-section-header d-flex w-100">
+    <div class="w-50 d-flex">
+      <div class="tools-icon">
+        <svg-icon class="tools-icon" key="tools"></svg-icon>
+      </div>
+      <div class="tools-section-title">{{ 'toolsManagement.toolsLabel' | translate }}</div>
+    </div>
+
+    <div class="w-50 d-flex justify-end" *ngIf="!isAdminOrTeamMember" (click)="viewAllToolRecommendations()">
+      <button class="view-all-btn d-flex btn-tertiary"  [ngClass]="{'pr-10': toolsRecommendationsCounter === ''}">
+        <svg-icon key="eye" class="eye-icon"></svg-icon>
+        {{ savedTools.dataList.length > 0
+        ? ('initiative.viewInitiative.viewAllLabel' | translate)
+        : ('initiative.viewInitiative.viewRecommendationLabel' | translate) }}
+        <sup class="initiative-section-counter counter-p-4" *ngIf="toolsRecommendationsCounter!==''"><span>{{toolsRecommendationsCounter}}</span></sup>
+      </button>
+    </div>
+  </div>
+
+  <div class="tools-section-body">
+    <div class="load-content-wrapper justify-center" *ngIf="isLoading === true ; else toolsList">
+      <neo-section-spinner></neo-section-spinner>
+  </div>
+  <ng-template #toolsList>
+    <div *ngIf="savedTools.dataList.length > 0">
+      <ng-container>
+        <div class="card" neoInfiniteSectionScroll infiniteScrollThreshold="90%" [infiniteScrollDisabled]="false"
+          (loadMoreData)="onLoadMoreData()">
+          <div class="flex-column " *ngFor="let tool of savedTools.dataList">
+            <div class="d-flex section">
+              <div class="div-img">
+                <img [src]="tool?.imageUrl?.uri" (click)="routeToToolPage('tools/' + tool?.id, tool?.id)"
+                  alt="tool-image" />
+              </div>
+              <div class="d-flex w-90">
+                <div class="flex-column w-92">
+                  <div class="title two-lines-ellipsis" (click)="routeToToolPage('tools/' + tool?.id, tool?.id)">
+                    {{ tool?.title }} </div>
+                  <div>
+                    <span class="sub-title two-lines-ellipsis">{{ tool?.description }}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="!isAdminOrTeamMember" class="three-dots d-flex justify-end align-center w-10">
+                <button>
+                  <neo-menu (optionClick)="optionClick(tool?.id)" [options]="options" activeIcon="cross"
+                    class="tools-section" icon="vertical-three-dots">
+                  </neo-menu>
+                </button>
+              </div>
+            </div>
+            </div>
+          </div>
+      </ng-container>
+    </div>
+  </ng-template>
+  </div>
+
+<ng-container *ngIf="savedTools?.dataList?.length <= 0 && isLoading === false">
+
+  <neo-initiative-no-content [section]="'toolsManagement.toolsLabel' | translate" [subTitleSection]="'toolsManagement.toolsLabel' | translate" [isAdminOrTeamMemberTemplate]="isAdminOrTeamMember"></neo-initiative-no-content>
+
+</ng-container>
+
+<neo-modal (closed)="closeDeletePopup()" *ngIf="showDeleteModal" size="medium"
+  [title]="'initiative.viewInitiative.deleteSavedToolPopUpTitle' | translate" class="title-h2">
+  <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+    {{ 'initiative.viewInitiative.deleteSavedContentPopUpSubTitle' | translate }}
+  </p>
+  <div class="popup-controls mt-10 d-flex">
+    <button (click)="closeDeletePopup()" class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button (click)="confirmDelete()" class="btn-confirm w-50">
+      {{ 'messages.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

@@ -1,0 +1,28 @@
+button {
+    font-weight: 400;
+    border-radius: 2px;
+    border: none;
+    font-family: 'Arial Rounded MT Bold', serif;
+    box-shadow: none;
+    background: none;
+    user-select: none;
+    outline: none;
+    max-height: 45px;
+    padding: 14px 24px;
+    font-size: 14px;
+    line-height: 17px;
+    text-transform: uppercase;
+    background: #9ee6ab;
+    color: #0b3b6b;
+}
+
+button:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+}
+
+button:hover {
+    cursor: pointer;
+    background: #adf3ba;
+}

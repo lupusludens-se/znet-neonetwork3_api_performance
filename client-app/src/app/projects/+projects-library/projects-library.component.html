@@ -1,0 +1,139 @@
+<div class="top flex-between align-center mb-24">
+  <h3 class="title neo-arial text-neo-near-black">
+    {{ 'projects.projectLibraryLabel' | translate }}
+  </h3>
+
+  <div class="buttons-wrapper d-flex" *ngIf="projectsList?.length || projectsList === undefined || searchString !== ''">
+   <button  *ngIf="projectsList && projectsList.length > 0" class="btn-export-project flex-center mr-12" (click)="exportModal = true">
+      <svg-icon key="upload-square" class="mr-8" size="xl"></svg-icon>
+      {{ 'projects.exportProjectsLabel' | translate }}
+    </button> 
+
+    <button class="green btn-add flex-center pr-10" routerLink="/projects-library/add-project">
+      <svg-icon class="mr-6" height="15px" key="thin-plus" width="15px" fontSize="15px"></svg-icon>
+      {{ 'projects.newProjectLibrary' | translate }}
+    </button>
+  </div>
+</div>
+
+<ng-container *ngIf="projectsList?.length || searchString !== ''">
+  <neo-search-bar [value]="searchString" (clearInput)="searchProjects('')" (inputChange)="searchProjects($event)"
+                  [placeholder]="'projects.projectsSearchPlaceholder' | translate" size="large">
+  </neo-search-bar>
+
+  <div class="content mt-32 d-flex">
+    <div class="table-wrapper flex-column">
+      <ng-container *ngIf="projectsList === undefined || projectsList?.length; else noResults">
+        <table class="table mb-24">
+          <thead>
+            <tr>
+              <td class="pl-24">
+                <div (click)="sortCriteriaSelection('titleAsc', sortingParamNames.title)" class="click-area">
+                  {{ 'projects.table.titleLabel' | translate }}
+                  <svg-icon [class.sorthighlight]="columnsList.titleAsc" class="text-blue-200 ml-6 caret"
+                            key="table-row-sort-up" size="md"></svg-icon><!--[class.up]="columnsList.titleAsc"-->
+                  <svg-icon [class.sorthighlight]="tdTitleClick === sortingParamNames.title && !columnsList.titleAsc"
+                            class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+                </div>
+              </td>
+
+              <td class="pl-24 type">
+                <div (click)="sortCriteriaSelection('categoryAsc', sortingParamNames.category)" class="click-area">
+                  {{ 'projects.table.typeLabel' | translate }}
+                  <svg-icon [class.sorthighlight]="columnsList.categoryAsc" class="text-blue-200 ml-6 caret"
+                            key="table-row-sort-up" size="md"></svg-icon><!--[class.up]="columnsList.categoryAsc"-->
+                  <svg-icon [class.sorthighlight]="tdTitleClick === sortingParamNames.category && !columnsList.categoryAsc"
+                            class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+                </div>
+              </td>
+
+              <td class="pl-24 location">
+                <div (click)="sortCriteriaSelection('regionsAsc', sortingParamNames.regions)" class="click-area">
+                  {{ 'projects.table.locationLabel' | translate }}
+                  <svg-icon [class.sorthighlight]="columnsList.regionsAsc" class="text-blue-200 ml-6 caret"
+                            key="table-row-sort-up" size="md"></svg-icon><!--[class.up]="columnsList.regionsAsc"-->
+                  <svg-icon [class.sorthighlight]="tdTitleClick === sortingParamNames.regions && !columnsList.regionsAsc"
+                            class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+                </div>
+              </td>
+
+              <td class="pl-24 posted">
+                <div (click)="sortCriteriaSelection('changedonAsc', sortingParamNames.changedon)" class="click-area">
+                  {{ 'projects.table.dateModifiedLabel' | translate }}
+
+                  <svg-icon [class.sorthighlight]="columnsList.changedonAsc" class="text-blue-200 ml-6 caret"
+                            key="table-row-sort-up" size="md"></svg-icon><!--[class.up]="columnsList.changedonAsc"-->
+                  <svg-icon [class.sorthighlight]="tdTitleClick === sortingParamNames.changedon && !columnsList.changedonAsc"
+                            class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+                </div>
+              </td>
+
+              <td *ngIf="showCompany" class="pl-24 company">
+                <div (click)="sortCriteriaSelection('companyAsc', sortingParamNames.company)" class="click-area">
+                  {{ 'projects.table.companyLabel' | translate }}
+
+                  <svg-icon [class.sorthighlight]="columnsList.companyAsc" class="text-blue-200 ml-6 caret"
+                            key="table-row-sort-up" size="md"></svg-icon><!--[class.up]="columnsList.companyAsc"-->
+                  <svg-icon [class.sorthighlight]="tdTitleClick === sortingParamNames.company && !columnsList.companyAsc"
+                            class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+                </div>
+              </td>
+
+              <td class="pl-24 publishedBy">
+                <div (click)="sortCriteriaSelection('publishedByAsc', sortingParamNames.publishedBy)"
+                     class="click-area">
+                  {{ 'projects.table.publishedByLabel' | translate }}
+
+                  <svg-icon [class.sorthighlight]="columnsList.publishedByAsc" class="text-blue-200 ml-6 caret"
+                            key="table-row-sort-up" size="md"></svg-icon><!--[class.up]="columnsList.publishedByAsc"-->
+                  <svg-icon [class.sorthighlight]="
+                      tdTitleClick === sortingParamNames.publishedBy && !columnsList.publishedByAsc
+                    " class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+                </div>
+              </td>
+
+              <td class="pl-24 status">
+                <div (click)="sortCriteriaSelection('statusAsc', sortingParamNames.status)" class="click-area">
+                  {{ 'projects.table.statusLabel' | translate }}
+
+                  <svg-icon [class.sorthighlight]="columnsList.statusAsc" class="text-blue-200 ml-6 caret"
+                            key="table-row-sort-up" size="md"></svg-icon><!--[class.up]="columnsList.statusAsc"-->
+                  <svg-icon [class.sorthighlight]="tdTitleClick === sortingParamNames.status && !columnsList.statusAsc"
+                            class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+                </div>
+              </td>
+
+              <td class="pl-24 options"></td>
+            </tr>
+          </thead>
+
+          <tbody>
+            <neo-projects-table-row (updateProjectsList)="getProjectsList()" *ngFor="let project of projectsList"
+                                    [class.red]="
+                project.owner.statusId === userStatuses.Inactive || project.owner.statusId === userStatuses.Deleted
+              " [project]="project" [showCompany]="showCompany" [currentUserId]="currentUserId">
+            </neo-projects-table-row>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-template #noResults>
+        <neo-no-results [searchedStr]="searchString" *ngIf="!projectsList?.length && searchString"></neo-no-results>
+      </ng-template>
+
+      <neo-pagination (changePage)="updatePaging($event)" *ngIf="paging?.total > defaultItemPerPage" [paging]="paging">
+      </neo-pagination>
+    </div>
+  </div>
+</ng-container>
+
+<neo-empty-page *ngIf="projectsList && projectsList.length === 0 && !searchString" [heightClass]="'h-100'"
+                [headlinePart1]="'projects.addAProjectLabel' | translate"
+                [headlinePart2]="'projects.addAProjectSubtitleLabel' | translate"
+                [line2TextClass]="'text-m neo-arial-normal text-blue-200 fw-100'"
+                [buttonText]="'projects.addAProjectLabel' | translate" [link]="'/projects-library/add-project'"
+                [iconKey]="'projects'">
+</neo-empty-page>
+
+ <neo-project-export-modal *ngIf="exportModal" (closeModal)="exportModal = false" [projectCount]="paging.total"
+                          [params]="requestParams">
+</neo-project-export-modal>  

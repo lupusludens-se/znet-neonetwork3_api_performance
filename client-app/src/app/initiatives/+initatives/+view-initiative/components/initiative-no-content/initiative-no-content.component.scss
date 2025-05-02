@@ -1,0 +1,29 @@
+@use 'colors';
+
+.no-content-wrapper {
+  background-color: colors.$purple-20;
+  border-radius: 8px;
+  border: 1px solid colors.$purple-160;
+  min-height: 320px;
+  align-items: center;
+  padding: 30px 0px 30px 0px;
+  .add-icon {
+    margin-top: 50px;
+    height: 60px;
+    width: 60px;
+  }
+
+  .title {
+    padding-top: 24px;
+    color: colors.$dark-gray-750;
+    font-family: 'Arial Rounded MT Bold';
+    font-size: 20px;
+  }
+
+  .sub-title {
+    padding-top: 10px;
+    font-size: 16px;
+    text-align: center;
+    color: colors.$dark-gray-545;
+  }
+}

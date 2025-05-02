@@ -1,0 +1,21 @@
+<div *ngIf="responseData?.dataList?.length > 0">
+  <div class="tile-container d-flex flex-wrap c-pointer">
+    <neo-tool-item [initiativeId]="initiativeId" *ngFor="let tile of responseData?.dataList; let i = index" [class.selected]="tile?.isSelected"
+      (click)="toggleSelection(tile)" [tool]="tile">
+    </neo-tool-item>
+  </div>
+</div>
+
+<ng-container *ngIf="responseData?.count === 0">
+  <div class="flex-column no-saved-container">
+    <svg-icon class="tools-icon" key="tools"></svg-icon>
+    <h3 class="pt-20">{{ 'initiative.viewInitiative.emptyRecommendedToolsLabel' | translate }}</h3>
+    <div class="pt-20 no-saved-description">
+      {{ 'initiative.viewInitiative.emptyRecommendedToolsSubLabel' | translate }}
+    </div>
+  </div>
+</ng-container>
+
+<neo-pagination *ngIf="paging && paging.total > defaultPageItems" (changePage)="changePage($event)"
+  [defaultItemPerPage]="12" [paging]="paging" class="pt-24 mb-64">
+</neo-pagination>

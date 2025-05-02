@@ -1,0 +1,30 @@
+@use 'colors';
+
+:host {
+  width: 100%;
+}
+
+.btn-cancel,
+.btn-save {
+  height: 42px;
+  width: 50%;
+  padding: 12px 16px;
+  text-transform: capitalize;
+
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.btn-cancel {
+  background: colors.$dark-gray-450;  
+  border-radius: 8px;
+  color: colors.$dark-gray-590;
+
+  &:hover {
+    background: colors.$dark-gray-250;//this is secondary button hover state
+    color: colors.$dark-gray-590;
+  }
+}

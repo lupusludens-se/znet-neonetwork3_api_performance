@@ -1,0 +1,7 @@
+<div class="d-flex container">
+  <neo-create-event-form *ngIf="(createEventStepsService.currentEventStep$ | async) === eventSteps.CreateEventForm">
+  </neo-create-event-form>
+
+  <neo-event-invite *ngIf="(createEventStepsService.currentEventStep$ | async) === eventSteps.EventInvite">
+  </neo-event-invite>
+</div>

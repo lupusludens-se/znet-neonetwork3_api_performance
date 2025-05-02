@@ -1,0 +1,118 @@
+<div class="control-wrapper">
+  <div class="label">
+    <div class="d-flex align-center">
+      <div class="d-flex align-center">{{ 'events.contentLinksLabel' | translate }}</div>
+      <div class="sub-label optional ml-6">({{ 'general.optionalLabel' | translate }})</div>
+    </div>
+
+    <span class="sub-label bold mt-12">{{ 'events.recordingPostEventLabel' | translate }}</span>
+
+    <ng-container *ngFor="let recordings of recordings.controls; let i = index">
+      <div
+        [formGroup]="recordings"
+        class="d-flex mt-8">
+        <input
+          [placeholder]="'events.recordingUrlLabel' | translate"
+          [class.error]="formSubmitted && recordings.get('url')?.invalid"
+          class="mr-24 w-100 mt-8"
+          formControlName="url"
+          type="text" />
+
+        <button
+          (click)="removeRecording(i)"
+          class="btn-delete d-flex">
+          <svg-icon
+            height="20px"
+            key="delete-icon"
+            width="20px" font-size="14px"></svg-icon>
+        </button>
+      </div>
+
+      <neo-control-error
+        *ngIf="formSubmitted && recordings.get('url')?.invalid"
+        [errors]="{ url: true }"
+        [fieldName]="'events.recordingUrlLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-control-error>
+    </ng-container>
+  </div>
+
+  <button
+    (click)="addRecording()"
+    class="btn-add mt-18 mb-32">
+    <svg-icon
+      class="mr-8"
+      key="plus-in-circle"></svg-icon>
+    {{ 'events.addRecordLinkLabel' | translate }}
+  </button>
+
+  <!-- *** -->
+
+  <span class="sub-label bold neo-arial">{{ 'events.linkLabel' | translate }}</span>
+
+  <ng-container *ngFor="let linkForm of links.controls; let i = index">
+    <div
+      [formGroup]="linkForm"
+      class="d-flex">
+      <div class="mr-24 w-50 mt-8 link-name-wrapper">
+        <input
+          [placeholder]="'events.linkNameLabel' | translate"
+          [class.error]="
+            formSubmitted && linkForm.get('url')?.value && linkForm.get('url')?.valid && !linkForm.get('name')?.value
+          "
+          class="mr-24 w-100 link-name-control"
+          formControlName="name"
+          type="text" />
+
+        <neo-control-error
+          *ngIf="
+            formSubmitted && linkForm.get('url')?.value && linkForm.get('url')?.valid && !linkForm.get('name')?.value
+          "
+          [errors]="{ required: true }"
+          [fieldName]="'events.linkNameLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-control-error>
+      </div>
+
+      <div class="mr-24 w-50 mt-8 link-url-wrapper">
+        <input
+          [placeholder]="'general.urlLabel' | translate"
+          [class.error]="
+            formSubmitted &&
+            ((linkForm.get('name')?.value && !linkForm.get('url')?.value) || linkForm.get('url')?.invalid)
+          "
+          class="mr-24 w-100 link-name-control"
+          formControlName="url"
+          type="text" />
+
+        <neo-control-error
+          *ngIf="
+            formSubmitted &&
+            ((linkForm.get('name')?.value && !linkForm.get('url')?.value) || linkForm.get('url')?.invalid)
+          "
+          [errors]="linkForm.get('url')?.invalid ? { url: true } : { required: true }"
+          [fieldName]="'general.urlLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-control-error>
+      </div>
+
+      <button
+        (click)="removeLink(i)"
+        class="btn-delete d-flex mt-12">
+        <svg-icon
+          height="20px"
+          key="delete-icon"
+          width="20px" font-size="14px"></svg-icon>
+      </button>
+    </div>
+  </ng-container>
+
+  <button
+    (click)="addLink()"
+    class="btn-add mt-18">
+    <svg-icon
+      class="mr-8"
+      key="plus-in-circle"></svg-icon>
+    {{ 'events.addContentUrlLabel' | translate }}
+  </button>
+</div>

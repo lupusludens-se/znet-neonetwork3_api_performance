@@ -1,0 +1,53 @@
+@use 'variables';
+@use 'colors';
+
+.users-filter-wrapper {
+  border: 1px solid colors.$dark-gray-300;
+  border-radius: 2px;
+  height: 240px;
+  min-width: 320px;
+
+  .search-bar-wrapper {
+    padding: 10px 12px;
+    border-bottom: 1px solid colors.$dark-gray-200;
+
+    .search-input {
+      .search-icon {
+        left: 10px;
+      }
+
+      .close-icon {
+        right: 10px;
+      }
+    }
+  }
+
+  .flex-column {
+    padding: 8px 12px;
+    overflow-y: scroll;
+  }
+}
+
+.control-wrapper {
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+}
+
+neo-blue-checkbox {
+  display: block;
+  background: colors.$white;
+
+  &.disabled {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  &:hover {
+    background: rgba(58, 36, 86, 0.05) !important;
+  }
+}
+
+.filter-state-wrapper:hover {
+  background: colors.$light-blue-20;
+}

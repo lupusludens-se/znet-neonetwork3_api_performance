@@ -1,0 +1,25 @@
+<p class="two-lines-ellipsis text-s pl-12 text-neo-near-black">
+  <ng-container *ngIf="notification?.details?.fieldName">
+    <span class="text-dark-gray-590 fw-700">
+      {{ notification?.details?.fieldName }}
+    </span>
+
+    {{ 'notificationType.changesToProjectISavedLabel' | translate }}
+
+    <a
+      class="text-neo-near-black fw-700 c-pointer"
+      routerLink="/projects/{{ notification?.details?.projectId }}">
+      {{ notification?.details?.projectTitle }}</a
+    >.
+  </ng-container>
+
+  <ng-container *ngIf="!notification?.details?.fieldName">
+    <a
+      class="text-neo-near-black fw-700 c-pointer"
+      routerLink="/projects/{{ notification?.details?.projectId }}">
+      {{ notification?.details?.projectTitle }}
+    </a>
+
+    {{ 'notificationType.multipleChangesToProjectISavedLabel' | translate }}
+  </ng-container>
+</p>

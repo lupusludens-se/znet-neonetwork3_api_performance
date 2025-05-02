@@ -1,0 +1,61 @@
+@use 'colors';
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+
+  label {
+    width: 100%;
+  }
+
+  .number-input-wrapper {
+    position: relative;
+
+    input {
+      height: 48px;
+    }
+
+    .sub-label {
+      position: absolute;
+      top: 2px;
+      right: 6px;
+      font-family: 'Arial', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+      color: colors.$dark-gray-515;
+      z-index: 1;
+      background: colors.$white;
+      height: 45px;
+      padding: 0 10px 0 16px;
+      width: auto;
+    }
+  }
+}
+
+:host.text-zeigo-near-black {
+  .input-label {
+    color: colors.$near-black-400;
+    font-size: 16px;
+    line-height: 20px;
+
+    .optional {
+      color: #868686;
+      font-family: 'Arial Rounded MT Bold', serif;
+    }
+  }
+}

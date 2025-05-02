@@ -1,0 +1,42 @@
+@use 'colors';
+
+.forbidden-wrapper {
+  padding: 50px 120px;
+  height: 100vh;
+  width: 100vw;
+
+  .zeigo-logo{
+    width: 243.21px;
+    height: 113.39px;
+  }
+
+  img {
+    width: 187px;
+  }
+
+  .user-forbidden {
+    width: 96px;
+  }
+
+  .vector {
+    width: 60%;
+  }
+
+  .background {
+    height: 100vh;
+    width: 35vw;
+  }
+
+  .text-forbidden-label{
+    color: colors.$dark-gray-750;
+    font-size: 40px;
+    line-height: 120%;
+  }
+
+  .back-btn{
+    width: 140px;
+    padding: 13px 24px;
+    gap: 8px;
+    line-height: 150%;
+  }
+}

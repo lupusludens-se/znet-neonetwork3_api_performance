@@ -1,0 +1,34 @@
+<td class="first-col">
+    <div class="div-img">
+        <svg-icon class="file-icon" [key]="getFileKey(fileDetails.type)"></svg-icon>  
+    </div>
+</td>
+
+<td class="middle-col">
+    <span class="fw-700 titleCol ellipsis" [title]="fileName">{{ fileName }}</span>
+    <span>{{ fileType }}</span>
+</td>
+
+<td class="middle-col">
+    <span class="file" [title]="fileType">{{ fileType }}</span>
+</td>
+
+<td class="middle-col">
+    <span class="file" [title]="fileDetails.size">{{ fileDetails.size | fileSize }}</span>
+</td>
+
+<td class="middle-col">
+    <span class="file" [title]="fileDetails.modifiedOn">{{ fileDetails.modifiedOn | date : 'short' }}</span>
+</td> 
+
+<td class="middle-col">
+    <span class="file text-ellipsis" [title]="fileDetails.updatedByUser.lastName+', '+ fileDetails.updatedByUser.firstName">{{ fileDetails.updatedByUser?.statusId === userStatuses.Deleted ? 'Deleted User' : (fileDetails.updatedByUser.lastName +', '+ fileDetails.updatedByUser.firstName) }}</span>
+</td> 
+
+<td class="last-col">
+    <button>
+        <neo-menu (optionClick)="optionClick($event)" [options]="options" activeIcon="cross"
+          class="files-section" icon="vertical-three-dots">
+        </neo-menu>
+    </button>
+</td>

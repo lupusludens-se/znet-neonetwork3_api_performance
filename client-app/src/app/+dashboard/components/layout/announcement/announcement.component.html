@@ -1,0 +1,27 @@
+<div [ngClass]="cssClasses" class="announcement-wrapper p-relative"
+  style="background-image: url({{ announcement?.backgroundImage?.uri || 'assets/images/announcement-default.png' }})">
+  <div class="p-absolute h-100 w-100 top-0 left-0 overlay z-index-1"></div>
+
+  <div class="p-absolute z-index-2 p-24 h-100 w-100 flex-column justify-between">
+    <h5 class="text-white pb-12 w-80">{{ announcement?.name }}</h5>
+
+    <a *ngIf="!isPublicUser"
+      [href]="announcement?.buttonUrl.startsWith('www') ? '//' + announcement?.buttonUrl : announcement?.buttonUrl"
+      class="btn-xs flex-center w-fit-content ann-view-btn neo-arial" target="_blank"
+      (click)="announcementClick.emit()">
+      {{ announcement.buttonText }}
+      <svg-icon class="ml-10" key="right-arrow" size="xs"></svg-icon>
+    </a>
+
+    <div *ngIf="isPublicUser && announcement.buttonText" (click)="announcementClick.emit()"
+      class="lock-icon btn-xs flex-center w-fit-content ann-view-btn neo-arial align-center d-flex" neoLockClick>
+      <svg-icon  
+      [fontSize]="'14px'"
+      class="lock p-1 svg-no-pointer-events"
+      key="lock-private-content"
+      ></svg-icon>
+      <span  [src]="activityEnum" [data]="{id: announcement?.id}">{{ announcement.buttonText }}</span>
+      <svg-icon class="ml-10" key="right-arrow" size="xs"></svg-icon>
+    </div>
+  </div>
+</div>

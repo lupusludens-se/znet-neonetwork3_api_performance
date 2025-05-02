@@ -1,0 +1,145 @@
+@use 'colors';
+
+.community-item {
+  padding: 8px;
+  min-height: 120px;
+  background: colors.$white;
+}
+
+.state-wrapper {
+  padding: 5px 8px;
+  user-select: none;
+
+  svg-icon {
+    color: colors.$zeigo-purple;
+  }
+
+  &:hover {
+    background: colors.$blue-5;
+
+    svg-icon {
+      color: colors.$zeigo-purple;
+    }
+  }
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.section-height {
+  min-height: 90px;
+}
+
+.tick-mark {
+  position: absolute;
+  top: 7%;
+  left: 1%;
+  z-index: 3;
+  width: 20px;
+  height: 15px;
+}
+
+.overlay-polygon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-style: solid;
+  border-width: 0 60px 60px 0;
+  border-color: transparent colors.$purple-300 transparent transparent;
+  transform: rotate(270deg);
+  z-index: 2;
+}
+
+.name,
+.job-title {
+  max-width: 640px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.name {
+  font-size: 16px;
+  color: #5d5d60;
+  font-weight: 700;
+  line-height: 18.2px;
+  cursor: pointer;
+
+  &.name-underline:hover {
+    text-decoration: underline;
+    text-decoration-color: colors.$zeigo-purple;
+    color: colors.$zeigo-purple;
+  }
+}
+
+.job-title {
+  font-size: 12px;
+  font-family: 'Arial';
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  color: colors.$dark-gray-580;
+}
+
+.buttons {
+  margin-left: auto;
+  align-items: center;
+}
+
+.gap-4 {
+  gap: 4px;
+}
+
+.eye-icon {
+  margin-right: 7px;
+  width: 15px;
+  height: 12px;
+}
+
+.purple {
+  color: colors.$zeigo-purple;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.role-tag-purple {
+  padding: 8px;
+  background: colors.$purple-15;
+  border-radius: 2px;
+  color: colors.$purple-250;
+  cursor: default;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  line-height: 130%;
+  font-size: 12px;
+}
+
+.default-cursor {
+  cursor: default !important;
+}
+
+:host.disableHover .state-wrapper {
+  background: colors.$white-10;
+  cursor: default !important;
+}
+.new-icon-corner {
+  pointer-events: none;
+  z-index: 9;
+  width: 96px;
+  .new-icon {
+    pointer-events: all;
+    margin-left: 10px;
+    top: 3px;
+    right: 5px;
+    color: colors.$white;
+    cursor: pointer;
+    min-width: 40px;
+    min-height: 22px;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+
+    path {
+      stroke: colors.$white;
+      fill: transparent;
+    }
+  }
+}

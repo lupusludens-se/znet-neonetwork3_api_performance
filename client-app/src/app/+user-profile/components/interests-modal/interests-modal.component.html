@@ -1,0 +1,30 @@
+<div class="interests-modal">
+  <div class="content">
+    <button
+      (click)="closeModal.emit()"
+      class="btn-close">
+      <svg-icon
+        class="close-icon text-blue-200"
+        height="14px"
+        key="modal-close"
+        width="14px"></svg-icon>
+    </button>
+
+    <h3 class="modal-title mb-6 neo-arial">Which topics are you interested in?</h3>
+
+    <p class="text-s mb-24 text-dark-gray-580">We’ll surface more information about these topics in your For You feed.</p>
+
+    <neo-interests-topic
+      (selectedTopics)="updateTopics($event)"
+      [topics]="categoriesList">
+    </neo-interests-topic>
+
+    <neo-save-cancel-controls
+      (cancel)="cancel()"
+      (save)="save()"
+      [cancelBtnText]="'general.cancelLabel' | translate"
+      [disable]="checkSelectedTopics()"
+      [saveBtnText]="'general.saveLabel' | translate">
+    </neo-save-cancel-controls>
+  </div>
+</div>

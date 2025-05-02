@@ -1,0 +1,55 @@
+<div class="start-wrapper d-flex p-relative">
+
+
+  <div class="right start-background-wrapper p-relative d-flex align-start justify-center">
+    <img alt="neo logo" class="pt-48 c-pointer" routerLink="" src="assets/images/zeigologo-sidebar.png" />
+    <img alt="vector image" class="p-absolute" src="assets/images/sign-up/sign-up-background-vector.svg" />
+  </div>
+
+  <div class="left d-flex flex-column justify-center">
+    <!-- <img alt="neo logo" class="logo mb-56" src="assets/images/neo-green-logo.png" /> -->
+    <h1 class="title mb-24 neo-arial">{{ 'onboarding.welcomeTitleLabel' | translate }}</h1>
+
+    <p class="text mb-24">
+      {{ 'onboarding.welcomeTextLabel' | translate }}
+    </p>
+
+    <ul class="mb-56">
+      <li>
+        <svg-icon class="mr-16 check-icon" height="10" key="check" size="md"></svg-icon>
+        {{ 'onboarding.sidebar.roleLabel' | translate }}
+      </li>
+      <li *ngIf="corporationFlow">
+        <svg-icon class="mr-16 check-icon" height="10" key="check" size="md"></svg-icon>
+        {{ 'onboarding.sidebar.responsibilitiesLabel' | translate }}
+      </li>
+      <li>
+        <svg-icon class="mr-16 check-icon" height="10" key="check" size="md"></svg-icon>
+        {{ 'onboarding.sidebar.locationLabel' | translate }}
+      </li>
+      <li>
+        <svg-icon class="mr-16 check-icon" height="10" key="check" size="md"></svg-icon>
+        {{ 'onboarding.sidebar.personalInfoLabel' | translate }}
+      </li>
+      <li>
+        <svg-icon class="mr-16 check-icon" height="10" key="check" size="md"></svg-icon>
+        {{ 'onboarding.sidebar.geographicalLabel' | translate }}
+      </li>
+      <li>
+        <svg-icon class="mr-16 check-icon" height="10" key="check" size="md"></svg-icon>
+        {{
+          (corporationFlow ? 'onboarding.sidebar.interestsLabel' : 'onboarding.sidebar.projectTypeLabel') | translate
+        }}
+      </li>
+      <li>
+        <svg-icon class="mr-16 check-icon" height="10" key="check" size="md"></svg-icon>
+        {{'onboarding.sidebar.welcomeSeries' | translate}}
+      </li>
+    </ul>
+
+    <button (click)="startOnboarding()" class="btn green text-s flex-center">
+      {{ 'onboarding.getStartedLabel' | translate }}
+      <svg-icon class="ml-14 rotate-180" height="10" key="arrow-thin-right" width="14"></svg-icon>
+    </button>
+  </div>
+</div>

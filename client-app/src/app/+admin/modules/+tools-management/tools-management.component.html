@@ -1,0 +1,77 @@
+<div class="tools-management flex-column h-100">
+  <div class="flex-between align-center pb-24">
+    <h2 class="title">
+      {{ 'toolsManagement.toolManagementLabel' | translate }}
+    </h2>
+
+    <button
+      *ngIf="showAdd"
+      class="btn-l green w-min-initial d-flex align-center"
+      routerLink="/admin/tool-management/add">
+      <svg-icon class="mr-12" key="plus"></svg-icon>
+
+      {{ 'toolsManagement.addToolLabel' | translate }}
+    </button>
+  </div>
+
+  <ng-container *ngIf="configuration?.data?.dataList?.length || (configuration?.data?.dataList && !configuration.data.dataList.length && search)">
+    <neo-search-bar
+      (clearInput)="search = null; changePage(1)"
+      (inputChange)="search = $event; changePage(1)"
+      class="search-bar-spacing">
+    </neo-search-bar>
+
+    <div class="pt-32">
+        <neo-table
+          (cellClick)="goToEdit($event)"
+          (optionClick)="optionClick($event)"
+          (orderChange)="paging.orderBy = $event.propertyName + '.' + $event.direction; loadTools$.next()"
+          [configurations]="configuration"
+          [currentOrdering]="{ propertyName: 'title', direction: 'asc' }">
+        </neo-table>
+
+        <neo-pagination
+          (changePage)="changePage($event)"
+          *ngIf="paging && paging.total > defaultItemPerPage"
+          [paging]="paging"
+          class="pt-24 mb-64">
+        </neo-pagination>
+
+      <neo-no-results *ngIf="!configuration?.data?.dataList?.length && search" [searchedStr]="search"> </neo-no-results>
+    </div>
+  </ng-container>
+
+<neo-empty-page
+  class="empty-page"
+  *ngIf="configuration?.data?.dataList && !configuration.data.dataList.length && !search"
+  [headlinePart1]="'general.emptyStateLabel' | translate"
+  iconKey="wrench">
+</neo-empty-page>
+
+<neo-modal (cancel)="showModal = false" *ngIf="showModal">
+  <svg-icon
+    (click)="showModal = false"
+    class="c-pointer p-absolute top-20 right-20"
+    height="30px"
+    key="close-snackbar"
+    width="30px"></svg-icon>
+
+  <h3 class="mb-6">
+    {{ 'general.deleteModal.titleLabel' | translate }}
+  </h3>
+
+  <p class="text-label mb-24">
+    {{ 'general.deleteModal.textLabel' | translate }}
+  </p>
+
+  <div class="popup-controls pt-24 d-flex">
+    <button (click)="showModal = false" class="btn btn-cancel mr-16">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+
+    <button (click)="deleteItem$.next(selectedItem.id)" class="btn btn-confirm">
+      {{ 'general.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>
+</div>

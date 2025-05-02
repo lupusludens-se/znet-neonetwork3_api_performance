@@ -1,0 +1,16 @@
+{
+  "singleQuote": true,
+  "trailingComma": "none",
+  "endOfLine": "auto",
+  "bracketSpacing": true,
+  "tabWidth": 2,
+  "printWidth": 170,
+  "useTabs": false,
+  "semi": true,
+  "arrowParens": "avoid",
+  "importOrder": "['^[./]']",
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "singleAttributePerLine": true,
+  "bracketSameLine": true
+}

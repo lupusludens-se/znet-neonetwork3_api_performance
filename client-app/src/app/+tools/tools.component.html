@@ -1,0 +1,73 @@
+<div *ngIf=" !(auth.isLoggedIn() || auth.needSilentLogIn())">
+  <div class="tools-wrapper">
+    <div class="flex-column">
+      <neo-top-panel imageCssClasses="l-250px w-599px h-249px t-28px text-dark-gray-30"
+        imageUrl="assets/images/project-category-background-image.svg">
+        <div class="top-panel-spacing d-flex z-index-1 w-100">
+          <div class="flex-column w-100">
+            <div class="d-flex justify-center align-center">
+              <div>
+                <svg-icon class="tools-icon" key="tools"></svg-icon>
+              </div>
+              <div class="flex-column title">
+
+                <h2>{{ 'toolsManagement.toolsLabel' | translate }}</h2>
+
+                <p class="pt-20 text-s w-100">
+                  {{ 'toolsManagement.publicToolsDescription' | translate }}
+                </p>
+                <span class="pt-10 text-s w-100">
+                  {{ 'toolsManagement.publicToolInterestedIn1' | translate }}
+                  <a class="banner-create-account-link" [routerLink]="['/sign-up']"
+                    [queryParams]="{ source: signTrackingSourceEnum }">{{ 'toolsManagement.publicToolInterestedIn2' |
+                    translate }}</a>
+                  {{ 'toolsManagement.publicToolInterestedIn3' | translate }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </neo-top-panel>
+    </div>
+
+    <div class="container">
+
+      <div *ngIf="tools?.dataList?.length"
+        class="tools-container d-flex flex-wrap mt-32 pl-32 pb-32 pr-32 gap-32 pt-24">
+        <neo-tool class="mt-8" (toolClick)="onToolClick(tool.id)" *ngFor="let tool of tools?.dataList"
+          [description]="tool?.description" [icon]="tool?.icon?.uri" [id]="tool.id" [showButton]="false"
+          [title]="tool?.title" size="fixed"></neo-tool>
+      </div>
+      <neo-scroll-loader (loadMoreData)="onLoadMoreData($event)"></neo-scroll-loader>
+    </div>
+  </div>
+</div>
+<div *ngIf="(auth.isLoggedIn() || auth.needSilentLogIn())">
+  <h2 class="page-header text-neo-near-black">{{ 'toolsManagement.toolsLabel' | translate }}</h2>
+
+  <ng-container *ngIf="tools?.dataList?.length || (tools?.dataList && !tools.dataList.length && search)">
+    <p class="text-s text-dark-gray-590 pt-8">
+      {{ 'toolsManagement.toolsSubHeaderLabel' | translate }}
+    </p>
+
+    <neo-search-bar (clearInput)="search = null; tools = null; changePage(1)"
+      (inputChange)="search = $event; changePage(1)" class="d-flex pt-24"></neo-search-bar>
+
+    <div *ngIf="tools?.dataList?.length" class="tools-container d-flex flex-wrap mt-32 pl-32 pb-32 pr-32 gap-32 pt-24">
+      <neo-tool class="mt-8" (pinClick)="pinClick({ toolId: tool.id })" (toolClick)="onToolClick(tool.id)"
+        *ngFor="let tool of tools?.dataList" [description]="tool?.description" [icon]="tool?.icon?.uri" [id]="tool.id"
+        [pinned]="tool.isPinned" [showButton]="false"
+        [showFavoriteButton]="pinnedToolIds.includes(tool.id) || pinnedToolIds.length < 5" [title]="tool?.title"
+        size="fixed"></neo-tool>
+    </div>
+  </ng-container>
+
+  <neo-empty-page class="empty-page" *ngIf="tools?.dataList && !tools.dataList.length && !search"
+    [headlinePart1]="'general.emptyStateLabel' | translate" iconKey="wrench">
+  </neo-empty-page>
+
+  <neo-pagination (changePage)="changePage($event)" *ngIf="tools?.dataList?.length > 0 && paging && paging.total > defaultItemPerPage"
+    [defaultItemPerPage]="defaultItemPerPage" [paging]="paging" class="pt-24 mb-64"></neo-pagination>
+
+  <neo-no-results class="ml-2 mt-32" *ngIf="!tools?.dataList?.length && search" [searchedStr]="search"></neo-no-results>
+</div>

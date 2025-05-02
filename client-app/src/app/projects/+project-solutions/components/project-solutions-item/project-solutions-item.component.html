@@ -1,0 +1,71 @@
+<div *ngIf="isPublicUser">
+  <div class="top-panel flex-between">
+    <div class="left">
+      <h2 class="title mb-8 neo-arial">{{ solution?.name }}</h2>
+      <p  class="text mb-18">{{ solution?.description }}</p>
+  
+      <div class="d-flex link">
+        <a class="mr-34 d-flex align-center z-index-1" [routerLink]="['/technologies']">
+          {{ 'projects.solutions.aboutTechnologiesLabel' | translate }}
+          <svg-icon class="ml-8" key="right-arrow-in-circle"></svg-icon>
+        </a>
+  
+        <a class="mr-34 d-flex align-center z-index-1" [routerLink]="['/solutions']">
+          {{ 'projects.solutions.aboutSolutionsLabel' | translate }}
+          <svg-icon class="ml-8" key="right-arrow-in-circle"></svg-icon>
+        </a>
+      </div>
+    </div>
+  
+    <div class="right d-flex align-center">
+      <div class="connect-wrapper flex-column neo-arial">
+        <p class="grey-text mb-8">
+          {{ 'projects.solutions.strategicAssistanceLabel' | translate }}
+        </p>
+  
+        <p class="white-text mb-16">
+          {{ 'projects.solutions.needHelpLabel' | translate }}
+        </p>
+  
+        <button (click)="contactUsModal = true" class="btn top-panel-btn-white flex-center">
+          {{ 'projects.solutions.contactNeoLabel' | translate }}
+          <svg-icon
+          class="ml-10"
+          key="right-arrow"></svg-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <img
+  alt="headline-background-image"
+  class="img"
+  src="assets/images/project-category-background-image.svg"
+  />
+  <neo-contact-neo-network (closed)="contactUsModal = false" *ngIf="contactUsModal"></neo-contact-neo-network>
+  
+  <div class="d-flex flex-column mt-24 w-100">
+    <neo-project-solutions-item-element *ngFor="let category of categoryItems" [category]="category">
+    </neo-project-solutions-item-element>
+  </div>
+  </div>
+
+   
+  <!-- #region PublicView -->
+  <div *ngIf="!isPublicUser">
+  <div class="top-panel banner-height">
+    <div class="left">
+      <h2 class="title mb-8 neo-arial">{{ solution?.name }}</h2>
+      <p class="text solution-description mb-18">{{ solution?.description }}</p>
+      </div>
+      <img
+  alt="headline-background-image"
+  class="img"
+  src="assets/images/project-category-background-image.svg"
+  />
+    </div>
+    <div class="flex-wrap mt-24 w-100" >
+      <neo-project-solutions-item-element *ngFor="let category of categoryItems" [category]="category" class="tile">
+      </neo-project-solutions-item-element >
+    </div>
+  </div>
+   <!-- #endregion-->

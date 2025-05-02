@@ -1,0 +1,122 @@
+<div class="regions-modal">
+  <div class="content">
+    <button
+      (click)="closeModal.emit(true)"
+      class="btn-close">
+      <svg-icon
+        class="close-icon text-blue-200"
+        height="14px"
+        key="modal-close"
+        width="14px"></svg-icon>
+    </button>
+
+    <div class="top mb-24">
+      <h2 class="modal-title neo-arial">{{ 'onboarding.whatGeographicLabel' | translate }}</h2>
+      <p class="text-s mt-6 text-dark-gray-580">{{ 'onboarding.whatGeographicSubLabel' | translate }}</p>
+    </div>
+
+    <div class="continents-wrapper d-flex flex-wrap pb-24 mb-24">
+      <button
+        (click)="selectContinent(continent, index)"
+        *ngFor="let continent of continents; let index = index"
+        [class.selected]="continent.selected"
+        class="select-button neo-arial">
+        <svg-icon
+          size="lg"
+          [class.selected]="continent.selected"
+          [key]="continent.selected ? 'cross' : 'plus'">
+        </svg-icon>
+        {{ continent.name }}
+        <span
+          *ngIf="
+            continent.selected && !!geographiesHelper.countSelectedCountriesInContinent(continent, selectedGeographies)
+          "
+          class="ml-8 continent-count flex-center pt-4 pb-4 pl-8 pr-8">
+          {{ geographiesHelper.countSelectedCountriesInContinent(continent, selectedGeographies) }}
+        </span>
+      </button>
+    </div>
+
+    <div class="main">
+      <div class="top flex-between mb-24">
+        <div class="left">
+          <h3 class="section-title neo-arial">{{ 'general.displayCountriesLabel' | translate }}</h3>
+          <p class="text">{{ 'general.chooseCountriesLabel' | translate }}</p>
+        </div>
+
+      </div>
+
+      <div
+        *ngIf="selectedContinents?.length"
+        class="list-wrapper d-flex">
+        <div class="list mr-24 mb-12">
+          <div class="p-relative w-100 d-flex align-center search-wrapper">
+            <svg-icon
+              class="p-absolute search-icon"
+              key="search"
+              size="lg"></svg-icon>
+
+            <input
+              (keyup)="searchCountries(searchInput.value)"
+              [formControl]="searchInput"
+              class="w-100 pl-32 search-input"
+              placeholder="{{ 'userProfile.searchPlaceholder' | translate }}"
+              type="text" />
+          </div>
+
+          <ng-container *ngIf="countries?.length; else noResults">
+            <div class="options-wrapper">
+              <neo-blue-checkbox
+                (selectCheckbox)="chooseCountry(country)"
+                *ngFor="let country of countries"
+                [checked]="country.selected"
+                [class.disabled]="country.disabled"
+                [name]="country.name"
+                [value]="country.id"
+                class="mb-8">
+              </neo-blue-checkbox>
+            </div>
+          </ng-container>
+
+          <ng-template #noResults>
+            <p class="no-results mt-10 ml-32 mr-32">{{ 'general.regionSearchNoResultsLabel' | translate }}</p>
+          </ng-template>
+        </div>
+
+        <div class="selected">
+          <neo-filter-header
+            (clearFilters)="clearAllRegions()"
+            [showClearButton]="!!selectedGeographies?.length"
+            filterName="Selected Geographies">
+          </neo-filter-header>
+          <div class="separator mb-8"></div>
+          <div class="options-wrapper selected d-flex flex-wrap">
+            <div
+              *ngFor="let geography of selectedGeographies"
+              class="option d-flex mr-8 mb-8">
+              {{ geography.name }}
+
+              <button
+                (click)="removeRegion(geography)"
+                class="btn-remove">
+                <svg-icon
+                  class="ml-8 text-aqua-400"
+                  key="cross"
+                  size="sm">
+                </svg-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <neo-save-cancel-controls
+      (cancel)="closeModal.emit(true)"
+      (save)="updatedRegions.emit(this.selectedGeographies)"
+      [cancelBtnText]="'general.cancelLabel' | translate"
+      [disable]="!selectedGeographies?.length"
+      [saveBtnText]="'general.saveLabel' | translate">
+    </neo-save-cancel-controls>
+  </div>
+</div>

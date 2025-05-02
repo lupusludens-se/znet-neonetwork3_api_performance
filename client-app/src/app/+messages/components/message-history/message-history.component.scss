@@ -1,0 +1,393 @@
+@use 'colors';
+@use 'mixins';
+
+.subject-header {
+  @include mixins.text-lines-overflow(2);
+}
+
+.subject-title {
+  margin-bottom: 1px;
+}
+
+.project-item {
+  justify-content: center;
+  align-items: center;
+  padding: 5px 16px;
+  gap: 8px;
+  width: fit-content;
+  height: 32px;
+  background: colors.$blue-40;
+  border-radius: 2px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border: 1px solid colors.$blue-40;
+
+  &:hover {
+    border: 1px solid #08443D;
+  }
+
+  span {
+    font-size: 13px;
+    line-height: 130%;
+    color: #0E9888;
+  }
+
+  .arrow-purple {
+    color: #0E9888;
+  }
+}
+
+.project-item:hover .arrow-purple,
+.project-item:hover span {
+  color: #08443D;
+}
+
+.message-history {
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+
+  &:first-of-type {
+    border-bottom: none;
+  }
+
+  &:last-of-type {
+    height: fit-content;
+  }
+
+  &.history {
+    height: calc(100vh - 336px);
+    overflow: auto;
+
+    .scrolled {
+      overflow-y: auto;
+    }
+  }
+
+  .round-image {
+    width: 32px;
+    height: 32px;
+    top: 8px;
+    left: 12px;
+  }
+
+  .message-input {
+    min-height: 48px;
+    min-width: 100%;
+    padding: 3px 12px 0;
+    border: 1px solid colors.$blue-100;
+    border-radius: 8px;
+    background: colors.$white;
+    border: 1px solid colors.$dark-gray-410;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+
+    &::placeholder {
+      color: colors.$dark-gray-515;
+      font-size: 16px;
+    }
+
+    &:hover {
+      border-color: colors.$dark-gray-510;
+    }
+
+    &:focus {
+      background: colors.$white;
+      border: 1.5px solid colors.$zeigo-purple;
+      /* Shadow/xs */
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    }
+  }
+
+  .editor {
+    width: 95%;
+    margin-right: 51px;
+    margin-top: 10px;
+  }
+
+  .buttons-wrapper {
+
+    button {
+      padding: 8px 20px 8px 8px;
+
+
+      &.btn-msg-connect-link, &.btn-initiative {
+        background: colors.$dark-gray-40;
+        border: 1px solid colors.$purple-300;
+        border-radius: 8px;
+        text-align: center;
+        text-transform: capitalize;
+        color: colors.$purple-200;
+        padding-left: 20px;
+
+        &:hover {
+          border: 1px solid colors.$purple-500;
+          color: colors.$purple-500;
+        }
+      }
+    }
+  }
+
+  .chip {
+    height: 32px;
+    background: colors.$sky-blue;
+    border-radius: 500px;
+    padding: 8px 12px;
+
+    .link {
+      color: colors.$white;
+    }
+  }
+
+  .message {
+    background: #F2FCFD;
+    border-radius: 0 12px 12px 12px;
+    padding: 12px 16px;
+    max-width: 100%;
+    width: fit-content;
+    margin-left: 52px;
+    letter-spacing: 0.01em;
+    color: colors.$near-black-400;
+    margin-right: 123px;
+
+    &.reverse {
+      border-radius: 12px 0 12px 12px;
+      margin-left: 123px;
+      margin-right: 52px;
+      background: colors.$blue-350;
+      color: colors.$dark-gray-30;
+    }
+
+    .message-content {
+      overflow-wrap: anywhere;
+    }
+
+    .attachment {
+      width: 32px;
+      height: 32px;
+      border-radius: 2px;
+      object-fit: cover;
+    }
+  }
+
+  .day-separator-wrapper {
+    padding: 16px 0;
+
+    .chip {
+      border: 1px solid colors.$dark-gray-280;
+      background: transparent;
+    }
+
+    .line {
+      height: 1px;
+      border-top: 1px solid colors.$dark-gray-280;
+    }
+  }
+
+  .link {
+    padding: 4px 12px;
+    background: colors.$gray;
+    color: colors.$neo-blue;
+    border-radius: 500px;
+
+    .remove-link-icon {
+      margin-top: -4px;
+      color: colors.$blue-200;
+
+      &:hover {
+        color: colors.$neo-blue;
+      }
+    }
+  }
+}
+
+.user-image-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 4px solid colors.$dark-gray-50;
+  margin-left: -11px;
+  border-bottom-color: transparent;
+
+  &:hover {
+    .user-tooltip {
+      display: initial;
+      z-index: 1;
+    }
+  }
+
+  .counter {
+    user-select: none;
+    background: colors.$blue-20;
+    border: 3px solid colors.$dark-gray-50;
+    border-radius: 500px;
+    line-height: 150%;
+    color: colors.$aqua-400;
+
+    &.background-blue-400 {
+      background: colors.$aqua-400;
+
+      &:hover {
+        background: #3E68FF;
+        opacity: 0.3;
+      }
+    }
+
+    &:hover {
+      background: #ABDBEF;
+      color: colors.$aqua-400;
+
+    }
+  }
+
+
+
+  .user-tooltip {
+    display: none;
+    padding: 8px 8px;
+    background: colors.$white-20;
+    border-radius: 8px;
+    white-space: nowrap;
+    bottom: -35px;
+    box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.1), 0px 4px 6px -2px rgba(16, 24, 40, 0.05);
+    line-height: 130%;
+    color: colors.$dark-gray-30;
+    word-wrap: break-word;
+
+    a {
+      color: colors.$near-black-400;
+
+      &:visited {
+        color: colors.$near-black-400;
+      }
+    }
+  }
+
+  .users-list {
+    right: 40px;
+    background: colors.$dark-gray-30;
+    box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+    border: 1px solid colors.$dark-gray-200;
+    border-radius: 2px;
+
+    .overflow-container {
+      height: 192px;
+      min-width: 204px;
+      overflow-y: auto;
+
+      .user {
+        padding: 6px 8px;
+
+        &:hover {
+          background: colors.$blue-5;
+        }
+      }
+    }
+  }
+}
+
+.z-index-6 {
+  z-index: 6;
+}
+
+.ellipsis {
+  width: 204px;
+}
+
+.btn-xs.blue-100-frame {
+  width: fit-content;
+}
+
+.find-project-form {
+  height: auto;
+
+  .controls {
+    margin-top: auto;
+  }
+}
+
+.cancel {
+  background: colors.$dark-gray-450;
+  border-radius: 8px;
+  color: colors.$dark-gray-590;
+
+  &:hover {
+    background: colors.$dark-gray-250;
+    color: colors.$dark-gray-590;
+  }
+}
+
+.mt-7-percent {
+  margin-top: 7%;
+}
+
+//message with links in the content - Message View page
+::ng-deep div.reverse .text-dark-green,
+::ng-deep div.reverse .text-neo-blue {
+  color: colors.$white !important;
+
+  &:hover {
+    color: colors.$white !important;
+  }
+}
+
+.btn-square {
+  width: 60px !important;
+  height: 46px !important;
+}
+
+.delete {
+  color: colors.$red;
+  margin-bottom: 8%;
+  cursor: pointer;
+}
+
+.edit {
+  color: colors.$dark-gray-590;
+  margin-bottom: 8%;
+  cursor: pointer;
+}
+
+.edit-cancel {
+  color: colors.$dark-gray-590;
+  cursor: pointer;
+
+}
+
+.edit-save {
+  color: #848383;
+  cursor: pointer;
+} 
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip .tooltiptext {
+  background-color: rgb(252, 252, 252);
+  border-radius: 6px;
+  font-size: small;
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+  left: 99%;
+  transform: translate(-50%);
+  transition: opacity 0.1s ease-in-out;
+  padding: 6px;
+  display: flex;
+  padding-bottom: 0px;
+  padding-right: 0px;
+  bottom: 100%;
+  margin-bottom: 10px;
+  visibility: visible;
+  opacity: 1;
+  box-shadow: 0px 2px 8px rgba(111, 110, 119, 0.5);
+}
+
+.errorMessage {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  margin-top: 2px;
+  line-height: 140%;
+  color: colors.$error-red; 
+  margin-left: 20px;
+} 

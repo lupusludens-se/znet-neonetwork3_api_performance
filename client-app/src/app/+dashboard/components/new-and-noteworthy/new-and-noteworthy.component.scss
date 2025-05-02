@@ -1,0 +1,31 @@
+@use 'colors';
+
+.new-noteworthy-wrapper {
+    align-items: center;
+    justify-content: center;
+
+
+    &:hover {
+        cursor: pointer;
+    }
+
+
+    .title {
+        font-size: 16px;
+        line-height: 130%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        justify-content: center;
+        font-family: 'Arial Rounded MT Bold';
+        width: 95%;
+    }
+
+    .icon {
+        line-height: 2.5;
+        text-align: end;
+        width: 5%;
+    }
+}

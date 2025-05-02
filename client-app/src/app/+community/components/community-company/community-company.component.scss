@@ -1,0 +1,33 @@
+@use 'colors';
+
+.company-wrapper {
+  align-items: center;
+}
+
+.company-name {
+  font-size: 14px;
+  line-height: 130%;
+  color: colors.$dark-gray-750;
+  max-width: 640px;
+}
+
+.members-text {
+  font-size: 12px;
+  font-family: 'Arial', serif;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  color: colors.$dark-gray-580;
+  max-width: 640px;
+}
+
+.buttons {
+  margin-left: auto;
+  align-items: center;
+}
+
+.add-hover{
+  &:hover{
+    background: colors.$blue-20;
+    border-radius: 999px;
+  }
+}

@@ -1,0 +1,13 @@
+<div class="flex-column">
+  <div    
+    [class]="headlineStyleClasses">
+    {{ 'general.emptyStatesHeadline1' | translate }}
+    <ng-container *ngIf="!!searchedStr">{{ 'general.forLabel' | translate }} “{{ searchedStr }}”</ng-container>
+  </div>
+
+  <ul class="p-relative">
+    <li [class]="pointsStyleClasses">{{ 'general.checkTyposText' | translate }}</li>
+    <li [class]="pointsStyleClasses">{{ 'general.tryGeneralKeywordsText' | translate }}</li>
+    <li [class]="pointsStyleClasses">{{ 'general.tryDifferentText' | translate }}</li>
+  </ul>
+</div>

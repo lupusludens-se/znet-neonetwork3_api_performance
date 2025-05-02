@@ -1,0 +1,52 @@
+<div
+  *ngFor="let project of projectsList"
+  id="project-item-{{ project.id }}"
+  class="d-flex project-item mb-12"
+  [class.pinned]="project.isPinned"
+  (click)="onProjectClick(project?.id)">
+  <div class="left-section">
+    <img
+      src="{{ project?.imageUrl }}"
+      alt="project-item" />
+  </div>
+  <div class="right-section">
+    <div class="d-flex flex-column h-70">
+      <div class="d-flex flex-row justify-between">
+        <span class="title mb-8 text-ellipsis title-height">{{ project.title }}</span>
+        <div
+          class="actions flex-center"
+          (click)="$event.stopPropagation()">
+          <button
+            class="action"
+            *ngIf="hasPermissionToSave(user)"
+            [class.active]="project.isSaved">
+            <svg-icon
+              class="save-item-icon thin"
+              fontSize="20px"
+              [key]="'star-outline'"
+              [ngClass]="{ saved: project.isSaved }"
+              (click)="$event.stopPropagation(); saveProject(project)"></svg-icon>
+          </button>
+        </div>
+      </div>
+      <p
+        [innerHTML]="project.subTitle"
+        class="text mb-12 mt-8 text-ellipsis title-height"></p>
+    </div>
+
+    <div class="bottom flex-between mt-8">
+      <div class="left d-flex align-center gap-16 w-100">
+        <div class="tags d-flex">
+          <neo-content-tag
+            fontSize="12"
+            [tag]="project.category"
+            [type]="type.Category"></neo-content-tag>
+        </div>
+
+        <neo-content-location
+          class="pr-8 company-ellipsis"
+          [regions]="project?.regions"></neo-content-location>
+      </div>
+    </div>
+  </div>
+</div>

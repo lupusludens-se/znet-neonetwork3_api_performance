@@ -1,0 +1,45 @@
+<ng-container *ngIf="toolData$ | async as toolData">
+  <div class="d-flex m-8 mr-0">
+    <div class="flex-column w-50">
+      <button (click)="goBack()" class="btn-connect back-btn d-flex align-center pb-4">
+        <svg-icon class="pr-4 back-btn-img-s" key="left-arrow"></svg-icon>
+        Back
+      </button>
+    </div>
+    <div class="flex-column w-50 align-end" *ngIf="isCorporateUser">
+      <button (click)="openAttachToInitiativeModal(); trackToolsDetailsActivity(); $event.stopPropagation();" class="btn-initiative align-center">
+        <span class="ml-8 mr-8 btn-text flex-center">
+          {{ 'initiative.attachContent.attachToolLabel' | translate }}
+          <svg-icon class="ml-8" fontSize="16px" key="idea-bulb"></svg-icon>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div [ngClass]="{ 'tool-wrapper tool-content-wrapper': !isSolarQuote }">
+    <div class="icon ml-8 d-flex align-center">
+      <img *ngIf="!isSolarQuote" [src]="toolData.icon?.uri || 'assets/images/default-tool-icon.png'" alt="title"
+        class="w-100" />
+    </div>
+
+    <h3 class="text-neo-near-black mt-8">{{ toolData.title }}</h3>
+
+    <div class="mt-8 w-80 ml-2"
+      [ngClass]="{ 'text-s text-dark-gray-590': isSolarQuote, 'text-m text-dark-gray-580': !isSolarQuote }">
+      {{ toolData.description }}
+    </div>
+
+    <div *ngIf="!isSolarQuote" class="separator mt-32"></div>
+
+    <div *ngIf="!isSolarQuote" class="mt-32">
+      <iframe *ngIf="!isSolarQuote" [src]="getUrl(toolData.toolUrl)" class="w-100"
+        [ngStyle]="{ height: toolHeight + 'px' }" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+
+  <div *ngIf="isSolarQuote" class="tool-wrapper mb-64 mt-32">
+    <neo-indicative-quote-request-form [toolId]="toolData.id"></neo-indicative-quote-request-form>
+  </div>
+</ng-container>
+<neo-attach-to-initiative (closed)="attachToInitiative = false" (initiativeLoadedStatus)="openAttachToInitiativeModal()"
+  [initiativeContentType]="contentType" [contentId]="toolId" [typeName]="'general.toolLabel' | translate"
+  *ngIf="attachToInitiative"></neo-attach-to-initiative>

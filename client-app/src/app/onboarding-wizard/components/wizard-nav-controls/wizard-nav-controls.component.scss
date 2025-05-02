@@ -1,0 +1,49 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+:host {
+  display: flex;
+  padding: 14px 16px;
+  background-color: colors.$dark-gray-30;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: calc(100% - #{variables.$onboarding-side-bar-width});
+
+  @media (breakpoints.$medium) {
+    width: calc(100% - #{variables.$onboarding-side-bar-width-medium});
+  }
+}
+
+.bottom {
+  width: 100%;
+
+  &.flex-end {
+    justify-content: flex-end;
+  }
+
+  .btn-back,
+  .btn-next {
+    width: 116px;
+    height: 45px;
+    text-transform: uppercase;
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+
+  .btn-back {
+    color: colors.$purple-200;
+
+    &:hover {
+      color: colors.$purple-500;
+    }
+  }
+
+  .right-arrow {
+    transform: rotate(180deg);
+  }
+}

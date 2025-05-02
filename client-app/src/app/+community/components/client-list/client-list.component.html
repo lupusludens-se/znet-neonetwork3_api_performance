@@ -1,0 +1,45 @@
+<div class="pb-8"><span class="company-title">{{'community.companiesLabel' | translate}}</span> </div>
+<div class="client-list-wrapper">
+  <div
+    *ngFor="let client of clients; let index = index; let even = even"
+    class="logo-item">
+    <div class=" d-flex" *ngIf="even">
+      <div
+        class="client-row flex-column saperator w-50 pt-16 pb-16 pl-32 ml-32 mr-32"
+        >
+        <div class="d-flex" [src]="activityTypeEnum" [data]="{companyName : client.companyName}" neoLockClick>
+          <div class="flex-column justify-center lock-icon">
+            <svg-icon
+              class="lock" 
+              key="lock-private-content" class="text-aqua-400"></svg-icon>
+          </div>
+          <div class="flex-column pl-20 w-20">
+            <img class="logo-height lock-icon"        
+              [src]="client.companyLogo"
+              alt="client logo" />
+          </div>
+          <div class="flex-column justify-center">
+            <span class="client-name pl-20 lock-icon">{{ client.companyName }}</span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="client-row flex-column saperator w-50 pt-16 pb-16 pl-32 ml-32 mr-32" *ngIf="index+1 !== clients.length">
+        <div class="d-flex" [src]="activityTypeEnum" [data]="{companyName : clients[index+1].companyName}" neoLockClick>
+          <div class="flex-column justify-center lock-icon">
+           <svg-icon
+              key="lock-private-content" class="text-aqua-400"></svg-icon>
+           </div>
+          <div class="flex-column pl-20 w-20">
+            <img class="logo-height lock-icon"
+              [src]="clients[index+1].companyLogo"
+              alt="client logo" />
+          </div>
+          <div class="flex-column justify-center">
+            <span class="client-name pl-20 lock-icon">{{ clients[index+1].companyName }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

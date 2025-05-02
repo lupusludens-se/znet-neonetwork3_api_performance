@@ -1,0 +1,118 @@
+<ng-container *ngIf="!isCompanyProfile && currentUser$ | async as currentUser">
+  <div class="right flex-column ml-24">
+    <div class="d-flex flex-between align-center p-20">
+      <div class="d-flex align-center">
+        <h4 class="text-neo-near-black pr-4">
+          {{ title }}
+        </h4>
+
+        <span *ngIf="membersDuplicate?.length" class="flex-center text-white badge text-xxs fw-700">
+          {{ membersDuplicate?.length}}
+        </span>
+      </div>
+
+      <button (click)="membersModal = true" *ngIf="membersDuplicate?.length"
+        class="link-btn fw-700 text-s d-flex align-center">
+        {{ 'general.viewAllLabel' | translate }}
+
+        <svg-icon class="ml-8" key="right-arrow" size="md"></svg-icon>
+      </button>
+    </div>
+
+    <div *ngIf="membersDuplicate?.length" class="flex-column pb-20 pl-20 pr-20">
+      <ng-container *ngFor="let user of membersDuplicate?.slice(0, 8); let last = last">
+        <neo-member (followClick)="followClick.emit($event)" [showActions]="currentUser.id !== user.id"
+          [user]="user"></neo-member>
+
+        <div *ngIf="!last" class="separator"></div>
+      </ng-container>
+    </div>
+
+    <div *ngIf="!membersDuplicate?.length" class="no-members-wrapper flex-center">
+      <div class="flex-column align-center">
+        <div class="circle flex-center">
+          <svg-icon key="{{iconKey}}" width="40px" height="40px" class="dark-gray-590"></svg-icon>
+        </div>
+
+        <p class="text-s text-dark-gray-590 pt-16">{{ noMembersMessage }}</p>
+      </div>
+    </div>
+  </div>
+
+  <neo-modal (closed)="clear(); membersModal = false" *ngIf="membersModal" [badgeNumber]="members?.length"
+    [showBadge]="true" [title]="title" size="large" class="title-h2 title-badge">
+    <div class="pt-24 h-100 members-wrapper">
+      <neo-search-bar (clearInput)="clear()" (inputChange)="searchMembers($event)"
+        class="search-border-radius-large search-border"></neo-search-bar>
+
+      <div class="d-flex flex-wrap members mt-16">
+        <ng-container *ngIf="members?.length">
+          <neo-member (followClick)="followClick.emit($event)" *ngFor="let user of members" [bordered]="true"
+            [showActions]="currentUser.id !== user.id" [user]="user"></neo-member>
+        </ng-container>
+
+        <neo-no-results *ngIf="!members?.length && search" [searchedStr]="search"
+          class="modal-no-results-label modal-ul-li"></neo-no-results>
+      </div>
+    </div>
+  </neo-modal>
+</ng-container>
+<ng-container *ngIf="isCompanyProfile && currentUser$ | async as currentUser">
+  <div class="company-right flex-column ml-24">
+    <div class="d-flex flex-between align-center p-20">
+      <div class="d-flex align-center">
+        <h4 class="text-neo-near-black pr-4">
+          {{ title }}
+        </h4>
+
+        <span *ngIf="membersDuplicate?.length" class="flex-center text-white badge text-xxs fw-700">
+          {{ membersDuplicate?.length}}
+        </span>
+      </div>
+
+      <button (click)="membersModal = true" *ngIf="membersDuplicate?.length > 5"
+        class="link-btn fw-700 text-s d-flex align-center">
+        {{ 'general.viewAllLabel' | translate }}
+
+        <svg-icon class="ml-8" key="right-arrow" size="md"></svg-icon>
+      </button>
+    </div>
+
+    <div *ngIf="membersDuplicate?.length" class="flex-column pb-20 pl-20 pr-20">
+      <ng-container *ngFor="let user of membersDuplicate?.slice(0, 5); let last = last">
+        <neo-member (followClick)="followClick.emit($event)" [showActions]="currentUser.id !== user.id" [user]="user"
+          [isCompanyProfile]="isCompanyProfile"></neo-member>
+
+        <div *ngIf="!last" class="separator"></div>
+      </ng-container>
+    </div>
+
+    <div *ngIf="!membersDuplicate?.length" class="no-members-wrapper flex-center">
+      <div class="flex-column align-center">
+        <div class="circle flex-center">
+          <svg-icon key="{{iconKey}}" width="40px" height="40px" class="dark-gray-590"></svg-icon>
+        </div>
+
+        <p class="text-s text-dark-gray-590 pt-16">{{ noMembersMessage }}</p>
+      </div>
+    </div>
+  </div>
+
+  <neo-modal (closed)="clear(); membersModal = false" *ngIf="membersModal" [badgeNumber]="members?.length"
+    [showBadge]="true" [title]="title" size="large" class="title-h2 title-badge">
+    <div class="pt-24 h-100 members-wrapper">
+      <neo-search-bar (clearInput)="clear()" (inputChange)="searchMembers($event)"
+        class="search-border-radius-large search-border"></neo-search-bar>
+
+      <div class="d-flex flex-wrap members mt-16">
+        <ng-container *ngIf="members?.length">
+          <neo-member (followClick)="followClick.emit($event)" *ngFor="let user of members" [bordered]="true"
+            [showActions]="currentUser.id !== user.id" [user]="user" [isCompanyProfile]="isCompanyProfile"></neo-member>
+        </ng-container>
+
+        <neo-no-results *ngIf="!members?.length && search" [searchedStr]="search"
+          class="modal-no-results-label modal-ul-li"></neo-no-results>
+      </div>
+    </div>
+  </neo-modal>
+</ng-container>

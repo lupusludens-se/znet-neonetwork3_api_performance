@@ -1,0 +1,32 @@
+<div class="p-relative flex-column flex-center p-24 w-100 h-100">
+  <svg-icon
+    class="save-item-icon p-absolute"
+    [class.saved]="isSavedProject"
+    (click)="saveProject()"
+    fontSize="22px"
+    [key]="'star-outline'"></svg-icon>
+  <img
+    [class.empty]="!image"
+    alt="{{ title }}"
+    class="project-company-image w-100"
+    src="{{ image ? image : 'assets/images/default-company-icon.svg' }}" />
+
+  <h5
+    *ngIf="title"
+    class="text-neo-blue pt-8 text-center c-pointer"
+    (click)="projectClick.emit()"
+    routerLink="/projects/{{projectId}}">
+    {{ title }}
+  </h5>
+
+  <div
+    *ngIf="tags?.length"
+    class="d-flex flex-wrap pt-16 gap-4">
+    <neo-content-tag
+      *ngFor="let tag of tags"
+      [tag]="tag"
+      [type]="type.Category"
+      (tagClicked)="tagClick.emit()"
+      fontSize="12"></neo-content-tag>
+  </div>
+</div>

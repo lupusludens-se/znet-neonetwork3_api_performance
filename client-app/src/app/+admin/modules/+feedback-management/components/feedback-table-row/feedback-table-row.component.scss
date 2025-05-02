@@ -1,0 +1,136 @@
+@use 'colors';
+
+:host {
+  display: table-row;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 4px 12px;
+  background: colors.$light-green;
+  border-radius: 500px;
+  font-size: 12px;
+  color: colors.$dark-green;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: colors.$dark-green;
+    margin-right: 6px;
+  }
+
+  &.inactive {
+    background: transparent;
+    border: 1px solid rgba(210, 81, 81, 0.2);
+    color: colors.$red;
+
+    &:before {
+      background: colors.$red;
+    }
+  }
+
+  &.deleted {
+    background: rgba(112, 132, 164, 0.06);
+    color: colors.$blue-400;
+
+    &:before {
+      background: colors.$blue-400;
+    }
+  }
+
+  &.onboard {
+    background: rgba(66, 180, 230, 0.06);
+    color: colors.$sky-blue;
+
+    &:before {
+      background: colors.$sky-blue;
+    }
+  }
+}
+
+.role {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 150px;
+  padding: 4px 10px 4px 12px;
+  border-radius: 500px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 140%;
+
+  &.corporation {
+    border: 1px solid rgba(112, 70, 164, 0.2);
+    color: colors.$purple-390
+  }
+
+  &.solution {
+    border: 1px solid rgba(0, 131, 188, 0.2);
+    color: colors.$aqua-600;
+  }
+
+  &.admin {
+    border: 1px solid rgba(103, 125, 160, 0.2);
+    color: colors.$blue-400;
+  }
+  &.spadmin {
+    border: 1px solid rgba(0, 131, 188, 0.2);
+    color: colors.$aqua-600;
+  }
+
+  &.internal {
+    border: 1px solid rgba(0, 149, 48, 0.2);
+    color: colors.$dark-green;
+  }
+  &.system {
+    border: 1px solid rgba(103, 125, 160, 0.2);
+    color: colors.$blue-400;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.btn-options {
+  width: 37px;
+  height: 37px;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+  color: colors.$neo-blue;
+  font-size: 24px;
+}
+
+.options-cell {
+  position: relative;
+}
+
+td {
+  vertical-align: middle;
+
+  &.transparent {
+    opacity: 0.5;
+  }
+}
+
+.feedback-star {
+  width: 25px;
+  height: 23px;
+  color: #7958A4;
+  cursor: pointer;
+  &:hover{
+    color: colors.$dark-gray-590;
+  }
+
+
+}
+
+

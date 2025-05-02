@@ -1,0 +1,168 @@
+@use 'colors';
+
+.topic {
+  background: colors.$dark-gray-30;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+  padding: 16px 24px;
+
+
+ 
+    h4 {
+      font-family: 'Arial Rounded MT Bold';
+      font-style: normal;
+      font-weight: 400;
+      line-height: 130%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:hover {
+        color: colors.$zeigo-purple;
+        text-decoration: underline;
+        text-decoration-color: colors.$zeigo-purple;
+      }
+    }
+
+    .inner-title {
+      font-size: 16px;
+      font-family: 'Arial';
+      font-style: normal;
+      font-weight: 400;
+      line-height: 130%;
+      letter-spacing: 0.16px;
+    }
+
+  &.pinned {
+    border-left: 4px solid colors.$aqua-400;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: url('../../../../../../assets/images/dummy-data/alfredo.png') no-repeat center;
+    background-size: contain;
+  }
+
+  .actions {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    .action {
+      color: colors.$dark-gray-590;
+      width:20px;
+      height: 30px;
+
+      &.active {
+        color: colors.$aqua-400;    
+      }
+
+      &:not(.active):hover{
+            color: colors.$aqua-400;
+            background-color: colors.$blue-20 ;
+            border-radius: 50%;
+      } 
+    }
+  }
+
+  .icon-bg{
+    border-radius: 1000px;
+    border: 2px solid #E9E1F6;
+    background: colors.$purple-10;
+    width: 24px;
+    height: 24px;
+
+    .lock-icon{
+      width: 16px;
+      height: 16px;
+      line-height: 22px;
+    }
+
+  }
+
+  .bottom {
+    border-top: 1px solid colors.$dark-gray-200;
+  }
+
+  .rounded-bold {
+    font-family: 'Arial Rounded MT Bold';
+  }
+
+
+  .parent-icon{
+    height: 19px;
+    width: 30px;
+
+    .likeactive{
+      color: colors.$aqua-400;
+      fill: colors.$aqua-400;
+      height: 20px;
+    }
+
+    :not(.likeactive):hover {
+      color: colors.$aqua-400;
+      background-color: colors.$blue-20 ;
+      border-radius: 50%;
+    }
+  }
+
+}
+
+.modal{
+  width: 640px;
+
+  .close-icon{
+    &:hover{
+      color: colors.$dark-gray-750;
+    }
+  }
+
+  .delete-label{
+    color: colors.$dark-gray-750;
+    line-height: 120%;
+  }
+
+  .description-label{
+    color: colors.$dark-gray-515;
+    font-size: 16px;
+    line-height: 130%;
+    letter-spacing: 0.16px;
+  }
+
+  .btn{
+    height:auto;
+    width:266px;
+    text-align: center;
+    font-size: 14px;
+    font-family: Arial Rounded MT Bold;
+    line-height: 150%;
+    border-radius: 8px;
+    padding: 13px 12px;
+
+    &.btn-cancel{
+      color: colors.$dark-gray-590;
+      background: colors.$dark-gray-450;
+
+      &:hover{
+        background: colors.$dark-gray-250;
+      }
+    }
+
+    &.btn-delete{
+      background: colors.$zeigo-purple;
+      color: colors.$dark-gray-40;
+
+      &:hover{
+        background: colors.$purple-400;
+      }
+    }
+
+  }
+}

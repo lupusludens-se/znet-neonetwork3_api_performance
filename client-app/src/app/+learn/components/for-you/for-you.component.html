@@ -1,0 +1,38 @@
+<ng-container *ngIf="selectedIndex === null; else selected">
+  <ng-container *ngFor="let data of pageData; let index = index">
+    <ng-container *ngIf="data?.dataList.length">
+      <neo-posts-carousel
+        [title]="(index === 0 && !this.isUserLoggedIn) ? ('learn.unlockedContentLabel' | translate) :requests[index].title"
+        [learnIndex]="index"      
+        [postData]="data"
+        (setIndexClick)="setIndex(index)"
+        (forwardClick)="forwardClick(index)"></neo-posts-carousel>
+    </ng-container>
+  </ng-container>
+  <neo-scroll-loader (loadMoreData)="loadMoreCategories()"></neo-scroll-loader>
+</ng-container>
+
+<ng-template #selected>
+  <h4
+    class="pb-16 pb-16 c-pointer title"
+    (click)="setIndex(selectedIndex)">
+    {{selectedIndex === 0 && !this.isUserLoggedIn ? ('learn.unlockedContentLabel' | translate) : (requests[selectedIndex].title | translate) }}
+  </h4>
+
+  <div class="d-flex flex-wrap">
+      <neo-post-link
+        (saveClick)="post.isSaved = $event"
+        *ngFor="let post of pageData[selectedIndex]?.dataList"
+        [post]="post"
+        class="pb-24 pr-24 post-width learn-post-wrapper">
+      </neo-post-link>
+  </div>
+</ng-template>
+
+<neo-empty-page
+  *ngIf="isEmpty"
+  [headlinePart1]="'general.emptyStateLabel' | translate"
+  [headlinePart2]="'topics.emptyStateSubLabel' | translate"
+  class="h-100"
+  iconKey="learn">
+</neo-empty-page>

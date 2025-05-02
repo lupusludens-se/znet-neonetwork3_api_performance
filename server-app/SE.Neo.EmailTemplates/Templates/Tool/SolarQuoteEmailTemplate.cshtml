@@ -1,0 +1,90 @@
+﻿@model SE.Neo.EmailTemplates.Models.SolarQuoteEmailTemplatedModel;
+<p>Requested by: @Model.RequestedUserName</p>
+<p>Company: @Model.CompanyName</p> 
+@if(!@Model.PortfolioReview)
+{
+    <p>Site Address: @Model.SiteAddress </p>
+    <p>Site Details:</p>
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Annual Power </td>
+            <td>@(Model.AnnualPower + " kwh")</td>
+        </tr>
+        <tr>
+            <td>
+                Building Owned
+            </td>
+            <td>
+                @(Model.BuildingOwned ? "Yes" : "No")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Roof Available
+            </td>
+            <td>
+                @(Model.RoofAvailable ? "Yes" : "No")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Roof Area
+            </td>
+            <td>
+                @(Model.RoofArea + (Model.RoofAreaType == SE.Neo.Common.Enums.AreaType.Feet ? " ft": " m"))<sup>2</sup>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Land Available
+            </td>
+            <td>
+                @(Model.LandAvailable ? "Yes" :"No")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Land Area
+            </td>
+            <td>
+                @(Model.LandArea + (Model.LandAreaType == SE.Neo.Common.Enums.AreaType.Feet ? " ft": " m"))<sup>2</sup>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Carport Available
+            </td>
+            <td>
+                @(Model.CarportAvailable ? "Yes" :"No")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Carport Area
+            </td>
+            <td>
+                @(Model.CarportArea + (Model.LandAreaType == SE.Neo.Common.Enums.AreaType.Feet ? " ft": " m"))<sup>2</sup>
+            </td>
+        </tr>
+    </table>
+    <p>Contract Structures</p>
+    <ul>
+    @foreach(var conStruct in @Model.ContractStructures)
+    {
+        <li>@conStruct.Name</li>
+    }
+    </ul>
+}
+<p>Interests</p>
+<ul>
+@foreach(var interest in @Model.Interests)
+{
+    <li>@interest.Name</li>
+}
+</ul>
+<p>Additional Comments</p>
+<blockquote>@Model.AdditionalComments</blockquote>

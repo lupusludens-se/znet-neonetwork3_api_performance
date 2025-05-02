@@ -1,0 +1,132 @@
+@use 'colors';
+@use 'mixins';
+
+.template-wrapper {
+  background-color: #1aaa55;
+  padding: 10px;
+  padding-left: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+neo-event-date-time {
+  display: block;
+}
+
+.quick-info-header {
+  position: relative;
+
+  .attending-button.default:hover {
+    background-color: colors.$dark-gray-250;
+  }
+
+  .attending-button.selected.border {
+    border: 1px solid;
+    background: colors.$zeigo-purple;
+    color: colors.$dark-gray-40;
+    text-align: center;
+    line-height: 150%;
+    text-transform: capitalize;
+  }
+
+  .attending-button.selected:hover {
+    background: colors.$purple-400;
+  }
+
+  .attending-button.selected:hover:not(.border) {
+    background-color: colors.$dark-gray-250;
+  }
+
+  .close-btn {
+    right: -15px;
+
+    .close-btn-icon {
+      font-size: 24px;
+      color: colors.$dark-gray-590;
+
+      &:hover {
+        color: colors.$near-black-400;
+      }
+    }
+  }
+}
+
+.event-description {
+  @include mixins.text-lines-overflow(3);
+  color: colors.$blue-600;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: 0.01em;
+  font-size: 14px;
+  overflow: hidden;
+  color: colors.$dark-gray-515;
+  text-overflow: ellipsis;
+  font-family: Arial;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+.highlights {
+  @include mixins.text-lines-overflow(5);
+}
+
+.moderator {
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  color: colors.$white;
+  border-radius: 50%;
+
+  img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.moderator-name {
+  font-size: 14px;
+  font-family: Arial;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+
+  &.existed-user:hover {
+    cursor: pointer;
+    color: colors.$dark-gray-510;
+    line-height: 100%;
+    text-decoration-line: underline;
+  }
+}
+
+.attender {
+  width: 28px;
+  height: 28px;
+  border: 2px solid colors.$white;
+  margin-left: -6px;
+  border-radius: 50%;
+  overflow: hidden;
+  color: colors.$white;
+
+  img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.attenders-count {
+  color: #1D122B;
+  text-align: right;
+  font-family: Arial Rounded MT Bold;
+}
+
+.btn-edit {
+  border-radius: 8px;
+  background: colors.$dark-gray-450;
+  color: colors.$dark-gray-590;
+
+  &:hover {
+    border-radius: 8px;
+    background: colors.$dark-gray-250;
+  }
+}

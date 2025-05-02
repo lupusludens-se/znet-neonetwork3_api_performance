@@ -1,0 +1,84 @@
+<div class="main">
+    <div class="top flex-between mb-24">
+      <div class="left">
+        <h3 class="section-title neo-arial pb-6">{{ title }}</h3>
+      </div>
+    </div>
+    <ng-container *ngIf="allUsers?.length > 0 else noActiveUser">
+    <div class="list-wrapper d-flex">
+      <div class="list mr-24">
+        <div class="p-relative w-100 d-flex align-center search-wrapper">
+          <svg-icon
+            class="p-absolute search-icon"
+            key="search"
+            size="lg"></svg-icon>
+  
+          <input
+            (keyup)="searchUsers(searchInput.value)"
+            [formControl]="searchInput"
+            class="w-100 pl-32 search-input"
+            placeholder="{{ 'initiative.createInitiative.addContent.searcTeamMemberPlaceholder' | translate }}"
+            type="text" />
+        </div>
+
+        <ng-container *ngIf="userList?.length; else noResults">
+          <div class="list-options-wrapper">
+            <neo-blue-checkbox [ngClass]="{'disabled': selectedUsers.length >= 2 && !user.selected}"
+              (selectCheckbox)="chooseUser(user)"
+              *ngFor="let user of userList"
+              [checked]="user.selected"
+              [name]="user.firstName + ' ' + user.lastName"
+              [value]="user.id"
+              class="mb-8">
+            </neo-blue-checkbox>
+          </div>
+        </ng-container>
+        <ng-template #noResults>
+          <p class="no-results mt-10 ml-32 mr-32">{{ 'general.emptyStatesHeadline1' | translate }}</p>
+        </ng-template>
+      </div>
+  
+      <div class="selected">
+        <neo-filter-header
+          (clearFilters)="clearAllUsers()"
+          [filterName]="subTitle"
+          [showClearButton]= "selectedUsers.length" >
+        </neo-filter-header>
+
+        <div class="separator mb-8"></div>
+  
+        <div class="selected-options-wrapper">
+          <div
+            *ngFor="let user of selectedUsers"
+            class="option mr-8 mb-8">
+            {{ user.firstName }} {{ user.lastName}}
+  
+            <button
+              (click)="chooseUser(user)"
+              class="btn-remove d-flex align-center">
+              <svg-icon
+                class="remove-option-icon ml-8"
+                key="cross"
+                size="sm"></svg-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </ng-container>
+    <ng-template #noActiveUser>
+      <div class="no-user">
+        <p>{{ 'initiative.createInitiative.formContent.noActiveUserLabel' | translate }}</p>
+        <div class="d-flex mt-12 justify-center">
+          <button
+            (click)="onLinkButtonClick()"
+            class="d-flex">
+            <svg-icon class="mr-4" size="md" key="pin"></svg-icon>
+            <span class="link">
+            {{ 'general.linkLabel' | translate }}</span>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  

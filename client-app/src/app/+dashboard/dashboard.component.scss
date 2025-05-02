@@ -1,0 +1,59 @@
+@use 'colors';
+@use 'breakpoints';
+
+.dashboard-wrapper {
+  background: colors.$dark-gray-20;
+  padding: 24px,5px,24px,24px;
+  @media (breakpoints.$medium) {
+    padding: 24px 5px 24px 32px;
+  }
+
+  @media (breakpoints.$fullHd) {
+    padding: 24px 5px 24px 32px;
+  }
+}
+@media only screen and (min-resolution: 1.5dppx) {
+  .dashboard-wrapper { padding: 24px 5px 24px 32px;
+  }
+}
+
+.events-wrapper {
+  padding: 28px 16px;
+
+  @media (breakpoints.$medium) {
+    padding: 26px 24px;
+    padding-right: 0px;
+  }
+
+  @media (breakpoints.$fullHd) {
+    padding-right: 0px;
+    padding-top: 24px;
+  }
+
+  &.event-wrapper-padding{
+     padding-top: 260px;
+  }
+  .link {
+    font-weight: 400;
+    font-family: 'Arial Rounded MT Bold';
+    text-transform: capitalize;
+    color: colors.$zeigo-purple;
+
+    &:hover {
+      color: colors.$purple-400;
+    }
+
+    .arrow-icon {
+      line-height: 0;
+    }
+  }
+
+  .wrapperside {
+    background: colors.$dark-gray-30;
+    border-radius: 2px;
+  }
+}
+
+.admin-event-wrapper{  
+  padding: 26px 24px !important;
+}

@@ -1,0 +1,52 @@
+@use 'colors';
+
+.tool-wrapper {
+  background: colors.$dark-gray-20;
+
+  &.p-32 {
+    padding: 32px;
+  }
+
+  .separator {
+    border-color: 1px solid colors.$dark-gray-200;
+  }
+
+  iframe {
+    min-height: 400px;
+    height: 75vh;
+    border: 0;
+  }
+
+  .icon {
+    min-width: 36px;
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.tool-content-wrapper {
+  background: colors.$white !important;
+  padding: 32px;
+}
+.btn-initiative {
+  font-family: Arial Rounded MT;
+  font-weight: 800;
+  text-align: left;
+  font-size: 14px;
+  color: colors.$purple-200;
+  line-height: 150%;
+  border: 1px solid colors.$purple-300;
+  box-shadow: 0 1px 3px rgba(0, 31, 81, 0.07);
+  border-radius: 8px;
+  padding: 6px;
+  gap: 8px;
+  cursor: pointer;
+  &.disabled {
+    pointer-events: none;
+  }
+  &:hover {
+    border: 1px solid colors.$purple-500;
+    color: colors.$purple-500;
+    background: colors.$white;
+  }
+}

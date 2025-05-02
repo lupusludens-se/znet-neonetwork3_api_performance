@@ -1,0 +1,76 @@
+@use 'colors';
+
+:host {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    width: 100%;
+  }
+
+  input {
+    height: 48px;
+  }
+}
+
+:host.text-neo-near-black {
+  .input-label {
+    color: colors.$near-black-400;
+    font-size: 16px;
+    .optional {
+      color: #868686;
+      font-family: 'Arial Rounded MT Bold', serif;
+    }
+  }
+}
+
+:host.text-neo-near-black-ft14 {
+  .input-label {
+    color: colors.$near-black-400;
+    font-size: 14px;
+    .optional {
+      color: #868686;
+      font-family: 'Arial Rounded MT Bold', serif;
+    }
+  }
+}
+
+:host.text-zeigo-near-black {
+  .input-label {
+    color: colors.$near-black-400;
+    font-size: 16px;
+    line-height: 20px;
+    .optional {
+      color: #868686;
+      font-family: 'Arial Rounded MT Bold', serif;
+    }
+  }
+}
+
+:host.text-input-label-announcement {
+  .input-label {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+:host.disabledLabel {
+  .input-label {
+    color: colors.$dark-gray-280;
+  }
+  input {
+    color: colors.$dark-gray-510 !important;
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  input {
+    width: 100% !important;
+  }
+}
+
+:host.editUserDisabledControl {
+  input {
+    opacity: 0.9;
+  }
+}

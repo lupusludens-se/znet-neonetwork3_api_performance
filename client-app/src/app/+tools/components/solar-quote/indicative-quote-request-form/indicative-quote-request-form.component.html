@@ -1,0 +1,60 @@
+<div class="preferWrapper">
+  <h5 class="pb-8 pt-24 pl-32 pr-32 text-neo-near-black">
+    {{ 'toolsManagement.whichDoYouPreferLabel' | translate }}
+  </h5>
+
+  <div class="d-flex pb-24 pl-32 pr-32">
+    <button
+      (click)="selectedFormType = solarRequestType.SubmitAnAddress"
+      [ngClass]="{
+        active: selectedFormType === solarRequestType.SubmitAnAddress,
+        notactive: selectedFormType === solarRequestType.RequestReviewOfPortfolio
+      }"
+      class="btn-l green-frame text-capitalize flex-center mr-12">
+      <svg-icon
+        class="mr-10"
+        key="location-icon"
+        size="xxl"></svg-icon>
+      {{ 'toolsManagement.submitAnAddressLabel' | translate }}
+    </button>
+
+    <button
+      (click)="selectedFormType = solarRequestType.RequestReviewOfPortfolio"
+      [ngClass]="{
+        active: selectedFormType === solarRequestType.RequestReviewOfPortfolio,
+        notactive: selectedFormType === solarRequestType.SubmitAnAddress
+      }"
+      class="btn-l green-frame text-capitalize flex-center">
+      <svg-icon
+        class="mr-10"
+        key="i-circle"
+        size="xxl"></svg-icon>
+      {{ 'toolsManagement.requestReviewOfPortfolioLabel' | translate }}
+    </button>
+  </div>
+</div>
+<div
+  *ngIf="selectedFormType"
+  class="mt-12">
+  <div>
+    <ng-container [ngSwitch]="selectedFormType">
+      <neo-submit-address-form
+        *ngSwitchCase="solarRequestType.SubmitAnAddress"
+        [toolId]="toolId">
+      </neo-submit-address-form>
+
+      <neo-request-portfolio-review-form
+        *ngSwitchCase="solarRequestType.RequestReviewOfPortfolio"
+        [toolId]="toolId">
+      </neo-request-portfolio-review-form>
+    </ng-container>
+  </div>
+</div>
+
+<neo-form-footer
+  (cancel)="cancel()"
+  *ngIf="!selectedFormType"
+  [disabled]="true"
+  icon="right-arrow"
+  submitButtonName="solarQuote.requestQuoteLabel">
+</neo-form-footer>

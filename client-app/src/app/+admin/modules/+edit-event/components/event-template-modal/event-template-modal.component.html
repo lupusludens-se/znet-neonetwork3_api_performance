@@ -1,0 +1,18 @@
+<svg-icon (click)="cancelClick.emit()" class="close-icon" key="close" size="xxl"></svg-icon>
+
+<h4 class="neo-arial mb-6 modal-title text-neo-near-black" *ngIf="showTitle">{{ title }}</h4>
+<form [formGroup]="form">
+<div class="event-edit-confirmation-modal">
+  <neo-radio-control [list]="confirmationMessages" [label]="title" *ngIf="showRadioButtons" formControlName="confirmationMessageId"
+    (valueChanged)="confirmSelection.emit(form.controls['confirmationMessageId'].value)">
+  </neo-radio-control>
+</div>
+</form>
+<div class="controls pt-24 d-flex">
+  <button (click)="cancelClick.emit()" class="btn-cancel blue-50-frame mr-16 p-10">
+    {{ 'general.cancelLabel' | translate }}
+  </button>
+  <button (click)="confirmClick.emit()" class="btn-confirm p-10 green">
+    {{ 'actions.confirmLabel' | translate }}
+  </button>
+</div>

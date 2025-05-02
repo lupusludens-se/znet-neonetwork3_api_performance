@@ -1,0 +1,29 @@
+<label
+  class="editor d-flex align-center"
+  for="editor">
+  <div
+    #editor
+    (input)="checkSymbols($event)"
+    (focusout)="emitMessage(editor)"
+    (focus)="focused.emit()"
+    (blur)="blurred.emit()"
+    (keydown)="checkLength($event)"
+    (keyup)="checkSymbols($event)"
+    (keydown.control.v)="paste($event)"
+    (keydown.meta.v)="paste($event)"
+    (keydown.control.z)="undo()"
+    (keydown.meta.z)="undo()"
+    (keydown.control.x)="cut()"
+    (keydown.meta.x)="cut()"
+    (keydown.control.c)="copy()"
+    (keydown.meta.c)="copy()"
+    [attr.placeholder]="!hidePlaceholder ? placeholder : ''"
+    [innerHTML]="editorValue"
+    [style.max-height]="maxHeight"
+    [style.min-height]="minHeight"
+    class="w-100 text-dark-gray-750 pl-12 pr-12 pt-8 arial editor {{ classes }}"
+    [contentEditable]="editable"
+    id="editor"
+    [class.textcolor]="!editable"></div>
+</label>
+<!--text-dark-gray-750 added the same for changes color in new message message content inside editor-->

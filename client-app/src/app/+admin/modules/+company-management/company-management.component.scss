@@ -1,0 +1,111 @@
+@use 'colors';
+@use 'variables';
+
+.content {
+  // * area to fit bottom item dropdown menu
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 28px;
+  line-height: 120%;
+  font-family: 'Arial Rounded MT Bold';
+  font-style: normal;
+  font-weight: 400;
+}
+
+.btn-add-company {
+  height: 45px;
+  font-size: 14px;
+  color: colors.$dark-gray-40;
+  text-transform: capitalize;
+}
+
+.filters {
+  width: variables.$filters-width;
+}
+
+.table-wrapper {
+  width: 100%;
+}
+
+.table {
+  cursor: default;
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background-color: colors.$dark-gray-450;
+    text-transform: uppercase;
+    color: #1d122b;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+
+    td {
+      height: 40px;
+
+      .caret {
+        transition: all 0.2s ease;
+        vertical-align: middle;
+        margin-bottom: 2px;
+
+        &.up {
+          transform: rotate(180deg);
+          transition: all 0.2s ease;
+        }
+      }
+    }
+
+    .click-area {
+      width: fit-content;
+      cursor: pointer;
+    }
+  }
+
+  tbody {
+    background-color: colors.$white;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    /* identical to box height, or 21px */
+
+    color: colors.$dark-gray-515;
+  }
+}
+
+td {
+  height: 76px;
+}
+
+.company {
+  color: colors.$near-black-400;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.type,
+.status {
+  letter-spacing: 0.01em;
+}
+
+.type {
+  width: 200px;
+}
+
+.status {
+  width: 160px;
+}
+
+.row:hover {
+  background-color: colors.$blue-5;
+}
+
+.sorthighlight {
+  color: #209cd1;
+}

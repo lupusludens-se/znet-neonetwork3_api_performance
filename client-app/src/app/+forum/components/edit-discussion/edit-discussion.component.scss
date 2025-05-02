@@ -1,0 +1,48 @@
+@use 'variables';
+@use 'colors';
+
+.control-wrapper {
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+}
+
+.tab {
+  border: 1px solid colors.$blue-10;
+  color: colors.$dark-gray-590;
+  border-radius: 8px;
+  background: colors.$dark-gray-450;
+  padding: 10px 16px;
+
+  &:hover {
+    border-radius: 8px;
+    background:  colors.$dark-gray-250;
+
+  }
+}
+
+.btn-forum-location-selected {
+  background: colors.$zeigo-purple;
+  border-radius: 8px;
+  text-align: center;
+  text-transform: capitalize;
+  color: colors.$dark-gray-40;
+  max-height: 37px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 400;
+
+  &:hover {
+    background: colors.$purple-400;
+  }
+}
+
+.required {
+  color: colors.$dark-gray-590;
+}

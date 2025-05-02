@@ -1,0 +1,114 @@
+<div class="files-container">
+  <div class="header d-flex align-center">
+    <h4 class="title">
+      {{ 'companyProfile.companyAnnouncementsLabel' | translate }}
+    </h4>
+    <button
+      *ngIf="
+        isInRole(currentUser, roles.Admin) ||
+        (currentUser.companyId.toString() === companyId.toString() && isInRole(currentUser, roles.SPAdmin))
+      "
+      class="add-button green btn-add flex-center pr-10"
+      (click)="showAnnouncementmodal()">
+      {{ 'companyProfile.formContent.addButtonLabel' | translate }}
+    </button>
+  </div>
+  <div
+    class="content flex-column align-center"
+    *ngIf="announcementList?.length === 0; else announcementsTemp">
+    <svg-icon
+      class="announcement-icon"
+      key="projects"></svg-icon>
+    <p
+      class="message mt-6"
+      [innerHTML]="'companyProfile.noAnnouncementLabel' | translate"></p>
+  </div>
+  <ng-template #announcementsTemp>
+    <div [ngClass]="{ 'scrollable-container': announcementList?.length > 2 }">
+      <div
+        class="file d-flex align-center"
+        *ngFor="let announcement of announcementList">
+        <div class="flex-column flex-between announcement-details">
+          <span
+            class="announcement-name"
+            [title]="announcement.title"
+            (click)="openAnnouncementLink(announcement)">
+            {{ announcement.title }}
+          </span>
+          <span class="announcement-type">
+            {{ getRegionNames(announcement.regions) }}
+            <span
+              class="text-blue-200 region-count tooltip"
+              *ngIf="announcement?.regions.length > 2">
+              + {{ announcement?.regions.length - 2 }}
+              <span class="tooltiptext text-xs">{{ getRegionStringTooltip(announcement.regions) }}</span>
+            </span>
+          </span>
+          <span class="announcement-type">
+            {{ announcement.modifiedOn | date : 'MM/dd/yyyy' }}
+          </span>
+        </div>
+        <div class="announcement-actions">
+          <button
+            class="action-button"
+            (click)="openAnnouncementLink(announcement)">
+            <svg-icon
+              key="globe"
+              size="xxxl"></svg-icon>
+          </button>
+          <div class="three-dots w-10">
+            <button
+              *ngIf="
+                isInRole(currentUser, roles.Admin) ||
+                (currentUser.companyId.toString() === companyId.toString() && isInRole(currentUser, roles.SPAdmin))
+              ">
+              <neo-menu
+                (optionClick)="optionClick($event, announcement.id)"
+                [options]="options"
+                activeIcon="cross"
+                cssClasses="flex-center"
+                class="download-company"
+                icon="three-dots"></neo-menu>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<neo-add-company-announcement
+  *ngIf="showAnnouncementModal"
+  [companyId]="companyId"
+  (announcementAdded)="announcementAdded($event)"
+  (closeModal)="closeModal()"></neo-add-company-announcement>
+
+<neo-edit-company-announcement
+  *ngIf="showEditAnnouncementModal"
+  [companyId]="companyId"
+  [announcementId]="announcementId"
+  (announcementUpdated)="announcementAdded($event)"
+  (closeModal)="closeEditAnnouncementModal()"></neo-edit-company-announcement>
+
+<neo-modal
+  (closed)="showDeleteModal = false"
+  *ngIf="showDeleteModal"
+  size="medium"
+  [title]="'companyProfile.deletePopupMessageTitle' | translate"
+  class="title-h2">
+  <p class="text-m text-dark-gray-515 mb-24 mt-6">
+    {{ 'companyProfile.subTextLabel' | translate }}
+  </p>
+  <div class="popup-controls mt-10 d-flex">
+    <button
+      (click)="showDeleteModal = false"
+      class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button
+      (click)="confirmDelete()"
+      class="btn-confirm w-50">
+      {{ 'messages.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

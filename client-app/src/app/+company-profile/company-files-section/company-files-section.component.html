@@ -1,0 +1,127 @@
+<div
+  class="files-container"
+  *ngIf="checkIfUserCanAccess()">
+  <div class="header d-flex align-center">
+    <h4 class="title">
+      {{ sectionTitle }}
+    </h4>
+    <button
+      class="upload-button green btn-add flex-center pr-10"
+      *ngIf="allFiles?.length > 0" (click)="viewAllClick()">
+      {{ 'general.viewAllLabel' | translate }}
+    </button>
+    <button
+      class="upload-button green btn-add flex-center pr-10 ml-8"
+      (click)="selectedFile = null; fileUploadModal = true"
+      *ngIf="
+        isInRole(currentUser, roles.Admin) ||
+        (currentUser.companyId.toString() === companyId.toString() && isInRole(currentUser, roles.SPAdmin))
+      ">
+      <svg-icon
+        key="upload-icon"
+        class="mr-10"></svg-icon>
+      {{ 'general.uploadLabel' | translate }}
+    </button>
+  </div>
+  <div
+    class="content flex-column align-center"
+    *ngIf="allFiles?.length === 0; else allFilesTemp">
+    <svg-icon
+      class="file-icon"
+      key="company-file"></svg-icon>
+    <div class="message mt-6">{{ getNoFilesMessage() }}</div>
+  </div>
+  <ng-template #allFilesTemp>
+    <div [ngClass]="{ 'scrollable-container': allFiles?.length > 2 }">
+      <div
+        class="file d-flex align-center"
+        *ngFor="let file of allFiles">
+        <div class="flex-column flex-between file-details">
+          <div class="file-name">
+            {{ file.actualFileTitle + (file.version > 0 ? '(' + file.version + ')' : '') + '.' + getFileExtension(file.extension)}}
+          </div>
+          <div class="file-type">{{ getFileType(file.type) }}</div>
+          <div class="file-size">{{ file.size | fileSize }}</div>
+        </div>
+        <div class="file-actions">
+          <button
+            class="action-button"
+            (click)="downloadFile(file.blobName, file.actualFileTitle, file.extension)">
+            <svg-icon key="download"></svg-icon>
+          </button>
+          <div class="three-dots w-10">
+            <button
+              *ngIf="
+                isInRole(currentUser, roles.Admin) ||
+                (currentUser.companyId.toString() === companyId.toString() && isInRole(currentUser, roles.SPAdmin))
+              ">
+              <neo-menu
+                (optionClick)="optionClick($event, file)"
+                [options]="options"
+                activeIcon="cross"
+                cssClasses="flex-center"
+                class="download-company"
+                icon="three-dots"></neo-menu>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<neo-modal
+  (closed)="showDeleteModal = false"
+  *ngIf="showDeleteModal"
+  size="medium"
+  [title]="'community.deletePopupMessageTitle' | translate"
+  class="title-h2">
+  <div class="popup-controls mt-10 d-flex">
+    <button
+      (click)="showDeleteModal = false"
+      class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button
+      (click)="confirmDelete()"
+      class="btn-confirm w-50">
+      {{ 'messages.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>
+
+<neo-modal
+  (closed)="showFileDuplicateModal = false"
+  *ngIf="showFileDuplicateModal"
+  class="primary-scope"
+  size="medium"
+  title=" ">
+  <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+    {{ 'community.fileDuplicate1Label' | translate }} <b> {{ this.fileName }}.{{ fileExtension }} </b>.
+    {{ 'community.fileDuplicate2Label' | translate }}
+  </p>
+  <div class="popup-controls mt-10 d-flex">
+    <button
+      (click)="replaceFile()"
+      class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.replaceLabel' | translate }}
+    </button>
+    <button
+      (click)="keepBothTheFiles()"
+      class="btn-confirm w-50">
+      {{ 'general.keepBothLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>
+
+<neo-file-upload
+  (closed)="fileUploadModal = false; selectedFile = null"
+  (fileSelected)="onFileSelect($event)"
+  *ngIf="fileUploadModal"
+  class="secondary-scope"
+  [infoTitle]="infoTitle"
+  [existingFileTile]="selectedFile?.actualFileTitle"
+  [existingFileName]="selectedFile?.actualFileName"
+  [fileDescription]="fileDescription"></neo-file-upload>
+
+

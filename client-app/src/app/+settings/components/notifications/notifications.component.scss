@@ -1,0 +1,29 @@
+@use 'colors';
+
+neo-dropdown {
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
+
+
+.header {
+  background-color: colors.$dark-gray-450;
+  text-transform: uppercase;
+  color: #1D122B;
+  font-family: 'Arial';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0.01em;
+}
+
+.fg-8 {
+  flex-grow: 8;
+}
+
+.fg-2 {
+  flex-grow: 2;
+}

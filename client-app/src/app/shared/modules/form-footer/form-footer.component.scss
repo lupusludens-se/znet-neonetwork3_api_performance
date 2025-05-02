@@ -1,0 +1,162 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+:host {
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - #{variables.$navbar-width-media});
+  right: 0;
+  z-index: 10;
+
+  @media (breakpoints.$medium) {
+    width: calc(100% - #{variables.$navbar-width});
+  }
+}
+
+:host.capitalize {
+  footer {
+    button {
+      &.btn-save {
+        text-transform: capitalize;
+      }
+    }
+  }
+}
+
+footer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  height: variables.$form-footer-height;
+  background: colors.$white;
+
+  button {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border-radius: 8px;
+
+    &.btn-make-inactive {
+      width: 146px;
+      height: 45px;
+      background: rgba(249, 164, 164, 0.15);
+      color: colors.$red;
+
+      &.inactive {
+        background: rgba(61, 205, 88, 0.15);
+        color: colors.$dark-green;
+        font-weight: normal;
+      }
+    }
+
+    &.btn-back {
+      padding: 14px 24px;
+    }
+
+    &.btn-delete {
+      background: rgba(255, 117, 117, 0.2);
+      border: 1px solid colors.$error-input;
+      color: colors.$white;
+      padding: 14px 20px;
+    }
+
+    &.btn-draft {
+      padding: 14px 24px;
+      color: colors.$white;
+      background: colors.$dark-gray-40;
+      border: 1px solid colors.$purple-300;
+      border-radius: 8px;
+      text-transform: capitalize;
+      color: colors.$purple-200;
+
+      &:hover {
+        border: 1px solid colors.$purple-500;
+        color: colors.$purple-500;
+      }
+    }
+
+    &.btn-cancel {
+      width: 96px;
+      background: colors.$dark-gray-450;
+      border-radius: 8px;
+      color: colors.$dark-gray-590;
+
+      &:hover {
+        background: colors.$dark-gray-250; //its a secondary button as per figma
+      }
+    }
+
+    &.btn-back {
+      color: colors.$white;
+      background: rgba(253, 252, 255, 0.5);
+      border: 1px solid colors.$purple-300;
+      border-radius: 8px;
+      color: colors.$purple-200;
+
+      &:hover {
+        background-color: colors.$dark-gray-40;
+        color: colors.$purple-500;
+      }
+    }
+
+    &.btn-save {
+      padding: 14px 24px;
+      width: fit-content;
+
+      &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+:host.edit-profile-footer {
+  footer {
+    button {
+      &.btn-save {
+        padding: 13px 40px;
+      }
+    }
+  }
+}
+
+
+:host.forum-post {
+  footer {
+    button {
+      &.btn-save {
+        svg-icon.svg-icon-arrow-thin-right {
+          transform: rotate(180deg);
+          transition: all 0.2s ease;
+        }
+      }
+    }
+  }
+}
+
+:host.deleteButton{
+  button{
+  &.btn-delete {
+    background: colors.$dark-gray-40;
+    border: 1px solid colors.$purple-300;   
+    color: colors.$purple-200;   
+    padding: 14px 20px;
+    .text-white
+    {
+      color:colors.$purple-200; 
+      &:hover{
+        color: colors.$purple-500; 
+      }
+    }
+    &:hover{
+      color: colors.$purple-500; 
+      border: 1px solid colors.$purple-500; 
+    }
+  }
+}
+}

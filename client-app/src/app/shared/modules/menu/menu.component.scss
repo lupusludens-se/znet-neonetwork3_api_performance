@@ -1,0 +1,132 @@
+@use 'colors';
+
+.fit-content {
+  width: fit-content;
+}
+
+.btn-square {
+  width: 37px;
+  height: 37px;
+}
+
+ul {
+  list-style: none;
+  width: 196px;
+  background-color: colors.$white;
+  border: 1px solid colors.$dark-gray-200;
+  box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+  border-radius: 2px;
+  padding: 6px;
+  z-index: 2;
+  right: 0;
+  top: 22px;
+
+  li {
+    display: flex;
+    align-items: center;
+    font-family: Arial, serif;
+    font-size: 14px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+    color: colors.$near-black-400; //project library listing actions popup
+    height: 34px;
+    padding: 18px 12px;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(58, 36, 86, 0.05);
+      border-radius: 2px;
+    }
+
+    svg-icon {
+      color: colors.$dark-gray-590; //project library listing actions popup
+    }
+  }
+}
+
+:host.initiative-banner {
+  bottom: 21px;
+  margin-left: 46px;
+  position: relative;
+
+  ul {
+    width: 100px;
+    padding: 3px;
+
+    li {
+      font-weight: 600;
+    }
+  }
+
+  svg-icon.menu-active {
+    height: 40px !important;
+    width: 40px !important;
+  }
+}
+
+:host.learn-section,
+:host.tools-section,
+:host.messages-section,
+:host.projects-section {
+  ul {
+    width: 215px;
+    padding: 3px;
+
+    li {
+      font-weight: 600;
+    }
+  }
+}
+
+:host.saved-article {
+  ul {
+    width: 225px;
+    top: -50px;
+
+    li {
+      font-weight: 600;
+    }
+  }
+}
+
+:host.download-company {
+  button {
+    rotate: 90deg;
+  }
+  ul {
+    width: 100px;
+    top: 20px;
+  }
+}
+
+:host.initiative-banner {
+  div {
+    button {
+      color: colors.$white;
+    }
+  }
+}
+
+:host.files-section {
+  ul {
+    width: 130px;
+    padding: 3px;
+
+    li {
+      font-weight: 600;
+    }
+  }
+}
+
+:host.company-files-section {
+  ul {
+    width: 130px;
+    padding: 3px;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}

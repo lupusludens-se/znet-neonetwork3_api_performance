@@ -1,0 +1,157 @@
+<ng-container *ngIf="isGlobalSearch">
+  <neo-search-bar [value]="searchValue" [searchOnEnter]="true" (inputChange)="searchFor($event)"> </neo-search-bar>
+
+  <h4 class="pt-24" *ngIf="searchValue">
+    <span class="text-dark-gray-580">
+      {{ 'topics.resultsForLabel' | translate }} <span class="text-neo-near-black">"{{ searchValue }}"</span>
+    </span>
+  </h4>
+</ng-container> 
+
+<h3 *ngIf="!isGlobalSearch" class="text-neo-near-black pb-16">#{{ selectedTopic }}</h3>
+
+<ng-container *ngIf="!isGlobalSearch || (searchValue && isGlobalSearch)">
+  <div
+    *ngIf="topicsPaginateAllResponse?.counters as counters"
+    class="d-flex gap-12 pb-26"
+    [class]="isGlobalSearch ? 'pt-24' : 'pt-16'">
+    <button
+      (click)="changeTab(null)"
+      [class.active]="selectedType === null"
+      class="btn-s btn-s-hover neo-arial d-flex align-center">
+      {{ 'general.allLabel' | translate }}
+
+      <div
+        *ngIf="
+        totalSearch >
+          0
+        "
+        class="flex-center badge text-xxs fw-700 text-white ml-8 pl-6 pr-6">
+        {{ totalSearch }}
+      </div>
+    </button>
+
+    <button
+      *ngIf="!isSolutionProvider"
+      (click)="changeTab(topicType.Project)"
+      [class.active]="selectedType === topicType.Project"
+      class="btn-s btn-s-hover neo-arial d-flex align-center">
+      {{ 'saved.projectsLabel' | translate }}
+
+      <div *ngIf="totalProject" class="flex-center badge text-xxs fw-700 text-white ml-8 pl-6 pr-6">
+        {{ totalProject }}
+      </div>
+    </button>
+
+    <button
+      (click)="changeTab(topicType.Learn)"
+      [class.active]="selectedType === topicType.Learn"
+      class="btn-s btn-s-hover neo-arial d-flex align-center">
+      {{ 'learn.learnLabel' | translate }}
+
+      <div *ngIf="totalLearn" class="flex-center badge text-xxs fw-700 text-white ml-8 pl-6 pr-6">
+        {{ totalLearn }}
+      </div>
+    </button>
+
+    <button
+      (click)="changeTab(topicType.Event)"
+      [class.active]="selectedType === topicType.Event"
+      class="btn-s btn-s-hover neo-arial d-flex align-center">
+      {{ 'settings.eventsLabel' | translate }}
+
+      <div *ngIf="totalEvent" class="flex-center badge text-xxs fw-700 text-white ml-8 pl-6 pr-6">
+        {{ totalEvent }}
+      </div>
+    </button>
+
+    <button
+      (click)="changeTab(topicType.Forum)"
+      [class.active]="selectedType === topicType.Forum"
+      class="btn-s btn-s-hover neo-arial d-flex align-center">
+      {{ 'forum.forumLabel' | translate }}
+
+      <div *ngIf="totalForum" class="flex-center badge text-xxs fw-700 text-white ml-8 pl-6 pr-6">
+        {{ totalForum }}
+      </div>
+    </button>
+
+    <button
+      (click)="changeTab(topicType.Company)"
+      [class.active]="selectedType === topicType.Company"
+      class="btn-s btn-s-hover neo-arial d-flex align-center">
+      {{ 'form.companiesLabel' | translate }}
+
+      <div *ngIf="totalCompany" class="flex-center badge text-xxs fw-700 text-white ml-8 pl-6 pr-6">
+        {{ totalCompany }}
+      </div>
+    </button>
+  </div>
+</ng-container>
+
+<div *ngIf="topicsPaginateResponse?.count && topicsPaginateResponse?.dataList?.length" >
+  <div *ngFor="let content of topicsPaginateResponse?.dataList; let last = last" class="content-wrapper p-24 mb-8 flex-column p-relative">
+    <p class="text-xxs text-purple-400 text-uppercase neo-arial d-flex align-center pb-10">
+      <svg-icon [key]="content.type | topicTypeIcon" class="mr-6"></svg-icon>
+
+      {{ content.type | topicTypeString }}
+    </p>
+
+    <h4 class="text-neo-near-black c-pointer title" [routerLink]="getLink(content)">
+      {{ content.title }}
+    </h4>
+
+    <p
+      [innerHTML]="getDescription(content.description)"
+      [routerLink]="getLink(content)"
+      class="text-s text-dark-gray-515 pt-8"></p>
+
+    <div class="d-flex align-center gap-16 pt-16">
+      <div class="tags d-flex gap-4" *ngIf="content?.categories?.length">
+        <neo-content-tag
+          *ngFor="let tag of content?.tags?.slice(0, 2)"
+          [tag]="tag"
+          [type]="tag.type"
+          [skipGoToTopics]="!isGlobalSearch"
+          (tagClicked)="categoryTagClicked($event)"
+          fontSize="12">
+        </neo-content-tag> 
+
+        <a [routerLink]="getLink(content)">
+          <neo-content-tag *ngIf="content?.tags?.length > 2" tagText="+{{ content?.tags.length - 2 }}" fontSize="12" >
+          </neo-content-tag>
+        </a>
+      </div>
+
+      <neo-content-location [regions]="content?.regions" (clicked)="regionTagClicked()"></neo-content-location>
+    </div>
+  </div>
+</div>
+
+<neo-pagination
+  (changePage)="changePage($event)"
+  *ngIf="topicsPaginateResponse?.count > defaultPerPage"
+  [defaultItemPerPage]="defaultPerPage"
+  [paging]="paging"
+  class="pt-8">
+</neo-pagination>
+
+<neo-empty-page
+  *ngIf="
+    topicsPaginateResponse &&
+    !topicsPaginateResponse?.count &&
+    !topicsPaginateResponse?.dataList?.length &&
+    !searchValue
+  "
+  [headlinePart1]="emptyStateLabel"
+  [headlinePart2]="isGlobalSearch ? null : 'topics.emptyStateSubLabel' | translate"
+  [iconKey]="isGlobalSearch ? 'search' : (selectedType | topicTypeIcon)"
+  class="empty-search-msg">
+</neo-empty-page>
+
+<neo-no-results
+  *ngIf="
+    topicsPaginateResponse && !topicsPaginateResponse?.count && !topicsPaginateResponse?.dataList?.length && searchValue
+  "
+  [searchedStr]="searchValue">
+</neo-no-results>

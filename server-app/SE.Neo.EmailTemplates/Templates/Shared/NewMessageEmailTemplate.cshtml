@@ -1,0 +1,766 @@
+﻿@model SE.Neo.EmailTemplates.Models.NewMessageEmailTemplatedModel;
+@{
+    var emptyText = "<span>&#160;</span>";
+}
+
+<!DOCTYPE HTML PUBLIC>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:v="urn:schemas-microsoft-com:vml" 
+      xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>...</title>
+    <!-- CSS Reset -->
+    <!--[if (gte mso 9)|(IE)]>
+        <style type="text/css">
+            table {
+                border-collapse: collapse;
+            }
+        </style>
+    <![endif]-->
+    <!--[if gte mso 9]>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:AllowPng/>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    <![endif]-->
+    <style type="text/css">
+        @@font-face {
+            font-family: 'NEO Arial Rounded';
+            mso-font-alt: 'Arial';
+            src: url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.eot"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.woff") format("woff"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.svg#Arial Rounded MT Std") format("svg"); }
+        
+        @@font-face {
+            font-family: 'NEO Arial Rounded Bold';
+            mso-font-alt: 'Arial';
+            src: url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.eot"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.woff") format("woff"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.svg#Arial Rounded MT Bold") format("svg"); }
+
+        .neo-arial-rounded-bold {
+            font-family: "NEO Arial Rounded Bold", "Arial", sans-serif !important;
+            font-weight: 600 !important;
+        }
+        
+        .neo-arial-rounded {
+            font-family: "NEO Arial Rounded", "Arial", sans-serif !important;
+        }
+
+        .neo-arial {
+            font-family: "Arial", sans-serif !important;
+        }
+
+        img {
+            user-select: none  !important;
+            object-fit: fill  !important;
+        }
+
+        h2, h4, h5, p, span {
+            margin: 0  !important;
+        }
+
+        h2 {
+            font-size: 28px  !important;
+            line-height: 30px  !important;
+            font-weight: 400  !important;
+        }
+
+        h4 {
+            font-size: 18px  !important;
+            line-height: 24px  !important;
+            font-weight: 400  !important;
+        }
+
+        h5 {
+            font-size: 16px  !important;
+            line-height: 20px  !important;
+        }
+
+        .text-s {
+            font-size: 14px  !important;
+            line-height: 20px  !important;
+        }
+        .text-sm {
+            font-size: 13px  !important;
+            line-height: 19px  !important;
+        }
+
+        .text-xs {
+            font-size: 12px !important;
+            line-height: 17px !important;
+            letter-spacing: .01em !important;
+        }
+
+        .text-neo-blue {
+            color: #0B3B6B  !important;
+        }
+
+        .h-4 {
+             height: 4px  !important;
+            line-height: 4px  !important;
+        }
+
+        .h-6 {
+            height: 6px  !important;
+            line-height: 6px  !important;
+        }
+
+         .h-18 {
+            height: 18px  !important;
+            line-height: 18px  !important;
+        }
+        .h-12 {
+            height: 12px  !important;
+            line-height: 12px  !important;
+        }
+
+        .h-24 {
+            height: 24px  !important;
+            line-height: 24px  !important;
+        }
+
+        .w-32 {
+            width: 32px  !important;
+        }
+
+        .h-32 {
+            height: 32px  !important;
+            line-height: 32px  !important;
+        }
+
+        .w-16 {
+            width: 16px  !important;
+        }
+
+        .body {
+            width: 100%  !important;
+            font-family: "Arial", sans-serif !important;
+            background-color: #FAFAFA  !important;
+            min-width: 320px  !important;
+        }
+
+        .container {
+            background-color: #FFFFFF  !important;
+            border-bottom-left-radius: 0  !important;
+            border-bottom-right-radius: 0  !important;
+            border-top-left-radius: 4px  !important;
+            border-top-right-radius: 4px  !important;
+            max-width: 580px  !important;
+            width: 580px  !important;
+        }
+
+        .button {
+            border-bottom-left-radius: 8px  !important;
+            border-bottom-right-radius: 8px  !important;
+            border-top-left-radius: 8px  !important;
+            border-top-right-radius: 8px  !important;
+            background-color: #3A2456  !important;
+            border-color: #3A2456  !important;
+            padding-top: 12px  !important;
+            padding-bottom: 12px  !important;
+            padding-left: 24px  !important;
+            padding-right: 24px  !important;
+            text-decoration: none  !important;
+        }
+        .borderContainer {
+            text-align: center;
+            border-bottom: 1px solid #dae1ec;
+            line-height: 0.1em;
+            margin: 10px 0 20px;
+        }
+
+        .messageContainer {
+            flex-direction: column;
+            display: flex;
+            margin-bottom:8px !important;
+        }
+
+        .messageUser {
+            margin-bottom:8px;
+            max-width: fit-content;
+            align-items: center;
+            flex-direction: row;
+            display: flex;
+            padding-right: 10px;
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+        .avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #305283;
+            font-size: 20px;
+            line-height: initial;
+            color: #fff;
+            text-transform: uppercase;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+        .ml-8 {
+            margin-left: 8px !important;
+        }
+
+        .text-blue-300{
+
+            color: #7084a4;
+        }
+
+        .message {
+            border-radius: 12px 0 12px 12px;
+            margin-left: 0;
+            margin-right: 52px;
+            background: #f3f6fb;
+            padding: 12px 16px;
+            max-width: 70%;
+            width: fit-content;
+            max-height: 35px;
+            margin-bottom: 8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .gap-8 {
+            gap: 8px;
+        }
+
+        .flex-column {
+            flex-direction: column;
+            display: flex;
+        }
+
+        body .w-min-initial {
+            min-width: initial;
+        }
+
+        button.green, a.green {
+            background: #9ee6ab;
+            color: #0b3b6b;
+             font-weight: 600 !important;
+        }
+
+        button.btn-l, a.btn-l {
+            max-height: 45px;
+            padding: 14px 24px;
+            font-size: 14px;
+            line-height: 17px;
+            text-transform: uppercase;
+        }
+
+        .flex-center {
+            justify-content: center;
+            align-items: center;
+        }
+
+        .d-flex, .flex-between, .flex-center, .flex-column {
+            display: flex;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 12px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #305283;
+            font-size: 20px;
+            line-height: initial;
+            color: #fff;
+            text-transform: uppercase;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+
+            }
+
+        .avatar  img {
+            object-fit: cover;
+            min-height: 100%;
+            width: 100%;
+            }
+
+        .day-separator-wrapper {
+            padding: 16px 0;
+            }
+         .w-100 {
+             width: 100%;
+            }
+         .align-center {
+            align-items: center;
+            }
+         .line{
+             height: 1px;
+             border-top: 1px solid #e1e3e9;
+            }
+
+         .chip{
+             border: 1px solid #e1e3e9;
+              background: transparent;
+             }
+
+         .chip {
+             height: 32px;
+             border-radius: 500px;
+             padding: 8px 12px;
+             color: #fff;
+            }
+         .fw-700 {
+                font-weight: 700;
+             }
+         .text-blue-400 {
+                color: #516a93!important;
+              }
+         .text-blue-500 {
+                color: #305283 !important;
+              }
+         .btn-draft{
+                background: rgba(112,132,164,.6) !important;
+                padding: 14px 24px !important;
+                color: #fff !important;
+              }
+
+        .user-image-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 6px solid #fff;
+            margin-left: -11px;
+            border-bottom-color: transparent;
+        
+        }
+
+        .user-image-wrapper :hover .user-tooltip {
+            display: initial;
+        }
+
+        .user-image-wrapper .counter {
+            user-select: none;
+            border-radius: 50%;
+                background: #dae1ec;
+        }
+
+        .user-image-wrapper .user-tooltip {
+            display: none;
+            padding: 2px 8px;
+                background: #516a93;
+            border-radius: 2px;
+            white-space: nowrap;
+            bottom: -24px;            
+
+        }
+
+        .user-image-wrapper .user-tooltip a {
+            color: white;
+        }
+
+        .user-image-wrapper .user-tooltip :visited {
+            color: white;
+        }
+          .z-index-6 {
+            z-index: 6;
+        }
+        .text-xxs {
+            font-size: 11px;
+            line-height: 16px;
+            letter-spacing: 0.01em;
+        }
+
+        .h-100 {
+            height: 100%;
+        }
+
+        .text-dark-green {
+            color: #009530 !important;
+        }
+        .text-blue {
+            color: #0F84B2 !important;
+        }
+        .text-zeigo-near-black {
+            color: #2A1A2F !important;
+        }
+        .text-zeigo-light-gray {
+            color:#6F6E77 !important;
+        }
+        .text-zeigo-black {
+            color:#171717 !important;
+        }
+        .text-button-white {
+            color:#FEFEFE !important;
+        }
+        .text-button-purple {
+            color:#643B72 !important;
+        }
+        .text-deep-purple {
+            color:#3A2456 !important;
+        }
+        .text-zeigo-dark-black {
+           color: #1A1523 !important;
+        }
+        .purple-white-button {
+            border-bottom-left-radius: 8px  !important;
+            border-bottom-right-radius: 8px  !important;
+            border-top-left-radius: 8px  !important;
+            border-top-right-radius: 8px  !important;
+            background-color: #FDFCFF  !important;
+            border-color: #9460A4 !important;
+            padding-top: 12px  !important;
+            padding-bottom: 12px  !important;
+            padding-left: 24px  !important;
+            padding-right: 24px  !important;
+            text-decoration: none  !important;
+        }
+
+
+    </style>
+</head>
+<body>
+<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%" class="body">
+    <tr>
+        <td align="center" valign="top">
+            <div class="h-32">@emptyText</div>
+            <table cellpadding="0" cellspacing="0" border="0" class="container">
+                    <tr style="width: 100%;background:#FAFAFA">
+                    <td align="left" valign="top" style="width: 100%;padding-left:18px">
+                        <div class="h-24">@emptyText</div>
+                        <img width="240" height="110" src="@Model.LogoUrl" alt="zeigo logo"/>
+                        <div class="h-24">@emptyText</div>
+                    </td>
+                    <td class="w-32"></td>
+                </tr>
+
+                <tr>
+                    <td style="width: 100%; padding-left:12px;">
+                        <div class="h-24">@emptyText</div>
+                            <h2 class="neo-arial-rounded text-zeigo-black" style="color: #171717;padding-left:18px;font-size: 28px;">Hi, @(Model.FirstName + ' ' + Model.LastName)</h2>
+                        <div class="h-18">@emptyText</div>
+
+                        @if (@Model.NumberOfMessages == 1)
+                        {
+                           @* <h4 class="neo-arial-rounded text-neo-blue" style="color: #0B3B6B;">
+                                You're popular! Don't miss the 1 new message in your inbox.
+                            </h4>*@
+                                <h4 class="neo-arial-rounded text-zeigo-black" style="color: #171717;font-size: 18px;padding-left:18px;">
+                                    <b>@Model.messages[0].MessageAuthor</b>  just sent you a message on the  <a href="@Model.Link" class="text-deep-purple">Zeigo Network</a>
+                                </h4>
+
+                        }
+                        else
+                        {
+                                @if (@Model.NumberOfConversations > 1) {
+                                    <h4 class="neo-arial-rounded text-zeigo-black" style="color: #171717;font-size: 18px;padding-left:18px;">
+                                        <b>@Model.messages[0].MessageAuthor + @(Model.NumberOfConversations - 1 > 0 ? (Model.NumberOfConversations - 1) + " others have sent you messages" : " has sent you a message ") </b> on the  <a href="@Model.Link" class="text-deep-purple">Zeigo Network</a>
+                            </h4>
+                                }
+                                else{
+                                    <h4 class="neo-arial-rounded text-zeigo-black" style="color: #171717;font-size: 18px;padding-left:18px;">
+                                        <b>@Model.messages[0].MessageAuthor</b> sent you messages on the  <a href="@Model.Link" class="text-deep-purple">Zeigo Network</a>
+                            </h4>
+                                }
+                            
+                        }
+                         <div class="h-24">@emptyText</div>
+                    </td>
+                    <td class="w-32"></td>
+                </tr>
+
+                <tr>
+                        <td align="left" valign="middle" style="mso-height-rule: exactly;display: block !important; width:100%;">
+                            <table style="width:100%; text-align:center;">
+                                <tr width=100%>
+                                    <td width=45% style="padding-top:18px; padding-left:12px;">
+                                        <div class="h-24" style="border-top: 1px solid #C8C7CB;">
+                                            @emptyText
+                                        </div>
+                                    </td>
+                                    <td valign="middle"  style=" mso-height-rule: exactly;display: block !important;">
+                                        <div>
+                                            <!--[if mso]>
+                                                <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+                                                             xmlns:w="urn:schemas-microsoft-com:office:word"
+                                                             href="#"
+                                                             style="height:30px;v-text-anchor:middle;width:80px;text-decoration: none;text-transform: uppercase;font-color: #1A1523;text-align:center;"
+                                                             arcsize="50%"
+                                                             strokecolor="#C8C7CB" strokeweight="2px" fillcolor="#FFFFFF">
+                                                <w:anchorlock/>
+                                                <v:textbox inset="0,0,0,0">
+                                                <center class="neo-arial-rounded-bold" style="v-text-anchor:middle;color:#1A1523;font-size:12px;mso-line-height-rule:exactly;vertical-align:middle; text-align:center;"
+                                                        ">TODAY</center>
+                                            <![endif]-->
+                                            <a href="#" class="text-s"
+                                               style="text-decoration: none; mso-hide:all;">
+                                                <div class="text-s text-zeigo-dark-black neo-arial-rounded-bold"
+                                                     style="padding:8px 20px;width:fit-content;display: inline-block;border:1px solid #C8C7CB;border-radius:500px;text-transform: uppercase;color: #1A1523;-webkit-text-size-adjust:none;mso-hide:all;">
+                                                    Today
+                                                </div>
+                                            </a>
+                                            <!--[if mso]>
+                                                </center>
+                                                </v:textbox>
+                                                </v:roundrect>
+                                            <![endif]-->
+                                    </div>
+                                    </td>
+                                    <td width=45% style="padding-top:18px; padding-right:12px;">
+                                        <div class="h-24" style="border-top: 1px solid #C8C7CB;">@emptyText</div>
+                                    </td>
+                                </tr>
+                            </table>
+                    </td>
+                        <td class="w-32"></td>
+                </tr>
+
+                    @for (var i = 0; i < @Model.messages.Count && i<5; i++) {
+                        @if(i == 0) {
+                            
+                        <tr class="h-12"></tr>
+                        }
+                        else {
+                            <tr class="h-24"></tr>
+                            <tr class="h-24"></tr>
+                        }
+                        <tr>
+                            <td align="left" valign="middle" style="mso-height-rule: exactly;display: block  !important;width: 100%">
+                               
+                                <table style="table-layout: auto;">
+                                <tr style="text-align:left;">
+                                        <td align="left" valign="middle" style="padding-left:12px; mso-height-rule: exactly;display: inline-block !important; min-width:5%;">
+                                            @*<table style="display:inline-block !important; table-layout: fixed;">
+                                                <tr style="text-align:left;">*@
+                                                        @*<td valign="middle" style="mso-height-rule: exactly;width: 48px;height: 48px;border-radius: 50%;border: 6px solid #fff;margin-left: -11px;border-radius: 50%;overflow: hidden; background-color: #305283;font-size: 20px; line-height: initial;color: #fff; text-transform: uppercase;">*@
+                                                    @if (@Model.messages[i].AuthorProfileUrl != "")
+                                                    {
+                                                                <!--[if mso]>
+                                                                 <td valign="middle" style="mso-height-rule: exactly;width: 48px;height: 48px;padding-left: 5px;overflow: hidden; background-color: transparent;font-size: 20px;line-height: initial;color: #fff;text-transform: uppercase;" [style.z-index]="j">
+                                                                    
+                                                                    <v:oval xmlns:v="urn:schemas-microsoft-com:vml"
+                                                                             style='width:32px;height:32px' stroke="false">
+                                                                             <v:fill style="height:30px;width:30px;" src="@Model.messages[i].AuthorProfileUrl" type="frame"/>
+                                                                            </v:oval>
+                                                                            </td>
+                                                                            <![endif]-->
+                                                <!--[if !mso]><!---->
+                                                            <td valign="middle" style="mso-height-rule: exactly;width: 48px;height: 48px;border-radius: 50%;border: 6px solid #fff;margin-left: -11px;border-radius: 50%;overflow: hidden; background-color: transparent;font-size: 15px; line-height: initial;color: #fff; text-transform: uppercase;">
+                                                                <img style="border-radius: 50%;" width="48" height="48" src="@Model.messages[i].AuthorProfileUrl"
+                                                 alt="@Model.messages[i].MessageAuthor" />
+                                                 </td>
+                                                <!--<![endif]-->
+                                                    }
+                                                    else
+                                                    {
+
+                                                            @* @(new string(@Model.messages[i].MessageAuthor.ToString().Split(' ').Select(x => x[0]).ToArray()))*@
+                                                            <!--[if mso]>
+                                                             <td valign="middle" style="mso-height-rule: exactly;width:48px;height:48px;overflow: hidden; background-color: transparent;font-size:0;line-height: initial;text-transform: uppercase; text-align:center" [style.z-index]="j">
+
+                                                               <v:oval xmlns:v="urn:schemas-microsoft-com:vml"
+                                                                        style="v-text-anchor:middle;width:32px;height:32px; background-color:#908e96;" fillcolor="#908e96" stroke="false">
+                                                                         <v:textbox inset="0,0,0,0">>
+                                                          <center style="font:14px;color:#fefefe;mso-line-height-rule:exactly;">
+                                                    @Model.messages[i].AuthorProfileText
+                                                              </center>
+                                                             </v:textbox>
+                                                                       </v:oval>
+                                                                       </td>
+                                                                       <![endif]-->
+                                                <!--[if !mso]>
+
+                                                    <!---->
+                                                            <td valign="middle" style="mso-height-rule: exactly;width: 48px;height: 48px;border-radius: 50%;border: 6px solid #fff;margin-left: -11px;border-radius: 50%;overflow: hidden; background-color: #908e96;font-size: 15px; line-height: initial;color: #fefefe; text-transform: uppercase; text-align:center;">
+                                                    @Model.messages[i].AuthorProfileText
+                                                            </td>
+                                                <!--<![endif]-->
+                                                    }
+                                      @*  </tr>
+                                        </table>*@
+                                        </td>
+                            <td align="left" class="text-sm text-zeigo-near-black ml-8 " style="mso-height-rule: exactly;font-size: 14px !important; line-height: 20px !important; font-weight:700 !important;color:#2A1A2F ;white-space:nowrap !important;min-width:5%;">
+                                            @Model.messages[i].MessageAuthor
+                                        </td>
+                                       @*   <!--[if mso]>
+                                        <td class="w-16"></td>
+                                         <![endif]-->*@
+                            <td align="left" class="text-sm text-zeigo-light-gray ml-8 " style="mso-height-rule: exactly;font-size: 13px !important;  line-height: 19px;color: #6F6E77;white-space:nowrap !important;padding-left:10px;">@Model.messages[i].AuthorCompany</td>
+                                       @* <!--[if mso]>
+                                        <td class="w-16"></td>
+                                         <![endif]-->*@
+                                        @if (@Model.messages[i].NumberOfDiscussionUsers > 2)
+                                        {
+                                <td align="left" class="text-sm  ml-8" style="mso-height-rule: exactly;font-size: 13px !important; line-height: 19px;color: #908E96;white-space:nowrap !important;padding-left:10px;">sent a message in Group Chat</td>
+                                        }
+
+                            <td align="left" class="text-sm text-zeigo-black ml-8" style="mso-height-rule: exactly;font-size: 13px !important; line-height: 19px;color: #171717;white-space:nowrap !important;padding-left:10px;">@Model.messages[i].MessageTime</td>
+                                               
+                                    </tr>
+                                    </table>
+                                    </td>
+                            <td class="w-32"></td>
+                                    </tr>
+                                    <tr class="h-4"></tr>
+                                    <tr width="100%" class="gap-8">
+                <td align="left" valign="middle" style="padding: 12px 22px;color: #171717 !important ; mso-height-rule: exactly; display:inline-block !important">
+                    <span style="color: #171717 ;font-size: 15px !important;line-height: 22px !important;letter-spacing: .01em !important;font-weight: 700;">@Model.messages[i].ConversationSubject</span>
+                                        </td>
+                                    </tr>
+
+            <tr width="100%" style="padding-left:18px" class="text-zeigo-black gap-8">
+
+                            <!--[if mso]>
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="display:inline-block !important;">
+                                <tr style="width: 100%;">
+                                         <![endif]-->
+
+                <td align="left" valign="middle" style="display:inline-block !important;mso-height-rule: exactly;border-radius: 2px;margin-left: 22px;background-color: #F3F3F3;padding: 12px 16px;width:80%;">
+                    <span class="text-s " style="color: #171717; font-size: 14px !important;line-height: 20px !important;font-family: NEO Arial Rounded, Arial, sans-serif !important;">@Model.messages[i].MessageText</span>                              
+                            
+                            @if (Model.messages[i].Attachment)
+                            {
+                        <img class="icon" src="@Model.attachmentLogoUrl">
+                            }
+                </td>
+                                        <td class="w-32"></td>
+                            <!--[if mso]>
+
+                                </tr>
+                            </table>
+                            <![endif]-->
+                                    </tr>
+                        <tr class="h-12"></tr>
+                        <tr style="height: 46px;display:block !important;">
+                            <!--[if mso]>
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="display:inline-block !important;">
+                            <tr style="width: 100%;">
+                            <td class="w-16"></td>
+                            <![endif]-->
+                            <td align="left" valign="middle" style="mso-height-rule: exactly;">
+                                    @if(@Model.messages.Count == 1)
+                                    {
+                                        
+                                <div style="padding-left:22px">
+                                        <!--[if mso]>
+                                        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+                                        xmlns:w="urn:schemas-microsoft-com:office:word"
+                                        href="@Model.messages[i].replyLink"
+                                        style="display:inline-block;height:40px;v-text-anchor:middle;width:248px;text-decoration: none;font-color: #FEFEFE;"
+                                        arcsize="15%"
+                                        strokecolor="#3A2456" strokeweight="1px" fillcolor="#3A2456">
+                                        <w:anchorlock/>
+                                        <center class="neo-arial-rounded-bold" style="color:#FEFEFE;font-size:14px !important;line-height: 19px !important;vertical-align:middle;"
+                                        ">Read And Reply</center>
+                                        
+                                        </v:roundrect>
+                                        <![endif]-->
+                            <!--[if !mso]><!-->
+                                        <a href="@Model.messages[i].replyLink" class="text-s"
+                                   style="text-decoration: none; mso-hide:all;">
+                                            <div class="text-s text-button-white button neo-arial-rounded-bold"
+                             style="min-width:190px ;padding:10px; border-radius:8px; color: #FEFEFE;-webkit-text-size-adjust:none;mso-hide:all;text-align:center;">
+                                                @(
+                                                Model.NumberOfMessages == 1 ? "Read And Reply" : "Read And Reply"
+                                                )
+                                            </div>
+                                        </a>
+
+                            <!--<![endif]-->
+                                        </div>
+                                    }
+                                    else{
+                                         <div style="padding-left:22px">
+                        <!--[if mso]>
+                                                <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+                                                                xmlns:w="urn:schemas-microsoft-com:office:word"
+                                                                href="@Model.messages[i].replyLink"
+                                                                        style="display:inline-block;height:40px;v-text-anchor:middle;width:248px;text-decoration: none;font-color: #643B72;"
+                                                                arcsize="15%"
+                            strokecolor="#9460A4" strokeweight="1px" fillcolor="#FDFCFF">
+                                                <w:anchorlock/>
+                                                <center class="neo-arial-rounded-bold" style="color:#643B72;font-size:14px !important;line-height: 19px !important;vertical-align:middle;"
+                                                        ">Read And Reply</center>
+                                        </v:roundrect>
+                                        <![endif]-->
+                            <!--[if !mso]><!-->
+                        <a href="@Model.messages[i].replyLink" class="text-s"
+                       style="text-decoration: none; mso-hide:all;">
+                                <div class="text-s text-button-purple purple-white-button neo-arial-rounded-bold"
+                             style="border:1px solid #9460A4; padding:10px;background-color: #FDFCFF !important; border-radius:8px; min-width:190px; color:#643B72;-webkit-text-size-adjust:none;mso-hide:all; text-align:center;">
+                                            @(Model.NumberOfMessages == 1 ? "Read And Reply" : "Read And Reply")
+                            </div>
+                        </a>
+                        <!--<![endif]-->
+
+                    </div>
+                    }
+                                   
+                            </td>
+                <!--[if mso]>
+                </tr>
+                </table>
+                <![endif]-->
+                        </tr>
+                    }
+
+        <tr class="h-32"></tr>
+             @if (@Model.messages.Count > 1) {
+            <tr style="height: 46px;display:block !important;">
+                <!--[if mso]>
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="display:inline-block !important;">
+                    <tr style="width: 100%;">
+                             <![endif]-->
+                            <td style="width: 30% !important;"></td>
+                <td valign="middle" style="mso-height-rule: exactly; white-space: nowrap !important">
+                    <div style="padding-left:18px">
+                        <!--[if mso]>
+                                                <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+                                                                xmlns:w="urn:schemas-microsoft-com:office:word"
+                                                                href="@Model.Link"
+                                                                style="display:inline-block;height:40px;v-text-anchor:middle;width:235px;text-decoration: none;font-color: #FEFEFE;"
+                                                                arcsize="15%"
+                                                                strokecolor="#3A2456" strokeweight="1px" fillcolor="#3A2456">
+                                                <w:anchorlock/>
+                                                <center class="neo-arial-rounded-bold" style="color:#FEFEFE;font-size:14px;line-height: 19px;vertical-align:middle;"
+                                                        ">View All Conversations</center>
+                         </v:roundrect>
+                         <![endif]-->
+
+                         <!--[if !mso]><!-->
+                        <a href="@Model.Link" class="text-s"
+                       style="text-decoration: none; mso-hide:all; max-width:235px;">
+                            <div class="text-s text-button-white button neo-arial-rounded-bold"
+                             style="min-width:180px;background-color: #3A2456  !important;padding:10px;border-radius:8px;color:#FEFEFE ;-webkit-text-size-adjust:none;mso-hide:all;text-align:center;">
+                                View All Conversations
+                            </div>
+                            </a>
+
+                         <!--<![endif]-->
+                            </div>
+                            </td>
+                            <td style="width: 30% !important;"></td>
+                            <!--[if mso]>
+                            </tr>
+                            </table>
+                            <![endif]-->
+                     </tr>
+                    }
+                
+
+                <tr class="h-32"></tr>
+
+                <tr style="background: #F3F3F3;">
+            <td class="neo-arial" style="padding-left:12px;">
+                        <div class="h-32">@emptyText</div>
+                <p class="text-s text-zeigo-black neo-arial" style="color: #171717;">&copy; @DateTime.Now.Year Zeigo by Schneider Electric</p>
+                        <div class="h-32">@emptyText</div>
+                    </td>
+                    <td class="w-32"></td>
+                </tr>
+            </table>
+
+            <div class="h-32">@emptyText</div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

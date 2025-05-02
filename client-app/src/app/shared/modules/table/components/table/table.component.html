@@ -1,0 +1,119 @@
+<table
+  *ngIf="configurations.data?.dataList?.length"
+  class="neo-table">
+  <thead class="neo-arial">
+    <tr>
+      <td
+        *ngFor="let column of configurations.columns"
+        [style.width]="column?.columnWidth"
+        class="pl-24 {{ column.propertyName }}-header-cell">
+        <span *ngIf="!column.isSortable">{{ column.name }}</span>
+
+        <span
+          (click)="setSortingPosition(column?.sortName ? column?.sortName : column?.propertyName)"
+          *ngIf="column.isSortable"
+          class="d-flex align-center c-pointer">
+          {{ column.name }}
+
+          <svg-icon
+            [class.sorthighlight]="
+              currentOrdering?.direction === 'asc' &&
+              (currentOrdering?.propertyName === column.propertyName ||
+                currentOrdering?.propertyName === column.sortName)
+            "
+            class="text-blue-200 ml-6 caret"
+            key="table-row-sort-up"
+            size="md"></svg-icon>
+          <svg-icon
+            [class.asc]="
+              currentOrdering?.direction === 'desc' &&
+              (currentOrdering?.propertyName === column.propertyName ||
+                currentOrdering?.propertyName === column.sortName)
+            "
+            [class.sorthighlight]="currentOrdering?.direction === 'desc' &&
+            (currentOrdering?.propertyName === column.propertyName ||
+              currentOrdering?.propertyName === column.sortName)"
+            class="ml-6 order-direction"
+            class="text-blue-200 ml-1 caret"
+            key="table-row-sort-down"
+            size="md"></svg-icon>
+        </span>
+      </td>
+
+      <td
+        *ngIf="configurations.optionCell"
+        class="pl-24 options"></td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr
+      (click)="rowClick.emit(dataItem)"
+      *ngFor="let dataItem of configurations.data.dataList"
+      class="c-pointer">
+      <td
+        class="tool-name"
+        (click)="
+          cellClick.emit({
+            property: column.propertyName,
+            dataItem: dataItem
+          })
+        "
+        *ngFor="let column of configurations.columns"
+        [class.disabled]="!dataItem?.isActive && column?.propertyName !== 'isActive'"
+        class="pl-24 {{ column.propertyName }}-cell">
+        <span
+          *ngIf="column.propertyName !== 'status' && column.propertyName !== 'isActive' && !column.imageProperty"
+          [class.c-pointer]="column?.isCellContentClickable"
+          [class.fw-700]="column.isBold"
+          class="w-fit-content">
+          {{ dataItem[column.propertyName] }}
+        </span>
+
+        <span
+          *ngIf="column?.imageProperty"
+          [class.c-pointer]="column?.isCellContentClickable"
+          [class.disabled]="!dataItem?.isActive"
+          [class.fw-700]="column.isBold"
+          class="d-flex align-center w-fit-content">
+          <span
+            *ngIf="column?.imageProperty"
+            class="d-flex align-center image mr-16">
+            <img
+              *ngIf="column?.imageProperty"
+              [alt]="dataItem[column.propertyName]"
+              [src]="dataItem[column?.imageProperty] ? dataItem[column?.imageProperty]?.uri : column?.defaultImageUrl"
+              class="w-100" />
+          </span>
+
+          {{ dataItem[column.propertyName] }}
+        </span>
+
+        <span
+          *ngIf="column.propertyName === 'status' || column.propertyName === 'isActive'"
+          [class.inactive]="dataItem[column.propertyName] === statusEnum.Inactive || !dataItem[column.propertyName]"
+          class="status-chip flex-center">
+          <span *ngIf="column.propertyName === 'status'">
+            {{ dataItem[column.propertyName] }}
+          </span>
+
+          <span *ngIf="column.propertyName === 'isActive'">
+            {{ dataItem[column.propertyName] ? statusEnum.Active : statusEnum.Inactive }}
+          </span>
+        </span>
+      </td>
+
+      <td
+        *ngIf="configurations.optionCell"
+        class="pl-24 option-cell">
+        <neo-menu
+          (optionClick)="optionClick.emit({ option: $event, dataItem: dataItem })"
+          [options]="getOptions(dataItem)"
+          activeIcon="cross"
+          cssClasses="flex-center fw-400"
+          icon="three-dots">
+        </neo-menu>
+      </td>
+    </tr>
+  </tbody>
+</table>

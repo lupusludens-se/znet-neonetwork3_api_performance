@@ -1,0 +1,17 @@
+<div
+  class="community-item state-wrapper"
+  [ngSwitch]="communityElement.type">
+  <neo-community-company
+    *ngSwitchCase="communityTypes.Company"
+    (companyClick)="itemClick.emit()"
+    (followClick) = "followClick.emit()"
+    [communityCompany]="communityElement">
+  </neo-community-company>
+
+  <neo-community-user
+    *ngSwitchCase="communityTypes.User"
+    (userClick)="itemClick.emit()"
+    (followClick) = "followClick.emit()"
+    [communityUser]="communityElement">
+  </neo-community-user>
+</div>

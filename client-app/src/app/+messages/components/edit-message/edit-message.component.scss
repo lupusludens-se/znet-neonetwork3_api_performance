@@ -1,0 +1,47 @@
+@use 'colors';
+@use 'mixins';
+
+.message-input {
+  min-height: 48px;
+  min-width: 100%;
+  padding: 3px 12px 0;
+  border: 1px solid colors.$blue-100;
+  border-radius: 8px;
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-410;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+
+  &::placeholder {
+    color: colors.$dark-gray-515;
+    font-size: 16px;
+  }
+
+  &:hover {
+    border-color: colors.$dark-gray-510;
+  }
+
+  &:focus {
+    background: colors.$white;
+    border: 1.5px solid colors.$zeigo-purple;
+    /* Shadow/xs */
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  }
+}
+
+.cancel-svg {
+  rotate: 45deg;
+}
+
+.errorMessage {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  margin-top: 2px;
+  line-height: 140%;
+  color: colors.$error-red;
+  margin-left: 20px;
+  flex-grow: 1;
+}
+
+.edit-cancel {
+  color: #706f78;
+}

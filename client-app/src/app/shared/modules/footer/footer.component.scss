@@ -1,0 +1,33 @@
+.footer-container {
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+
+  img {
+    width: 98px;
+    height: 47px;
+  }
+}
+
+.copyright-show {
+  display: none;
+}
+
+
+@media only screen and (max-width: 950px) {
+  .copyright-hide {
+    display: none;
+  }
+
+  .copyright-show {
+    display: block;
+    text-align: center;
+    padding-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+
+  .privacy-terms {
+    margin-left: 7%;
+  }
+}

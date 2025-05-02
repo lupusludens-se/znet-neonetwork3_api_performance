@@ -1,0 +1,55 @@
+<div class="content flex-column">
+  <h2 class="title neo-arial"> {{'onboarding.SubscribeToOurWelcomeSeries' | translate}}</h2>
+  <p class="pb-12"></p>
+
+  <div class="control-wrapper">
+    <p class="text-s pt-8 text-neo-near-black">
+      The Zeigo Network Welcome Series consists of several emails designed to introduce new members to key topics
+      about
+      decarbonization, and provide them with resources to learn more inside the platform. Topics include:
+    </p>
+    <ul class="text-s pt-8 ml-26 mb-32 text-neo-near-black">
+      <li>Corporate motivations to decarbonize</li>
+      <li>Renewable energy levers in the marketplace</li>
+      <li>Setting targets and crafting a strategy</li>
+      <li>The pathway to procurement</li>
+      <li>Reducing consumption through efficiency efforts</li>
+      <li>Steps to take an action</li>
+    </ul>
+    <div class="text-xs pt-8 text-dark-gray-580 d-flex">
+      <div class="controls-wrapper flex-column">
+        <neo-radio-control (valueChanged)="change($event)" [list]="yesNoData" formControlName="subscribeToWelcomeSeries"
+          [labelName]="'Subscribe to the welcome series'" class="text-label-near-black flex-direction-row">
+        </neo-radio-control>
+      </div>
+    </div>
+    <div class="separator"></div>
+    <div class="d-flex">
+      <div class="text-xs pt-8 ml-26 mb-32 text-dark-gray-580 flex-1">
+
+        <neo-blue-checkbox (selectCheckbox)="validatePrivacy();" [disabled]="subscribeToWelcomeSeriesVal == 2" [checked]="privacy" class="w-fit-content text-accept">
+        </neo-blue-checkbox>
+      </div>
+      <div class="text-xs pt-8 ml-26 mb-32  flex-2" [class.text-error]="showErr" [class.text-dark-gray-580]="!showErr">
+        By clicking, you agree to be contacted by Schneider Electric Sustainability Business and
+        its affiliates via email. For more details, please read our
+        <i><a href="https://www.se.com/ww/en/about-us/legal/data-privacy.jsp" target="_blank">privacy policy</a>.</i>
+       <!-- <p *ngIf="showErr" class="d-flex text-error text-xs pt-8 align-center">
+          {{ 'onboarding.privacyRequiredLabel' | translate }}
+        </p>-->
+      </div>
+      <div class="text-xs pt-8 ml-26 mb-16 text-dark-gray-580 flex-3">
+        <span class="green">PRIVACY NOTICE:</span> Schneider Electric Sustainability Business and affiliates use the
+        personal information that you
+        provide to address your request. Data is analyzed by our systems in an automated way, where we may contact you
+        to provide additional support. These activities are performed in the legitimate interest of our customers and
+        of
+        Schneider Electric. We will keep a record of your data for as long as needed for these purposes. Get more
+        information about your rights and how Schneider Electric uses personal information in the
+        <i> <a href="https://www.se.com/ww/en/about-us/legal/data-privacy.jsp" target="_blank">privacy policy</a>.</i>
+      </div>
+    </div>
+  </div>
+
+  <neo-wizard-nav-controls (goBack)="changeStep(stepsList.Interests)" (goNext)="goForward(stepsList.Finish)">
+  </neo-wizard-nav-controls>

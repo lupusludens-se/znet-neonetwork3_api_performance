@@ -1,0 +1,33 @@
+<div class="decarbonization-initiatives-wrapper">
+  <neo-top-panel imageCssClasses="l-250px w-599px h-249px t-28px text-dark-gray-30" imageUrl="assets/images/project-category-background-image.svg">
+    <div class="top-panel-spacing d-flex z-index-1 w-100">
+      <div class="flex-column">
+        <div class="d-flex">
+          <div class="flex-column title">
+            <h2>{{ 'initiative.dashboard.initiativeTitle' | translate }}</h2>
+
+            <p class="pt-8 text-s w-100">
+              {{ 'initiative.dashboard.decarbonizationInitiativeBannerSublabel' | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </neo-top-panel>
+  <div class="d-flex mt-24">
+    <button (click)="changeTab(0)" [ngClass]="{ active: selectedTab === 0, inactive: selectedTab === 1 }"
+      class="btn-tab neo-arial d-flex align-center mr-4">
+      {{ 'general.yourInitiativesLabel' | translate }}
+    </button>
+    <button (click)="changeTab(1)" [ngClass]="{ inactive: selectedTab === 0, active: selectedTab === 1 }"
+      class="btn-tab neo-arial d-flex align-center">
+      {{ 'general.teamInitiativesLabel' | translate }}
+    </button>
+  </div>
+  <div *ngIf="selectedTab === 0" class="mt-16">
+    <neo-initiative-information [initiativeSource]="selectedTab"></neo-initiative-information>
+  </div>
+  <div *ngIf="selectedTab === 1" class="mt-16">
+    <neo-initiative-information [initiativeSource]="selectedTab" [paging]="paging" (updateSourceAndPagingDetailsEvent)="updateSourceAndPagingDetails($event)"></neo-initiative-information>
+  </div>
+</div>

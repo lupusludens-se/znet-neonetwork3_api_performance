@@ -1,0 +1,16 @@
+@use 'colors';
+
+.tag {
+  height: 32px;
+  max-width: 600px;
+  border-radius: 2px;
+  background-color: colors.$blue-20;
+  font-size: 12px;
+  line-height: 130%;
+  color: colors.$aqua-400;
+  
+
+	&:hover {
+		background: colors.$light-blue-20;
+	}
+}

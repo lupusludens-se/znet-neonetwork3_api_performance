@@ -1,0 +1,72 @@
+{
+  "testCases": [
+    {
+      "testCaseId": 1,
+      "projectType": "Efficiency Equipment Measures",
+      "technology": ["Building Controls"],
+      "regions": ["Africa (=All)"],
+      "contractStructures": ["Shared Savings", "Guaranteed Savings"],
+      "requiresInvestmentGradeCreditofOfftaker": "Yes",
+      "minimumTermLength": "enter numerical value",
+      "valueProvided": ["=All"],
+      "timeUrgencyConsiderations": "enter string value or alphanumeric value",
+      "additionalComments": "enter string value or alphanumeric value",
+      "projectTitle": "enter a alpha numeric value",
+      "subTitle": "enter a alphanumeric value",
+      "describeOpportunity": "enter a alpha numeric value",
+      "aboutTheProvider": "should be auto populated from the company description page",
+      "action": "Publish"
+    },
+    {
+      "testCaseId": 2,
+      "projectType": "Efficiency Equipment Measures",
+      "technology": ["Building Envelope"],
+      "regions": ["Asia (indonesia, India, Bhutan, Nepal, Pakistan, Afghanistan)"],
+      "contractStructures": ["=All"],
+      "requiresInvestmentGradeCreditofOfftaker": "Yes",
+      "minimumTermLength": "enter numerical value",
+      "valueProvided": ["Cost Savings", "Energy Savings/Reduction"],
+      "timeUrgencyConsiderations": "enter string value or alphanumeric value",
+      "additionalComments": "enter string value or alphanumeric value",
+      "projectTitle": "enter a alpha numeric value",
+      "subTitle": "enter a alphanumeric value",
+      "describeOpportunity": "enter a alpha numeric value",
+      "aboutTheProvider": "should be auto populated from the company description page",
+      "action": "Publish"
+    },
+    {
+      "testCaseId": 3,
+      "projectType": "Efficiency Equipment Measures",
+      "technology": ["HVAC"],
+      "regions": ["South America (=All)", "USA & Canada (US-All)"],
+      "contractStructures": ["As-a-Service or Alternative Financing"],
+      "requiresInvestmentGradeCreditofOfftaker": "Yes",
+      "minimumTermLength": "enter numerical value",
+      "valueProvided": ["Resiliency"],
+      "timeUrgencyConsiderations": "enter string value or alphanumeric value",
+      "additionalComments": "enter string value or alphanumeric value",
+      "projectTitle": "enter a alpha numeric value",
+      "subTitle": "enter a alphanumeric value",
+      "describeOpportunity": "enter a alpha numeric value",
+      "aboutTheProvider": "should be auto populated from the company description page",
+      "action": "Publish"
+    },
+    {
+      "testCaseId": 4,
+      "projectType": "Efficiency Equipment Measures",
+      "technology": ["Lighting"],
+      "regions": ["Africa (=All)", "Oceania (=All)", "Asia (Indonesia)"],
+      "contractStructures": ["Cash Purchase", "Shared Savings", "Guaranteed Savings"],
+      "requiresInvestmentGradeCreditofOfftaker": "Yes",
+      "minimumTermLength": "enter numerical value",
+      "valueProvided": "Other",
+      "timeUrgencyConsiderations": "enter string value or alphanumeric value",
+      "additionalComments": "enter string value or alphanumeric value",
+      "projectTitle": "enter a alpha numeric value",
+      "subTitle": "enter a alpha numeric value",
+      "describeOpportunity": "enter a alpha numeric value",
+      "aboutTheProvider": "should be auto populated from the company description page",
+      "action": "Publish"
+    }
+  ]
+}

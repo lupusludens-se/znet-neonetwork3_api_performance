@@ -1,0 +1,218 @@
+@use 'colors';
+@use 'variables';
+
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title-wrapper {
+  .title {
+    font-size: 24px;
+    line-height: 110%;
+    color: colors.$near-black-400;
+  }
+
+  .top {
+    justify-content: flex-end;
+  }
+}
+
+.status-label {
+  width: 71px;
+  height: 24px;
+  border: 1px solid colors.$sky-blue;
+  border-radius: 500px;
+  font-weight: 700;
+  font-size: 12px;
+  color: colors.$sky-blue;
+
+  &.deleted {
+    border: 1px solid colors.$blue-400;
+    color: colors.$blue-400;
+  }
+  &.expired {
+    background: colors.$warning-5;
+    border: 1px solid colors.$warning;
+    color: colors.$warning;
+  }
+}
+
+.content-wrapper {
+  padding: 32px 32px 48px;
+  background-color: colors.$white;
+  margin-bottom: 114px;
+  .file-input {
+    display: none;
+  }
+
+  .avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    padding: 7px;
+    border: 2px solid colors.$aqua-400;
+
+    &.inactive {
+      border-color: rgba(177, 0, 67, 0.06);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+
+    .permissions {
+      opacity: 1;
+    }
+  }
+}
+
+.bottom-part {
+  border-top: 1px solid colors.$dark-gray-420;
+}
+
+.bottom {
+  width: 70%;
+}
+
+.primary-form {
+  width: 80%;
+  @media (max-width: 1399px) {
+    width: 70%;
+  }
+
+  .dropdown-wrapper {
+    width: 314px;
+    @media (max-width: 1399px) {
+      width: 250px;
+    }
+  }
+}
+
+.secondary-form {
+  .dropdown-wrapper {
+    width: 260px;
+    @media (max-width: 1399px) {
+      width: 230px;
+    }
+  }
+}
+
+.btn-view-profile {
+  width: 100%;
+  height: 47px;
+  background-color: #fcfcfc;
+  color: colors.$zeigo-purple;
+  border: none !important;
+  &:hover {
+    color: colors.$purple-200;
+    background: none;
+  }
+}
+
+.right {
+  margin-top: 26px;
+  margin-left: 64px;
+}
+
+.controls-row {
+  neo-text-input {
+    width: 314px;
+
+    @media (max-width: 1399px) {
+      width: 230px;
+    }
+  }
+}
+
+neo-text-input {
+  display: block;
+}
+
+.text-input-label,
+.section-label {
+  font-size: 14px;
+  line-height: 130%;
+  color: colors.$dark-gray-590;
+  font-family: Arial Rounded MT Bold, serif;
+}
+
+.user-type {
+  min-width: 144px;
+}
+
+neo-blue-checkbox {
+  margin-bottom: 6px;
+  width: 50%;
+}
+
+.permissions {
+  // * temp for first version
+  width: 652px;
+  @media (max-width: 1399px) {
+    width: 550px;
+  }
+
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+neo-search-bar {
+  display: block;
+}
+
+.small {
+  width: 30px;
+  height: 18px;
+  border: white;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: max-content;
+  background-color: #ffffff;
+  color: colors.$near-black-400;
+  padding: 5px 15px;
+  border-radius: 6px;
+  font-size: small;
+  position: absolute;
+  z-index: 1;
+  top: 33%;
+  margin-left: 12px;
+  font-weight: bold;
+  inline-size: 203px;
+  overflow: hidden;
+  box-shadow: 0px 2px 8px rgba(111, 110, 119, 0.5);
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.flex-item-left {
+  padding: 10px;
+  flex: 50%;
+}
+.flex-item-right {
+  padding: 10px;
+  flex: 50%;
+}
+
+.flex-container-right {
+  display: flex;
+  flex-direction: row;
+}
+ 
+
+.text-label {
+  color: colors.$dark-gray-580;
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0.16px;
+}

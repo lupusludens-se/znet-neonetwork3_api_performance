@@ -1,0 +1,24 @@
+<div class="content flex-column">
+  <div class="top flex-between align-center mb-32">
+    <h2 class="title mb-32 neo-arial">{{ 'onboarding.whatGeographicLabel' | translate }}</h2>
+  </div>
+
+  <div class="control-wrapper">
+    <neo-geographic-interest
+      [continents]="regionsService.continents$ | async"
+      [preSelectedRegions]="controlContainer.control?.get('regions')?.value"
+      (selectedRegionsChange)="updateForm($event)">
+    </neo-geographic-interest>
+  </div>
+
+	<neo-control-error
+		[errors]="controlContainer.control.get('regions').errors"
+		[fieldName]="'onboarding.whatGeographicLabel' | translate"
+		[submitted]="formSubmitted">
+	</neo-control-error>
+</div>
+
+<neo-wizard-nav-controls
+  (goNext)="goForward(stepsList.Interests)"
+  (goBack)="changeStep(stepsList.PersonalInfo)">
+</neo-wizard-nav-controls>

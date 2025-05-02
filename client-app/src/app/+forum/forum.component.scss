@@ -1,0 +1,48 @@
+@use 'colors';
+@use 'breakpoints';
+@use 'variables';
+
+.filter {
+  width: variables.$filters-forum-width;
+  //min-width: variables.$filters-forum-width;
+  height: 100%;
+  background: colors.$white;
+}
+
+.forum-label{
+  color: colors.$dark-gray-750;
+  line-height: 120%;
+}
+
+.start-discussion-btn{
+  padding: 13px 12px;
+
+  .chat-icon{
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.separator {
+  width: 96%;
+}
+
+.content {
+  padding-left: 24px;
+  width: calc(100% - #{variables.$filters-forum-width});
+
+  @media (breakpoints.$medium) {
+    padding-left: 32px;
+  }
+
+  @media (breakpoints.$fullHd) {
+    padding-left: 64px;
+  }
+
+  .suggested-label{
+    color: colors.$dark-gray-515;
+    line-height: 20px;
+    letter-spacing: 0.24px;
+  }
+
+}

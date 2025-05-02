@@ -1,0 +1,41 @@
+<div class="d-flex company-wrapper p-16 w-100 new">
+  <neo-company-logo
+    [company]="communityCompany"
+    [imageSize]="'small'">
+  </neo-company-logo>
+
+  <div class="flex-column pl-24 pt-12">
+    <h5
+      class="company-name c-pointer"
+      (click)="companyClick.emit()"
+      routerLink="/company-profile/{{ communityCompany.id }}">
+      {{ communityCompany.companyName }}
+    </h5>
+
+    <span class="text-s pt-2 members-text">
+      {{ communityCompany.memberCount }}
+      {{
+        (communityCompany.memberCount === 1 ? 'community.memberSingleLabel' : 'community.memberPluralLabel') | translate
+      }}
+    </span>
+  </div>
+
+  <div class="d-flex buttons pr-8">
+    <ng-container *ngIf="communityCompany.isFollowed">
+      <svg-icon
+        (click)="follow('delete')"
+        class="ml-8 text-aqua-400 c-pointer icon24"
+        key="check-circle">
+      </svg-icon>
+    </ng-container>
+
+    <ng-container *ngIf="!communityCompany.isFollowed">
+      <svg-icon
+        (click)="follow('post')"
+        class="ml-8 add-hover c-pointer"
+        key="add-circle"
+        size="xxl">
+      </svg-icon>
+    </ng-container>
+  </div>
+</div>

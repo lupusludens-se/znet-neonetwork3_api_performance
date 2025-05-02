@@ -1,0 +1,347 @@
+<ng-container *ngIf="!!eventData">
+  <button
+    (click)="goBack()"
+    class="btn-connect back-btn d-flex align-center pb-4">
+    <svg-icon
+      class="pr-4 back-btn-img-s"
+      key="left-arrow"></svg-icon>
+    Back
+  </button>
+  <div class="event-view-wrapper d-flex">
+    <ng-container>
+      <div class="event-details-wrapper w-100">
+        <div class="event-details-top-wrapper flex-between">
+          <div class="event-title-wrapper">
+            <h2 class="text-neo-near-black">{{ eventData?.subject }}</h2>
+
+            <div class="mt-12 text-s text-dark-gray-515">
+              {{ eventData?.locationType === 0 ? 'Virtual' : 'In-Person' }}
+            </div>
+          </div>
+
+          <div class="event-actions-wrapper d-flex justify-end">
+            <div
+              *ngIf="currentUser && isEventActual"
+              class="flex-column align-end">
+              <div class="event-details-attending d-flex">
+                <h6 class="pt-8 text-neo-near-black">{{ 'events.attendingLabel' | translate }}?</h6>
+
+                <button
+                  (click)="changeAttendance(eventData?.isAttending === true ? null : true)"
+                  [class]="
+                    eventData?.isAttending === null
+                      ? 'default'
+                      : eventData?.isAttending === true
+                      ? 'selected border'
+                      : 'selected'
+                  "
+                  class="ml-12 btn-s attending-button d-flex align-center">
+                  {{ 'general.yesLabel' | translate }}
+                </button>
+
+                <button
+                  (click)="changeAttendance(eventData?.isAttending === false ? null : false)"
+                  [class]="
+                    eventData?.isAttending === null
+                      ? 'default'
+                      : eventData?.isAttending === false
+                      ? 'selected border'
+                      : 'selected'
+                  "
+                  class="ml-4 btn-s attending-button d-flex align-center">
+                  {{ 'general.noLabel' | translate }}
+                </button>
+
+                <ng-container *ngIf="hasPermission(currentUser)">
+                  <button
+                    (click)="$event.stopPropagation()"
+                    class="btn-s ml-20 flex-center btn-edit"
+                    routerLink="/admin/events/edit-event/{{ eventData?.id }}">
+                    {{ 'actions.editLabel' | translate }}
+                    <svg-icon
+                      class="edit-svg"
+                      key="pencil"
+                      size="md"></svg-icon>
+                  </button>
+                </ng-container>
+              </div>
+
+              <div class="mt-16 add-calendar">
+                <button
+                  (click)="addToCalendar(eventData?.occurrences)"
+                  class="btn-s d-flex align-center text-capitalize mb-16 text-s p-10"
+                  type="button">
+                  <svg-icon key="event-calendar"></svg-icon>
+                  {{ 'events.addToMyCalendarLabel' | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="separator mb-24 mt-24"></div>
+
+        <h5 class="text-neo-near-black text-s">{{ 'events.datesLabel' | translate }}</h5>
+
+        <ng-container *ngFor="let occurrence of sortedOccurrences; let i = index">
+          <div class="d-flex mt-12 text-dark-gray-545 text-s fw-700 occurrence">
+            <div class="d-flex occurrence-date-wrapper">
+              <svg-icon
+                key="event-calendar"
+                size="xl">
+              </svg-icon>
+
+              <div class="ml-6">
+                {{ occurrence.fromDate | date : 'EEE, MMM d' }}
+              </div>
+            </div>
+
+            <div class="d-flex justify-center align-center occurrence-time-wrapper ml-32 mr-16">
+              <svg-icon
+                key="event-timer"
+                size="xl"></svg-icon>
+
+              <div class="ml-6 mr-2">
+                <p *ngFor="let time of occurrence.timeRanges">
+                  {{ (time.fromDate | date : 'h:mma').toLowerCase() }} -
+                  {{ (time.toDate | date : 'h:mma').toLowerCase() }}
+                </p>
+              </div>
+              <div
+                *ngIf="i === 0"
+                class="ml-4 time-zone-name">
+                ({{ occurrence.timeZoneName }})
+              </div>
+            </div>
+
+            <div
+              *ngIf="occurrence.isToday"
+              class="today-label">
+              {{ 'general.todayLabel' | translate }}
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="separator mb-24 mt-24"></div>
+
+        <div
+          class="d-flex"
+          *ngIf="currentUser">
+          <div class="fg-0">
+            <a
+              [href]="
+                eventData?.locationType === 0
+                  ? eventData?.location.startsWith('www')
+                    ? '//' + eventData?.location
+                    : eventData?.location
+                  : 'https://www.google.com/maps/search/' + eventData?.location
+              "
+              class="location-block text-s mb-24 w-fit-content fw-700 btn-s d-flex align-center max-h-fit"
+              target="_blank">
+              <svg-icon
+                class="location-icon mr-4"
+                key="location-thiner-new"></svg-icon>
+              {{
+                eventData?.location?.length > 80 ? (eventData?.location | slice : 0 : 80) + '....' : eventData?.location
+              }}
+            </a>
+          </div>
+
+          <div class="registration-block mb-24 w-fit-content">
+            <a
+              [href]="
+                eventData?.userRegistration.startsWith('www')
+                  ? '//' + eventData?.userRegistration
+                  : eventData?.userRegistration
+              "
+              target="_blank"
+              class="registration-link text-s blue-50-frame flex-center pl-16 pr-16 py-10"
+              *ngIf="isLink(eventData?.userRegistration); else plainTextTmpl">
+              <h6>{{ 'events.registrationLabel' | translate }}</h6>
+              <svg-icon
+                class="arrow-icon ml-8"
+                key="right-arrow"
+                fontSize="16px"></svg-icon>
+            </a>
+            <ng-template #plainTextTmpl>
+              <h5>
+                <span class="text-dark-gray-545">{{ eventData?.userRegistration }}</span>
+              </h5>
+            </ng-template>
+          </div>
+        </div>
+
+        <div
+          *ngIf="!currentUser" class="pb-5p">
+          <button *ngIf="!isUserLoggedIn"
+            class="green p-12 lock-icon registration-button"
+            [src]="activityTypeEnum"
+            [data]="{eventId: eventData?.id}"
+            neoLockClick>
+            <svg-icon
+              key="lock-private-content"
+              class="text-dark-gray-30"
+              size="xxl"
+              ></svg-icon>
+            {{ 'events.registrationLabel' | translate }}
+            <svg-icon
+              class="ml-10"
+              key="right-arrow"
+              size="l"></svg-icon>
+          </button>
+        </div>
+
+        <div class="text-m text-dark-gray-515 mb-24">{{ eventData?.description }}</div>
+
+        <div
+          *ngIf="!!eventData?.highlights?.length"
+          class="text-m text-dark-gray-515 mb-24">
+          <h5 class="mb-16 text-neo-near-black text-s">
+            {{ 'events.eventHighlightsLabel' | translate }}
+          </h5>
+
+          <ng-container *ngFor="let highlight of eventData?.highlights?.split('\n')">
+            <div class="highlight-item green-bullets pl-12 text-dark-gray-515 text-s">
+              {{ highlight.slice(1) }}
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="separator mb-24 mt-24"></div>
+
+        <div
+          class="mb-24"
+          *ngIf="currentUser">
+          <h4 class="mb-16 text-neo-near-black text-s">
+            {{ 'events.moderatorsViewLabel' | translate }}
+          </h4>
+
+          <div class="moderators-wrapper">
+            <ng-container *ngFor="let moderator of eventData?.moderators">
+              <div class="moderator">
+                <div class="moderator-info-wrapper">
+                  <div class="moderator-image mb-8">
+                    <neo-user-avatar
+                      [user]="getUserAvatar(moderator)"
+                      imageSize="size48"></neo-user-avatar>
+                  </div>
+
+                  <h5
+                    (click)="moderator.user?.statusId !== userStatuses.Deleted && openUserProfile(moderator.userId)"
+                    [class.c-pointer]="moderator.user?.statusId !== userStatuses.Deleted && moderator.userId"
+                    class="moderator-name text-dark-gray-590 ellipsis">
+                    {{
+                      moderator.user?.statusId === userStatuses.Deleted
+                        ? 'Deleted User'
+                        : moderator.user?.name ?? moderator.name
+                    }}
+                  </h5>
+
+                  <div
+                    *ngIf="moderator.user?.statusId !== userStatuses.Deleted"
+                    class="moderator-name company text-gray-510 text-xs ellipsis">
+                    {{ moderator.user?.company ?? moderator.company }}
+                  </div>
+
+                  <div
+                    *ngIf="
+                      !!moderator.userId &&
+                      currentUser.id !== moderator.userId &&
+                      moderator.user?.statusId !== userStatuses.Deleted
+                    "
+                    class="d-flex align-center mt-12 text-neo-dark-green">
+                    <div class="moderator-action">
+                      <svg-icon
+                        (click)="followUser(moderator.user, moderator)"
+                        [ngClass]="{
+                          'text-neo-aqua': moderator.user.isFollowed,
+                          'text-dark-green-hover': !moderator.user.isFollowed
+                        }"
+                        [key]="moderator.user.isFollowed ? 'check-in-circle' : 'add-circle'"
+                        fontSize="22px"
+                        class="c-pointer add-hover"></svg-icon>
+                    </div>
+
+                    <div class="c-pointer ml-12 moderator-action">
+                      <svg-icon
+                        (click)="startNewMessageWithUser(moderator.userId)"
+                        fontSize="26px"
+                        [key]="'chat-transparent'"
+                        class="add-hover"></svg-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <ng-container *ngIf="currentUser && !!eventData?.recordings.length">
+          <div class="separator mb-24 mt-32"></div>
+          <h4 class="mb-16 text-neo-near-black text-s">
+            {{ 'events.recordingsViewLabel' | translate }}
+          </h4>
+          <div class="d-flex flex-wrap">
+            <a
+              *ngFor="let recording of eventData.recordings"
+              class="btn-recording mb-24 fw-700 btn-s d-flex align-center mr-10"
+              href="{{ recording.url.startsWith('www') ? '//' + recording.url : recording.url }}"
+              target="_blank">
+              {{ 'events.recordingLabel' | translate }}
+              <svg-icon
+                class="ml-10"
+                key="camera"
+                size="xxl"></svg-icon>
+            </a>
+          </div>
+        </ng-container>
+
+        <ng-container *ngFor="let link of eventData?.links">
+          <div
+            (click)="openLink(link.url.startsWith('www') ? '//' + link.url : link.url)"
+            class="event-link w-fit-content text-m fw-700 d-flex align-center c-pointer">
+            <div>{{ link.name }}</div>
+
+            <svg-icon
+              key="small-right-arrow"
+              size="xxl"></svg-icon>
+          </div>
+        </ng-container>
+
+        <div class="separator mb-24 mt-24" *ngIf="currentUser"></div>
+
+        <div class="d-flex justify-between">
+          <div class="d-flex flex-wrap w-50 gap-4">
+            <neo-content-tag
+              *ngFor="let tag of eventData?.categories"
+              [tag]="tag"
+              [type]="type.Category"
+              fontSize="12"
+              [disable]="!currentUser"></neo-content-tag>
+          </div>
+
+          <div class="d-flex align-center w-50">
+            <button
+              (click)="copyLink()"
+              class="link text-s d-flex align-center">
+              <svg-icon
+                class="mr-10"
+                key="pin"
+                size="xxl"></svg-icon>
+              {{ 'general.linkLabel' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <neo-members-list
+        (followClick)="followUser($event)"
+        [members]="eventData?.attendees"
+        [iconKey]="'user-unavailable'"
+        [noMembersMessage]="'events.noAttendeesYetLabel' | translate"
+        [title]="'events.attendingLabel' | translate"
+        [isCompanyProfile]="false">
+      </neo-members-list>
+    </ng-container>
+  </div>
+</ng-container>

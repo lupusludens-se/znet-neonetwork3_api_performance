@@ -1,0 +1,35 @@
+<div *ngIf = "initiativeprogressdetails"
+  class="progress pt-8 pb-8">
+  <div
+    *ngFor="let step of initiativeprogressdetails.steps; let index = index"
+    [ngClass]="{'w-19' :index + 1 !== initiativeprogressdetails.steps.length, 'w-5' :index + 1 === initiativeprogressdetails.steps.length }"
+    class="d-flex flex-row">
+    <div
+      class="d-flex flex-column"
+      style="width: 100%">
+      <div class="d-flex">
+        <div class="w-15 d-flex" [ngClass]="{'is-active-border' : step.stepId === currentStep}">
+          <span
+            class="progress-step mr-2"
+            [ngClass]="getStepProgressColor(step)">
+            <svg-icon fontSize="20px" *ngIf="(getStepProgressColor(step) === 'is-complete')"
+              key="check-mark"></svg-icon>
+            <svg-icon class="warning-svg" fontSize="17px" *ngIf="(getStepProgressColor(step) === 'is-partial')"
+              key="warning"></svg-icon>
+          </span>
+        </div>
+        <div
+          *ngIf="index + 1 !== initiativeprogressdetails.steps.length"
+          class="progress-track ml-12 mr-12">
+          <div class="track-height"
+            [ngClass]="getStepProgressColor(step)"
+            [style.width]="step.completed + '%'"></div>
+        </div>
+      </div>
+      <div class="mt-12">
+        <div class="step-title">{{ step.name }}</div>
+        <div class="title mr-12" *ngIf="!canHideStepDescription">{{ step.description }}</div>
+      </div>
+    </div>
+  </div>
+</div>

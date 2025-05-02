@@ -1,0 +1,56 @@
+<div class="flex-container">
+    <div class="p-relative reset-complete-background-wrapper d-flex align-start justify-center">
+      <img alt="zeigo logo" class="pt-48 c-pointer" routerLink="" src="assets/images/zeigologo-sidebar.png" />
+    
+      <img alt="vector image" class="p-absolute" src="assets/images/sign-up/sign-up-background-vector.svg" />
+    </div>
+    
+    <div class="p-relative background-mobile-wrapper d-flex align-start justify-center">
+               
+      <img class="pb-24 c-pointer logo" src="assets/images/zeigologo-sidebar.png"/>
+    </div>
+    
+    <div id="reset-complete-form"class="justify-center flex-column align-center reset-complete-form-wrapper pt-48 p-relative">
+      <img src="assets/images/sign-up/password-reset.svg" alt="password created image" />
+    
+      <h1 class="text-neo-near-black pt-48">{{ 'passwordChanged.titleLabel' | translate }}</h1>
+    
+      <p class="text-blue-200 text-s pt-12 pb-32 text-center">
+        {{ 'passwordChanged.successfullyChangedPassword1Label' | translate }}
+      </p>
+    
+      <button class="btn-l green d-flex align-center pb-32" (click)="goToDashboard()">
+        {{ 'passwordChanged.goToDashboardLabel' | translate }}
+        <svg-icon class="ml-12" key="right-arrow"></svg-icon>
+      </button>
+    
+      <neo-footer
+        (termOfUseModalClosed)="termOfUseModal = false"
+        [removeLogo]="true"
+        [forRegistration]="true"
+        [termOfUseModal]="termOfUseModal"
+        class="w-100 p-absolute">
+      </neo-footer>
+    </div>
+    
+    <div id="mobile-reset-complete-form-wrapper" class="justify-center flex-column align-center reset-complete-form-wrapper pt-64 p-relative">
+    
+      <img class="set-password" src="assets/images/sign-up/password-reset.svg" alt="password created image" />
+      <h1 class="text-neo-near-black font-heading pt-24">{{ 'passwordChanged.titleLabel' | translate }}</h1>
+      <p class="text-blue-200 text-s text-center pt-12 pb-24 m-1">{{ 'passwordChanged.successfullyChangedPassword1Label' | translate }}&nbsp;{{ 'passwordChanged.successfullyCreatedPassword2Label' | translate }}</p>
+    
+      <button class="btn-l green d-flex align-center w-80" (click)="goToDashboard()">
+        {{ 'passwordChanged.goToDashboardLabel' | translate }}
+        <svg-icon class="ml-12" key="right-arrow"></svg-icon>
+      </button>
+    
+      <neo-footer
+        (termOfUseModalClosed)="termOfUseModal = false"
+        [removeLogo]="true"
+        [forRegistration]="true"
+        [termOfUseModal]="termOfUseModal"
+        class="w-100">
+      </neo-footer>
+    </div>
+    </div>
+    

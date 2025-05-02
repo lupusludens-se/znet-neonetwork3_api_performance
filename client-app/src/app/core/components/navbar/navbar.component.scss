@@ -1,0 +1,151 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+.navbar-wrapper {
+	position: fixed;
+	width: variables.$navbar-width-media;
+	min-height: 100vh;
+	height: 100%;
+	background: colors.$zeigo-purple;
+
+	@media (breakpoints.$medium) {
+		width: variables.$navbar-width;
+	}
+
+	.logo-label {
+		font-size: 10px;
+		line-height: 130%;
+		color: colors.$white;
+		opacity: 0.7;
+
+		@media (breakpoints.$medium) {
+			font-size: 12px;
+		}
+	}
+
+	.company-switcher-block {
+		padding: 24px 12px 0;
+
+		@media (breakpoints.$medium) {
+			padding: 24px 0 0;
+		}
+
+		.selector {
+			text-transform: none;
+		}
+	}
+
+	.navbar-items-block {
+		padding: 16px 12px 0;
+
+		@media (breakpoints.$medium) {
+			padding: 16px 0 0;
+		}
+	}
+
+	.nav-menu-item {
+		font-size: 14px;
+
+		@media (breakpoints.$medium) {
+			font-size: 16px;
+		}
+	}
+
+	a {
+		font-family: 'Arial', serif;
+		max-width: 100%;
+		width: 100%;
+		max-height: 36px;
+		font-size: 14px;
+		white-space: nowrap;
+
+		@media (breakpoints.$medium) {
+			max-width: 196px;
+			max-height: 48px;
+			font-size: 16px;
+		}
+
+		&.link-icon {
+			background: transparent;
+			color: colors.$dark-gray-30;
+			padding-left: 12px;
+
+			&.active {
+				background: rgba(255, 255, 255, 0.1);
+				border-right: 3px solid colors.$white;
+				border-radius: 2px;
+			}
+
+			&:hover {
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			&.selector {
+				border: 1px solid colors.$blue-400;
+			}
+		}
+	}
+
+	.nav-icon {
+		margin-right: 8px;
+		font-size: 18px;
+		width: 1rem;
+		min-width: 1rem;
+
+		@media (breakpoints.$medium) {
+			margin-right: 12px;
+			font-size: 22px;
+			min-width: auto;
+			width: auto;
+		}
+	}
+
+	.custom-message {
+		align-items: center;
+		margin: 10%;
+		border-radius: 6px !important;
+		background: colors.$white !important;
+		color: colors.$zeigo-purple !important;
+
+		&:hover {
+			background: colors.$purple-150 !important;
+			border-color: colors.$purple-150 !important;
+			color: colors.$purple-500 !important;
+		}
+	}
+
+	.custom-message.active {
+		background: colors.$blue-15 !important;
+		border-right: 3px solid colors.$blue-15 !important;
+		color: colors.$purple-200 !important;
+
+		&:hover {
+			background: colors.$purple-150 !important;
+			border-right: 3px solid colors.$purple-150 !important;
+			color: colors.$purple-500 !important;
+		}
+	}
+
+	.badge {
+		border-radius: 500px;
+		background: #DC3D43;
+		color: #FCFCFC;
+		font-family: Arial Rounded MT Bold;
+		font-size: 14px;
+		padding: 3px 8px;
+		margin-left: 7%;
+	}
+
+	.m-10 {
+		margin: 10px;
+	}
+
+	.feedback {
+		background: transparent;
+		color: colors.$dark-gray-30;
+		padding-left: 12px;
+		bottom: 10px;
+		position: absolute;
+	}
+}

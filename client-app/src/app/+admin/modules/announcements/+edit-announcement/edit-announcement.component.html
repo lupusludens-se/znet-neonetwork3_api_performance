@@ -1,0 +1,134 @@
+<h1 class="title mb-24">
+  {{ (openedAnnouncement ? 'announcement.editAnnouncementLabel' : 'announcement.addAnnouncementLabel') | translate }}
+</h1>
+
+<main class="content mb-96">
+  <div class="top d-flex justify-end mb-16">
+    <div
+      *ngIf="openedAnnouncement"
+      class="controls">
+      <button
+        (click)="updateAnnouncementStatus(true, openedAnnouncement.id)"
+        [class.active]="openedAnnouncement.isActive"
+        class="btn-active"
+        type="button">
+        {{ 'status.activeStatusLabel' | translate }}
+      </button>
+      <button
+        (click)="updateAnnouncementStatus(false, openedAnnouncement.id)"
+        [class.active]="!openedAnnouncement.isActive"
+        class="btn-inactive"
+        type="button">
+        {{ 'status.inactiveStatusLabel' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="image-area d-flex">
+    <img
+      [class.opaque]="imageSrc === defaultImageSrc"
+      [src]="imageSrc"
+      alt="announcement image"
+      class="announcement-img" />
+
+    <div class="controls flex-center flex-column">
+      <input
+        #fileInput
+        (change)="onFileSelect($event)"
+        (click)="fileInput.value = ''"
+        accept="image/png, image/gif, image/jpeg"
+        class="file-input"
+        name="picture"
+        type="file" />
+
+      <button
+        (click)="fileInput.click()"
+        class="btn-add flex-center mb-16">
+        <svg-icon
+          [key]="imageSrc !== defaultImageSrc ? 'redo' : 'upload'"
+          class="mr-12"></svg-icon>
+        {{
+          (imageSrc !== defaultImageSrc ? 'announcement.changeBgImageLabel' : 'announcement.uploadBgImageLabel')
+            | translate
+        }}
+      </button>
+
+      <button
+        (click)="removeImage()"
+        *ngIf="openedAnnouncement?.backgroundImage || imageSrc !== defaultImageSrc"
+        class="btn-remove flex-center mb-16">
+        <svg-icon
+          class="mr-8"
+          key="trash-can"></svg-icon>
+        {{'announcement.removeBgImageLabel' | translate }}
+      </button>
+
+      <p class="info pl-20 pr-20">{{'announcement.imageDarkenedLabel' | translate }}</p>
+    </div>
+  </div>
+
+  <form
+    [formGroup]="form"
+    class="mt-32">
+    <label class="text-input-label neo-arial">
+      {{ 'announcement.announcementLabel' | translate }}
+
+      <span class="counter">{{ form.controls['name'].value.length }}/100</span>
+
+      <neo-text-input
+        [labelName]="'announcement.announcementLabel' | translate"
+        [showLabel]="false"
+        [submitted]="formSubmitted"
+        maxLength="100"
+        formControlName="name"
+        class="mt-8">
+      </neo-text-input>
+    </label>
+
+    <label class="text-input-label neo-arial mt-24 mb-24">
+      {{ 'announcement.buttonTextLabel' | translate }}
+
+      <span class="counter">{{ form.controls['buttonText'].value.length }}/21</span>
+
+      <neo-text-input
+        [labelName]="'announcement.buttonTextLabel' | translate"
+        [showLabel]="false"
+        [submitted]="formSubmitted"
+        maxLength="21"
+        formControlName="buttonText"
+        class="mt-8">
+      </neo-text-input>
+    </label>
+
+    <neo-text-input
+      [labelName]="'announcement.buttonUrlLabel' | translate"
+      class="text-input-label-announcement"
+      [submitted]="formSubmitted"
+      formControlName="buttonUrl">
+    </neo-text-input>
+
+    <neo-radio-control
+      formControlName="audienceId"
+      class="mt-24 text-input-label-announcement text-label-announcement "
+      [list]="rolesData"
+      [labelName]="'announcement.audienceLabel' | translate"
+      [submitted]="formSubmitted">
+    </neo-radio-control>
+  </form>
+</main>
+
+<neo-form-footer
+  (cancel)="goBack()"
+  (save)="createAnnouncementWithImage()"
+  [submitButtonName]="
+    (announcementId ? 'announcement.updateAnnouncementLabel' : 'announcement.addAnnouncementLabel') | translate
+  "
+  class="form-footer">
+</neo-form-footer>
+
+<neo-modal *ngIf="showConfirmAnnouncement">
+  <neo-confirm-announcement
+    (closeModal)="showConfirmAnnouncement = false"
+    (confirmChanges)="confirmChanges()">
+  </neo-confirm-announcement>
+</neo-modal>

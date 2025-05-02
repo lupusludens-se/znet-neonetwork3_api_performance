@@ -1,0 +1,36 @@
+<a
+  *ngIf="linkedInLink"
+  [href]="linkedInLink.startsWith('www') ? '//' + linkedInLink : linkedInLink"
+  class="linkedin social mr-12 flex-center"
+  rel="noreferrer"
+  target="_blank">
+  <svg-icon
+    key="linkedin"
+    size="xxl"></svg-icon>
+</a>
+
+<button
+  *ngIf="message"
+  [queryParams]="{ userId: userId }"
+  class="message social mr-12 flex-center"
+  routerLink="/messages/new-message">
+  <svg-icon
+    key="chat-fill"
+    size="xxl"></svg-icon>
+</button>
+
+<button
+  (click)="followClick.emit(true)"
+  [class.following]="following"
+  class="btn-follow flex-center">
+  <svg-icon
+    *ngIf="!following"
+    key="plus"
+    class="mr-12" size="sm"></svg-icon>
+  {{ (following ? 'general.followingBtn' : 'general.followBtn') | translate }}
+
+  <svg-icon
+    *ngIf="following"
+    class="ml-8"
+    key="check-in-white"></svg-icon>
+</button>

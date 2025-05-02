@@ -1,0 +1,111 @@
+<ng-container *ngIf="auth.isLoggedIn() || auth.needSilentLogIn()">
+  <div class="d-flex w-100 h-100">
+    <div class="dashboard-wrapper h-100" [ngClass]="{
+        'w-70': isNotRoles(authService.currentUser() | async) && (authService.currentUser() | async) !== null,
+        'w-100': isEitherOfTheRoles(authService.currentUser() | async) || (authService.currentUser() | async) === null
+      }">
+      <neo-dashboard-private-skeleton *ngIf="!isUserAvailable"></neo-dashboard-private-skeleton>
+      <ng-container *ngIf="(authService.currentUser() | async) !== null">
+        <ng-container *ngIf="authService.currentUser() | async as currentUser">
+          <ng-container *ngIf="currentUser !== null && currentUser?.statusId === status.Active">
+            <h3 class="text-neo-near-black pb-16" *ngIf="isNotRoles(currentUser)">
+              {{ 'dashboard.dashboardLabel' | translate }}
+            </h3>
+
+            <neo-internal-dashboard *ngIf="isInRole(currentUser, roles.Internal) || isInRole(currentUser, roles.Admin)|| isInRole(currentUser, roles.SystemOwner)"
+              (elementClick)="elementClick$.next($event)"></neo-internal-dashboard>
+
+            <neo-corporation-dashboard *ngIf="isInRole(currentUser, roles.Corporation)"
+              (elementClick)="elementClick$.next($event)">
+              <ng-container *ngTemplateOutlet="eventWrapperTemplate"></ng-container>
+            </neo-corporation-dashboard>
+
+            <neo-solution-provider-dashboard
+              *ngIf="isInRole(currentUser, roles.SolutionProvider) || isInRole(currentUser, roles.SPAdmin)"
+              (elementClick)="elementClick$.next($event)">
+              <ng-container *ngTemplateOutlet="eventWrapperTemplate"></ng-container></neo-solution-provider-dashboard>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <ng-container *ngIf="authService.currentUser() | async as currentUser">
+      <ng-container *ngIf="isNotRoles(currentUser)">
+        <ng-container *ngTemplateOutlet="eventWrapperTemplate"> </ng-container>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #eventWrapperTemplate>
+      <div class="events-wrapper" [ngClass]="{
+          'w-30':
+            !isInRole(authService.currentUser() | async, roles.SolutionProvider) &&
+            !isInRole(authService.currentUser() | async, roles.SPAdmin) &&
+            !isInRole(authService.currentUser() | async, roles.Corporation),
+          'admin-event-wrapper':
+            !isInRole(authService.currentUser() | async, roles.SolutionProvider) &&
+            !isInRole(authService.currentUser() | async, roles.SPAdmin) &&
+            !isInRole(authService.currentUser() | async, roles.Corporation)
+        }" #eventWrapper>
+        <ng-container *ngIf="
+            (authService.currentUser() | async)?.statusId === status.Active && authService.currentUser()
+              | async as currentUser
+          ">
+          <div class="flex-between align-center pb-16">
+            <h4 class="text-neo-near-black" *ngIf="announcement$ | async as announcement">
+              {{ 'dashboard.featureLabel' | translate }}
+            </h4>
+          </div>
+
+          <neo-announcement *ngIf="announcement$ | async as announcement" [announcement]="announcement"
+            (announcementClick)="onAnnouncementClick(announcement.id)" cssClasses="mb-12"></neo-announcement>
+
+
+          <ng-container *ngIf="events$ | async as events">
+            <div class="flex-between align-center pt-24 pb-12" *ngIf="events?.dataList.length">
+              <h4 class="text-neo-near-black">
+                {{ 'dashboard.upcomingEventsLabel' | translate }}
+              </h4>
+
+              <button *ngIf="isNotRoles(currentUser)" class="link text-s d-flex align-center"
+                (click)="onEventAllClick()" routerLink="/events">
+                {{ 'general.viewAllLabel' | translate }}
+                <svg-icon class="arrow-icon text-neo-purple ml-6 rotate-180" key="arrow-thin-right"></svg-icon>
+              </button>
+            </div>
+            <div *ngIf="events?.dataList.length" class="gap-12 mb-12 wrapperside">
+              <neo-upcoming-events *ngFor="let event of events.dataList; let i = index" [event]="event"
+                (eventClick)="onEventClick(event.id)" cssClasses="mb-4"></neo-upcoming-events>
+            </div>
+          </ng-container>
+          <div class="mt-24">
+            <neo-suggestion *ngIf="suggestions$ | async as suggestion" [usersSuggestions]="suggestion?.suggestions"
+              (skipClick)="onSuggestionSkipClick()" (hideClick)="onSuggestionHideClick()"
+              (yesClick)="onSuggestionYesClick()"></neo-suggestion>
+          </div>
+        </ng-container>
+      </div>
+    </ng-template>
+    <!-- Added this below div to check the bypass whether it works, Have to be replaced with actual content -->
+    <div *ngIf="(authService.currentUser() | async) === null && !(auth.isLoggedIn() || auth.needSilentLogIn())">
+      <neo-announcement *ngIf="announcement$ | async as announcement" [announcement]="announcement"
+        (announcementClick)="onAnnouncementClick(announcement.id)" cssClasses="mb-12"></neo-announcement>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="(authService.currentUser() | async) === null && !(auth.isLoggedIn() || auth.needSilentLogIn())">
+  <div class="d-flex w-100 h-100">
+    <div class="dashboard-wrapper h-100 w-100">
+      <!-- w-70 -->
+      <ng-container>
+        <ng-container>
+          <neo-dashboard-public-skeleton *ngIf="!isSkeletonHidden"></neo-dashboard-public-skeleton>
+          <neo-public-corporation-dashboard (elementClick)="elementClick$.next($event)">
+          </neo-public-corporation-dashboard>
+          <!-- <neo-dashboard-content-skeleton
+          *ngIf="(authService.currentUser() | async) === null && !(auth.isLoggedIn() || auth.needSilentLogIn())"></neo-dashboard-content-skeleton> -->
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>

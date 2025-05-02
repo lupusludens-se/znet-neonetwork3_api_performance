@@ -1,0 +1,10 @@
+<div [ngClass]="topPanelClasses" class="d-flex w-100 top-panel-wrapper text-white align-center p-relative">
+  <ng-content></ng-content>
+
+  <img
+    [ngClass]="imageCssClasses"
+    alt="headline-background-image"
+    class="p-absolute"
+    [src]="imageUrl"
+  />
+</div>

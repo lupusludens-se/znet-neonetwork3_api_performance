@@ -1,0 +1,37 @@
+<div class="p-relative d-flex justify-center">
+  <button
+    (click)="toggleMenu(); preventCloseOnClick()"
+    [ngClass]="{ active: isActive }"
+    class="circle p-relative">
+    <svg-icon
+      key="star"
+      size="xxl"></svg-icon>
+  </button>
+
+  <div
+    (click)="preventCloseOnClick()"
+    *ngIf="menuOpen"
+    class="flex-column p-absolute saved-content-wrapper">
+    <div class="flex-between align-center pt-26 pb-26 pl-24 pr-24">
+      <h4
+        class="saved-tab-title text-neo-near-black"
+        *ngIf="!shortVersion">
+        {{ 'saved.savedLabel' | translate }}
+      </h4>
+      <button
+        (click)="toggleMenu()"
+        class="text-neo-purple link text-s fw-700 d-flex align-center justify-center"
+        routerLink="./saved-content">
+        {{ 'general.viewAllLabel' | translate }}
+
+        <svg-icon
+          class="ml-10"
+          key="right-arrow"
+          size="md"></svg-icon>
+      </button>
+    </div>
+    <div>
+      <neo-saved-content-list [shortVersion]="true"></neo-saved-content-list>
+    </div>
+  </div>
+</div>

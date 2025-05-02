@@ -1,0 +1,33 @@
+@use 'text';
+@use 'colors';
+
+.editor {
+  width: 100%;
+  min-height: 24px;
+  background: transparent;
+  overflow-y: auto;
+
+  :empty::before {
+    content: attr(placeholder);
+    @extend .text-s; //added for the Message placeholder in new message screen
+    @extend .text-blue-200;
+  }
+
+  :hover {
+    cursor: text;
+  }
+}
+
+.textcolor {
+  color: colors.$dark-gray-510;
+}
+
+.edit-message {
+  font-size: 14px;
+  margin-bottom: 10px;
+  line-height: 20px; 
+  display: inline-block;
+  word-break: break-word;  
+  align-items: center;
+  display: flex;
+}

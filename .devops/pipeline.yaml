@@ -1,0 +1,421 @@
+parameters:
+- name: deployBranches
+  displayName: These branches will trigger a deployment to Kubernetes.
+  type: object
+  default:
+    - develop
+    - test
+    - pre-production
+    - main
+
+trigger:
+  branches:
+    include:
+    - develop
+    - test
+    - pre-production
+    - main
+  paths:
+    exclude:
+      - doc/**
+      - README.md
+
+pr:
+  drafts: false
+  branches:
+    include:
+    - develop
+    - test
+    - pre-production
+    - main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  ${{ if endsWith( variables['Build.SourceBranchName'], 'main' ) }}:
+    aksServiceConnection: 'aks-prod-eastus2'
+    environment: 'prod'
+    namespace: 'znet-prod'
+    ingresspath: /zeigonetwork
+  ${{ elseif endsWith( variables['Build.SourceBranchName'], 'pre-production' ) }}:
+    aksServiceConnection: 'aks-prod-eastus2'
+    environment: 'preprod'
+    namespace: 'znet-preprod'
+    ingresspath: /zeigonetwork/preprod
+  ${{ elseif endsWith( variables['Build.SourceBranchName'], 'test' ) }}:
+    aksServiceConnection: 'aks-nonprod-eastus'
+    environment: 'tst'
+    namespace: 'znet-test'
+    ingresspath: /zeigonetwork/tst
+  ${{ else }}:
+    aksServiceConnection: 'aks-nonprod-eastus'
+    environment: 'dev'
+    namespace: 'znet-dev'
+    ingresspath: /zeigonetwork/dev
+
+  appName: neonetwork3
+  acrServiceConnection: 'acrsbsharedservices'
+  spaChartVersion: '0.1.3'
+  apiChartVersion: '0.3.10'
+  cronChartVersion: '0.3.3'
+
+stages:
+- stage: Setup
+  displayName: Gather Prerequisites
+  jobs:
+    - job: CalculateTag
+      displayName: Calculate Tag
+      steps:
+        - bash: |
+            git_tag=$( git tag --points-at HEAD )
+            if [ -z "$git_tag" ]; then
+              echo "No tag found for this commit."
+              echo "Using commit hash as tag: $( git rev-parse --short HEAD )"
+              echo "##vso[task.setvariable variable=tag;isOutput=true]$( git rev-parse --short HEAD )"
+            else
+              echo "Tag found for this commit: $git_tag"
+              echo "##vso[task.setvariable variable=tag;isOutput=true]$git_tag"
+            fi
+          name: gitTag
+
+- stage: ServiceBuild
+  displayName: Build and Push Service Image
+  dependsOn:
+    - Setup
+  variables:
+    tag: $[stageDependencies.Setup.CalculateTag.outputs['gitTag.tag']]
+  jobs:
+  - job: ImageBuild
+    displayName: Build Service Image
+    steps:
+    - checkout: self
+
+    - task: DotNetCoreCLI@2
+      displayName: Restore Services Project
+      inputs:
+        command: restore
+        projects: 'server-app/SE.Neo.WebAPI/SE.Neo.WebAPI.csproj'
+        vstsFeed: '78546a61-f969-4f94-bbdc-0238cb74b0d1'
+
+    - task: DotNetCoreCLI@2
+      displayName: Build Services Project
+      inputs:
+        command: build
+        projects: 'server-app/SE.Neo.WebAPI/SE.Neo.WebAPI.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Unit Tests'
+      inputs:
+        command: 'test'
+        publishTestResults: true
+        projects: '**/*.UnitTests.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: Dotnet Publish
+      inputs:
+        command: publish
+        publishWebProjects: false
+        projects: 'server-app/SE.Neo.WebAPI/SE.Neo.WebAPI.csproj'
+        arguments: '-o $(Build.SourcesDirectory)/.build/service'
+        zipAfterPublish: false
+        modifyOutputPath: false
+
+    - task: Docker@2
+      displayName: 'Docker Build'
+      inputs:
+        command: build
+        containerRegistry: $(acrServiceConnection)
+        repository: $(appName)-api
+        buildContext: $(Build.SourcesDirectory)/.build/service
+        dockerfile: '$(Build.SourcesDirectory)/.cicd/api/Dockerfile'
+        tags: |
+          $(tag)
+
+    - task: Docker@2
+      displayName: 'Docker Push'
+      inputs:
+        command: push
+        containerRegistry: $(acrServiceConnection)
+        repository: $(appName)-api
+        tags: |
+          $(tag)
+
+- stage: EmailAlertBuild
+  displayName: Build and Push Email Alert Image
+  dependsOn:
+    - Setup
+  variables:
+    tag: $[stageDependencies.Setup.CalculateTag.outputs['gitTag.tag']]
+  jobs:
+  - job: ImageBuild
+    displayName: Build Email Alert Image
+    steps:
+    - checkout: self
+
+    - task: DotNetCoreCLI@2
+      displayName: Restore Email Alert Project
+      inputs:
+        command: restore
+        projects: 'server-app/SE.Neo.EmailAlertSender/SE.Neo.EmailAlertSender.csproj'
+        vstsFeed: '78546a61-f969-4f94-bbdc-0238cb74b0d1'
+
+    - task: DotNetCoreCLI@2
+      displayName: Build Email Alert Project
+      inputs:
+        command: build
+        projects: 'server-app/SE.Neo.EmailAlertSender/SE.Neo.EmailAlertSender.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: Dotnet Publish
+      inputs:
+        command: publish
+        publishWebProjects: false
+        projects: 'server-app/SE.Neo.EmailAlertSender/SE.Neo.EmailAlertSender.csproj'
+        arguments: '-o $(Build.SourcesDirectory)/.build/eml'
+        zipAfterPublish: false
+        modifyOutputPath: false
+
+    - task: Docker@2
+      displayName: 'Docker Build'
+      inputs:
+        command: build
+        containerRegistry: $(acrServiceConnection)
+        repository: $(appName)-eml-alert
+        buildContext: $(Build.SourcesDirectory)/.build/eml
+        dockerfile: '$(Build.SourcesDirectory)/.cicd/email-alert/Dockerfile'
+        tags: |
+          $(tag)
+
+    - task: Docker@2
+      displayName: 'Docker Push'
+      inputs:
+        command: push
+        containerRegistry: $(acrServiceConnection)
+        repository: $(appName)-eml-alert
+        tags: |
+          $(tag)
+
+- stage: DataSyncBuild
+  displayName: Build and Push Data Sync Image
+  dependsOn:
+    - Setup
+  variables:
+    tag: $[stageDependencies.Setup.CalculateTag.outputs['gitTag.tag']]
+  jobs:
+  - job: ImageBuild
+    displayName: Build Data Sync Image
+    steps:
+    - checkout: self
+
+    - task: DotNetCoreCLI@2
+      displayName: Restore Data Sync Project
+      inputs:
+        command: restore
+        projects: 'server-app/SE.Neo.DataSync/SE.Neo.DataSync.csproj'
+        vstsFeed: '78546a61-f969-4f94-bbdc-0238cb74b0d1'
+
+    - task: DotNetCoreCLI@2
+      displayName: Build Data Sync Project
+      inputs:
+        command: build
+        projects: 'server-app/SE.Neo.DataSync/SE.Neo.DataSync.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: Dotnet Publish
+      inputs:
+        command: publish
+        publishWebProjects: false
+        projects: 'server-app/SE.Neo.DataSync/SE.Neo.DataSync.csproj'
+        arguments: '-o $(Build.SourcesDirectory)/.build/dsync'
+        zipAfterPublish: false
+        modifyOutputPath: false
+
+    - task: Docker@2
+      displayName: 'Docker Build'
+      inputs:
+        command: build
+        containerRegistry: $(acrServiceConnection)
+        repository: $(appName)-data-sync
+        buildContext: $(Build.SourcesDirectory)/.build/dsync
+        dockerfile: '$(Build.SourcesDirectory)/.cicd/data-sync/Dockerfile'
+        tags: |
+          $(tag)
+
+    - task: Docker@2
+      displayName: 'Docker Push'
+      inputs:
+        command: push
+        containerRegistry: $(acrServiceConnection)
+        repository: $(appName)-data-sync
+        tags: |
+          $(tag)
+
+- stage: MigrationBuild
+  displayName: Build and Push Migration Image
+  dependsOn:
+    - Setup
+  variables:
+    tag: $[stageDependencies.Setup.CalculateTag.outputs['gitTag.tag']]
+  jobs:
+  - job: ImageBuild
+    displayName: Build Migration Image
+    steps:
+    - checkout: self
+
+    - task: Docker@2
+      displayName: 'Docker Migration Build'
+      inputs:
+        command: build
+        containerRegistry: $(acrServiceConnection)
+        repository: $(appName)-migration
+        dockerfile: '$(Build.SourcesDirectory)/.cicd/migration/Dockerfile'
+        buildContext: '$(Build.SourcesDirectory)/server-app/'
+        tags: |
+          $(tag)
+
+    - task: Docker@2
+      displayName: 'Docker Push'
+      inputs:
+        command: push
+        containerRegistry: $(acrServiceConnection)
+        repository: $(appName)-migration
+        tags: |
+          $(tag)
+
+- stage: ClientBuild
+  displayName: Build and Push Client Image
+  dependsOn:
+    - Setup
+  variables:
+    tag: $[stageDependencies.Setup.CalculateTag.outputs['gitTag.tag']]
+  jobs:
+  - job: ImageBuild
+    displayName: Build Client Image
+    steps:
+    - checkout: self
+      persistCredentials: true
+      clean: true
+
+    - task: Docker@2
+      displayName: 'Docker Build'
+      inputs:
+        command: build
+        containerRegistry: $(acrServiceConnection)
+        repository: $(appName)-client
+        buildContext: $(Build.SourcesDirectory)/client-app
+        dockerfile: '$(Build.SourcesDirectory)/.cicd/client/Dockerfile'
+        arguments: '--build-arg env_name=$(environment) --build-arg ing_path=$(ingresspath)'
+        tags: |
+          $(tag)
+
+    - task: Docker@2
+      displayName: 'Docker Push'
+      inputs:
+        command: push
+        containerRegistry: $(acrServiceConnection)
+        repository: $(appName)-client
+        tags: |
+          $(tag)
+
+- stage: Deployment
+  displayName: Deploy Solutions to Cluster
+  dependsOn:
+    - Setup
+    - ServiceBuild
+    - ClientBuild
+    - EmailAlertBuild
+    - DataSyncBuild
+    - MigrationBuild
+  variables:
+  - group: Githubsecret
+  - name: tag
+    value: $[stageDependencies.Setup.CalculateTag.outputs['gitTag.tag']]
+  - name: doDeploy
+    value: ${{ containsValue(parameters.deployBranches, variables['Build.SourceBranchName']) }}
+  condition: and(succeeded(), eq(variables.doDeploy, true))
+  jobs:
+  - job: Deployment
+    steps:
+    - checkout: self
+    - task: HelmDeploy@0
+      displayName: Add SB Helm Repository
+      name: HelmRepoAdd
+      inputs:
+        connectionType: Kubernetes Service Connection
+        kubernetesServiceEndpoint: $(aksServiceConnection)
+        command: repo
+        arguments: add sb https://$(GH-TOKEN)@raw.githubusercontent.com/SE-Sustainability-Business/helm-repository/main
+
+    - task: HelmDeploy@0
+      displayName: Update Helm Repo
+      name: HelmRepoUpdate
+      inputs:
+        kubernetesServiceEndpoint: $(aksServiceConnection)
+        command: repo
+        arguments: update sb
+
+    - task: HelmDeploy@0
+      displayName: Deploy Service
+      name: ApiHelmDeploy
+      inputs:
+        chartName: sb/dotnet-api
+        chartVersion: $(apiChartVersion)
+        command: upgrade
+        connectionType: Kubernetes Service Connection
+        install: true
+        kubernetesServiceConnection: $(aksServiceConnection)
+        namespace: $(namespace)
+        overrideValues: image.tag=$(tag)
+        releaseName: neonetwork3-api
+        valueFile: $(Build.SourcesDirectory)/.cicd/api/helm-vals/$(environment).yaml
+        waitForExecution: true
+        arguments: --timeout 600s
+
+    - task: HelmDeploy@0
+      displayName: Deploy Data Sync
+      name: DataSyncHelmDeploy
+      inputs:
+        chartName: sb/dotnet-console
+        chartVersion: $(cronChartVersion)
+        command: upgrade
+        connectionType: Kubernetes Service Connection
+        install: true
+        kubernetesServiceConnection: $(aksServiceConnection)
+        namespace: $(namespace)
+        overrideValues: image.tag=$(tag)
+        releaseName: neonetwork3-data-sync
+        valueFile: $(Build.SourcesDirectory)/.cicd/data-sync/helm-vals/$(environment).yaml
+        waitForExecution: true
+
+    - task: HelmDeploy@0
+      displayName: Deploy Email Alert
+      name: EmailAlertHelmDeploy
+      inputs:
+        chartName: sb/dotnet-console
+        chartVersion: $(cronChartVersion)
+        command: upgrade
+        connectionType: Kubernetes Service Connection
+        install: true
+        kubernetesServiceConnection: $(aksServiceConnection)
+        namespace: $(namespace)
+        overrideValues: image.tag=$(tag)
+        releaseName: neonetwork3-email-alert
+        valueFile: $(Build.SourcesDirectory)/.cicd/email-alert/helm-vals/$(environment).yaml
+        waitForExecution: true
+
+    - task: HelmDeploy@0
+      displayName: Deploy Client
+      name: ClientHelmDeploy
+      inputs:
+        chartName: sb/spa
+        chartVersion: $(spaChartVersion)
+        command: upgrade
+        connectionType: Kubernetes Service Connection
+        install: true
+        kubernetesServiceConnection: $(aksServiceConnection)
+        namespace: $(namespace)
+        overrideValues: image.tag=$(tag)
+        releaseName: neonetwork3-client
+        valueFile: $(Build.SourcesDirectory)/.cicd/client/helm-vals/$(environment).yaml
+        waitForExecution: true

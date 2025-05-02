@@ -1,0 +1,136 @@
+<ng-container *ngIf="project">
+  <td class="pl-24 d-flex align-center" [class.transparent]="project.statusId === projectStatuses.Inactive"
+    [class.draft]="project.statusId === projectStatuses.Draft">
+    <span class="tooltip c-pointer">
+      <svg-icon
+        *ngIf="project.owner.statusId === userStatuses.Deleted || project.owner.statusId === userStatuses.Inactive"
+        class="mr-8 text-error" key="alert-filled">
+      </svg-icon>
+      <span class="tooltiptext text-xs">
+        {{ 'projects.tooltipText' | translate }}
+        <a [routerLink]="['edit-project/' + project?.id]">{{ 'projects.tooltipLinkText' | translate }}</a>
+      </span>
+    </span>
+
+    <span [class.transparent]="project.statusId === projectStatuses.Inactive"
+      [class.draftTitle]="project.statusId === projectStatuses.Draft"
+      [class.lightText]="project.statusId === projectStatuses.Inactive" class="title-col ellipsis"
+      title="{{project.title}}">
+      {{ project.title }}
+    </span>
+  </td>
+
+  <td [class.draft]="project.statusId === projectStatuses.Draft"
+    [class.transparent]="project.statusId === projectStatuses.Inactive" class="pl-24">
+    <span class="type ellipsis" title="{{project.category?.name}}">{{ project.category?.name }}</span>
+  </td>
+
+  <td [class.draft]="project.statusId === projectStatuses.Draft"
+    [class.transparent]="project.statusId === projectStatuses.Inactive" class="pl-24 location-col">
+    <span class="location ellipsis" title="{{generateLocationString()}}">{{ generateLocationString() }}</span>
+  </td>
+
+  <td [class.draft]="project.statusId === projectStatuses.Draft"
+    [class.transparent]="project.statusId === projectStatuses.Inactive" class="pl-24 posted">
+    <span class="posted" title="{{ project.changedOn | date: 'shortDate' }}">
+      {{ project.changedOn | date: 'shortDate' }}
+    </span>
+  </td>
+
+  <td [class.draft]="project.statusId === projectStatuses.Draft"
+    [class.transparent]="project.statusId === projectStatuses.Inactive" *ngIf="showCompany" class="pl-24">
+    <span class="company ellipsis" title="{{ project.company.name }}">
+      {{ project.company.name }}
+    </span>
+  </td>
+
+
+
+  <td class="pl-24" [class.draft]="project.statusId === projectStatuses.Draft"
+    [class.transparent]="project.statusId === projectStatuses.Inactive">
+    <span class="publishedBy ellipsis" title="{{ project?.owner?.firstName  +' ' + project?.owner?.lastName  }}">
+      {{ project?.owner?.firstName + ' ' + project?.owner?.lastName }}
+    </span>
+  </td>
+
+  <td class="pl-24" [class.draft]="project.statusId === projectStatuses.Draft"
+    [class.transparent]="project.statusId === projectStatuses.Inactive && (project.owner.statusId === userStatuses.Deleted || project.owner.statusId === userStatuses.Inactive)"
+    [class.transparent1]="(project.owner.statusId === userStatuses.Deleted || project.owner.statusId === userStatuses.Inactive)"
+    [class.midlight-column]="project.statusId === projectStatuses.Inactive">
+    <span class="status {{ project.statusName | lowercase }}" title="{{ project.statusName }}">
+      {{ project.statusName }}
+    </span>
+  </td>
+
+  <td class="pl-24 options-cell pr-24" [class.draft]="project.statusId === projectStatuses.Draft"
+    [class.transparent]="project.statusId === projectStatuses.Inactive && (project.owner.statusId === userStatuses.Deleted || project.owner.statusId === userStatuses.Inactive)"
+    [class.transparent1]="(project.owner.statusId === userStatuses.Deleted || project.owner.statusId === userStatuses.Inactive)"
+    [class.midlight-column]="project.statusId === projectStatuses.Inactive">
+    <neo-menu (optionClick)="optionClick($event)" [options]="options" activeIcon="cross" cssClasses="flex-center"
+      icon="three-dots">
+    </neo-menu>
+  </td>
+
+  <neo-modal (cancel)="showDeleteModal = false" *ngIf="showDeleteModal">
+    <svg-icon (click)="showDeleteModal = false" class="text-blue-200 c-pointer p-absolute top-20 right-20" key="cross">
+    </svg-icon>
+
+    <h3 class="mb-6 text-neo-near-black">
+      {{ 'general.deleteModal.titleLabel' | translate }}
+    </h3>
+
+    <p class="text-s text-subtitle mb-24">
+      {{ 'general.deleteModal.textLabel' | translate }}
+    </p>
+
+    <div class="popup-controls pt-24 d-flex">
+      <button (click)="showDeleteModal = false" class="btn-cancel blue-50-frame mr-16">
+        {{ 'general.cancelLabel' | translate }}
+      </button>
+
+      <button (click)="deleteProject()" class="btn-confirm">
+        {{ 'general.deleteModal.confirmLabel' | translate }}
+      </button>
+    </div>
+  </neo-modal>
+
+  <neo-modal (cancel)="showDuplicateModal = false" *ngIf="showDuplicateModal && project.title" size="medium">
+    <svg-icon (click)="showDuplicateModal = false" class="text-blue-200 c-pointer p-absolute top-20 right-20"
+      height="16px" key="cross" width="16px">
+    </svg-icon>
+
+    <h3 class="mb-6 text-neo-near-black">{{ 'projects.duplicateModal.titleLabel' | translate }}
+    </h3>
+
+    <p class="text-s text-subtitle mb-12 p-10">
+      {{ 'projects.duplicateModal.subTitleLabel1' | translate }}
+      <b>{{project.title}}</b>
+      {{'projects.duplicateModal.subTitleLabel2' | translate }}
+    </p>
+
+    <form [formGroup]="projectFormGroup" class="flex-column w-100">
+      <div class="flex-column text-neo-near-black neo-arial">
+        <div class="d-flex pb-10">
+          <span class="flex-grow-1">{{ 'projects.addProject.titleLabel' | translate }} </span>
+          <span class="counter"> {{this.projectFormGroup.controls['text']?.value?.length}}/{{ titleMaxLength }}</span>
+        </div>
+        <label>
+          <neo-text-input formControlName="text" class="text-neo-near-black-ft14" [maxLength]="titleMaxLength"
+            [labelName]="'projects.addProject.titleLabel' | translate" placeholder="Project Title" [showLabel]="false"
+            [submitted]="hasError('text', 'projectFormGroup')">
+          </neo-text-input>
+        </label>
+      </div>
+    </form>
+
+    <div class="popup-controls pt-24 d-flex mt-12">
+      <button (click)="showDuplicateModal = false" class="btn-cancel blue-50-frame mr-16">
+        {{ 'general.cancelLabel' | translate }}
+      </button>
+
+      <button (click)="duplicateProject()" class="btn-confirm duplicate">
+        {{ 'projects.duplicateModal.confirmSaveAsDraftButton' | translate }}
+      </button>
+    </div>
+  </neo-modal>
+</ng-container>

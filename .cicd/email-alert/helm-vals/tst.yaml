@@ -1,0 +1,32 @@
+fullnameOverride: neonetwork3-email-alert
+
+replicaCount: 2
+
+image:
+  repository: acrsbsharedservices.azurecr.io/neonetwork3-eml-alert
+  tag: null
+  pullPolicy: Always
+
+serviceAccount:
+  create: false
+  name: neonetwork3-api
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 1024Mi
+  requests:
+    cpu: 500m
+    memory: 1024Mi
+
+cronjob:
+  namespace: znet-test
+  environment: tst
+  schedule: "*/5 * * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3  
+  concurrencyPolicy: Forbid
+  restartPolicy: OnFailure
+  workingDir: /app
+  entrypoint: ["dotnet", "SE.Neo.EmailAlertSender.dll"]
+  otelServiceName: neonetwork3-email-alert

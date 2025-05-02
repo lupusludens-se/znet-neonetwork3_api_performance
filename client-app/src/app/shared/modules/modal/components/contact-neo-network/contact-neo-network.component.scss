@@ -1,0 +1,60 @@
+@use 'colors';
+
+.contact-us .modal {
+  padding: 32px 48px;
+  color: colors.$near-black-400;
+}
+
+.sent-content-wrapper {
+  padding: 48px 54px;
+
+  .sent-icon {
+    font-size: 64px !important;
+    color: colors.$purple-300;
+  }
+
+  .sent-label {
+    font-size: 32px;
+  }
+}
+
+.description{
+  line-height: 130%;
+  color: colors.$dark-gray-515;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+}
+
+.message{
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Arial Rounded MT Bold';
+}
+
+.message-receive{
+  font-size: 14px;
+  line-height: 18px;
+  color: colors.$dark-gray-580;
+}
+
+.btn-back{
+  width: 420px;
+  height: 47px;
+}
+
+button:disabled{
+  background-color:colors.$dark-gray-450 ;
+  color: colors.$dark-gray-505;
+}
+.errorMessage
+{
+  font-family: Arial,sans-serif;
+    font-size: 12px;
+    margin-top: 2px;
+    line-height: 140%;
+    color:colors.$error-red;;
+    margin-left: 20px;
+}
+.input-error {
+  border:colors.$error-red 1px solid;
+}

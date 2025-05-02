@@ -1,0 +1,179 @@
+<ng-container *ngIf="notifications">
+  <ng-container *ngIf="notifications?.length; else emptyNotifications">
+    <div
+      (click)="notificationClick.emit(notification)"
+      *ngFor="let notification of notifications; let index = index"
+      [class.mt-18]="index > 0"
+      [class.show-wrapper]="showWrapper"
+      [class.unread]="!notification?.isRead"
+      class="notification d-flex align-center {{ index > 0 ? spaceBetween : '' }}">
+      <div class="icon flex-center circle p-relative">
+        <svg-icon
+          [key]="notification?.type | icon"
+          size="md"></svg-icon>
+          <span
+          *ngIf="!notification?.isRead"
+          class="badge flex-center">
+        </span>
+      </div>
+
+      <ng-container [ngSwitch]="notification?.type">
+        <neo-user-comment-topic
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          [truncateName]="shortVersion"
+          *ngSwitchCase="notificationType.CommentsMyTopic"
+          [notification]="notification"></neo-user-comment-topic>
+
+        <neo-user-comment-topic
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          [truncateName]="shortVersion"
+          *ngSwitchCase="notificationType.LikesMyTopic"
+          [notification]="notification"></neo-user-comment-topic>
+
+        <neo-user-comment-topic
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          [truncateName]="shortVersion"
+          *ngSwitchCase="notificationType.RepliesToMyComment"
+          [notification]="notification"></neo-user-comment-topic>
+
+        <neo-user-comment-topic
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          [truncateName]="shortVersion"
+          *ngSwitchCase="notificationType.NewForumCreated"
+          [notification]="notification"></neo-user-comment-topic>
+
+        <neo-user-comment-topic
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          [truncateName]="shortVersion"
+          *ngSwitchCase="notificationType.NewPrivateForumCreated"
+          [notification]="notification"></neo-user-comment-topic>
+
+        <neo-user-comment-topic
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          [truncateName]="shortVersion"
+          *ngSwitchCase="notificationType.RepliesToTopicIFollow"
+          [notification]="notification"></neo-user-comment-topic>
+
+        <neo-user-comment-topic
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          [truncateName]="shortVersion"
+          *ngSwitchCase="notificationType.MentionsMeInComment"
+          [notification]="notification"></neo-user-comment-topic>
+
+        <neo-event
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          *ngSwitchCase="notificationType.InvitesMeToEvent"
+          [notification]="notification"></neo-event>
+
+        <neo-event
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          *ngSwitchCase="notificationType.ChangesToEventInvited"
+          [notification]="notification"></neo-event>
+
+        <neo-user-follows
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          *ngSwitchCase="notificationType.FollowsMe"
+          [truncateName]="shortVersion"
+          [notification]="notification"></neo-user-follows>
+
+          <neo-message [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          *ngSwitchCase="notificationType.MessagesMe" [notification]="notification"></neo-message>
+
+        <neo-message [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          *ngSwitchCase="notificationType.ContactZeigoNetwork" [notification]="notification"></neo-message>
+
+       <neo-feedback
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+            *ngSwitchCase="notificationType.NewFeedback"
+            [notification]="notification">
+       </neo-feedback>
+
+       <neo-initiative
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+            *ngSwitchCase="notificationType.NewInitiativeCreated"
+            [notification]="notification">
+       </neo-initiative>
+
+        <span
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          *ngSwitchCase="notificationType.AdminAlert"
+          [class.trim]="!showWrapper"
+          class="two-lines-ellipsis text-s pl-12 text-neo-blue">
+          {{ notification?.details?.alertMessage }}
+        </span>
+
+        <neo-deleted-user
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          *ngSwitchCase="notificationType.UserDeleted"
+          [truncateName]="shortVersion"
+          [showWrapper]="showWrapper"
+          class="two-lines-ellipsis text-s pl-12 text-neo-blue">
+        </neo-deleted-user>
+
+        <neo-project-notification
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          *ngSwitchCase="notificationType.ChangesToProjectISaved"
+          [truncateName]="shortVersion"
+          [notification]="notification"></neo-project-notification>
+
+        <neo-company
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          *ngSwitchCase="notificationType.CompanyIFollowPostProject"
+          [truncateName]="shortVersion"
+          [notification]="notification"></neo-company>
+
+        <neo-user-comment-topic
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          *ngSwitchCase="notificationType.UserRegistered"
+          [truncateName]="shortVersion"
+          [notification]="notification">
+        </neo-user-comment-topic>
+
+        <neo-company-employee
+        [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          *ngSwitchCase="notificationType.CompanyIFollowAddEmployee"
+          [truncateName]="shortVersion"
+          [notification]="notification"></neo-company-employee>
+
+          <neo-user-comment-topic
+          [ngClass]="{'w-65': !showWrapper, 'w-75': showWrapper }"
+          *ngSwitchCase="notificationType.UserAutoApproved"
+          [truncateName]="shortVersion"
+          [notification]="notification">
+        </neo-user-comment-topic> 
+
+      </ng-container>
+      <div class="d-flex align-center flex-start" [ngClass]="{ 'pl-16 w-28': !showWrapper, 'pl-40 w-18': showWrapper}">
+        <svg-icon
+        class="timer-icon text-blue-200"
+        key="message-timer"
+        size="md">
+      </svg-icon>
+
+      <span class="text-xs text-blue-200 pl-8">
+        {{ notification?.detailsModifiedTime | timeAgo }}
+      </span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyNotifications>
+    <div class="flex-column flex-center align-self-center h-100">
+      <div class="flex-center notification-icon">
+        <svg-icon
+          class="text-dark-gray-590"
+          height="36px"
+          key="no-notification"
+          width="36px"></svg-icon>
+      </div>
+
+      <h3 class="text-neo-near-black pt-32 pb-4">
+        {{ 'notification.noNotificationsLabel' | translate }}
+      </h3>
+
+      <p class="text-m text-dark-gray-590">
+        {{ 'notification.newNotificationsLabel' | translate }}
+      </p>
+    </div>
+  </ng-template>
+</ng-container>

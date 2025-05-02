@@ -1,0 +1,64 @@
+@use '../../../../styles/filters-common';
+@use 'colors';
+
+:host {
+	position: relative;
+}
+
+:host.w-96 {
+	width: 96%; //making this from 100 to 96. 96 - forum, 99- community
+	display: inline-block;
+}
+
+.filter-wrapper {
+	&.expanded {
+		.horizontal {
+			position: absolute;
+			width: 100%;
+			z-index: 1;
+			background: colors.$white;
+			box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+		}
+
+		.text-blue-100 {
+			transform: rotate(180deg);
+		}
+	}
+}
+
+:host.ppaMapFilter,
+:host.msgFilter {
+	.filter-wrapper {
+		&.collapsed {
+			width: 250px;
+		}
+
+		&.expanded {
+			width: 250px;
+			box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+
+			.horizontal {
+				overflow-y: auto;
+				width: 250px;
+				max-height: 250px !important;
+				min-height: 140px;
+				height: fit-content;
+				z-index: 4;
+			}
+		}
+
+		&.collapsed {
+			animation: none;
+		}
+	}
+}
+
+:host.technologyFilter {
+	.filter-wrapper {
+		&.expanded {
+			.horizontal {
+				min-height: 160px;
+			}
+		}
+	}
+}

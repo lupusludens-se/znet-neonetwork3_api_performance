@@ -1,0 +1,86 @@
+@use 'colors';
+@use 'variables';
+
+:host{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 120%;
+  color: colors.$near-black-400;
+}
+
+.btn-add-user {
+  width: 200px;
+  height: 45px;
+  font-size: 14px;
+  color: colors.$dark-gray-40;
+  text-transform: capitalize;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.table-wrapper {
+  width: 100%;
+}
+
+.table {
+  cursor: default;
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    font-family: 'Arial Rounded MT Bold', sans-serif;
+    background-color: colors.$dark-gray-450;
+    font-size: 14px;
+    line-height: 130%;
+    text-transform: uppercase;
+    color: colors.$blue-800;
+    letter-spacing: 0.14px;
+
+    td {
+      height: 40px;
+
+      .caret {
+        transition: all 0.2s ease;
+        vertical-align: middle;
+        margin-bottom: 2px;
+
+        &.up {
+          transform: rotate(180deg);
+          transition: all 0.2s ease;
+        }
+      }
+    }
+
+    .click-area {
+      width: fit-content;
+      cursor: pointer;
+    }
+  }
+
+  tbody {
+    font-size: 14px;
+    color: colors.$blue-500;
+    line-height: 130%;
+    background-color: colors.$white;
+
+    neo-announcement-table-row {
+      height: 74px;
+      border-bottom: 1px solid colors.$blue-50;
+      border-top: none;
+
+      &:hover{
+        background-color: colors.$blue-5;
+      }
+    }
+  }
+}
+.sorthighlight {
+  color: #209cd1;
+}

@@ -1,0 +1,62 @@
+<div class="info-wrapper flex-column">
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.category?.name">
+    <p class="param mr-6">
+      {{ 'projects.projectTypeLabel' | translate }}
+    </p>
+    <p class="param-value text-s">
+      {{ projectDetails?.category?.name }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="technologiesList">
+    <p class="param mr-6">{{ 'projects.technologyLabel' | translate }}</p>
+    <p class="param-value">
+      {{ technologiesList }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.projectDetails?.minimumAnnualSiteKWh">
+    <p class="param mr-6">
+      {{ 'projects.addProject.minimumAnnualSiteKWhLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ projectDetails?.projectDetails?.minimumAnnualSiteKWh | number }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.projectDetails?.minimumTermLength">
+    <p class="param mr-6">
+      {{ 'projects.addProject.minimumTermLengthAvailableLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ projectDetails?.projectDetails?.minimumTermLength }}
+      {{
+        projectDetails?.projectDetails?.minimumTermLength
+          ? ((projectDetails?.projectDetails?.minimumTermLength === 1
+              ? 'projects.termLengthYearsSingleLabel'
+              : 'projects.termLengthYearsPluralLabel'
+            ) | translate)
+          : ''
+      }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="valuesProvidedList">
+    <p class="param mr-6">
+      {{ 'projects.valueProvidedLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ valuesProvidedList }}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+@use 'colors';
+
+.tile-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .splitter {
+    padding: 5px 8px;
+    border-bottom: 1px solid colors.$dark-gray-200;
+  }
+
+  .tile {
+    width: 49%;
+    background: colors.$white-10;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+    margin: 4px;
+
+    &:hover {
+      background: colors.$blue-5;
+      border: 1px solid #e2e1e1;
+      border-radius: 8px;
+      box-shadow: 0px 2px 8px rgba(134, 132, 141, 0.16);
+    }
+
+    &.selected {
+      border: 2px solid colors.$purple-300;
+      border-radius: 8px;
+    }
+  }
+}
+
+.no-saved-container {
+  padding: 80px;
+  align-items: center;
+  background-color: colors.$purple-20;
+  border: 1px solid colors.$purple-160;
+  border-radius: 12px;
+  
+  .no-saved-description {
+  color: colors.$dark-gray-545;
+  font-size: 14px;
+  border-radius: 5px;
+  }
+
+  .community-icon {
+    color: colors.$purple-300;
+    width: 42px;
+    height: 42px;
+  }
+
+}

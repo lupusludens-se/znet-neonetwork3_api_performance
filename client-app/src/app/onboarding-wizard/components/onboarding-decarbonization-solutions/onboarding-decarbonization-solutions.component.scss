@@ -1,0 +1,34 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+textarea {
+  padding: 16px;
+}
+
+.flex-1 {
+  flex: .1 0 0;
+}
+
+.flex-2 {
+  flex: .5 0 0;
+}
+
+.flex-3 {
+  flex: 1 0 0;
+}
+
+a {
+  text-decoration: underline;
+}
+
+.green {
+
+  color: rgb(61, 205, 88);
+}
+
+.control-wrapper {
+ 
+} 

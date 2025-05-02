@@ -1,0 +1,40 @@
+<div class="flex-center flex-column wrapper-height">
+  <div class="circle flex-center">
+    <svg-icon
+      key="ok-wire"
+      class="text-neo-purple"></svg-icon>
+  </div>
+
+  <h1 class="text-neo-near-black pt-20 pb-12">
+    {{ 'solarQuote.thankYou.thankYouLabel' | translate }}
+  </h1>
+
+  <p class="text-xl text-dark-gray-590 pb-32 w-100">
+    {{ 'solarQuote.thankYou.thankYouDescriptionLabel' | translate }}
+  </p>
+
+  <div class="green-separator"></div>
+
+  <p class="text-s fw-700 text-dark-gray-590 pt-32 pb-24">
+    {{ 'solarQuote.thankYou.companyListLabel' | translate }}
+  </p>
+
+  <div class="d-flex justify-center flex-wrap">
+    <div
+      *ngFor="let company of hardcodedCompanies"
+      class="company d-flex flex-center flex-column logo-wrapper c-pointer ml-6 mr-6 mb-12 p-12"
+      routerLink="/company-profile/{{ company.id }}">
+      <neo-company-logo
+        [company]="company"
+        [imageSize]="'large'">
+      </neo-company-logo>
+    </div>
+  </div>
+</div>
+
+<neo-form-footer
+  (cancel)="onCancel()"
+  (save)="submitAnotherRequest()"
+  cancelButtonName="general.closeLabel"
+  icon="right-arrow"
+  submitButtonName="solarQuote.submitAnotherRequestLabel"></neo-form-footer>

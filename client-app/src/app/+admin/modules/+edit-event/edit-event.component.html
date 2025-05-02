@@ -1,0 +1,272 @@
+<h3 class="title mb-24">{{ 'events.editEventLabel' | translate }}</h3>
+
+<div class="container mb-96">
+  <form [formGroup]="eventInfoForm">
+    <div class="control-wrapper">
+      <label>
+        {{ 'events.eventNameLabel' | translate }}
+        <span class="counter">{{ eventInfoForm.controls['subject'].value?.length }}/60</span>
+
+        <neo-text-input
+          class="mt-12"
+          formControlName="subject"
+          [showLabel]="false"
+          maxLength="60"
+          [labelName]="'events.eventNameLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-text-input>
+      </label>
+
+      <div class="mt-12 d-flex">
+        <neo-blue-checkbox
+          (selectCheckbox)="eventInfoForm.get('isHighlighted').patchValue(!eventInfoForm.get('isHighlighted').value)"
+          [checked]="eventInfoForm.get('isHighlighted').value"
+          [name]="'events.highlightEventLabel' | translate">
+        </neo-blue-checkbox>
+        <neo-blue-checkbox
+          (selectCheckbox)="
+            changeVisibilityInPublicDashboard()
+          "
+          [checked]="eventInfoForm.get('showInPublicSite').value"
+          [name]="'events.visibleOnPublicDashboardLabel' | translate">
+        </neo-blue-checkbox>
+      </div>
+    </div>
+
+    <div class="control-wrapper">
+      <label> Event Type </label>
+      <neo-radio-control
+        [list]="eventTypes"
+        [disabled]="true"
+        [submitted]="formSubmitted"
+        class="mt-12"
+        formControlName="eventType"
+        [flexDirection]="'row'"
+        id="eventTypeId">
+      </neo-radio-control>
+    </div>
+
+    <neo-event-dates [formSubmitted]="formSubmitted"> </neo-event-dates>
+
+    <div class="control-wrapper">
+      <label>
+        {{ 'events.locationLabel' | translate }}
+
+        <span class="controls-wrapper d-flex mt-12">
+          <button
+            (click)="changeLocationType(eventLocationType.Virtual)"
+            [class.selected]="eventInfoForm.get('locationType').value === eventLocationType.Virtual"
+            class="location-select mr-8 mb-8">
+            {{ 'events.virtualLabel' | translate }}
+          </button>
+
+          <button
+            (click)="changeLocationType(eventLocationType.InPerson)"
+            [class.selected]="eventInfoForm.get('locationType').value === eventLocationType.InPerson"
+            class="location-select mb-8">
+            {{ 'events.inPersonLabel' | translate }}
+          </button>
+        </span>
+
+        <neo-text-input
+          [placeholder]="
+            eventInfoForm.get('locationType').value === eventLocationType.Virtual
+              ? ('general.urlLabel' | translate)
+              : ('events.addressLabel' | translate)
+          "
+          [labelName]="'events.locationLabel' | translate"
+          [showLabel]="false"
+          formControlName="location"
+          [submitted]="formSubmitted">
+        </neo-text-input>
+      </label>
+    </div>
+
+    <div class="control-wrapper">
+      <div class="label">
+        <div class="d-flex align-center mb-12">
+          <div class="d-flex align-center">{{ 'events.userRegistrationLabel' | translate }}</div>
+          <div class="sub-label ml-6">{{ 'events.inputVariesLabel' | translate }}</div>
+        </div>
+
+        <neo-text-input
+          formControlName="userRegistration"
+          [placeholder]="'events.urlTextLabel' | translate"
+          [showLabel]="false"
+          [labelName]="'events.eventNameLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-text-input>
+      </div>
+    </div>
+
+    <div class="control-wrapper">
+      <div class="label">
+        <div class="d-flex align-center mb-12">
+          <div class="d-flex align-center">{{ 'events.descriptionOfEventLabel' | translate }}</div>
+          <div class="sub-label ml-6">({{ 'general.optionalLabel' | translate }})</div>
+        </div>
+
+        <neo-textarea-control
+          formControlName="description"
+          height="176px"
+          [placeholder]="'events.descriptionLabel' | translate"
+          [showLabel]="false"
+          [submitted]="formSubmitted">
+        </neo-textarea-control>
+      </div>
+    </div>
+
+    <neo-highlights></neo-highlights>
+    <neo-moderators [formSubmitted]="formSubmitted"></neo-moderators>
+    <neo-tags-step [formSubmitted]="formSubmitted"></neo-tags-step>
+    <neo-content-links
+      [linksError]="linksError"
+      [formSubmitted]="formSubmitted">
+    </neo-content-links>
+  </form>
+
+  <div class="control-wrapper nobackground label">
+    <div class="d-flex align-center mb-24">
+      <h3 class="d-flex align-center">{{ 'events.editEventInvitesLabel' | translate }}</h3>
+      <div
+        class="sub-label optional ml-6"
+        *ngIf="isPublicEvent">
+        ({{ 'events.optionalForPublicEventsLabel' | translate }})
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="inviteForm">
+    <div class="control-wrapper">
+      <h4 class="label pb-8">{{ 'events.eventInvitesLabel' | translate }}</h4>
+      <span class="sub-heading mt-2">{{ 'events.selectAllWhoApplyLabel' | translate }}</span>
+
+      <div class="types-wrapper d-flex mt-12">
+        <ng-container *ngFor="let role of userRoles; let i = index">
+          <input
+            [id]="role.name + i"
+            [value]="role.id"
+            type="checkbox" />
+
+          <button
+            (click)="saveRole(role.id)"
+            [class.selected]="role.checked"
+            [class.disabled]="role.preSelected"
+            class="select-button">
+            <svg-icon
+              [class.selected]="role.checked"
+              [key]="role.preSelected ? 'block' : role.checked ? 'cross' : 'plus'"
+              [ngClass]="role.checked && !role.preSelected ? 'text-blue-100' : 'text-neo-purple'">
+            </svg-icon>
+            {{ role.name }}
+          </button>
+        </ng-container>
+      </div>
+    </div>
+
+    <div
+      class="sections-divider d-flex align-center"
+      *ngIf="!isPublicEvent">
+      <span class="text">{{ 'events.additionalInviteCriteriaLabel' | translate }}</span>
+      <div class="line"></div>
+    </div>
+
+    <div class="control-wrapper">
+      <h4 class="label mb-12">{{ 'events.whichRegionLabel' | translate }}</h4>
+
+      <neo-event-regions
+        class="selectedRegions"
+        [invitedGeographies]="inviteForm.controls['invitedRegions']?.value"
+        [editFlow]="true"
+        class="selectedRegions"></neo-event-regions>
+    </div>
+
+    <neo-edit-event-categories></neo-edit-event-categories>
+
+    <neo-event-users
+      (selectedUsersUpdated)="addUsersToPayload($event)"
+      [event]="event">
+    </neo-event-users>
+  </form>
+
+  <neo-sections-panel
+    [createEventForm]="eventInfoForm"
+    [inviteForm]="inviteForm"></neo-sections-panel>
+</div>
+
+<neo-form-footer
+  (cancel)="goBack()"
+  (deleteButtonClick)="showConfirmDelete = true"
+  (save)="onEdit()"
+  [deleteButtonText]="'events.deleteEventLabel' | translate"
+  [deleteButton]="true"
+  [submitButtonName]="'general.saveChangesLabel' | translate"
+  class="form-footer deleteButton"
+  deleteButtonIcon="trash-can">
+</neo-form-footer>
+
+<neo-modal
+  (closed)="showConfirmDelete = false"
+  *ngIf="showConfirmDelete">
+  <svg-icon
+    (click)="showConfirmDelete = false"
+    class="close-icon"
+    key="close"
+    size="xxl"></svg-icon>
+
+  <h2 class="neo-arial mb-6 modal-title">Are you sure you want to do this?</h2>
+  <p class="text-m text-dark-gray-580 mb-24">After deletion, all data will be lost.</p>
+
+  <div class="popup-controls pt-24 d-flex">
+    <button
+      (click)="showConfirmDelete = false"
+      class="btn-cancel blue-50-frame mr-16">
+      Cancel
+    </button>
+    <button
+      (click)="deleteEvent()"
+      class="btn-confirm">
+      Yes, Delete
+    </button>
+  </div>
+</neo-modal>
+
+<neo-modal
+  (closed)="showModal = false"
+  *ngIf="showModal">
+  <neo-event-template-modal
+    [title]="modalTitle"
+    [showTitle]="showModalTitle"
+    [showRadioButtons]="showRadioButtons"
+    [confirmationMessages]="confirmationMsgs"
+    [selectedConfirmationId]="selectedConfirmationId"
+    (confirmClick)="Confirm()"
+    (cancelClick)="Cancel()"
+    (confirmSelection)="confirmSelection($event)"></neo-event-template-modal>
+</neo-modal>
+<neo-modal
+  *ngIf="showInPublicModal"
+  padding="p-32"
+  (closed)="togglePublicEventModal()"
+  class="modal"
+  size="extra-medium" title=" ">  
+
+  <h3 class="delete-label pr-24">{{ 'events.showInPublicDashboardLabel' | translate }}</h3>
+
+  <p class="description-label pt-8">{{ 'general.doYouWantToContinueLabel' | translate }}</p>
+
+  <div class="separator mt-20 mb-32"></div>
+
+  <div class="d-flex align-center justify-end gap-16">
+    <button
+      class="btn btn-cancel"
+      (click)="togglePublicEventModal()">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button
+      class="btn btn-delete"
+      (click)="showEventInPublic()">
+      {{ 'general.yesProceedLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

@@ -1,0 +1,561 @@
+﻿@using Microsoft.Extensions.Logging
+@using Newtonsoft.Json
+@using SE.Neo.Common.Extensions
+@using System.Globalization;
+@using SE.Neo.EmailTemplates.Models
+@inject ILogger<SummaryEmailTemplatedModel> _logger;
+@model SE.Neo.EmailTemplates.Models.SummaryEmailTemplatedModel;
+@{
+    var emptyText = "<span>&#160;</span>";
+    var tagBackgroundColor = "#F3FBFF";
+    var tagColor = "#0F84B2";
+}
+
+<!DOCTYPE HTML PUBLIC>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:v="urn:schemas-microsoft-com:vml"
+      xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>...</title>
+    <!-- CSS Reset -->
+    <!--[if (gte mso 9)|(IE)]>
+        <style type="text/css">
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+    <![endif]-->
+    <!--[if gte mso 9]>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:AllowPng/>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    <![endif]-->
+    <style type="text/css">
+        @@font-face {
+            ffont-family: 'Arial Rounded MT';
+            mso-font-alt: 'Arial';
+            src: url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.eot"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.woff") format("woff"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.svg#Arial Rounded MT Std") format("svg");
+        }
+
+        @@font-face {
+            ffont-family: 'Arial Rounded MT Bold' !important;
+            mso-font-alt: 'Arial';
+            src: url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.eot"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.woff") format("woff"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.svg#Arial Rounded MT Bold") format("svg");
+        }
+
+        .zeigo-arial-rounded-bold {
+            font-family: "Arial Rounded MT Bold", "Arial" !important;
+            font-weight: 400 !important;
+        }
+
+        .zeigo-arial-rounded {
+            font-family: "Arial Rounded MT", "Arial" !important;
+            font-weight: 400 !important;
+        }
+
+        .zeigo-arial {
+            font-family: "Arial Rounded MT";
+        }
+
+        img {
+            user-select: none !important;
+            object-fit: fill !important;
+        }
+
+        h2, h4, h5, p, span {
+            margin: 0 !important;
+        }
+
+        h2 {
+            font-size: 28px !important;
+            line-height: 30px !important;
+            font-weight: 400 !important;
+        }
+
+        h4 {
+            font-size: 18px !important;
+            line-height: 24px !important;
+            font-weight: 400 !important;
+        }
+
+        h5 {
+            font-size: 16px !important;
+            line-height: 20px !important;
+        }
+
+        .text-s {
+            font-size: 14px !important;
+            line-height: 20px !important;
+        }
+
+        .text-xs {
+            font-size: 12px !important;
+            line-height: 17px !important;
+            letter-spacing: 0.01em !important;
+        }
+
+        .text-xss {
+            font-size: 10px !important;
+            line-height: 15px !important;
+            letter-spacing: 0.01em !important;
+        }
+
+        .h-6 {
+            height: 6px !important;
+            line-height: 6px !important;
+        }
+
+        .h-8 {
+            height: 8px !important;
+            line-height: 8px !important;
+        }
+
+        .w-8 {
+            width: 8px !important;
+        }
+
+        .h-16 {
+            height: 16px !important;
+        }
+
+        .h-24 {
+            height: 24px !important;
+            line-height: 24px !important;
+        }
+
+        .h-32 {
+            height: 32px !important;
+            line-height: 32px !important;
+        }
+
+        .w-16 {
+            width: 16px !important;
+        }
+
+        .w-32 {
+            width: 32px !important;
+        }
+
+        .header-width {
+            width: 300px !important;
+        }
+
+        .body {
+            width: 100% !important;
+            font-family: "Arial" !important;
+            background-color: #FAFAFA !important;
+            min-width: 320px !important;
+        }
+
+        .container {
+            background-color: #FFFFFF !important;
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            border-top-left-radius: 4px !important;
+            border-top-right-radius: 4px !important;
+            max-width: 840px !important;
+            width: 840px !important;
+        }
+
+        .button-border {
+            border-bottom-left-radius: 8px !important;
+            border-bottom-right-radius: 8px !important;
+            border-top-left-radius: 8px !important;
+            border-top-right-radius: 8px !important;
+            padding-top: 12px !important;
+            padding-bottom: 12px !important;
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+            background-color: #3A2456 !important;
+            text-transform: capitalize !important;
+        }
+
+        .icon {
+            width: 20px !important;
+            height: 20px !important;
+        }
+
+        .content a {
+            text-decoration: none !important;
+            color: #171717 !important;
+        }
+
+    </style>
+</head>
+<body>
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%" class="body">
+        <tr>
+            <td align="center" valign="top">
+                <div class="h-32">@emptyText</div>
+                <table cellpadding="0" cellspacing="0" border="0" class="container">
+                    <tr style="background: #FAFAFA">
+                        <td class="w-32"></td>
+                        <td align="left" valign="top">
+                            <div class="h-24">@emptyText</div>
+                            <img width="240" height="110" src="@Model.LogoUrl" alt="zeigo logo" />
+                            <div class="h-24">@emptyText</div>
+                        </td>
+                        <td class="w-32"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="w-32"></td>
+                        <td>
+                            <div class="h-24">@emptyText</div>
+                            <h2 class="zeigo-arial-rounded" style="color: #171717;letter-spacing: normal; font-size: 28px; ">
+                                Hello, @Model.FirstName
+                            </h2>
+                            <h4 class="zeigo-arial-rounded" style="color: #171717;letter-spacing: normal; font-size: 18px; padding-top: 12px;">
+                                Discover what's new in the Zeigo Network
+                            </h4>
+                        </td>
+                        <td class="w-32"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="w-32"></td>
+                        <td>
+                            <div class="h-24">@emptyText</div>
+                            <div class="h-24" style="border-top: 1px solid #DAE1EC;">@emptyText</div>
+                        </td>
+                        <td class="w-32"></td>
+                    </tr>
+
+                    @{
+                        _logger.LogError($"Summary Email Template for the user name :{Model.FirstName}  {JsonConvert.SerializeObject(Model)}.");
+                    }
+
+
+                    @foreach (var summaryItemSection in Model.Items.GroupBy(sei => sei.ItemTypeName))
+                    {
+                        <!--email body-->
+                        <tr>
+                            <td class="w-32"></td>
+                            <td>
+                                @{
+                                    var summaryItems = summaryItemSection.ToList();
+                                }
+                                @for (int i = 0; i < summaryItems.Count; i++)
+                                {
+                                    @if (i == 0)
+                                    {
+                                        <table cellpadding="0" cellspacing="0" border="0">
+                                            @if (i > 0)
+                                            {
+                                                <tr class="h-16">@emptyText</tr>
+                                            }
+                                            <tr style="font-size:10px;">
+                                                <td class="header-width"></td>
+                                                <td>
+                                                    <img class="icon" src="@summaryItemSection.First().ItemTypeLogoUrl" alt="@summaryItemSection.Key">
+                                                </td>
+                                                <td class="zeigo-arial-rounded-bold"
+                                                    style="font-size:18px;line-height: 20px;color: #684299;vertical-align:center;">
+                                                    @emptyText@(
+                                              summaryItemSection.Key.ToUpper() + (@summaryItemSection.Key.ToUpper() != "FORUM" && @summaryItemSection.Key.ToUpper() != "LEARN" && summaryItems.Count > 1 ? "S" : "")
+                                              )
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    }
+
+                                    <table cellpadding="0" cellspacing="0" border="0">
+                                        @if (summaryItems[i].EventDateInfo != null)
+                                        {
+                                            <tr>
+                                                <td class="w-16"></td>
+                                                <td>
+                                                    <table cellpadding="0" cellspacing="0" border="0">
+                                                        <tr class="zeigo-arial" style="color: #6F6E77; font-weight: 700; font-size: 12px;">
+                                                            <td style="padding-top: 8px;">
+                                                                <img style="width: 12px; height: 12px" alt="date" src="@summaryItems[i].EventDateLogoUrl" />
+                                                            </td>
+                                                            <td style="padding-top: 8px;">
+                                                                @emptyText@emptyText@summaryItems[i].EventDateInfo.EventDate.ToString("MMM dd")
+                                                            </td>
+                                                            <td style="width: 16px; padding-top: 8px;">
+                                                                @emptyText
+                                                            </td>
+                                                            <td style="padding-top: 8px;">
+                                                                <img style="height: 12px" alt="time" src="@summaryItems[i].EventTimeLogoUrl" />
+                                                            </td>
+                                                            <td style="padding-top: 8px;">
+                                                                @emptyText@emptyText@summaryItems[i].EventDateInfo.EventStart - @summaryItems[i].EventDateInfo.EventEnd
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        }
+                                        <tr class="zeigo-arial-rounded-bold">
+                                            <td class="w-16"></td>
+                                            <td class="content" style="color: #1A1523; font-size:18px; line-height: 23px; padding-top: 8px;">
+                                                <a target="_blank" href="@summaryItems[i].ItemLink">
+                                                    @if (@summaryItems[i].MainTitle.RemoveAllHTML().Length > 150)
+                                                    {
+                                                        @(summaryItems[i].MainTitle.Substring(0, 150) + "...")
+                                                    }
+                                                    else
+                                                    {
+                                                        @summaryItems[i].MainTitle
+                                                    }
+                                                </a>
+                                                @if (!string.IsNullOrEmpty(summaryItems[i].Company))
+                                                {
+                                                    <br>
+                                                    <span class="zeigo-arial-rounded-bold"
+                                                          style="font-size: 12px;color:#684299;font-weight: bold;">@("By " + summaryItems[i].Company)</span>
+                                                    <br>
+                                                }
+                                                @if (!string.IsNullOrEmpty(summaryItems[i].InitiativeStepName))
+                                                {
+                                                    <br>
+                                                    <span class="zeigo-arial"
+                                                          style="font-size: 12px;color:#626569;">STATUS:</span>
+                                                    <span class="zeigo-arial"
+                                                          style="font-size: 13px;color:#867897;background-color : #f9f7fa;line-height: 16px;">@emptyText @(summaryItems[i].InitiativeStepName) @emptyText</span>
+                                                    <br>
+                                                }
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    @if (summaryItems[i].Tags != null || summaryItems[i].Regions != null)
+                                    {
+                                        if (summaryItems[i].ItemTypeName.Contains("Initiative"))
+                                        {
+                                            tagBackgroundColor = "#EBDEEF";
+                                            tagColor = "#9B25B9";
+                                        }
+                                        {
+                                            int regionsLength = 30;
+                                            <table cellpadding="0" cellspacing="0" border="0">
+                                                <tr style="height: 28px">
+                                                    @if (summaryItems[i].Tags?.Any() == true)
+                                                    {
+                                                        {
+                                                            int categoriesLength = @summaryItems[i].Tags[0].Length;
+                                                            if (categoriesLength > 55 && @summaryItems[i].Tags.Count == 1)
+                                                            {
+                                                                regionsLength -= categoriesLength - 55;
+                                                            }
+                                                            <td class="w-16"></td>
+                                                            <td style="padding-top: 8px;">
+                                                                <table cellpadding="0" cellspacing="0" border="0" style="background-color: @tagBackgroundColor">
+                                                                    <tr style="font-size: 6px; line-height: 6px;">
+                                                                        <td>@emptyText</td>
+                                                                        <td>@emptyText</td>
+                                                                        <td>@emptyText</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="w-8"></td>
+                                                                        <td class="zeigo-arial" style="color: @tagColor;font-size: 12px; line-height: 16px;">
+                                                                            @summaryItems[i].Tags[0]
+                                                                        </td>
+                                                                        <td class="w-8"></td>
+                                                                    </tr>
+                                                                    <tr style="font-size: 6px; line-height: 6px;">
+                                                                        <td>@emptyText</td>
+                                                                        <td>@emptyText</td>
+                                                                        <td>@emptyText</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            if (summaryItems[i].Tags.Count > 1)
+                                                            {
+                                                                {
+                                                                    categoriesLength += @summaryItems[i].Tags[1].Length;
+                                                                    if (categoriesLength > 44 && @summaryItems[i].Tags.Count == 2)
+                                                                    {
+                                                                        regionsLength -= categoriesLength - 44;
+                                                                    }
+                                                                    <td>
+                                                                        <span>@emptyText@emptyText@emptyText@emptyText</span>
+                                                                    </td>
+                                                                    <td style="padding-top: 8px;">
+                                                                        <table cellpadding="0" cellspacing="0" border="0" style="background-color: @tagBackgroundColor">
+                                                                            <tr style="font-size: 6px; line-height: 6px;">
+                                                                                <td>@emptyText</td>
+                                                                                <td>@emptyText</td>
+                                                                                <td>@emptyText</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td class="w-8"></td>
+                                                                                <td class="zeigo-arial" style="color: @tagColor;font-size: 12px; line-height: 16px;">
+                                                                                    @summaryItems[i].Tags[1]
+                                                                                </td>
+                                                                                <td class="w-8"></td>
+                                                                            </tr>
+                                                                            <tr style="font-size: 6px; line-height: 6px;">
+                                                                                <td>@emptyText</td>
+                                                                                <td>@emptyText</td>
+                                                                                <td>@emptyText</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+
+                                                                    if (summaryItems[i].Tags.Count > 2)
+                                                                    {
+                                                                        {
+                                                                            if (categoriesLength > 35)
+                                                                            {
+                                                                                regionsLength -= categoriesLength - 35;
+                                                                            }
+                                                                            <td>
+                                                                                <span>@emptyText@emptyText</span>
+                                                                                @if (regionsLength < 12)
+                                                                                {
+                                                                                    regionsLength += 2;
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span>@emptyText@emptyText</span>
+                                                                                }
+                                                                            </td>
+                                                                            <td style="padding-top: 8px;">
+                                                                                <table cellpadding="0" cellspacing="0" border="0" style="background-color: @tagBackgroundColor;">
+                                                                                    <tr style="font-size: 6px; line-height: 6px;">
+                                                                                        <td>@emptyText</td>
+                                                                                        <td>@emptyText</td>
+                                                                                        <td>@emptyText</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="w-8"></td>
+                                                                                        <td class="zeigo-arial" style="color: @tagColor;font-size: 12px; line-height: 16px;">
+                                                                                            +@(summaryItems[i].Tags.Count - 2)
+                                                                                        </td>
+                                                                                        <td class="w-8"></td>
+                                                                                    </tr>
+                                                                                    <tr style="font-size: 6px; line-height: 6px;">
+                                                                                        <td>@emptyText</td>
+                                                                                        <td>@emptyText</td>
+                                                                                        <td>@emptyText</td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            <td>
+                                                                <span>@emptyText@emptyText</span>
+                                                                @if (regionsLength < 12)
+                                                                {
+                                                                    regionsLength += 2;
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span>@emptyText@emptyText</span>
+                                                                }
+                                                            </td>
+                                                        }
+                                                    }
+
+                                                    @if (summaryItems[i].Regions?.Any() == true && regionsLength > 0)
+                                                    {
+                                                        string regions = string.Join("  •  ", summaryItems[i].Regions);
+                                                        if (regions.RemoveAllHTML().Length > regionsLength)
+                                                        {
+                                                            regions = regions.Substring(0, regionsLength) + "...";
+                                                        }
+                                                        <td>
+                                                            <span class="zeigo-arial" style="font-size: 12px; line-height: 16px; color: #6F6F6F;">@regions</span>
+                                                        </td>
+                                                    }
+                                                    @if (summaryItems[i].InitiativeModifiedDate.HasValue)
+                                                    {
+                                                        DateTime date = @summaryItems[i].InitiativeModifiedDate.Value;
+                                                        string formattedDate = date.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture); 
+                                                        <td>
+                                                            <span class="zeigo-arial" style="font-size: 12px; line-height: 16px; color: #6F6F6F;">Last Updated:</span>
+                                                            <span class="zeigo-arial" style="font-size: 12px; line-height: 16px; color: #6F6F6F;">@formattedDate</span>
+                                                        </td>
+                                                    }
+                                                </tr>
+                                            </table>
+                                        }
+                                    }
+                                }
+                            </td>
+                            <td class="w-32"></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="h-24">@emptyText</div>
+                                <div class="h-24" style="border-top: 1px solid #dae1ec;">@emptyText</div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <!--end email body-->
+                    }
+
+                    <tr style="height: 47px">
+                        <td class="w-32"></td>
+                        <td align="left" valign="middle" style="mso-height-rule: exactly;">
+                            <div>
+                                <!--[if mso]>
+                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+                                                 xmlns:w="urn:schemas-microsoft-com:office:word"
+                                                 href="@Model.Link"
+                                                 style="display:inline-block;height:47px;v-text-anchor:middle;width:225px;text-decoration: none;font-color: #FDFCFF;"
+                                                 arcsize="15%"
+                                                 strokecolor="#3A2456" strokeweight="2px" fillcolor="#3A2456">
+                                    <w:anchorlock/>
+                                    <center class="zeigo-arial-rounded-bold" style="color:#FDFCFF;background-color: #3A2456;font-size:14px;line-height: 19px;vertical-align:middle;"
+                                            ">View More</center>
+                                <![endif]-->
+                                <!--[if mso]>
+                                    </v:roundrect>
+                                <![endif]-->
+                                <!--[if !mso]><!-->
+                                <a href="@Model.Link" class="text-s"
+                                   style="text-decoration: none; mso-hide:all; display: block !important;">
+                                    <div class="text-s button-border zeigo-arial-rounded-bold"
+                                         style="max-width:225px;color: #FDFCFF;background-color: #3A2456;padding: 10px;-webkit-text-size-adjust:none; text-align: center;">
+                                        View More
+                                    </div>
+                                </a>
+                                <!--<![endif]-->
+                            </div>
+                        </td>
+                        <td class="w-32"></td>
+                    </tr>
+
+                    <tr class="h-32"></tr>
+                </table>
+                <table cellpadding="0" cellspacing="0" border="0" class="container">
+                    <tr style="background: #F3F3F3;">
+                        <td style="width:360px"></td>
+                        <td class="zeigo-arial">
+                            <div class="h-24"><a href="_unsubscribeLink_" style="text-decoration:underline;color:#0000ff;font-size:12px;">Unsubscribe</a></div>
+                        </td>
+                    </tr>
+                </table>
+                <table cellpadding="0" cellspacing="0" border="0" class="container">
+                    <tr style="background: #F3F3F3;">
+                        <td class="w-32"></td>
+                        <td class="zeigo-arial">
+                            <div class="h-32"></div>
+                            <p class="text-s"
+                               style="color: #171717;">
+                                &copy; @DateTime.Now.Year Zeigo by Schneider Electric
+                            </p>
+                            <div class="h-32">@emptyText</div>
+                        </td>
+                        <td class="w-32"></td>
+                    </tr>
+                </table>
+
+                <div class="h-32">@emptyText</div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

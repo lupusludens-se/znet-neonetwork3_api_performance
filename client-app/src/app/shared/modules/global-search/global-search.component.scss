@@ -1,0 +1,55 @@
+@import 'colors';
+@import 'variables';
+
+$box-shadow: 0px 1px 3px rgb(28 55 99 / 15%), 0px 1px 2px rgb(28 55 99 / 8%);
+
+.search-input {
+  right: -4px;
+  background: $white;
+  box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+
+  .search-icon {
+    left: 35px;
+  }
+
+  .close-icon {
+    &:hover {
+      color: $near-black-400;
+    }
+  }
+
+  input {
+    border: none;
+    height: 52px; //$header-height;
+    //color: $grey-100;
+  }
+
+  ::placeholder {
+    color: $dark-gray-590;
+    opacity: 1;
+  }
+}
+
+.results-wrapper {
+  top: $header-height;
+  box-shadow: $box-shadow;
+  border-top: 1px solid $dark-gray-200;
+
+  .btn-xs {
+    &.active {
+      border-color: $blue-400;
+      background: $blue-400;
+      color: $white;
+    }
+  }
+
+  .results {
+    height: 155px;
+    overflow-y: auto;
+
+    .text-blue-300 {
+      padding: 8px 16px 8px 24px;
+    }
+  }
+}

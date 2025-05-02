@@ -1,0 +1,216 @@
+<ng-container *ngIf="currentUser$ | async as currentUser">
+  <div class="top flex-column flex-center mb-12">
+    <svg-icon
+      class="project-type-icon text-white"
+      key="{{ projectDetails.category?.slug.toLowerCase() }}"></svg-icon>
+
+    <ng-container *ngIf="currentUser.id !== projectDetails?.ownerId">
+      <ng-container *ngIf="conversationId; else defaultContactBtn">
+        <div class="contacted d-flex mb-8">
+          <span class="blue-part mr-8 flex-center neo-arial">
+            <svg-icon
+              class="mr-8"
+              key="check"></svg-icon>
+            {{ 'general.requestedLabel' | translate }}
+          </span>
+
+          <span
+            class="icon-part flex-center c-pointer"
+            routerLink="/messages/{{ conversationId }}">
+            <svg-icon key="chat-fill"></svg-icon>
+          </span>
+        </div>
+      </ng-container>      
+      <ng-template #defaultContactBtn>
+        <button *ngIf="!isCurrentUserIsSolutionProvider && projectDetails.statusId !== projectStatusEnum.Draft"
+          (click)="contactProvider.emit(true)"
+          class="btn btn-l w-min-initial flex-center top-panel-btn-white">
+          <svg-icon
+            class="mr-10"
+            key="chat-fill"></svg-icon>
+          {{ 'general.contactProviderLabel' | translate }}
+        </button>
+      </ng-template>
+    </ng-container>
+    <ng-container>      
+      <button
+        *ngIf="isCurrentUserHasEditPermission"
+          (click)="goToEditProject()"
+          class="btn btn-l w-min-initial flex-center top-panel-btn-white">
+          <svg-icon
+            class="mr-8"
+            key="pencil"></svg-icon>          
+          {{ 'actions.editLabel' | translate }}
+        </button>
+    </ng-container>
+    <ng-container>
+      <button
+        *ngIf="!isCurrentUserIsSolutionProvider && projectDetails.statusId !== projectStatusEnum.Draft"
+        [disabled]="projectDetails.statusId !== projectStatusEnum.Active"
+        (click)="saveProject()"
+        class="btn btn-save flex-center">
+        <svg-icon
+          [key]="projectDetails?.isSaved ? 'star-filled' : 'star'"
+          class="mr-10"></svg-icon>
+        {{ (projectDetails?.isSaved ? 'general.savedLabel' : 'projects.saveProjectLabel') | translate }}
+      </button>
+    </ng-container>
+
+    
+
+    <svg-icon
+      class="lines-decor"
+      key="top-lines-vector"></svg-icon>
+    <img
+      alt="headline-background-image"
+      class="img"
+      src="assets/images/project-category-background-image.svg" />
+  </div>
+</ng-container>
+
+<div class="provider-info flex-column mb-12">
+  <div class="section-header d-flex pb-26 mb-24">
+    <img
+      [src]="projectDetails?.company?.image?.uri ?? 'assets/images/default-company-icon.svg'"
+      alt="company logo"
+      class="logo mr-16" />
+
+    <div class="name-wrapper">
+      <p class="secondary-text">{{ 'projects.providerLabel' | translate }}</p>
+
+      <div class="name d-flex align-center neo-arial">
+        {{ projectDetails?.company?.name }}
+
+        <!-- <a class="btn-provider ml-4 d-flex" routerLink="/company-profile/{{ projectDetails?.company?.id }}">
+          <svg-icon [fontSize]="20" class="lines-decor" key="right-arrow-in-circle-filled"></svg-icon>
+        </a> -->
+
+        <button
+          class="light-green d-flex align-center justify-center rotate-180 arrow"
+          routerLink="/company-profile/{{ projectDetails?.company?.id }}">
+          <svg-icon key="arrow-thin-right" [fontSize]="'14px'"></svg-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-container [ngSwitch]="projectDetails?.category?.slug">
+    <neo-project-side-panel-battery-storage-component
+      *ngSwitchCase="projectTypes.BatteryStorage"
+      [projectDetails]="projectDetails"></neo-project-side-panel-battery-storage-component>
+    <neo-project-side-panel-carbon-offset-component
+      *ngSwitchCase="projectTypes.CarbonOffset"
+      [projectDetails]="projectDetails"></neo-project-side-panel-carbon-offset-component>
+    <neo-project-side-panel-community-solar-component
+      *ngSwitchCase="projectTypes.CommunitySolar"
+      [projectDetails]="projectDetails"></neo-project-side-panel-community-solar-component>
+    <neo-project-side-panel-eac-purchasing-component
+      *ngSwitchCase="projectTypes.EacPurchasing"
+      [projectDetails]="projectDetails"></neo-project-side-panel-eac-purchasing-component>
+    <neo-project-side-panel-efficiency-audit-component
+      *ngSwitchCase="projectTypes.EfficiencyAudit"
+      [projectDetails]="projectDetails"></neo-project-side-panel-efficiency-audit-component>
+    <neo-project-side-panel-efficiency-audit-component
+      *ngSwitchCase="projectTypes.EfficiencyEquipmentMeasures"
+      [projectDetails]="projectDetails"></neo-project-side-panel-efficiency-audit-component>
+    <neo-project-side-panel-emerging-technology-component
+      *ngSwitchCase="projectTypes.EmergingTechnologies"
+      [projectDetails]="projectDetails"></neo-project-side-panel-emerging-technology-component>
+    <neo-project-side-panel-ev-charging-component
+      *ngSwitchCase="projectTypes.EvCharging"
+      [projectDetails]="projectDetails"></neo-project-side-panel-ev-charging-component>
+    <neo-project-side-panel-fuell-cells-component
+      *ngSwitchCase="projectTypes.FuelCells"
+      [projectDetails]="projectDetails"></neo-project-side-panel-fuell-cells-component>
+    <neo-project-side-panel-onsite-solar-component
+      *ngSwitchCase="projectTypes.OnsiteSolar"
+      [projectDetails]="projectDetails"></neo-project-side-panel-onsite-solar-component>
+    <neo-project-side-panel-renewable-electricity-component
+      *ngSwitchCase="projectTypes.RenewableRetail"
+      [projectDetails]="projectDetails"></neo-project-side-panel-renewable-electricity-component>
+    <neo-project-side-panel-green-tariff-component
+      *ngSwitchCase="projectTypes.UtilityGreenTariff"
+      [projectDetails]="projectDetails"></neo-project-side-panel-green-tariff-component>
+    <neo-project-side-panel-offsite-ppa-component
+      *ngSwitchCase="projectTypes.OffsitePpa"
+      [projectDetails]="projectDetails"></neo-project-side-panel-offsite-ppa-component>
+    <neo-project-side-panel-offsite-ppa-component
+      [formSubmitted]="formSubmitted"
+      *ngSwitchCase="projectTypes.AggregatedPpa"
+      [projectDetails]="projectDetails"></neo-project-side-panel-offsite-ppa-component>
+  </ng-container>
+</div>
+
+<div
+  *ngIf="isOffsitePPAProject"
+  class="map-wrapper flex-column mb-12">
+  <div class="section-header flex-between">
+    <span class="section-title neo-arial">{{ 'projects.availableSitesLabel' | translate }}</span>
+    <button
+      (click)="expandMap()"
+      class="btn btn-expand">
+      <svg-icon
+        class="mr-10"
+        key="expand"></svg-icon>
+    </button>
+  </div>
+
+  <div
+    class="map h-100"
+    id="map"></div>
+</div>
+
+<div class="locations mb-12">
+  <p class="section-title mb-12">
+    {{ 'projects.locationsLabel' | translate }}
+  </p>
+
+  <div class="tags-wrapper d-flex flex-wrap gap-6">
+    <neo-content-tag
+      *ngFor="let region of projectDetails?.regions"
+      fontSize="12"
+      classCustom="tag-purple"
+      [tag]="region"
+      [type]="type.Region"></neo-content-tag>
+  </div>
+</div>
+
+<div class="tags">
+  <p class="section-title mb-12">{{ 'projects.tagsLabel' | translate }}</p>
+
+  <div class="tags-wrapper d-flex flex-wrap gap-6">
+    <neo-content-tag
+      *ngFor="let technology of projectDetails?.technologies"
+      fontSize="12"
+      [tag]="technology"
+      [type]="type.Technology"></neo-content-tag>
+  </div>
+</div>
+
+<ng-container *ngIf="showLargeMap">
+  <div
+    (wheel)="$event.preventDefault()"
+    class="wrapper">
+    <div class="content">
+      <div class="modal-top pb-16">
+        <h3 class="mb-4 modal-title neo-arial">
+          {{ projectDetails?.title }}
+        </h3>
+        <p class="modal-subtitle">{{ projectDetails?.subTitle }}</p>
+      </div>
+
+      <svg-icon
+        key="close"
+        class="btn-close mr-10 text-blue-200"
+        [fontSize]="24"
+        (click)="showLargeMap = false"></svg-icon>
+
+      <div
+        class="h-85 mt-20"
+        id="largeMap"></div>
+    </div>
+  </div>
+  <div
+    (click)="showLargeMap = false"
+    class="overlay"></div>
+</ng-container>

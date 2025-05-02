@@ -1,0 +1,38 @@
+@use 'colors';
+@use 'variables';
+
+.chip {
+  background: colors.$dark-gray-200;
+  border-radius: 500px;
+  padding: 2px 12px;
+}
+
+.wrapper {
+  max-width: 960px;
+}
+
+.link {
+  &:hover {
+    color: colors.$purple-400;
+  }
+}
+
+.notifications-wrapper {
+  height: calc(100vh - (100px + #{variables.$header-height} + #{variables.$footer-height}));
+  overflow-y: auto;
+  padding-right: 10px;  
+
+  .notification {
+    padding: 20px 16px;
+    background: colors.$white;
+    border: 1px solid colors.$dark-gray-200;
+    border-radius: 2px;
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: colors.$blue-25;
+    }
+  }
+}

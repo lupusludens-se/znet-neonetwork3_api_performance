@@ -1,0 +1,186 @@
+<ng-container *ngIf="currentUser">
+  <div class="community-wrapper">
+    <div class="flex-column">
+      <h2 class="community-label pb-24">
+        {{ 'title.communityLabel' | translate }}
+      </h2>
+
+      <neo-search-bar
+        [value]="filters.initialFiltersState?.search"
+        (inputChange)="search($event)"
+        (clearInput)="search('')"
+        class="d-flex search-bar-spacing">
+      </neo-search-bar>
+    </div>
+
+    <div class="d-flex pt-32">
+      <div class="flex-column filters-wrapper w-100">
+        <neo-filter-header
+          [showClearButton]="showClearButton"
+          [filterName]="'community.filtersLabel' | translate"
+          (clearFilters)="clearAll()">
+        </neo-filter-header>
+
+        <neo-filter-state></neo-filter-state>
+
+        <div class="flex-column ml-10">
+          <neo-filter-button
+            class="mr-10"
+            name="{{ 'general.forYouLabel' | translate }}"
+            icon="filter-user-checked"
+            [isActive]="filters.forYouFilterTitle"
+            (clicked)="applyFilter($event)">
+          </neo-filter-button>
+          <neo-filter-button
+            class="mt-8 mr-10"
+            name="{{ 'general.followingBtnUpper' | translate }}"
+            icon="account-following"
+            [isActive]="filters.followingFilterTitle"
+            (clicked)="applyFilter($event)">
+          </neo-filter-button>
+          <div class="seperator-near-full ml-4 mt-20 mb-20"></div>
+          <div class="mt-12 neo-arial-regular text-xxs text-uppercase">{{ 'filter.companyLabel' | translate }} :</div>
+          <neo-filter-expand
+            #companyExpandFilter
+            class="mt-8 mr-10"
+            name="{{ 'form.companyTypeLabel' | translate }}"
+            type="radio"
+            icon="companies-icon"
+            [isActive]="filters.companiesClassActive"
+            [options]="companiesOptions"
+            [radioForm]="companiesTypeForm"
+            (optionsChange)="companiesChange($event)">
+          </neo-filter-expand>
+
+          <neo-taxonomy-filter
+            #industryFilter
+            class="mr-10"
+            [class.filter-disabled]="filters.disableIndustries"
+            icon="industry-icon"
+            [name]="'filter.industriesLabel' | translate"
+            [taxonomy]="taxonomyEnum.industries">
+          </neo-taxonomy-filter>
+          <neo-taxonomy-filter
+            #projectCapabilitiesFilter
+            class="mr-10"
+            [class.filter-disabled]="filters.disableProjectsCompanyFilter"
+            icon="projects"
+            [name]="'filter.projectCapabilitiesLabel' | translate"
+            [taxonomy]="taxonomyEnum.projectCapabilities">
+          </neo-taxonomy-filter>
+
+          <div class="seperator-near-full ml-4 mt-20 mb-20"></div>
+          <div class="mt-12 neo-arial-regular text-xxs text-uppercase">{{ 'filter.userLabel' | translate }} :</div>
+          <neo-filter-expand
+            #peopleExpandFilter
+            class="mt-8 mr-10"
+            name="{{ 'community.userRoleLabel' | translate }}"
+            type="radio"
+            icon="all-people"
+            [isActive]="filters.peopleFilterClassActive"
+            [options]="peopleOptions"
+            [radioForm]="peopleTypeForm"
+            parentControlName="peopleControl"
+            (optionsChange)="optionsChangeForPeopleFilter($event)">
+          </neo-filter-expand>
+          <div class="mt-12 neo-arial-regular text-xxs text-uppercase">
+            {{ 'filter.interestedInLabel' | translate }} :
+          </div>
+          <neo-taxonomy-hierarchical-filter
+            #regionFilter
+            [class.filter-disabled]="filters.disableRegions"
+            class="mt-10 mr-10 mb-10"
+            icon="filter-location"
+            [name]="'filter.regionLabel' | translate"
+            [taxonomy]="taxonomyEnum.regions">
+          </neo-taxonomy-hierarchical-filter>
+          <neo-taxonomy-filter
+            #categoryFilter
+            class="mr-10"
+            [class.filter-disabled]="filters.disableProjectsUserFilter"
+            icon="projects"
+            [name]="'filter.categoryLabel' | translate"
+            [taxonomy]="taxonomyEnum.categories">
+          </neo-taxonomy-filter>
+        </div>
+      </div>
+
+      <div class="flex-column content-wrapper">
+        <div class="flex-between mb-12">
+          <p class="community-catalog neo-arial">{{ filters.title }}</p>
+
+          <ng-container *ngIf="filters.title === 'Following'">
+            <neo-sort-dropdown
+              [sortingOptions]="followingSortingOptions"
+              [selectedOption]="filters.followingSelectedSortOrder"
+              (optionSelected)="onFollowingSortOrderChange($event)"></neo-sort-dropdown>
+          </ng-container>
+          <ng-container *ngIf="filters.companiesSelected && communityData?.length">
+            <div class="community-btn d-flex gap-12">
+              <button
+                [class.active]="filters.listActive"
+                class="filter-btn btn-s c-pointer no-bshadow"
+                (click)="filters.listActive = !filters.listActive">
+                {{ 'community.listLabel' | translate }}
+              </button>
+
+              <button
+                [class.active]="!filters.listActive"
+                class="filter-btn btn-s c-pointer no-bshadow"
+                (click)="filters.listActive = !filters.listActive">
+                {{ 'community.logoLabel' | translate }}
+              </button>
+            </div>
+          </ng-container>
+        </div>
+
+        <ng-container *ngIf="filters.listActive && communityData?.length">
+          <neo-community-item
+            *ngFor="let communityElement of communityData"
+            [communityElement]="communityElement"
+            (followClick)="followOptionChange()"
+            (itemClick)="itemClicked()">
+          </neo-community-item>
+        </ng-container>
+
+        <div
+          class="d-flex flex-wrap gap-8"
+          *ngIf="!filters.listActive">
+          <div
+            *ngFor="let communityElement of communityData"
+            class="d-flex flex-center flex-column logo-wrapper c-pointer"
+            (click)="itemClicked()"
+            routerLink="/company-profile/{{ communityElement.id }}">
+            <neo-company-logo
+              [company]="communityElement"
+              [imageSize]="'large'">
+            </neo-company-logo>
+          </div>
+        </div>
+
+        <neo-pagination
+          *ngIf="filters.paging?.total > defaultItemPerPage && communityData?.length"
+          class="pt-16"
+          [paging]="filters.paging"
+          (changePage)="updatePaging($event)">
+        </neo-pagination>
+
+        <neo-no-results
+          *ngIf="communityData !== null && communityData?.length === 0 && filters.initialFiltersState?.search"
+          [searchedStr]="filters.initialFiltersState?.search">
+        </neo-no-results>
+
+        <neo-empty-page
+          *ngIf="communityData && communityData?.length === 0 && !filters.initialFiltersState?.search"
+          [headlinePart1]="'general.emptyStatesHeadline1' | translate"
+          [headlinePart2]="'general.emptyStatesHeadline2' | translate"
+          [line2TextClass]="'text-m'"
+          [iconKey]="'community'">
+        </neo-empty-page>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!currentUser && !(auth.isLoggedIn() || auth.needSilentLogIn())">
+  <neo-community-public></neo-community-public>
+</ng-container>

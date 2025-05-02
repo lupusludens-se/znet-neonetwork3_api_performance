@@ -1,0 +1,23 @@
+<div *ngIf="isPublicUser">
+  <a 
+    class="mr-10 p-8 flex-center tag"
+    [routerLink]="tag?.toolId ? '../../tools/' + tag?.toolId : '../../learn/' + tag?.articleId" >
+  
+    <svg-icon size="xl" class="mr-8" [key]="tag.typeId | resourceTypeToIcon"></svg-icon>
+  
+    {{ tag?.contentTitle }}
+    <svg-icon class="ml-8" key="forward"></svg-icon>
+  </a>
+  </div>
+  <!-- #region PublicView -->
+  <div *ngIf="!isPublicUser" neoLockClick class="lock-icon">
+  <div 
+    class="mr-10 p-8 flex-center tag svg-no-pointer-events">
+   
+    <svg-icon size="xl" class="mr-8" [key]="tag.typeId | resourceTypeToIcon"></svg-icon>
+  
+    {{ tag?.contentTitle }}
+    <svg-icon class="ml-8" key="forward"></svg-icon>
+  </div>
+  </div>
+  <!-- #endregion -->

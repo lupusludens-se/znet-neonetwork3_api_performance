@@ -1,0 +1,157 @@
+<div class="top flex-between align-center mb-24">
+  <h1 class="title">{{ 'userManagement.pageTitleLabel' | translate }}</h1>
+
+  <div class="buttons-wrapper d-flex">
+    <button
+      class="btn-export-user flex-center mr-12"
+      (click)="exportModal = true">
+      <svg-icon
+        key="upload-square"
+        class="mr-8" size="xl"></svg-icon>
+      {{ 'userManagement.exportUsersLabel' | translate }}
+    </button>
+
+    <button
+      class="green btn-add-user text-uppercase flex-center"
+      routerLink="./add">
+      <svg-icon
+        key="plus"
+        class="mr-12"></svg-icon>
+      {{ 'userManagement.addUserLabel' | translate }}
+    </button>
+  </div>
+</div>
+
+<neo-search-bar
+  [value]="searchString"
+  (inputChange)="getUsersBySearch($event)"
+  (clearInput)="getUsersBySearch('')"></neo-search-bar>
+
+<div class="content mt-32 d-flex">
+  <div class="flex-column filters mr-32">
+    <neo-filter-header
+      [showClearButton]="showClearButton"
+      (clearFilters)="clearFilters()">
+    </neo-filter-header>
+
+    <neo-filter-state></neo-filter-state>
+
+    <neo-taxonomy-filter
+      class="mb-8 pr-8"
+      icon="flash"
+      [name]="'filter.interestsLabel' | translate"
+      [taxonomy]="taxonomyEnum.categories"></neo-taxonomy-filter>
+
+    <neo-taxonomy-filter
+      class="mb-8 pr-8"
+      icon="flash"
+      [name]="'filter.rolesLabel' | translate"
+      [taxonomy]="taxonomyEnum.roles"></neo-taxonomy-filter>
+
+    <neo-taxonomy-filter
+      class="mb-8 pr-8"
+      icon="flash"
+      [name]="'filter.statusLabel' | translate"
+      [taxonomy]="taxonomyEnum.statuses"></neo-taxonomy-filter>
+  </div>
+
+  <div class="table-wrapper flex-column">
+    <ng-container *ngIf="usersList?.length || usersList === undefined; else noResults">
+      <table class="table mb-24">
+        <thead>
+          <tr>
+            <td class="pl-24 user">
+              <div
+                class="click-area"
+                (click)="sortCriteriaSelection('lastNameAsc', sortingCriteria.lastname, 'companyAsc', 'statusNameAsc')">
+                {{ 'userManagement.table.userCol' | translate }}
+                <svg-icon
+                  [class.sorthighlight]="lastNameAsc"
+                  class="text-blue-200 ml-6 caret"
+                  key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon
+                  [class.sorthighlight]="tdTitleClick === sortingCriteria.lastname && !lastNameAsc"
+                  class="text-blue-200 ml-1 caret"
+                  key="table-row-sort-down"
+                  size="md"></svg-icon>
+              </div>
+            </td>
+            <td class="pl-24 company">
+              <div
+                class="click-area"
+                (click)="sortCriteriaSelection('companyAsc', sortingCriteria.company, 'lastNameAsc', 'statusNameAsc')">
+                {{ 'userManagement.table.companyCol' | translate }}
+                <svg-icon
+                  [class.sorthighlight]="companyAsc"
+                  class="text-blue-200 ml-6 caret"
+                  key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon
+                  [class.sorthighlight]="tdTitleClick === sortingCriteria.company && !companyAsc"
+                  class="text-blue-200 ml-1 caret"
+                  key="table-row-sort-down"
+                  size="md"></svg-icon>
+              </div>
+            </td>
+            <td class="pl-24 type">
+              {{ 'userManagement.table.roleCol' | translate }}
+            </td>
+            <td class="pl-24 status status-cell">
+              <div
+                class="click-area"
+                (click)="
+                  sortCriteriaSelection('statusNameAsc', sortingCriteria.statusname, 'companyAsc', 'lastNameAsc')
+                ">
+                {{ 'userManagement.table.statusCol' | translate }}
+                <svg-icon
+                  [class.sorthighlight]="statusNameAsc"
+                  class="text-blue-200 ml-6 caret"
+                  key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon
+                  [class.sorthighlight]="tdTitleClick === sortingCriteria.statusname && !statusNameAsc"
+                  class="text-blue-200 ml-1 caret"
+                  key="table-row-sort-down"
+                  size="md"></svg-icon>
+              </div>
+            </td>
+            <td class="pl-24 user-approver ellipsis">
+              {{ 'userManagement.table.approver' | translate }}
+            </td>
+            <td class="pl-24 options"></td>
+          </tr>
+        </thead>
+
+        <tbody>
+          <neo-table-row
+            *ngFor="let user of usersList"
+            [user]="user"
+            (updateUsers)="getUsersList()"
+            class="row">
+          </neo-table-row>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <ng-template #noResults>
+      <neo-no-results [searchedStr]="searchString"></neo-no-results>
+    </ng-template>
+
+    <neo-pagination
+      *ngIf="paging && paging.total > defaultItemPerPage"
+      [paging]="paging"
+      (changePage)="updatePaging($event)">
+    </neo-pagination>
+  </div>
+</div>
+
+<neo-export-modal
+  *ngIf="exportModal"
+  [title]="'userManagement.exportUsersLabel' | translate"
+  [subText]="'userManagement.startExportUsersLabel' | translate"
+  (closeModal)="exportModal = false"
+  itemsFoundDesc="users"
+  [recordsCount]="paging.total"
+  [params]="requestParams">
+</neo-export-modal>

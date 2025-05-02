@@ -1,0 +1,12 @@
+<div class="content flex-column">
+  <div *ngIf="typesList" class="controls-wrapper d-flex flex-wrap">
+    <button
+      *ngFor="let type of typesList"
+      [class.disabled]="selectedType && type.id !== selectedType?.id"
+      [class.selected]="type.id === selectedType?.id"
+      class="d-flex flex-center neo-arial checkbox-wrapper mr-8 mb-8"
+    >
+      {{ type.name }}
+    </button>
+  </div>
+</div>

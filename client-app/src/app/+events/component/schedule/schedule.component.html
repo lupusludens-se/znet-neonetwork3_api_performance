@@ -1,0 +1,231 @@
+<ejs-schedule
+  #schedule
+  (currentViewChange)="onCurrentViewChange($event)"
+  (actionBegin)="onActionBegin($event)"
+  (actionComplete)="onActionComplete($event)"
+  (dataBinding)="onDataBinding()"
+  (dataBound)="onDataBound()"
+  (eventClick)="onAppointmentClick()"
+  (popupOpen)="onPopupOpen($event)"
+  (popupClose)="onPopupClose($event)"
+  (renderCell)="onRenderCell($event)"
+  (navigating)="onNavigating($event)"
+  (moreEventsClick)="onMoreEventsClick($event)"
+  [eventSettings]="eventSettingsObject"
+  [firstDayOfWeek]="weekFirstDay"
+  [selectedDate]="today">
+  <ng-container *ngIf="currentUser$ | async as currentUser">
+    <ng-template
+      #quickInfoTemplatesHeader
+      let-data>
+      <div class="quick-info-header">
+        <button
+          (click)="onCloseClick()"
+          class="close-btn absolute">
+          <svg-icon
+            fontSize="16px"
+            class="close-btn-icon"
+            key="close"></svg-icon>
+        </button>
+
+        <div class="quick-info-header-content pt-4">
+          <neo-event-date-time
+            [dates]="data.ShortDates"
+            [times]="data.ShortTimes"
+            [datesCount]="data.MoreDatesCount"
+            [timesCount]="data.MoreOccurrencesCount"
+            class="mb-6">
+          </neo-event-date-time>
+
+          <div class="d-flex justify-between align-center">
+            <div class="quick-info-title mb-6">
+              {{ data?.Subject }}
+            </div>
+
+            <ng-container *ngIf="hasPermission(currentUser)">
+              <button
+                (click)="$event.stopPropagation()"
+                class="btn-s ml-20 flex-center btn-edit"
+                routerLink="/admin/events/edit-event/{{ data?.EventId }}">
+                <svg-icon
+                  class="mr-10"
+                  key="pencil"
+                  size="md"></svg-icon>
+                {{ 'actions.editLabel' | translate }}
+              </button>
+            </ng-container>
+          </div>
+
+          <div class="quick-info-location mb-12">
+            {{ data?.Location }}
+          </div>
+
+          <div
+            *ngIf="isEventActual"
+            class="quick-info-type">
+            <div class="d-flex flex-between event-details-attending">
+              <div class="d-flex">
+                <h6 class="pt-8 text-neo-near-black text-xs">{{ 'events.attendingLabel' | translate }}?</h6>
+
+                <button
+                  (click)="changeAttendance(data?.EventId, data?.IsAttending === true ? null : true)"
+                  [class]="
+                    data?.IsAttending === null
+                      ? 'default'
+                      : data?.IsAttending === true
+                      ? 'selected border'
+                      : 'selected'
+                  "
+                  class="ml-12 btn-xs attending-button d-flex align-center">
+                  {{ 'general.yesLabel' | translate }}
+                </button>
+
+                <button
+                  (click)="changeAttendance(data?.EventId, data?.IsAttending === false ? null : false)"
+                  [class]="
+                    data?.IsAttending === null
+                      ? 'default'
+                      : data?.IsAttending === false
+                      ? 'selected border'
+                      : 'selected'
+                  "
+                  class="ml-8 btn-xs attending-button d-flex align-center">
+                  {{ 'general.noLabel' | translate }}
+                </button>
+              </div>
+
+              <button
+                (click)="addToCalendar(data?.EventId)"
+                class="add-calendar-btn text-s d-flex align-center"
+                type="button">
+                <svg-icon
+                  class="mr-10"
+                  key="event-calendar"
+                  size="sm"></svg-icon>
+                {{ 'events.addToMyCalendarLabel' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <ng-template
+    #quickInfoTemplatesContent
+    let-data>
+    <div class="quick-info-content">
+      <div class="event-content">
+        <div
+          *ngIf="data?.Description"
+          class="event-description mt-16">
+          {{ data?.Description }}
+        </div>
+
+        <ng-container *ngIf="data?.Highlights">
+          <h6 class="text-neo-near-black mt-16 mb-6 neo-arial">
+            {{ 'events.eventHighlightsLabel' | translate }}
+          </h6>
+
+          <div
+            class="event-description highlights"
+            [innerHTML]="getHighlightsHTML(data?.Highlights)"></div>
+        </ng-container>
+
+        <ng-container *ngIf="data?.Moderators?.length">
+          <h6 class="text-neo-near-black mt-16 mb-12 neo-arial">
+            {{ 'events.moderatorsViewLabel' | translate }}
+          </h6>
+
+          <div class="event-description">
+            <ng-template
+              [ngForOf]="data?.Moderators"
+              let-i="index"
+              let-item
+              ngFor>
+              <div class="d-flex mb-6">
+                <div class="moderator">
+                  <img
+                    [alt]="(data?.Moderators[i].name ?? data?.Moderators[i].userId) + 'image'"
+                    [src]="data?.Moderators[i].user?.image?.uri ?? 'assets/icons/default-avatar.png'" />
+                </div>
+
+                <div
+                  (click)="
+                    data?.Moderators[i].statusId !== userStatuses.Deleted && openUserProfile(data?.Moderators[i].userId)
+                  "
+                  [class]="data?.Moderators[i].userId ? 'existed-user' : ''"
+                  class="moderator-name pl-8 pt-4 text-dark-gray-515 text-s">
+                  {{
+                    data?.Moderators[i].name ??
+                      data?.Moderators[i].user.firstName + ' ' + data?.Moderators[i].user.lastName
+                  }}{{
+                    data?.Moderators[i].statusId === userStatuses.Deleted
+                      ? ''
+                      : data?.Moderators[i].company
+                      ? ', ' + data?.Moderators[i].company ?? data?.Moderators[i].user.company
+                      : ''
+                  }}
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </ng-container>
+      </div>
+
+      <button
+        (click)="openDetails(data.EventId)"
+        class="btn-xs blue-50-frame w-min-initial d-flex align-center mt-16 text-capitalize">
+        {{ 'general.readMoreLabel' | translate }}
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template
+    #quickInfoTemplatesFooter
+    let-data>
+    <div
+      *ngIf="!!data?.Attenders.length"
+      class="e-event-footer">
+      <div class="event-footer-content">
+        <h6 class="text-neo-near-black mt-16 mb-6 neo-arial">
+          {{ 'events.attendingLabel' | translate }}
+        </h6>
+
+        <div class="attenders d-flex justify-between">
+          <div class="d-flex ml-6">
+            <ng-template
+              [ngForOf]="data?.Attenders"
+              let-count="count"
+              let-i="index"
+              let-item
+              ngFor>
+              <div
+                *ngIf="i < 9"
+                [style.zIndex]="count - i"
+                class="attender">
+                <img
+                  [alt]="data?.Attenders[i].firstName + data?.Attenders[i].lastName + 'image'"
+                  [src]="data?.Attenders[i].image?.uri ?? 'assets/icons/default-avatar.png'" />
+              </div>
+            </ng-template>
+
+            <div
+              (click)="openDetails(data.EventId)"
+              *ngIf="data?.Attenders?.length > 9"
+              class="attenders-count pl-10 pt-2 c-pointer text-xs">
+              +{{ data?.Attenders.length - 9 }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <e-views>
+    <e-view
+      isSelected="true"
+      option="Month">
+    </e-view>
+  </e-views>
+</ejs-schedule>

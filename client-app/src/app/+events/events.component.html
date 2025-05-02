@@ -1,0 +1,57 @@
+<div class="h-100">
+  <h1
+    class="title neo-arial"
+    *ngIf="eventsCount === 0 && !search && selectedTab === 'list'">
+    {{ 'settings.eventsLabel' | translate }}
+  </h1>
+  <ng-container *ngIf="(authService.currentUser() | async) !== null && (auth.isLoggedIn() || auth.needSilentLogIn())">
+    <ng-container>
+      <neo-events-slider *ngIf="eventsCount > 0 || (!eventsCount && search)"></neo-events-slider>
+
+      <div>
+        <neo-search-bar
+          *ngIf="eventsCount > 0 || (!eventsCount && search)"
+          (clearInput)="search = ''; eventsCount = null"
+          (inputChange)="search = $event; selectedTab = 'list'"></neo-search-bar>
+
+        <div
+          class="d-flex tabs-wrapper pt-24"
+          *ngIf="eventsCount > 0 || (!eventsCount && search)">
+          <button
+            (click)="selectedTab = 'list'"
+            [class.active]="selectedTab === 'list'"
+            class="btn-s neo-arial d-flex align-center list">
+            {{ 'events.listLabel' | translate }}
+          </button>
+
+          <button
+            (click)="selectedTab = 'calendar'"
+            [class.active]="selectedTab === 'calendar'"
+            class="btn-s neo-arial d-flex align-center calendar">
+            {{ 'events.calendarLabel' | translate }}
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedTab === 'list'">
+      <neo-events-list
+        [searchInput]="search"
+        (eventsLoad)="onEventsLoaded($event)"></neo-events-list>
+    </ng-container>
+
+    <ng-container *ngIf="selectedTab === 'calendar'">
+      <neo-schedule (onEventsLoaded)="onEventsLoaded($event)"></neo-schedule>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="(authService.currentUser() | async) === null && !(auth.isLoggedIn() || auth.needSilentLogIn())">
+    <neo-public-events-banner></neo-public-events-banner>
+    <neo-events-public-list></neo-events-public-list>
+  </ng-container>
+
+  <neo-empty-page
+    class="empty-page"
+    *ngIf="eventsCount === 0 && !search && selectedTab === 'list'"
+    [headlinePart1]="'general.emptyStateLabel' | translate"
+    iconKey="events">
+  </neo-empty-page>
+</div>

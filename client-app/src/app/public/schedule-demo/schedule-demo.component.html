@@ -1,0 +1,114 @@
+<div class="align-center">
+  <div class="pb-12 m-3-percent mt-6-imp">
+    <ng-container *ngIf="!showSuccess">
+      <p class="text-subtitle text-s pb-16 pt-8">
+        {{ 'scheduleDemo.subtitle' | translate }}
+      </p>
+      <div class="separator"></div>
+
+      <form [formGroup]="formGroup" class="flex-column pt-24">
+        <div class="flex-between gap-32">
+          <neo-text-input formControlName="name" class="grow-width w-100 mb-32" [applyAsterisk]="true"
+            [labelName]="'scheduleDemo.nameLabel' | translate" [submitted]="formSubmitted">
+          </neo-text-input>
+
+          <neo-text-input formControlName="email" class="w-100 mb-32" [applyAsterisk]="true"
+            [labelName]="'scheduleDemo.emailLabel' | translate" [submitted]="formSubmitted">
+          </neo-text-input>
+
+          <p *ngIf="emailServerError" class="text-error text-xs pt-8">
+            {{ emailServerError | translate }}
+          </p>
+        </div>
+        <div class="flex-between gap-32">
+          <neo-text-input formControlName="company" class="w-100" [disabled]="disableInput ? true : null"
+            [applyAsterisk]="true" [labelName]="'scheduleDemo.companyLabel' | translate" [submitted]="formSubmitted"
+            [labelForError]="'scheduleDemo.companyLabel' | translate">
+          </neo-text-input>
+
+          <neo-dropdown class="mb-32 ml-12 w-100 demo" [dropdownOptions]="businessTypeOptions"
+            formControlName="businessType" [showLabel]="true" [applyAsterisk]="true"
+            [labelName]="'scheduleDemo.businessTypeLabel' | translate" [submitted]="formSubmitted">
+          </neo-dropdown>
+        </div>
+        <div class="flex-between gap-32">
+          <neo-dropdown class="mb-32  w-100 demo" [dropdownOptions]="iAmLookingForOptions"
+            formControlName="iAmLookingFor" [showLabel]="true" [applyAsterisk]="true"
+            [labelName]="'scheduleDemo.iAmLookingForLabel' | translate" [submitted]="formSubmitted">
+          </neo-dropdown>
+
+          <div class="w-100">
+            <label class="input-label neo-arial text-s mb-6" for="country">
+              {{ 'userManagement.form.countryLabel' | translate }}<span class="text-asterisk">*</span>
+            </label>
+            <neo-search-bar (clearInput)="clearCountry()" (inputChange)="searchCountries($event)"
+              (selectedResult)="setCountry($event)" [error]="!!formGroup.controls['countryId']?.errors && formSubmitted"
+              [results]="countries$ | async" [submitted]='formSubmitted' class="mt-8 w-100" id="country">
+            </neo-search-bar>
+
+            <neo-control-error [submitted]="formSubmitted" [errors]="formGroup.controls['countryId']?.errors"
+              [fieldName]="'userProfile.edit.countryLabel' | translate">
+            </neo-control-error>
+          </div>
+        </div>
+
+        <div class="flex-column">
+          <label class="input-label neo-arial flex-between" for="joiningInterestDetails">
+            <div class="d-flex flex-start">
+              <div>{{ 'scheduleDemo.joiningInterestLabel' | translate }}</div>
+              <div class="optionalText">{{ 'scheduleDemo.optionalLabelText' | translate }}</div>
+            </div>
+            <span class="align-right counter-wrapper flex-between">
+              <span class="counter">{{ formGroup.controls['joiningInterestDetails'].value?.length ?? 0 }}/{{
+                joiningInterestDetailsTextMaxLength }}</span>
+            </span>
+          </label>
+          <neo-textarea-control class="neo-arial" formControlName="joiningInterestDetails" height="100px"
+            [submitted]="formSubmitted">
+          </neo-textarea-control> 
+        </div>
+
+        <div class="d-flex align-center pt-24">
+          <neo-blue-checkbox [name]="'scheduleDemo.iAcceptLabel' | translate" [nameContainsHTML]="true"
+            (selectCheckbox)="termsAndConditions = !termsAndConditions" [checked]="termsAndConditions"
+            class="w-fit-content text-accept-demo">
+          </neo-blue-checkbox>
+        </div>
+
+        <neo-control-error [submitted]="formSubmitted" [errors]="termsAndConditions ? null : {required: true}"
+          [fieldName]="'landing.footer.termsOfUseLabel' | translate" class='mb-24'>
+        </neo-control-error>
+
+
+        <button (click)="submitRequest()" class="btn-l green">
+          {{ 'scheduleDemo.submitLabel' | translate }}
+        </button>
+
+        <div class="flex-center pt-24 align-self-center ">
+          <p class="text-s text-neo-purple">
+            {{ 'signUp.alreadyHaveAnAccountLabel' | translate }}
+          </p>
+
+          <button (click)="logIn()" class="link text-s text-neo-purple ml-4 underline">
+            {{ 'landing.header.loginLabel' | translate }}
+          </button>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+</div>
+
+<ng-container *ngIf="showSuccess">
+  <div class="text-center pr-16 pl-24"><img alt="user icon" src="assets/images/user-checked.svg" />
+    <h3 class="text-s pt-12 pb-12 text-blue-200 text-center">
+      {{ 'scheduleDemo.thankYouLabel' | translate }}
+    </h3>
+    <h1 class="text-header">{{ 'scheduleDemo.requestReceivedLabel' | translate }}</h1>
+    <p class="text-s pt-12 pb-12 text-blue-200 text-center">
+      {{ 'scheduleDemo.youWillHereFromUsLabel' | translate }}
+    </p>
+    <button class="btn-m green mb-24" (click)="close()">
+      {{ 'general.closeLabel' | translate }}
+    </button>
+  </div>
+</ng-container>

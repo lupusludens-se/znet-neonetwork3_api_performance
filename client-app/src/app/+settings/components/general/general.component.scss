@@ -1,0 +1,57 @@
+@use 'colors';
+
+.btn-xs {
+  background: colors.$dark-gray-40;
+  border: 1px solid colors.$purple-300;
+  color: colors.$purple-200;
+  border-radius: 8px;
+  max-height: 47px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 150%;
+
+  &:hover {
+    color: colors.$purple-500;
+    background: colors.$dark-gray-40;
+    border: 1px solid colors.$purple-500;
+  }
+
+  &:active {
+    color: colors.$purple-500;
+    background: colors.$dark-gray-40;
+    border: 1px solid colors.$purple-300;
+  }
+}
+
+.btn-cancel {
+  width: 50%;
+  height: 45px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 120%;
+  color: colors.$dark-gray-590;
+  background: colors.$dark-gray-450;
+  border: none;
+
+  &:hover {
+    background: colors.$dark-gray-250;
+    color: colors.$dark-gray-590;
+    border-radius: 8px;
+    border: none;
+  }
+}
+
+.btn-yes {
+  width: 50%;
+  height: 45px;
+  border-radius: 8px;
+  font-size: 14px;
+  background: colors.$zeigo-purple;
+  text-transform: capitalize;
+  color: colors.$dark-gray-40;
+
+  &:hover {
+    background: colors.$purple-400 !important;
+  }
+}

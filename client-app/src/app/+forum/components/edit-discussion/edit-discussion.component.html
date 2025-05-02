@@ -1,0 +1,159 @@
+<h3 class="text-neo-near-black pb-24">
+  {{ 'forum.editDiscussionLabel' | translate }}
+</h3>
+
+<ng-container *ngIf="currentUser$ | async as currentUser">
+  <form
+    [formGroup]="formGroup"
+    class="flex-column mb-64">
+    <div class="flex-row p-24 control-wrapper">
+      <label
+        class="text-neo-near-black neo-arial text-m pb-12 flex-between"
+        for="title">
+        {{ 'form.titleLabel' | translate }}
+      </label>
+      <ng-container *ngIf="permissionService.userHasPermission(currentUser, permissionTypes.ForumManagement)">
+        <input
+          [class.error]="hasError('title')"
+          [maxLength]="250"
+          class="medium pl-16"
+          formControlName="title"
+          id="title"
+          type="text" />
+
+        <p
+          *ngIf="hasError('title')"
+          class="text-error pt-8 text-s">
+          {{ 'form.titleLabel' | translate }}
+          {{ 'general.requiredLabel' | translate }}
+        </p>
+      </ng-container>
+      <ng-container *ngIf="!permissionService.userHasPermission(currentUser, permissionTypes.ForumManagement)">
+        <label
+          class="text-neo-near-black neo-arial pb-12 flex-between"
+          for="title">
+          {{ formGroup.get('title').value }}
+        </label>
+      </ng-container>
+    </div>
+
+    <div class="p-relative flex-column p-24 control-wrapper mt-12">
+      <label
+        class="text-neo-near-black text-m neo-arial pb-6 flex-between"
+        for="description">
+        {{ 'form.discussionLabel' | translate }}
+      </label>
+
+      <div class="pb-12 required arial text-s">
+        {{ 'general.requiredText' | translate }}
+         <span class="p-absolute right-24 counter text-s fw-700 text-dark-gray-590">
+        {{ descriptionCount || 0 }}/{{ DESCRIPTION_TEXT_MAX_LENGTH }}
+      </span></div>
+
+      
+
+      <neo-message-control
+        (fileSelected)="fileSelected$.next($event)"
+        (symbolsCount)="descriptionCount = $event"
+        [attachments]="attachments"
+        [maxLength]="DESCRIPTION_MAX_LENGTH"
+        [hasError]="hasError('description')"
+        [isLoading]="isLoading"
+        formControlName="description"
+        id="description"
+        classes="p-0 text-s">
+      </neo-message-control>
+
+      <p
+        *ngIf="hasDescriptionError('description')"
+        class="text-error pt-8 text-s">
+        {{ descriptionErrorMessage }}
+      </p>
+    </div>
+
+    <div class="flex-column p-24 control-wrapper mt-12 text-m">
+      <div class="d-flex align-center pb-12 neo-arial text-neo-near-black text-m">
+        <span>
+          {{ 'forum.topicsLabel' | translate }}
+        </span>
+        &nbsp;
+        <span
+          [class.text-error]="hasError('topics')">
+          {{ 'forum.topicsSubLabel' | translate }}
+        </span>
+      </div>
+
+      <div class="d-flex flex-wrap gap-8">
+        <ng-container *ngIf="categories$ | async as categories">
+          <neo-select-item
+            class="forum-selectitems"
+            (add)="addItem('topics', $event)"
+            *ngFor="let category of categories"
+            [item]="category"
+            [maxSelectedItems]="3"
+            [selectedItems]="formGroup.get('topics').value">
+          </neo-select-item>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="flex-column p-24 control-wrapper mt-12">
+      <div class="d-flex text-m align-center pb-12">
+        <span class="neo-arial text-neo-near-black">
+          {{ 'forum.locationSpecificLabel' | translate }} {{ 'forum.locationSpecificSubLabel' | translate }}
+        </span>
+      </div>
+
+      <div class="d-flex align-start">
+        <div class="d-flex align-center">
+          <button
+            (click)="resetRegions()"
+            [class.btn-forum-location-selected]="!locationSpecific"
+            class="tab mr-8">
+            {{ 'general.noLabel' | translate }}
+          </button>
+
+          <button
+            (click)="locationSpecific = true"
+            [class.btn-forum-location-selected]="locationSpecific"
+            class="tab mr-16">
+            {{ 'general.yesLabel' | translate }}
+          </button>
+
+          <svg-icon
+            class="text-blue-200 mr-16"
+            height="24px"
+            key="forward"
+            width="24px"></svg-icon>
+        </div>
+
+        <div
+          [class.disabled]="!locationSpecific"
+          class="d-flex flex-wrap gap-8">
+          <ng-container *ngIf="regions$ | async as regions">
+            <neo-select-item
+            class="forum-selectitems"
+              (add)="addItem('regions', $event)"
+              *ngFor="let region of regions"
+              [item]="region"
+              [selectedItems]="formGroup.get('regions').value">
+            </neo-select-item>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <neo-forum-users
+      *ngIf="topic.isPrivate && isUserAdmin"
+      (selectedUsersUpdated)="selectedUsersUpdated($event)"
+      [forumUserIds]="forumUserIds">
+    </neo-forum-users>
+  </form>
+</ng-container>
+
+<neo-form-footer
+  (cancel)="cancelClick()"
+  (save)="updateDiscussion()"
+  [submitButtonName]="'forum.updateDiscussionLabel' | translate"
+  backButtonIcon="left-arrow"
+  class="neo-form-footer capitalize">
+</neo-form-footer>

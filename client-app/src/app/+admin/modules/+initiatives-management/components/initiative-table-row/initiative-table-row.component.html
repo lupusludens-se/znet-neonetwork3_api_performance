@@ -1,0 +1,56 @@
+<td class="pl-24 titleCol-cell ellipsis align-center" [class.transparent]="initiative.user?.statusId === userStatus.Inactive">
+    <span class="tooltip c-pointer">
+      <svg-icon
+        *ngIf="initiative.user?.statusId === userStatus.Deleted || initiative.user?.statusId === userStatus.Inactive"
+        class="mr-8 text-error" key="alert-filled">
+      </svg-icon>
+      <span class="tooltiptext text-xs">
+        {{ 'initiative.viewInitiative.initiativeWarning' | translate }}
+      </span>
+    </span>
+    <span [class.transparent]="initiative.user?.statusId === userStatus.Inactive"
+      [class.lightText]="initiative.user?.statusId === userStatus.Inactive" class="title-col ellipsis"
+      title="{{initiative.title}}">
+      {{ initiative.title }}
+    </span>
+  </td>
+
+
+<td class="pl-24 ellipsis projectType-cell">
+  <span class="projectType" [title]="initiative.category.name">{{ initiative.category.name }}</span>
+</td>
+
+
+<td class="pl-24 ellipsis company-cell">
+  <span class="company" [title]="initiative.companyName">{{ initiative.companyName }}</span>
+</td>
+
+
+<td
+  [class.transparent]="initiative.user.statusId === userStatus.Inactive || initiative.user.statusId === userStatus.Deleted"
+  class="pl-24 d-flex align-center  ellipsis name-cell">
+
+  <neo-user-avatar [user]="initiative.user" class="mr-12" imageSize="size24"
+    *ngIf="!initiative.user.requestDeleteDate"></neo-user-avatar>
+  <ng-container *ngIf="initiative.user.requestDeleteDate">
+    <svg-icon key="trash-can" class="ml-4 mr-12"></svg-icon>
+  </ng-container>
+  <span class="name ellipsis" [title]="initiative.userName">{{ initiative.user.lastName }}, {{ initiative.user.firstName }}</span>
+</td>
+
+<td class="pl-24 ellipsis geography-cell">
+  <span class="geography" [title]="initiative?.regionNames">{{ initiative.regionNames }}</span>
+</td>
+
+<td class="pl-24 ellipsis phase-cell">
+  <span class="phase" [title]="initiative.phase">{{ initiative.phase }}</span>
+</td>
+
+<td class="pl-12 ellipsis updatedDate-cell">
+  <span class="updatedDate">{{ initiative.modifiedOn | timeAgo }}</span>
+</td>
+
+<td class="pl-12 ellipsis status-cell  pr-12">
+  <span class="status" [class.deleted]="initiative.statusId === initiativeStatus.Deleted">{{ initiative.statusName
+    }}</span>
+</td>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="../../styles/buttons.css" rel="stylesheet">
+    <link href="../../styles/flexbox.css" rel="stylesheet">
+    <link href="../../styles/fonts.css" rel="stylesheet">
+    <link href="../../styles/inputs.css" rel="stylesheet">
+    <link href="../../styles/spacing.css" rel="stylesheet">
+    <link href="../../styles/text.css" rel="stylesheet">
+    <link href="../../styles/index.css" rel="stylesheet">
+</head>
+<body class="d-flex align-center">
+<div class="p-relative background-wrapper d-flex align-start justify-center">
+    <!--link to web app-->
+    <a href=""><img class="pt-48 c-pointer" src="../../assets/images/logo.svg" alt="neo logo"/></a>
+    <img class="p-absolute" src="../../assets/images/vector.svg" alt="vector image"/>
+</div>
+
+<div class="flex-column align-center form-wrapper pt-48 p-relative">
+    <div class="flex-column align-start pb-96">
+        <h1 class="text-neo-blue">New Password</h1>
+
+        <p class="text-blue-500 text-s pt-12 pb-16">
+            Please enter a secure password that you can remember but is difficult to guess.
+        </p>
+
+        <div class="separator"></div>
+
+        <form class="flex-column w-100 pt-24">
+            <div class="flex-column w-100 pb-56">
+                <label class="text-neo-blue neo-arial text-s pb-12" for="password">Enter password</label>
+                <!--add class "error" to input in case invalid input value -->
+                <input type="password" id="password" name="Password" aria-label="Password"
+                       autocomplete="current-password" aria-required="true">                <!--Error message-->
+                <!--<p class="text-error text-xs pt-8">Password invalid message</p>-->
+                <p class="text-s text-blue-300 mt-8">At least 8 alphanumeric characters and 1 special character.</p>
+            </div>
+
+            <button>Reset and login</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

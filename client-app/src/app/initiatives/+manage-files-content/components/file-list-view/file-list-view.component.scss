@@ -1,0 +1,182 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+.file-icon {
+  color: colors.$blue-650;
+  width: 32px;
+  height: 32px;
+}
+
+h2.header {
+  color: colors.$zeigo-black;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 120%;
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
+.btn-upload {
+  font-size: 14px;
+  background: colors.$zeigo-purple;
+  text-transform: capitalize;
+  border-radius: 8px;
+  border: 1px solid colors.$purple-300;
+  box-shadow: 0 1px 3px rgba(0, 31, 81, 0.07);
+  color: colors.$dark-gray-40;
+  padding: 10px;
+
+  &:hover {
+    border: 1px solid colors.$purple-500;
+    background: colors.$purple-400;
+  }
+}
+
+.tooltip {
+  cursor: help;
+  position: relative;
+
+  .tooltiptext {
+    visibility: hidden;
+    width: 472px;
+    background-color: colors.$white;
+    color: colors.$near-black-400;
+    border-radius: 6px;
+    font-size: small;
+    position: absolute;
+    z-index: 1;
+    bottom: 149%;
+    left: 599%;
+    transform: translate(-50%);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    padding: 12px;
+    border: 1px solid colors.$purple-160;
+  }
+
+  &:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.subtext {
+  color: colors.$dark-gray-590;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 110%;
+  color: colors.$near-black-400;
+}
+
+.table-wrapper {
+  width: 100%;
+}
+
+.table {
+  cursor: default;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+
+  thead {
+    background-color: colors.$dark-gray-450;
+    text-transform: uppercase;
+    color: colors.$purple-550;
+    font-family: 'Arial';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+
+    td {
+      height: 40px;
+
+      .caret {
+        transition: all 0.2s ease;
+        vertical-align: middle;
+        margin-bottom: 2px;
+
+        &.up {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    .click-area {
+      width: fit-content;
+      cursor: pointer;
+    }
+  }
+
+  tbody {
+    background-color: colors.$white;
+    font-family: 'Arial';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: colors.$dark-gray-515;
+  }
+}
+
+td {
+  height: 76px;
+}
+
+.user {
+  max-width: 20%;
+}
+
+neo-file-table-row {
+  display: table-row;
+}
+
+.sorthighlight {
+  color: colors.$aqua-700;
+}
+
+.row:hover {
+  background-color: colors.$blue-5;
+}
+
+.width-10 {
+  width: 10px;
+}
+
+.no-file-container {
+  padding: 80px;
+  align-items: center;
+  background-color: colors.$purple-20;
+  border: 1px solid colors.$purple-160;
+  border-radius: 12px;
+
+  .file-description {
+    color: colors.$dark-gray-545;
+    font-size: 14px;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  .file-icon {
+    color: colors.$purple-300;
+    width: 42px;
+    height: 42px;
+  }
+} 
+
+.primary-scope {
+  position: relative;
+  z-index: 1 !important;
+}
+
+.secondary-scope {
+  position: relative;
+  z-index: 0 !important;
+}
+
+.popup-controls.centered {
+  justify-content: center !important;
+}

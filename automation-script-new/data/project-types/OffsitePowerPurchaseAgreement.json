@@ -1,0 +1,194 @@
+{
+    "testCases": [
+      {
+        "testCaseId": 1,
+        "projectType": "Offsite Power Purchase Agreement",
+  
+        "technology": ["Groundmount Solar"],
+  
+        "regions": ["Africa"],
+  
+        "mapLocation": { "searchText": "enter zipcode and select the value from suggestions", "dropdownText": "" },
+        "isoRto": "select PJM from the drop down",
+        "productType": "select Energy Only from the drop down",
+        "calendarDate": "select any date",
+        "valueToOfftaker": "select all the checkboxes",
+        "ppaTermLength": "enter numerical value",
+        "totalProjectNameplateCapacity": "enter numerical value",
+        "totalProjectExpectedAnnualProdP50": "enter numerical value",
+        "minOfftakeVolumeRequired": "enter numerical value",
+        "notesForPotentialOfftakers": "enter string value",
+  
+        "settlementType": "select Hub from the dropdown",
+        "currencyForAllPriceEntries": "select USD from the dropdown",
+        "contractPrice": "enter numerical value",
+        "floatIndex": "enter alphanumerical value",
+        "floatFloor": "enter alphanumerical value",
+        "floatCap": "enter alphanumerical value",
+        "pricingStructure": "select Plain CFD from the dropdown",
+        "eacType": "select REC from the dropdown",
+        "eacValue": "enter alphanumeric value",
+        "settlementPriceInterval": "select Day-Ahead from the dropdown",
+        "settlementCalculationInterval": "select Hourly from the dropdown",
+        "projectMWCurrentlyAvailable": "enter a numeric value",
+        "notesForSEOpsTeam": "enter a alphanumeric value",
+  
+        "projectTitle": "enter a alpha numeric value",
+        "subTitle": "enter a alphanumeric value",
+        "describeOpportunity": "enter a alpha numeric value",
+        "aboutTheProvider": "should be auto populated from the company description page",
+        "action": "Publish"
+      },
+      {
+        "testCaseId": 2,
+        "projectType": "Offsite Power Purchase Agreement",
+  
+        "technology": ["Offshore wind"],
+  
+        "regions": ["Africa (Algeria, Congo, Egypt, Côte d'Ivoire)"],
+  
+        "mapLocation": { "searchText": "enter zipcode and select the value from suggestions", "dropdownText": "" },
+        "isoRto": "select PJM from the drop down",
+        "productType": "select Energy Only from the drop down",
+        "calendarDate": "select any date",
+        "valueToOfftaker": "select all the checkboxes",
+        "ppaTermLength": "enter numerical value",
+        "totalProjectNameplateCapacity": "enter numerical value",
+        "totalProjectExpectedAnnualProdP50": "enter numerical value",
+        "minOfftakeVolumeRequired": "enter numerical value",
+        "notesForPotentialOfftakers": "enter string value",
+  
+        "settlementType": "select Hub from the dropdown",
+        "currencyForAllPriceEntries": "select USD from the dropdown",
+        "contractPrice": "enter numerical value",
+        "floatIndex": "enter alphanumerical value",
+        "floatFloor": "enter alphanumerical value",
+        "floatCap": "enter alphanumerical value",
+        "pricingStructure": "select Plain CFD from the dropdown",
+        "eacType": "select REC from the dropdown",
+        "eacValue": "enter alphanumeric value",
+        "settlementPriceInterval": "select Day-Ahead from the dropdown",
+        "settlementCalculationInterval": "select Hourly from the dropdown",
+        "projectMWCurrentlyAvailable": "enter a numeric value",
+        "notesForSEOpsTeam": "enter a alphanumeric value",
+  
+        "projectTitle": "enter a alpha numeric value",
+        "subTitle": "enter a alphanumeric value",
+        "describeOpportunity": "enter a alpha numeric value",
+        "aboutTheProvider": "should be auto populated from the company description page",
+        "action": "Publish"
+      },
+      {
+        "testCaseId": 3,
+        "projectType": "Offsite Power Purchase Agreement",
+  
+        "technology": ["Groundmount Solar"],
+  
+        "regions": ["Africa (=All)"],
+  
+        "mapLocation": { "searchText": "enter zipcode and select the value from suggestions", "dropdownText": "" },
+        "isoRto": "select PJM from the drop down",
+        "productType": "select Energy Only from the drop down",
+        "calendarDate": "select any date",
+        "valueToOfftaker": "select all the checkboxes",
+        "ppaTermLength": "enter numerical value",
+        "totalProjectNameplateCapacity": "enter numerical value",
+        "totalProjectExpectedAnnualProdP50": "enter numerical value",
+        "minOfftakeVolumeRequired": "enter numerical value",
+        "notesForPotentialOfftakers": "enter string value",
+  
+        "settlementType": "select Hub from the dropdown",
+        "currencyForAllPriceEntries": "select USD from the dropdown",
+        "contractPrice": "enter numerical value",
+        "floatIndex": "enter alphanumerical value",
+        "floatFloor": "enter alphanumerical value",
+        "floatCap": "enter alphanumerical value",
+        "pricingStructure": "select Plain CFD from the dropdown",
+        "eacType": "select REC from the dropdown",
+        "eacValue": "enter alphanumeric value",
+        "settlementPriceInterval": "select Day-Ahead from the dropdown",
+        "settlementCalculationInterval": "select Hourly from the dropdown",
+        "projectMWCurrentlyAvailable": "enter a numeric value",
+        "notesForSEOpsTeam": "enter a alphanumeric value",
+  
+        "projectTitle": "enter a alpha numeric value",
+        "subTitle": "enter a alphanumeric value",
+        "describeOpportunity": "enter a alpha numeric value",
+        "aboutTheProvider": "should be auto populated from the company description page",
+        "action": "Publish"
+      },
+      {
+        "testCaseId": 4,
+        "projectType": "Offsite Power Purchase Agreement",
+  
+        "technology": [" Onshore wind"],
+  
+        "regions": ["Africa (=All)"],
+  
+        "mapLocation": { "searchText": "enter zipcode and select the value from suggestions", "dropdownText": "" },
+        "isoRto": "select PJM from the drop down",
+        "productType": "select Energy Only from the drop down",
+        "calendarDate": "select any date",
+        "valueToOfftaker": "select the Energy Arbitrage checkbox",
+        "ppaTermLength": "enter numerical value",
+        "totalProjectNameplateCapacity": "enter numerical value",
+        "totalProjectExpectedAnnualProdP50": "enter numerical value",
+        "minOfftakeVolumeRequired": "enter numerical value",
+        "notesForPotentialOfftakers": "enter string value",
+  
+        "currencyForAllPriceEntries": "select USD from the dropdown",
+        "contractPrice": "enter numerical value",
+        "pricingStructure": "select Plain CFD from the dropdown",
+        "eacType": "select REC from the dropdown",
+        "eacValue": "enter alphanumeric value",
+        "settlementPriceInterval": "select Day-Ahead from the dropdown",
+        "settlementCalculationInterval": "select Hourly from the dropdown",
+        "projectMWCurrentlyAvailable": "enter a numeric value",
+  
+        "projectTitle": "enter a alpha numeric value",
+        "subTitle": "enter a alphanumeric value",
+        "describeOpportunity": "enter a alpha numeric value",
+        "aboutTheProvider": "should be auto populated from the company description page",
+        "action": "Publish"
+      },
+      {
+        "testCaseId": 5,
+        "projectType": "Offsite Power Purchase Agreement",
+  
+        "technology": ["Battery Storage"],
+  
+        "regions": ["Asia (=All)"],
+  
+        "mapLocation": { "searchText": "enter zipcode and select the value from suggestions", "dropdownText": "" },
+        "isoRto": "select PJM from the drop down",
+        "productType": "select Energy Only from the drop down",
+        "calendarDate": "select any date",
+        "valueToOfftaker": "select the Energy Arbitrage and Visible Commitment to Climate Action checkboxes",
+        "ppaTermLength": "enter numerical value",
+        "totalProjectNameplateCapacity": "enter numerical value",
+        "totalProjectExpectedAnnualProdP50": "enter numerical value",
+        "minOfftakeVolumeRequired": "enter numerical value",
+        "notesForPotentialOfftakers": "enter string value",
+  
+        "settlementType": "select Hub from the dropdown",
+        "currencyForAllPriceEntries": "select USD from the dropdown",
+        "contractPrice": "enter numerical value",
+        "floatIndex": "enter alphanumerical value",
+        "floatFloor": "enter alphanumerical value",
+        "floatCap": "enter alphanumerical value",
+        "pricingStructure": "select Plain CFD from the dropdown",
+        "eacType": "select REC from the dropdown",
+        "eacValue": "enter alphanumeric value",
+        "settlementPriceInterval": "select Day-Ahead from the dropdown",
+        "settlementCalculationInterval": "select Hourly from the dropdown",
+        "projectMWCurrentlyAvailable": "enter a numeric value",
+        "notesForSEOpsTeam": "enter a alphanumeric value",
+  
+        "projectTitle": "enter a alpha numeric value",
+        "subTitle": "enter a alphanumeric value",
+        "describeOpportunity": "enter a alpha numeric value",
+        "aboutTheProvider": "should be auto populated from the company description page",
+        "action": "Publish"
+      }
+    ]
+}

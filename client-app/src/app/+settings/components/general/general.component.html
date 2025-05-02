@@ -1,0 +1,113 @@
+<div class="flex-column settings mb-96">
+  <div class="settings-wrapper p-32">
+    <h4 class="text-neo-near-black">
+      {{ 'settings.generalLabel' | translate }}
+    </h4>
+
+    <form
+      [formGroup]="formGroup"
+      class="flex-column w-60 pb-24">
+      <div class="flex-column pt-24">
+        <label
+          class="text-dark-gray-280 neo-arial text-s"
+          for="email">
+          {{ 'userManagement.form.emailLabel' | translate }}
+        </label>
+
+        <input
+          [class.error]="hasError('email')"
+          class="mt-4"
+          disabled
+          formControlName="email"
+          id="email"
+          type="text" />
+
+        <ng-container *ngIf="hasError('email')">
+          <p
+            *ngIf="!emailCustomError"
+            class="text-error text-xs pt-8">
+            {{ 'userManagement.form.emailLabel' | translate }}
+            {{ 'general.fieldInvalidLabel' | translate }}
+          </p>
+
+          <p
+            *ngIf="emailCustomError"
+            class="text-error text-xs pt-8">
+            {{ emailCustomError | translate }}
+          </p>
+        </ng-container>
+      </div>
+
+      <div class="flex-column pt-24">
+        <label
+          class="text-neo-near-black neo-arial text-s"
+          for="timezone">
+          {{ 'settings.timezoneLabel' | translate }}
+        </label>
+
+        <neo-dropdown
+          [dropdownOptions]="timeZones"
+          class="mt-4 text-dark-gray-590"
+          spacing="mb-0"
+          formControlName="timeZoneId"
+          id="timezone"></neo-dropdown>
+
+        <p
+          *ngIf="hasError('timeZoneId')"
+          class="text-error text-xs pt-8">
+          {{ 'settings.timezoneLabel' | translate }}
+        </p>
+      </div>
+    </form>
+
+    <div class="separator"></div>
+
+    <div class="flex-column pt-24">
+      <h4 class="text-neo-near-black">
+        {{ 'settings.closeAccountLabel' | translate }}
+      </h4>
+
+      <p class="text-s text-dark-gray-590 pt-4 pb-12">
+        {{ 'settings.closeAccountSubLabel' | translate }}
+      </p>
+
+      <button
+        (click)="showModal = true"
+        class="btn-xs text-purple-200 w-fit-content">
+        {{ 'settings.closeAccountLabel' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<neo-form-footer
+  (cancel)="cancelClick()"
+  (save)="updateAccount()"
+  [submitButtonName]="'general.saveChangesLabel' | translate"
+  class="capitalize"></neo-form-footer>
+
+<neo-modal
+  (closed)="showModal = false"
+  *ngIf="showModal" size="medium" padding="p-48"
+  [title]="'settings.closeAccountModal.titleLabel' | translate"
+  class="title-h2">
+  <p class="text-m text-dark-gray-515 mb-24 pt-6 mr-16">
+    {{ 'settings.closeAccountModal.textLabel' | translate }}
+  </p>
+
+  <div class="separator"></div>
+
+  <div class="pt-24 d-flex align-center justify-end">
+    <button
+      (click)="showModal = false"
+      class="btn-cancel blue-50-frame mr-16">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+
+    <button
+      (click)="deleteUser()"
+      class="btn-yes">
+      {{ 'settings.closeAccountModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

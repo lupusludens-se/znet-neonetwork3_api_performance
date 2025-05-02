@@ -1,0 +1,30 @@
+@use 'src/styles/colors';
+
+.search-input {
+  border-radius: 2px;
+  position: relative;
+
+  input {
+    &:read-only {
+      cursor: default;
+      opacity: 1;
+    }
+  }
+
+  .img-icon {
+    position: absolute;
+    left: 16px;
+  }
+
+  &.error {
+    border-color: transparent;
+  }
+}
+
+
+.results-wrapper {
+
+  .text-dark-gray-750 {
+    height:auto !important;
+  }
+}

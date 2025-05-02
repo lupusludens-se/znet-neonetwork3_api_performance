@@ -1,0 +1,129 @@
+@use 'colors';
+@use 'breakpoints';
+@use 'mixins';
+
+:host {
+  min-width: calc((100% / 5) - 10px);
+}
+
+.pinned-tool-wrapper {
+  // done for dashboard
+  transition: all 0.05s ease-in-out;
+  background: colors.$dark-gray-40;
+  border: 1px solid colors.$purple-180;
+  border-radius: 8px;
+
+  //dashbaord tools section
+  &:hover {
+    //box-shadow: 0px 2px 19px rgba(134, 132, 141, 0.16);//dashbaord tools section
+    background: colors.$purple-10;
+    border: 1px solid colors.$purple-180;
+    box-shadow: 0px 2px 8px rgba(134, 132, 141, 0.16);
+    border-radius: 8px;
+  }
+
+  &.wide {
+    height: 131px;
+    padding: 0 24px 0 30px;
+
+    @media (breakpoints.$medium) {
+      height: 145px;
+    }
+
+    .title-wrapper {
+      .tool-title {
+        font-size: 16px;
+      }
+    }
+  }
+
+  &.medium {
+    min-height: 120px;
+    padding: 22px 20px;
+    justify-content: center;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .title-wrapper {
+      .tool-title {
+        padding: 12px 0 0;
+        font-size: 12px;
+      }
+    }
+  }
+
+  &.fixed {
+    min-height: 93px;
+    padding: 12px 24px;
+    justify-content: center;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .title-wrapper {
+      .tool-title {
+        font-size: 16px;
+        color: colors.$dark-gray-750;
+      }
+    }
+
+    .description {
+      overflow: hidden;
+      color: colors.$dark-gray-580;
+      text-overflow: ellipsis;
+      font-size: 16px;
+      font-family: Arial;
+    }
+  }
+
+  .title-wrapper {
+    .tool-title {
+      line-height: 130%;
+    }
+  }
+
+  .pin-icon {
+    &.pinned {
+      color: colors.$aqua-400;
+    }
+    &:not(.pinned) {
+      color: colors.$dark-gray-590;
+    }
+
+    &:hover:not(.pinned) {
+      color: colors.$aqua-400;
+      background-color: colors.$blue-20;
+      border-radius: 50%;
+    }
+  }
+
+  .icon {
+    min-width: 36px;
+    width: 36px;
+    height: 36px;
+
+    &.medium {
+      min-width: 32px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .light-green {
+    min-width: 32px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .tool-title,
+  .text-xs {
+    @include mixins.text-lines-overflow(2);
+    font-family: 'Arial Rounded MT Bold';
+  }
+}
+.svg-no-pointer-events{
+  pointer-events: none !important;
+}

@@ -1,0 +1,58 @@
+@use 'colors';
+
+:host {
+  position: relative;
+}
+
+.filter-wrapper {
+  &.expanded {
+    .horizontal {
+      position: absolute;
+      width: 90%;
+      z-index: 1;
+      background: colors.$white;
+      box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12); 
+    }
+  }
+}
+
+:host.msgFilter {
+  .filter-wrapper {
+    &.expanded {
+      width: 296px;
+      margin-top: 5px;
+      box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+
+      .horizontal {
+        overflow-y: auto;
+        width: 295px;
+        height: 200px; 
+      }
+    }
+
+    &.collapsed {
+      margin-top: 3px;
+      width: 295px;
+      animation: none;
+    }
+  }
+}
+
+.parent-wrapper {
+  height: 48px;
+
+  .parent-title-wrapper {
+    .child-wrapper:not(.pb-8) {
+      border-bottom: 1px solid colors.$dark-gray-200;
+      padding-top: 6px;
+    }
+
+    padding: 0px 6px;
+  }
+
+  .parent-expanding {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

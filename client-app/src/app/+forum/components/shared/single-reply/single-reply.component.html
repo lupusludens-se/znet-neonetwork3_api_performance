@@ -1,0 +1,133 @@
+<ng-container *ngIf="comment">
+  <div [class.pinned]="comment?.isPinned" class="response-wrapper w-100 flex-column align-start p-24">
+    <div [class.expanded]="comment?.repliesCount" class="d-flex response w-100">
+      <div class="mr-12">
+        <neo-user-avatar [user]="getUser(comment?.user)" class="mr-8" imageSize="size24"></neo-user-avatar>
+      </div>
+
+      <div class="flex-column min-w-100">
+        <div class="flex-column">
+          <div class="d-flex align-center">
+            <a class="text-m fw-700 d-flex align-center user-name"
+              [class.c-default]="comment?.user?.statusId === userStatuses.Deleted" [routerLink]="
+                comment?.user?.statusId === userStatuses.Deleted ? [] : ['/user-profile/', comment?.user?.id]
+              ">
+              {{ comment?.user?.statusId === userStatuses.Deleted ? 'Deleted User' : comment?.user?.name }}
+            </a>
+
+            <ng-container
+              *ngIf="currentUser?.id !== comment?.user?.id && comment?.user?.statusId !== userStatuses.Deleted">
+              <neo-dot-decor class="child-grey-dot"></neo-dot-decor>
+
+              <button (click)="
+                  followUserClick.emit({
+                    id: comment?.user?.id,
+                    isFollowed: comment?.user?.isFollowed
+                  })
+                " [class]="comment?.user?.isFollowed ? 'text-aqua-400' : 'text-light-purple'"
+                class="text-xs d-flex text-capitalize follow-text">
+                {{ (comment?.user?.isFollowed ? 'general.followingBtn' : 'general.followBtn') | translate }}
+
+                <svg-icon [class.text-aqua-400]="comment?.user?.isFollowed"
+                  [key]="comment?.user?.isFollowed ? 'check-in-circle' : 'plus-in-circle'" class="ml-6"></svg-icon>
+              </button>
+            </ng-container>
+          </div>
+
+          <div class="d-flex mt-4 mb-4 align-center text-s user-details">
+            <ng-container *ngIf="comment?.user?.company && comment?.user?.statusId !== userStatuses.Deleted">
+              <div *ngIf="!comment?.user?.jobTitle" class="position">
+                {{ comment?.user?.company }}
+              </div>
+
+              <div *ngIf="comment?.user?.jobTitle" class="position">
+                {{ comment?.user?.jobTitle
+                }}{{ comment?.user?.statusId === userStatuses.Deleted ? '' : ', ' + comment?.user?.company }} 
+              </div>
+
+              <neo-vertical-line-decor></neo-vertical-line-decor>
+            </ng-container>
+
+            {{ comment?.modifiedOn | timeAgo }} <span class="edited-comment">{{comment?.modifiedOn  === comment?.createdOn ? '' : '(Edited)' }}</span>
+          </div>
+
+          <div  *ngIf="!inEditMode" [innerHTML]="comment?.text" class="text-s mb-8 pt-12 reply-width"></div> 
+
+          <ng-container *ngIf="inEditMode">
+            <neo-edit-control [user]="currentUser" class="mt-18 w-100"
+              (cancelClick)="replyMessage = null; showReply = false; inEditMode = false" (editResponse)="update($event)"
+              [editorValue]="comment?.text" placeholder="Edit..."></neo-edit-control>
+
+          </ng-container>
+
+          <div class="d-flex text-neo-purple"  *ngIf="!inEditMode">
+            <button (click)="$event.stopPropagation(); likeClick.emit(comment)" (mouseleave)="mouseover = false"
+              (mouseover)="mouseover = true" [class.active]="comment?.isLiked"
+              class="btn d-flex align-center mr-24 text-s ">
+              <svg-icon [class.active]="comment?.isLiked"
+               [key]="comment?.isLiked ? 'hands-thumps-up-filled' : 'finger-up'" class="mr-10 action">
+              </svg-icon>
+
+              <span class="svg-icon-details"> {{ comment?.likesCount }} </span>
+            </button>
+            <svg-icon key="pencil" (click)="edit()" *ngIf="currentUser.id === this.comment?.user?.id" 
+             class="forum-pencil-icon c-pointer mr-24 action"></svg-icon>
+
+            <svg-icon (click)="pin()" *ngIf="!isChild && isAdmin" [class.active]="comment?.isPinned"
+              [key]="comment?.isPinned ? 'pin-active' : 'pin-inactive'" class="link text-s mr-24 c-pointer action">
+            </svg-icon>
+
+            <svg-icon (click)="toggleModal()" *ngIf="isAdmin || currentUser.id == this.comment?.user.id" class="link text-s mr-24 c-pointer action" key="trash-can">
+            </svg-icon>
+
+            <button (click)="replyToUser(this.comment.user)" *ngIf="!hideChildReplies"
+              class="btn btn-reply d-flex align-center svg-icon-details">
+              <svg-icon class="mr-10 action" key="left-arrow-cornered"></svg-icon>
+              {{ 'forum.replyLabel' | translate }}
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="showReplies && commentReplies?.length && !hideChildReplies" class="w-100 pt-24">
+          <div *ngFor="let childComment of commentReplies; let index = index" class="reply">
+            <neo-single-reply (deleteClick)="replyDeleted(index)" (followUserClick)="followUserClick.emit($event)"
+              (likeClick)="likeClick.emit($event)" (loadParentReplies)="loadReplies$.next()"
+              (replyClick)="replyToUser($event)" [comment]="childComment" [currentUser]="currentUser"
+              [forumId]="forumId" [isAdmin]="isAdmin" [isChild]="true" [parentMessageId]="parentMessageId">
+            </neo-single-reply>
+          </div>
+        </div>
+
+        <div *ngIf="comment?.repliesCount && !hideChildReplies" class="w-100 flex-between ml-12">
+          <button (click)="showHideReplies(comment?.repliesCount)" class="mt-14 view-replies">
+            {{ buttonText ?? 'View all ' + comment?.repliesCount + ' replies ...' }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <neo-respond-control (cancelClick)="replyMessage = null; showReply = false" (respond)="reply($event)"
+      *ngIf="showReply && !isChild" [editorValue]="replyMessage" [user]="currentUser" class="mt-18 w-100 respond-textbox"
+      placeholder="Respond...">
+    </neo-respond-control>
+  </div>
+</ng-container>
+
+
+<neo-modal *ngIf="deleteModal" size="small" padding="p-32" (closed)="toggleModal()">
+  <svg-icon key="close-forum-icon" size="xxl" class="p-absolute top-20 right-20 c-pointer text-blue-200" (click)="toggleModal()">
+  </svg-icon>
+
+  <h3 class="comment-delete-label">{{ 'forum.commentDeleteLabel' | translate }}</h3>
+
+  <div class="separator mt-24 mb-24"></div>
+
+  <div class="d-flex align-center justify-end gap-16">
+    <button class="btn-modal cancel" (click)="toggleModal()">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+
+    <button class="btn-modal delete" (click)="delete()">
+      {{ 'general.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

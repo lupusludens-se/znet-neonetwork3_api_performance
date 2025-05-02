@@ -1,0 +1,38 @@
+@use 'colors';
+
+:host {
+  width: 100%;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.circle-violet-5 {
+  background: colors.$violet-5;
+}
+
+.circle-small {
+  width: 20px;
+  height: 20px;
+}
+
+.circle-big {
+  width: 36px;
+  height: 36px;
+}
+
+.line {
+  height: 0px;
+  border-bottom: 4px solid colors.$violet-5;
+  border-radius: 4px;
+}
+
+.breadcrumb-line,
+.username-line {
+  width: 96px;
+}
+
+.company-line {
+  width: 72px;
+}

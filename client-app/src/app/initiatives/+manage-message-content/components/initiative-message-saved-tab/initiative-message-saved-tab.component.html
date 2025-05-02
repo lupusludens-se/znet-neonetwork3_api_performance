@@ -1,0 +1,46 @@
+<div *ngIf="responseData?.dataList?.length > 0">
+  <div class="tile c-pointer d-flex align-center" [class.message-wrapper-first]="i === 0"  *ngFor="let tile of responseData?.dataList; let i = index">
+    <neo-message-item [message]="tile" [currentUser]="currentUser" (selectedMessage)="openMessage(tile)" 
+    [isSavedMessage]="true" [initiativeId]="initiativeId" class="w-97">
+    </neo-message-item>
+
+    <div class="three-dots">
+      <button>
+        <neo-menu (optionClick)="optionClick(tile?.id)" [options]="options" activeIcon="cross" class="messages-section"
+          icon="vertical-three-dots">
+        </neo-menu>
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="responseData?.count === 0">
+  <div class="flex-column no-saved-container">
+    <svg-icon class="communication-bubble-icon" key="communication-bubble"></svg-icon>
+    <h3 class="pt-20">{{ 'initiative.viewInitiative.noSavedMessageContentTitle' | translate }}</h3>
+    <div class="pt-20 no-saved-description pb-16">
+      {{ 'initiative.viewInitiative.noMessageSavedContentDescription' | translate }}
+    </div>
+  </div>
+</ng-container>
+
+<neo-pagination *ngIf="paging?.total > defaultPageItems" (changePage)="changePage($event)" [defaultItemPerPage]="12"
+  [paging]="paging" class="pt-24 mb-64">
+</neo-pagination>
+
+<neo-modal (closed)="closeDeletePopup()" *ngIf="showDeleteModal" size="medium"
+  [title]="'initiative.viewInitiative.deleteSavedConversationPopUpTitle' | translate" class="title-h2">
+  <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+    {{ 'initiative.viewInitiative.deleteSavedContentPopUpSubTitle' | translate }}
+  </p>
+
+  <div class="popup-controls mt-10 d-flex">
+    <button (click)="closeDeletePopup()" class="btn-cancel mr-16 w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+
+    <button (click)="confirmDelete()" class="btn-confirm w-50">
+      {{ 'messages.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

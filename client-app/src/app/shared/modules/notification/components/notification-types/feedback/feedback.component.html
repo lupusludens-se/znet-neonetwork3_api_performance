@@ -1,0 +1,19 @@
+<p class="two-lines-ellipsis text-s pl-12 text-neo-near-black">
+  <a
+    class="text-neo-near-black fw-700 c-pointer"
+    routerLink="/admin/user-feedback/{{ notification?.details?.feedbackId }}">
+    {{ 'notificationType.feedbackLabel' | translate }}
+  </a>
+  {{ 'notificationType.sharedByLabel' | translate }}
+  <a
+    class="text-neo-near-black fw-700 c-pointer"
+    routerLink="/user-profile/{{ notification?.details?.userId }}">
+    {{ notification?.details?.userName }}
+  </a>
+  {{ 'notificationType.fromLabel' | translate }}
+  <a
+    class="text-neo-near-black fw-700 c-pointer"
+    routerLink="/company-profile/{{ notification?.details?.companyId }}">
+    {{ notification?.details?.companyName }}
+  </a>
+</p>

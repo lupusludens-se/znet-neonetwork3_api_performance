@@ -1,0 +1,17 @@
+@use 'colors';
+
+:host {
+  background: colors.$dark-gray-20;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 38px;
+}
+
+.optionalText {
+  margin-left: 4px;
+  color: colors.$dark-gray-70;
+}
+
+ 

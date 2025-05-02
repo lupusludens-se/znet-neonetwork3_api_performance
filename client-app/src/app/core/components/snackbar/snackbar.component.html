@@ -1,0 +1,17 @@
+<div *ngIf="show" @state [ngClass]="['snackbar-wrap', type]" class="d-flex justify-between align-center">
+  <div class="d-flex align-center">
+    <svg-icon
+      *ngIf="type !== snackbarType.Info"
+      [class.text-neo-dark-green]="type === snackbarType.Success"
+      [key]="type === snackbarType.Success ? 'check-in-circle' : 'exclamation-triangle'"
+      class="mr-10"
+      size="lg"
+    ></svg-icon>
+
+    <p class="snackbar-text">
+      {{ message }}
+    </p>
+  </div>
+
+  <svg-icon (click)="show = false" class="c-pointer svg-icon-close" key="close-snackbar" size="lg"></svg-icon>
+</div>

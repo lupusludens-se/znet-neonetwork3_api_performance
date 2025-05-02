@@ -1,0 +1,27 @@
+<div class="date-time d-flex flex-wrap text-xs">
+  <time class="date d-flex arial align-center">
+    <svg-icon
+      [fontSize]="14"
+      class="date-icon mr-4"
+      key="event-calendar"></svg-icon>
+    {{ dates }}
+    <div
+      *ngIf="datesCount"
+      class="more-dates-count ml-4">
+      +{{ datesCount }}
+    </div>
+  </time>
+
+  <time class="d-flex arial align-center pr-20 ellipsis">
+    <svg-icon
+      [fontSize]="14"
+      class="date-icon mr-4"
+      key="event-timer"></svg-icon>
+    <div class="time-label ellipsis">{{ times }}</div>
+    <div
+      *ngIf="timesCount"
+      class="more-dates-count ml-4">
+      +{{ timesCount }}
+    </div>
+  </time>
+</div>

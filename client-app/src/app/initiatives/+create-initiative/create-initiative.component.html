@@ -1,0 +1,4 @@
+<neo-initiative-form *ngIf="initialData.id === 0"
+    (initiativeResult)="setInitiativeDetails($event)"></neo-initiative-form>
+<neo-initiative-content [(showLeaveConfirmation)]="showLeaveConfirmation" [nextUrl]="nextUrl"
+    [basicInitiativeDetails]="initialData" (submitAction)="onSubmitAction($event)" *ngIf="initialData.id > 0"></neo-initiative-content>

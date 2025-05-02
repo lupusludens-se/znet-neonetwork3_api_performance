@@ -1,0 +1,44 @@
+@use 'colors';
+
+.tile-item {
+  background-color: colors.$dark-gray-30;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+    cursor: pointer;
+
+    .light-green {
+      display: flex;
+    }
+  }
+
+  .flex-column {
+    width: calc(100% - 40px);
+
+    .text-h2{
+      line-height: 23px;
+      color: colors.$dark-gray-750;
+    }
+
+    .text-description {
+      font-size: 16px;
+      line-height: 21px;
+      letter-spacing: 0.01em;
+      color: colors.$dark-gray-580;
+    }
+    
+   .line{
+     border-top: 1px solid colors.$dark-gray-200;
+     margin-top: 10px;
+    }
+  }
+
+  .light-green {
+    display: none;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 8px;
+		color: colors.$dark-gray-590;
+		background: colors.$dark-gray-450;
+  }
+}

@@ -1,0 +1,36 @@
+<div (click)="openArticle()">
+  <svg-icon key="selection-tick-mark" *ngIf="article?.isSelected" class="tick-mark"></svg-icon>
+  <div class="image-container">
+    <img alt="{{ article?.title }}" class="c-pointer" [src]="article?.imageUrl" />
+  </div>
+  <div class="overlay-polygon" *ngIf="article?.isSelected"></div>
+  <ng-container *ngIf="article?.typeId">
+    <div *ngIf="article?.typeId === postType.Video" class="play-button flex-center p-absolute align-self-center c-pointer">
+      <svg-icon key="play" size="sm"></svg-icon>
+    </div>
+  </ng-container>
+  <span *ngIf="article?.typeId" class="neo-arial text-xxs text-uppercase max-w-fit post-type ml-6">
+    {{ getLearnType(article?.typeId) }}
+  </span>
+  <h6 [title]="article?.title" class="ml-6">{{ article?.title }}</h6>
+  <div class="new-icon-corner" *ngIf="article?.isNew">
+    <svg-icon (click)="$event.stopPropagation()" key="new-icon" class="favorite-icon"></svg-icon>
+  </div>
+</div>
+<div class="tile-footer d-flex flex-center ml-6 mb-4">
+  <div class="d-flex flex-center">
+    <neo-content-tag  [isOpenInNewTab]="true" *ngIf="article?.categories[0]" fontSize="12" [tag]="article?.categories[0]" [type]="type.Category"></neo-content-tag>
+    <span (click)="openArticleInNewTab();$event.stopPropagation()" class="tags-number default-cursor" *ngIf="article?.tagsTotalCount > 1">
+      +{{ article?.tagsTotalCount - 1 }}
+    </span>
+  </div>
+  <div class="three-dots w-10" *ngIf="isSavedArticle">
+    <button>
+      <neo-menu (optionClick)="optionClick($event)" [options]="options" activeIcon="cross" cssClasses="flex-center" class="saved-article" icon="three-dots"></neo-menu>
+    </button>
+  </div>
+  <a *ngIf="!isSavedArticle" class="purple pr-8" (click)="$event.stopPropagation(); trackArticleActivity();">
+    <svg-icon key="eye" class="mr-5 eye-icon"></svg-icon>
+    <span class="view-link">{{ 'general.viewLabel' | translate }}</span>
+  </a>
+</div>

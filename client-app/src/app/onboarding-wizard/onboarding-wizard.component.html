@@ -1,0 +1,33 @@
+<div class="d-flex">
+  <ng-container *ngIf="(onboardingWizardService.currentStep$ | async) === stepsList.Start; else mainFlow">
+    <neo-onboarding-start [corporationFlow]="corporationFlow"></neo-onboarding-start>
+  </ng-container>
+
+  <ng-template #mainFlow>
+    <neo-onboarding-sidebar [corporationFlow]="corporationFlow"></neo-onboarding-sidebar>
+    <form [formGroup]="form">
+      <ng-container [ngSwitch]="onboardingWizardService.currentStep$ | async">
+        <neo-onboarding-role
+          *ngSwitchCase="stepsList.Role"
+          [corporationFlow]="corporationFlow"></neo-onboarding-role>
+        <neo-onboarding-responsibilities *ngSwitchCase="stepsList.Responsibilities"></neo-onboarding-responsibilities>
+        <neo-onboarding-location
+          *ngSwitchCase="stepsList.Location"
+          [corporationFlow]="corporationFlow"></neo-onboarding-location>
+        <neo-onboarding-personal-info
+          *ngSwitchCase="stepsList.PersonalInfo"
+          [skillsByCategory]="skillsByCategory"></neo-onboarding-personal-info>
+        <neo-onboarding-geographical-purview
+          *ngSwitchCase="stepsList.GeographicalPurview"></neo-onboarding-geographical-purview>
+        <neo-onboarding-interests
+          *ngSwitchCase="stepsList.Interests"
+          class="w-public-interest"></neo-onboarding-interests>
+        <neo-onboarding-decarbonization-solutions
+          *ngSwitchCase="stepsList.DecarbonizationSolutions"></neo-onboarding-decarbonization-solutions>
+        <neo-onboarding-finish
+          *ngSwitchCase="stepsList.Finish"
+          [userId]="(authService.currentUser() | async)?.id"></neo-onboarding-finish>
+      </ng-container>
+    </form>
+  </ng-template>
+</div>

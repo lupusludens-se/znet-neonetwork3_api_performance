@@ -1,0 +1,140 @@
+@use 'colors';
+
+.content-wrapper {
+  background-color: colors.$white;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 114px;
+  padding: 32px;
+  width: fit-content;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 110%;
+  color: colors.$near-black-400;
+}
+
+form {
+  width: 652px;
+
+  .bottom-width {
+    width: 314px;
+  }
+}
+
+.bottom-part {
+  border-top: 1px solid colors.$dark-gray-420;
+}
+
+.right {
+  margin-top: 26px;
+  margin-left: 64px;
+}
+
+.controls-row {
+
+  .text-input,
+  neo-text-input {
+    width: 314px;
+  }
+}
+
+.text-input {
+  margin-top: 8px;
+  padding: 15px 16px;
+  height: 48px;
+}
+
+.text-input-label,
+.section-label {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial Rounded MT Bold, serif;
+  font-size: 14px;
+  line-height: 130%;
+  color: colors.$dark-gray-590;
+}
+
+.user-type {
+  min-width: 144px;
+}
+
+neo-blue-checkbox {
+  margin-bottom: 6px;
+  width: 50%;
+}
+
+.permissions {
+  // * temp for first version
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.flex-item-left {
+  padding: 10px;
+  flex: 50%;
+
+}
+
+.flex-item-right {
+
+  padding: 10px;
+  flex: 50%;
+}
+
+.flex-container-right {
+  display: flex;
+  flex-direction: row;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: max-content;
+  background-color: colors.$white;
+  color: colors.$near-black-400;
+  padding: 5px 15px;
+  border-radius: 6px;
+  font-size: small;
+  position: absolute;
+  z-index: 1;
+  top: 33%;
+  margin-left: 12px;
+  font-weight: bold;
+  inline-size: 203px;
+  overflow: hidden;
+  box-shadow: 0px 2px 8px rgba(111, 110, 119, 0.5);
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+
+}
+
+.checkbox-size {
+  width: 30px;
+  height: 18px;
+  border: white;
+  background-color: colors.$zeigo-purple;
+}
+ 
+.text-label {
+  color: colors.$dark-gray-580;
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0.16px;
+}
+ 

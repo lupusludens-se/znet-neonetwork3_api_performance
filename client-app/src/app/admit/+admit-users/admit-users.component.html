@@ -1,0 +1,169 @@
+<h3 class="title">{{ 'admitUsers.pageTitle' | translate }}</h3>
+
+<div class="content mt-32 d-flex">
+  <div class="table-wrapper flex-column">
+    <ng-container *ngIf="usersList && usersList.length">
+      <table class="table mb-24">
+        <thead>
+          <tr>
+            <td class="pl-24 user">
+              <div class="click-area" (click)="
+                  sortCriteriaSelection('nameAsc', sortingCriteria.name, 'roleAsc', 'companyAsc', 'createddateAsc')
+                ">
+                {{ 'admitUsers.table.registeredUsersLabel' | translate }}
+
+                <svg-icon [class.sorthighlight]="nameAsc" class="text-blue-200 ml-6 caret" key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon [class.sorthighlight]="tdTitleClick === sortingCriteria.name && !nameAsc"
+                  class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+              </div>
+            </td>
+
+            <td class="pl-24 company">
+              <div class="click-area" (click)="
+                  sortCriteriaSelection('companyAsc', sortingCriteria.company, 'nameAsc', 'roleAsc', 'createddateAsc')
+                ">
+                {{ 'admitUsers.table.companyLabel' | translate }}
+
+                <svg-icon [class.sorthighlight]="companyAsc" class="text-blue-200 ml-6 caret" key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon [class.sorthighlight]="tdTitleClick === sortingCriteria.company && !companyAsc"
+                  class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+              </div>
+            </td>
+
+            <td class="pl-24 role">
+              <div class="click-area" (click)="
+                  sortCriteriaSelection('roleAsc', sortingCriteria.role, 'nameAsc', 'companyAsc', 'createddateAsc')
+                ">
+                {{ 'admitUsers.table.roleLabel' | translate }}
+
+                <svg-icon [class.sorthighlight]="roleAsc" class="text-blue-200 ml-6 caret" key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon [class.sorthighlight]="tdTitleClick === sortingCriteria.role && !roleAsc"
+                  class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+              </div>
+            </td>
+
+            <td class="pl-24 date">
+              <div class="click-area" (click)="
+                  sortCriteriaSelection(
+                    'createddateAsc',
+                    sortingCriteria.createddate,
+                    'nameAsc',
+                    'companyAsc',
+                    'roleAsc'
+                  )
+                ">
+                {{ 'admitUsers.table.registeredLabel' | translate }}
+
+                <svg-icon [class.sorthighlight]="createddateAsc" class="text-blue-200 ml-6 caret"
+                  key="table-row-sort-up" size="md"></svg-icon>
+                <svg-icon [class.sorthighlight]="tdTitleClick === sortingCriteria.createddate && !createddateAsc"
+                  class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+              </div>
+            </td>
+
+            <td class="pl-24 controls status">
+              {{ 'admitUsers.table.statusLabel' | translate }}
+            </td>
+          </tr>
+        </thead>
+
+        <tbody>
+          <ng-container *ngIf="usersList">
+            <tr *ngFor="let user of usersList" class="row" [class.denied]="user.isDenied"
+              [class.inactive]="!user.company || user.company.statusId !== companyStatuses.Active">
+              <td class="user pl-24 ellipsis" (click)="goToUser(user.id)">
+                {{ user.lastName }}, {{ user.firstName }}
+              </td>
+              <td class="company pl-24 ellipsis" [class.denied]="user.isDenied"
+                [class.inactive]="!user.company || user.company.statusId !== companyStatuses.Active"
+                (click)="goToUser(user.id)">
+                <div class="d-flex align-center">
+                  <svg-icon key="alert-filled" class="mr-6" [class.up]="companyAsc" size="lg"
+                    *ngIf="!user.company"></svg-icon>
+                  <svg-icon key="trash-can" class="mr-6" [class.up]="companyAsc" size="lg" *ngIf="
+                      user.company?.statusId === companyStatuses.Deleted ||
+                      user.company?.statusId === companyStatuses.Inactive
+                    "></svg-icon>
+
+                  <div class="ellipsis company-name">
+                    {{ user.company?.name || user.companyName }}
+                  </div>
+                </div>
+              </td>
+              <td class="role pl-24 ellipsis" (click)="goToUser(user.id)">
+                <div class="d-flex align-center">
+                  <span class="role-label d-flex {{ getClassNamesBasedonRole(user.roleId, user.role.name)}} ellipsis">
+                    <svg-icon key="alert-filled" class="mr-6 svg-icon-red" [class.up]="companyAsc" size="lg" *ngIf="
+                        (user.roleId === rolesList.Corporation &&
+                          user.company?.typeId !== companyRolesList.Corporation) ||
+                        (user.roleId === rolesList.SolutionProvider &&
+                          user.company?.typeId !== companyRolesList.SolutionProvider)
+                      "></svg-icon>
+                    {{ user.role.name }}
+                  </span>
+                </div>
+              </td>
+              <td class="date pl-24 ellipsis" (click)="goToUser(user.id)">
+                {{ user.createdDate | date: 'M/d/YY' }}
+              </td>
+
+              <td class="controls pl-24 d-flex align-center">
+                <button class="blue-50-frame flex-center btn-deny mr-12" [class.semi-denied]="user.isDenied"
+                  [class.denied]="user.isDenied" (click)="denyUser(user, !user.isDenied)">
+                  {{ (user.isDenied ? 'admitUsers.deniedLabel' : 'admitUsers.denyLabel') | translate }}
+                </button>
+
+                <button class="flex-center btn-approve" [class.denied]="user.isDenied"
+                  [class.blue-50-frame]="!user.company" [attr.disabled]="
+                    !user.company ||
+                    user.company.statusId !== companyStatuses.Active ||
+                    (user.roleId === rolesList.Corporation && user.company?.typeId !== companyRolesList.Corporation) ||
+                    (user.roleId === rolesList.SolutionProvider &&
+                      user.company?.typeId !== companyRolesList.SolutionProvider)
+                      ? true
+                      : null
+                  " (click)="approveUserConfirmation(user)">
+                  {{ 'admitUsers.approveLabel' | translate }}
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <neo-pagination *ngIf="paging && paging.total > defaultItemPerPage" [paging]="paging"
+      (changePage)="updatePaging($event)">
+    </neo-pagination>
+
+    <neo-empty-page class="empty-page" *ngIf="usersList && !usersList.length"
+      [headlinePart1]="'general.emptyStateLabel' | translate" iconKey="user-management">
+    </neo-empty-page>
+  </div>
+</div>
+
+<neo-modal *ngIf="showConfirmModal" (closed)="showConfirmModal = false; userToApprove = null">
+  <svg-icon key="close" class="close-icon" size="xxl"
+    (click)="showConfirmModal = false; userToApprove = null"></svg-icon>
+
+  <h2 class="neo-arial mb-6 modal-title" *ngIf="!spAdminConfirmationTitle">
+    Are you sure you want to approve {{ userToApprove.lastName | titlecase }},
+    {{ userToApprove.firstName | titlecase }}?
+  </h2>
+
+  <h2 class="neo-arial mb-6 modal-title" *ngIf="spAdminConfirmationTitle">
+    {{spAdminConfirmationTitle}}
+  </h2>
+
+  <div class="bottom d-flex justify-end mt-24 pt-24">
+    <button (click)="showConfirmModal = false; userToApprove = null" class="blue-50-frame btn-cancel mr-16">
+      Cancel
+    </button>
+    <button (click)="approveUser(userToApprove)" class="btn-confirm">
+      Yes, Approve
+    </button>
+  </div>
+</neo-modal>

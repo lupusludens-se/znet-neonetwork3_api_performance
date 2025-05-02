@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="../../styles/buttons.css" rel="stylesheet">
+    <link href="../../styles/flexbox.css" rel="stylesheet">
+    <link href="../../styles/fonts.css" rel="stylesheet">
+    <link href="../../styles/inputs.css" rel="stylesheet">
+    <link href="../../styles/spacing.css" rel="stylesheet">
+    <link href="../../styles/text.css" rel="stylesheet">
+    <link href="../../styles/index.css" rel="stylesheet">
+</head>
+<body class="d-flex align-center">
+<div class="p-relative background-wrapper d-flex align-start justify-center">
+    <!--link to web app-->
+    <a href=""><img class="pt-48 c-pointer" src="../../assets/images/logo.svg" alt="neo logo"/></a>
+    <img class="p-absolute" src="../../assets/images/vector.svg" alt="vector image"/>
+</div>
+
+<div class="flex-column align-center form-wrapper pt-48 p-relative">
+    <div class="flex-column align-start pb-96">
+        <h1 class="text-neo-blue">Forgot Password?</h1>
+
+        <p class="text-blue-500 text-s pt-12 pb-16">No problem. Enter your email and we’ll send you a link to reset your
+            password.
+        </p>
+
+        <div class="separator"></div>
+
+        <form class="flex-column w-100 pt-24">
+            <div class="flex-column w-100 pb-56">
+                <label class="text-neo-blue neo-arial text-s pb-12" for="email">Email</label>
+                <!--add class "error" to input in case invalid input value -->
+                <input id="email" type="text" autofocus
+                       pattern="^[a-zA-Z0-9!#$%&'+^_`{}~-]+(?:\.[a-zA-Z0-9!#$%&'+^_`{}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
+                       aria-label="Email Address"/>
+                <!--Error message-->
+                <!--<p class="text-error text-xs pt-8">Email invalid message</p>-->
+            </div>
+
+            <button>Send via email</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

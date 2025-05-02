@@ -1,0 +1,156 @@
+<div class="info-wrapper flex-column">
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.category?.name">
+    <p class="param mr-6">
+      {{ 'projects.projectTypeLabel' | translate }}
+    </p>
+    <p class="param-value text-s">
+      {{ projectDetails?.category?.name }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="technologiesList">
+    <p class="param mr-6">{{ 'projects.technologyLabel' | translate }}</p>
+    <p class="param-value">
+      {{ technologiesList }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.company?.zip">
+    <p class="param mr-6">
+      {{ 'projects.projectDetails.zipCodeLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ projectDetails?.company?.zip }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.projectDetails?.latitude">
+    <p class="param mr-6">
+      {{ 'projects.projectDetails.latitudeLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ projectDetails?.projectDetails?.latitude }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.projectDetails?.longitude">
+    <p class="param mr-6">
+      {{ 'projects.projectDetails.longitudeLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ projectDetails?.projectDetails?.longitude }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.projectDetails?.isoRtoName">
+    <p class="param mr-6">
+      {{ 'projects.projectDetails.ISORTOLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ projectDetails?.projectDetails?.isoRtoName }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.projectDetails?.productTypeName">
+    <p class="param mr-6">
+      {{ 'projects.projectDetails.productTypeLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ projectDetails?.projectDetails?.productTypeName }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.projectDetails?.commercialOperationDate">
+    <p class="param mr-6">
+      {{ 'projects.projectDetails.commercialOperationLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ projectDetails?.projectDetails?.commercialOperationDate | date: 'MM/dd/yyyy' }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="valueToOfftaker">
+    <p class="param mr-6">
+      {{ 'projects.projectDetails.valueOfftakerLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ valueToOfftaker }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.projectDetails?.ppaTermYearsLength">
+    <p class="param mr-6">
+      {{ 'projects.projectDetails.PPATermLengthLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ projectDetails?.projectDetails?.ppaTermYearsLength }}
+      {{ 'projects.termLengthYearsPluralLabel' | translate }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.projectDetails?.totalProjectNameplateMWACCapacity">
+    <p class="param mr-6">
+      {{ 'projects.projectDetails.totalMWACLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ projectDetails?.projectDetails?.totalProjectNameplateMWACCapacity }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.projectDetails?.totalProjectExpectedAnnualMWhProductionP50">
+    <p class="param mr-6">
+      {{ 'projects.projectDetails.totalAnnualP50Label' | translate }}
+    </p>
+    <p class="param-value">
+      {{ projectDetails?.projectDetails?.totalProjectExpectedAnnualMWhProductionP50 }}
+    </p>
+  </div>
+
+  <div
+    class="info-item mb-16 d-flex"
+    *ngIf="projectDetails?.projectDetails?.minimumOfftakeMWhVolumeRequired">
+    <p class="param mr-6">
+      {{ 'projects.projectDetails.minimumOfftakeLabel' | translate }}
+    </p>
+    <p class="param-value">
+      {{ projectDetails?.projectDetails?.minimumOfftakeMWhVolumeRequired }}
+    </p>
+  </div>  
+    <button *ngIf="enablePrivateView"
+      class="btn-view c-pointer d-flex justify-center align-center"
+      (click)="openPrivateInfoModal()">
+      <svg-icon
+            key="eye"
+            class="mr-10"></svg-icon>
+      View Private Information
+    </button>
+  <neo-project-private-details
+    [projectDetails]="projectDetails"
+    (closeModal)="closePrivateInfoModal()"
+    *ngIf="showPrivateInfo">
+  </neo-project-private-details>
+</div>

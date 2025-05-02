@@ -1,0 +1,23 @@
+<div class="d-flex flex-wrap gap-8 p-10">
+  <div
+    *ngFor="let tag of expandAllSelected ? selectedTags : selectedTags.slice(0, maxAppliedFiltersViewCount)"
+    class="filter-state-wrapper flex-center text-xs text-neo-aqua c-pointer">
+    {{ tag.name }}
+    <svg-icon (click)="removeFilter(tag)" class="ml-4 c-pointer" key="close" size="sm"></svg-icon>
+  </div>
+
+  <div
+    *ngIf="selectedTags?.length > maxAppliedFiltersViewCount && !expandAllSelected"
+    class="filter-state-wrapper flex-center text-xs text-neo-aqua c-pointer"
+    (click)="toggle()">
+    +{{ selectedTags?.length - maxAppliedFiltersViewCount }}
+  </div>
+
+  <button
+    class="link text-xs text-blue-300 text-center w-100"
+    *ngIf="expandAllSelected && selectedTags?.length > 7"
+    (click)="toggle()">
+    {{ 'forum.showLessLabel' | translate }}
+  </button>
+</div>
+ 

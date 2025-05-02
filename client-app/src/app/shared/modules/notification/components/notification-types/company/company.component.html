@@ -1,0 +1,23 @@
+<p class="two-lines-ellipsis text-s pl-12 text-neo-near-black">
+  <a
+    class="text-neo-near-black fw-700 c-pointer"
+    routerLink="/company-profile/{{ notification?.details?.companyId }}">
+    {{ notification?.details?.companyName }}
+  </a>
+
+  <ng-container *ngIf="!notification?.details['count']">
+    {{ 'notificationType.companyIFollowPostProjectLabel' | translate }}
+
+    <a
+      class="text-neo-near-black fw-700 c-pointer"
+      routerLink="/projects/{{ notification?.details?.projectId }}">
+      {{ notification?.details?.projectTitle }}</a
+    >.
+  </ng-container>
+
+  <ng-container *ngIf="notification?.details['count']">
+    {{ 'notificationType.hasPostedLabel' | translate }}
+    {{ notification?.details['count'] }}
+    {{ 'notificationType.newProjectsLabel' | translate }}
+  </ng-container>
+</p>

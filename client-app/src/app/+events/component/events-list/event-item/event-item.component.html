@@ -1,0 +1,115 @@
+<div class="event-item flex-column justify-between">
+  <div class="top">
+    <div class="flex-between">
+      <div class="event-date-labels d-flex date-time pr-32">
+        <div
+          class="today-label d-flex align-center"
+          *ngIf="!!(eventData.occurrences | findBy : true : 'isToday')">
+          {{ 'general.todayLabel' | translate }}
+        </div>
+
+        <div class="date d-flex align-center mb-8">
+          <svg-icon
+            fontSize="16px"
+            class="mr-4"
+            key="event-calendar"></svg-icon>
+          <div class="dates-label ellipsis">{{ eventData.shortDates }}</div>
+          <div
+            *ngIf="eventData.moreDatesCount"
+            class="more-dates-count ml-4">
+            +{{ eventData.moreDatesCount }}
+          </div>
+        </div>
+
+        <div class="time d-flex align-center mb-8">
+          <svg-icon
+            [fontSize]="14"
+            class="mr-4"
+            key="event-timer"></svg-icon>
+          <div
+            [title]="eventData.shortTimes"
+            class="dates-label ellipsis">
+            {{ eventData.shortTimes }}
+          </div>
+          <div
+            *ngIf="eventData.moreOccurrencesCount"
+            class="more-dates-count ml-4">
+            +{{ eventData.moreOccurrencesCount }}
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="currentUser !== null">
+        <ng-container *ngIf="hasPermission()">
+          <button
+            class="btn-xs blue-50-frame flex-center edit-button"
+            (click)="$event.stopPropagation()"
+            routerLink="/admin/events/edit-event/{{ eventData?.id }}">
+            <svg-icon
+              key="pencil"
+              size="lg"></svg-icon>
+          </button>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <div
+      class="info-wrapper"
+      *ngIf="currentUser !== null">
+      <h5 class="title c-pointer text-m text-dark-gray-750 mb-4 arial-rounded-mt-bold">
+        {{ eventData.subject }}
+      </h5>
+
+      <div class="location text-dark-gray-515">
+        {{ eventData.locationType === 0 ? 'Virtual' : eventData.location }}
+      </div>
+    </div>
+    <div
+      class="info-wrapper"
+      *ngIf="currentUser === null">
+      <h5 class="title c-pointer text-m text-dark-gray-750 mb-8 arial-rounded-mt-bold">
+        {{ eventData.subject }}
+      </h5>
+      <div class="d-flex flex-row justify-between align-center">
+        <div class="location text-dark-gray-515">
+          {{ eventData.locationType === 0 ? 'Virtual' : eventData.location }}
+        </div>
+        <div class="attending" *ngIf="publicReadMore">
+          <div
+            class="ml-12 read-more arial-rounded-mt-bold"
+            >
+            {{ 'general.readMoreLabel' | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="attending d-flex align-center mt-16"
+    *ngIf="attendanceEnable">
+    <div class="text-neo-near-black">{{ 'events.attendingLabel' | translate }}?</div>
+
+    <button
+      class="attend-btn ml-12 btn-xs flex-center"
+      [class]="
+        eventData.isAttending === null ? 'default' : eventData.isAttending === true ? 'selected border' : 'selected'
+      "
+      (click)="$event.stopPropagation(); changeAttendance.emit(eventData.isAttending === true ? null : true)">
+      {{ 'general.yesLabel' | translate }}
+    </button>
+
+    <button
+      class="attend-btn ml-4 btn-xs flex-center"
+      [class]="
+        eventData.isAttending === null ? 'default' : eventData.isAttending === false ? 'selected border' : 'selected'
+      "
+      (click)="$event.stopPropagation(); changeAttendance.emit(eventData.isAttending === false ? null : false)">
+      {{ 'general.noLabel' | translate }}
+    </button>
+
+    <div class="ml-12 read-more arial-rounded-mt-bold">
+      {{ 'general.readMoreLabel' | translate }}
+    </div>
+  </div>
+</div>

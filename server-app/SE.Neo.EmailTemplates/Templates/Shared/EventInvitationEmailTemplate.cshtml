@@ -1,0 +1,440 @@
+﻿@model SE.Neo.EmailTemplates.Models.EventInvitationEmailTemplatedModel;
+@{
+    var emptyText = "<span>&#160;</span>";
+}
+
+<!DOCTYPE HTML PUBLIC>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:v="urn:schemas-microsoft-com:vml" 
+      xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>...</title>
+    <!-- CSS Reset --><!--[if (gte mso 9)|(IE)]>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+    <![endif]-->
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPng/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+    <style type="text/css">
+        @@font-face {
+            ffont-family: 'Arial Rounded MT';
+            mso-font-alt: 'Arial';
+            src: url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.eot"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.woff") format("woff"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.svg#Arial Rounded MT Std") format("svg");
+        }
+
+        @@font-face {
+            ffont-family: 'Arial Rounded MT Bold';
+            mso-font-alt: 'Arial';
+            src: url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.eot"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.woff") format("woff"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.svg#Arial Rounded MT Bold") format("svg");
+        }
+
+        .zeigo-arial-rounded-bold {
+            font-family: "Arial Rounded MT Bold", "Arial" !important;
+            font-weight: 400 !important;
+        }
+
+        .zeigo-arial-rounded {
+            font-family: "Arial Rounded MT", "Arial" !important;
+            font-weight: 400 !important;
+        }
+
+        .zeigo-arial {
+            font-family: "Arial Rounded MT" !important;
+            font-weight: 400 !important;
+        }
+
+        .zeigo-arial-bold {
+            font-family: "Arial Rounded MT Bold", sans-serif !important;
+        }
+
+        img {
+            user-select: none !important;
+            object-fit: fill !important;
+        }
+
+        h2, h4, h5, p, span {
+            margin: 0 !important;
+        }
+
+        h2 {
+            font-size: 28px !important;
+            line-height: 30px !important;
+            font-weight: 400 !important;
+        }
+
+        h4 {
+            font-size: 18px !important;
+            line-height: 24px !important;
+            font-weight: 400 !important;
+        }
+
+        h5 {
+            font-size: 16px !important;
+            line-height: 20px !important;
+        }
+
+        .text-m {
+            font-size: 16px !important;
+            line-height: 22px !important;
+        }
+
+        .text-s {
+            font-size: 14px !important;
+            line-height: 20px !important;
+        }
+
+        .text-green {
+            color: #009530 !important;
+        }
+
+        .text-white {
+            color: #FDFCFF !important;
+        }
+
+        .text-blue-100 {
+            color: #BFC9D9 !important;
+        }
+
+        .text-blue-400 {
+            color: #516A93 !important;
+        }
+
+        .text-grey {
+            color: #6F6E77 !important;
+        }
+
+        .text-black {
+            color: #1A1523 !important;
+        }
+
+        .fw-700 {
+            font-weight: 700 !important;
+        }
+
+        .h-6 {
+            height: 6px !important;
+            line-height: 6px !important;
+        }
+
+        .h-8 {
+            height: 8px !important;
+            line-height: 8px !important;
+        }
+
+        .h-12 {
+            height: 12px !important;
+            line-height: 12px !important;
+        }
+
+        .w-16 {
+            width: 16px !important;
+        }
+
+        .h-24 {
+            height: 24px !important;
+            line-height: 24px !important;
+        }
+
+        .w-24 {
+            width: 24px !important;
+        }
+
+        .w-32 {
+            width: 32px !important;
+        }
+
+        .w-100 {
+            width: 100% !important;
+        }
+
+        .h-32 {
+            height: 32px !important;
+            line-height: 32px !important;
+        }
+
+        .body {
+            width: 100% !important;
+            font-family: "Arial" !important;
+            background-color: #FAFAFA !important;
+            min-width: 320px !important;
+        }
+
+        .container {
+            background-color: #FFFFFF !important;
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            border-top-left-radius: 4px !important;
+            border-top-right-radius: 4px !important;
+            max-width: 580px !important;
+            width: 580px !important;
+        }
+
+        .separator {
+            border-top: 1px !important;
+            border-style: solid !important;
+            border-color: #DAE1EC !important;
+            border-left: none !important;
+            border-right: none !important;
+            border-bottom: none !important;
+        }
+
+        .button-border {
+            border-bottom-left-radius: 8px !important;
+            border-bottom-right-radius: 8px !important;
+            border-top-left-radius: 8px !important;
+            border-top-right-radius: 8px !important;
+            padding-top: 12px !important;
+            padding-bottom: 12px !important;
+            padding-left: 24px !important;
+            padding-right: 24px !important;
+            font-family: 'Arial Rounded MT Bold';
+            box-shadow: none;
+            background: none;
+            background-color: #3A2456 !important;
+            text-transform: capitalize !important;
+        }
+
+        .icon {
+            width: 15px !important;
+            height: 16px !important;
+        }
+
+        .date {
+            width: 155px !important;
+            height: 18px !important;
+            display: inline-block !important;
+        }
+
+        .today {
+            font-family: "Arial" !important;
+            background: #0894B3 !important;
+            font-size: 12px !important;
+            line-height: 17px !important;
+            letter-spacing: 0.01em !important;
+            font-weight: 700 !important;
+            color: #FEFEFE !important;
+            border-bottom-left-radius: 2px !important;
+            border-bottom-right-radius: 2px !important;
+            border-top-left-radius: 2px !important;
+            border-top-right-radius: 2px !important;
+            padding-top: 2px !important;
+            padding-bottom: 2px !important;
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+        }
+    </style>
+</head>
+<body>
+<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%" class="body">
+    <tr>
+        <td align="center" valign="top">
+            <div class="h-32">@emptyText</div>
+            <table cellpadding="0" cellspacing="0" border="0" class="container">
+                    <tr style="background: #FAFAFA">
+                    <td class="w-32"></td>
+                    <td align="left" valign="top">
+                        <div class="h-24">@emptyText</div>
+                        <img width="240" height="110"
+                             src="@Model.LogoUrl"
+                             alt="zeigo logo"/>
+                        <div class="h-24">@emptyText</div>
+                    </td>
+                    <td class="w-32"></td>
+                </tr>
+
+                <tr>
+                    <td class="w-32"></td>
+                    <td>
+                        <div class="h-24">@emptyText</div>
+                            <h2 class="zeigo-arial-rounded" style="color: #171717;letter-spacing: normal; font-size: 28px;">
+                            Hello, @Model.FirstName
+                        </h2>
+
+                            <h4 class="zeigo-arial-rounded" style="color: #171717;letter-spacing: normal; font-size: 18px; padding-top: 12px;">
+                            Save the Date! You've been invited to an event.
+                        </h4>
+                    </td>
+                    <td class="w-32" style=""></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <div class="h-24">@emptyText</div>
+                        <div class="h-24" style="border-top: 1px solid #dae1ec;">@emptyText</div>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td class="w-32"></td>
+                    <td>
+                        <!--email body-->
+                        <h2 class="zeigo-arial-rounded-bold"
+                                style="color:#171717;letter-spacing: normal;line-height: 29px;">
+                            @Model.EventName
+                        </h2>
+                        <div class="zeigo-arial"
+                                 style="color: #6F6F6F;font-size: 14px;line-height: 18px; vertical-align: central; padding-top: 8px;">
+                            @Model.EventType
+                        </div>
+                        <div class="h-24">@emptyText</div>
+                            <h5 class="zeigo-arial-rounded-bold" style="color: #171717;letter-spacing:normal; font-size: 16px; line-height: 1.3; margin-left: 10px !important;">
+                            Event Dates</h5>
+                        <div class="h-12">@emptyText</div>
+
+                        <table>
+                               @for (int i = 0; i < Model.EventDates.Count; i++)
+                               {
+                                   <tr class="zeigo-arial">
+                                       <td class="h-12">
+                                           <img class="icon" src="@Model.EventDateLogoUrl">
+                                       </td>
+
+                                       <td class="text-s" style="line-height: 16px !important; margin-left: 5px !important;">
+                                           <span class="date"
+                                              style="font-weight: bold;text-decoration: none!important;color: #6F6F6F;">
+                                               @Model.EventDates[i].EventDate.ToString("dddd, MMMM dd")
+                                           </span>
+                                       </td>
+
+                                        <td class="zeigo-arial" style="color: #6F6F6F; line-height: 16px !important">
+                                            @emptyText | @emptyText
+                                        </td>
+
+                                       <td class="h-12">
+                                           <img class="icon" src="@Model.EventTimeLogoUrl">
+                                       </td>
+
+                                        <td class="text-s" style="line-height: 16px !important; margin-left: 5px !important;">
+                                           <span class="fw-700"
+                                              style="text-decoration: none!important;color: #6F6F6F;">@Model.EventDates[i].EventStart.ToLower() - @Model.EventDates[i].EventEnd.ToLower() @Model.EventDates[i].TimeZoneAbbreviation</span>
+                                       </td>
+                                       
+                                      @if (Model.EventDates[i].EventDate.Date == DateTime.Today)
+                                       {
+                                           <td align="center" 
+                                               style="font-weight: bold;vertical-align:central; font-size: 12px; line-height: 16px;">
+                                               @emptyText@emptyText@emptyText@emptyText<span class="today">@emptyText Today @emptyText</span></td>
+                                       }
+                                   </tr>
+                                   @if (i < Model.EventDates.Count - 1)
+                                   {
+                                        <tr class="h-12"></tr>
+                                   }
+                               }
+                        </table>
+
+                        <div class="h-24">@emptyText</div>
+
+                        @if (!string.IsNullOrEmpty(@Model.EventInfo))
+                        {
+                                <h5 class="zeigo-arial" style="color: #6F6E77; font-weight:normal;">
+                                @Model.EventInfo
+                            </h5>
+
+                            <div class="h-24">@emptyText</div>
+                        }
+
+                        @if(Model.EventHighlights != null)
+                        {
+                                <h5 class="zeigo-arial-rounded-bold" style="color: #1A1523;">Event Highlights</h5>
+                            <div class="h-12">@emptyText</div>
+                            <table cellpadding="0" cellspacing="0" border="0">
+                            @for (int i = 0; i < Model.EventHighlights.Count; i++)
+                            {
+                                <tr class="zeigo-arial" style="font-size: 14px; line-height: 18px;">
+                                  <td>
+                                    <span class="text-black">•</span><span class="text-grey">@emptyText@emptyText@emptyText@Model.EventHighlights[i]?.TrimStart('•', ' ')</span>
+                                  </td>
+                                </tr>
+                                @if (i < Model.EventHighlights.Count - 1)
+                                {
+                                    <tr style="font-size: 6px; line-height: 6px;"><td>@emptyText</td></tr>
+                                }
+                            }
+                            </table>
+                        }
+                        <!--end email body-->
+                    </td>
+                    <td class="w-32"></td>
+                </tr>
+
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <div class="h-24">@emptyText</div>
+                        <div class="h-24" style="border-top: 1px solid #dae1ec;">@emptyText</div>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr style="height: 46px">
+                    <td class="w-32"></td>
+                    <td align="left" valign="middle" style="mso-height-rule: exactly;display: block;">
+                        <div>
+                            <!--[if mso]>
+                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+                                         xmlns:w="urn:schemas-microsoft-com:office:word"
+                                         href="@Model.Link"
+                                         style="display:inline-block;height:47px;v-text-anchor:middle;width:225px;text-decoration: none;font-color: #FDFCFF;"
+                                         arcsize="15%"
+                                         strokecolor="#3A2456" strokeweight="2px" fillcolor="#3A2456">
+                                <w:anchorlock/>
+                                        <center class="zeigo-arial-rounded-bold" style="color:#FDFCFF;font-size:14px;line-height: 19px;vertical-align:middle;"
+                                ">View More</center>
+                            <![endif]-->                           
+                            <!--[if mso]>
+                            </center>
+                            </v:roundrect>
+                            <![endif]-->
+                                <!--[if !mso]><!-->
+                                <a href="@Model.Link" class="text-s"
+                                   style="text-decoration: none; mso-hide:all;">
+                                    <div class="text-s text-white button-border zeigo-arial-rounded-bold"
+                                         style="max-width:225px; background-color: #3A2456; color: #FDFCFF;padding: 10px;-webkit-text-size-adjust:none; text-align: center;">
+                                        View More
+                                    </div>
+                                </a>
+                                <!--<![endif]-->
+                        </div>
+                    </td>
+                    <td class="w-32"></td>
+                </tr>
+
+                <tr class="h-32">
+                    <td class="h-32">@emptyText</td>
+                </tr>
+
+                <tr style="background: #F3F3F3;">
+                    <td class="w-32"></td>
+                    <td class="zeigo-arial">
+                        <div class="h-32">@emptyText</div>
+                        <p class="text-s"
+                            style="color: #171717;">
+                                &copy; @DateTime.Now.Year Zeigo by Schneider Electric
+                        </p>
+                        <div class="h-32">@emptyText</div>
+                     </td>
+                     <td class="w-32"></td>
+                </tr>
+            </table>
+
+            <div class="h-32">@emptyText</div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

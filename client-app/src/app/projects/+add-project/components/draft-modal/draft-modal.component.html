@@ -1,0 +1,43 @@
+<neo-modal (closed)="closeModal.emit(true)" size="medium">
+  <svg-icon (click)="closeModal.emit(true)" class="close-icon text-blue-200"
+  key="modal-close" size="xl"></svg-icon>
+
+  <ng-container *ngIf="addProjectService.draftSuccess$ | async; else formView">
+    <div class="success-wrapper align-center flex-column">
+      <svg-icon class="notification-success mb-34" key="notification-success"></svg-icon>
+
+      <h2 class="success-title neo-arial">{{ 'projects.addProject.draftSavedLabel' | translate }}</h2>
+      <p class="text mt-12 mb-32">{{ 'projects.addProject.inProjectLibraryLabel' | translate }}.</p>
+
+      <button (click)="finishDraft()" class="green success-btn flex-center" routerLink="/projects-library">
+        {{ 'projects.projectLibraryLabel' | translate }}
+
+        <svg-icon class="ml-8" key="right-arrow" size="xl"></svg-icon>
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-template #formView>
+    <h2 class="modal-title neo-arial mb-6">
+      {{ 'projects.addProject.saveAsDraftLabel' | translate }}
+    </h2>
+    <p class="text">{{ 'projects.addProject.draftWillBeSavedLabel' | translate }}.</p>
+
+    <form [formGroup]="form">
+      <label class="flex-column mt-32 text-neo-near-black neo-arial">
+        {{ 'projects.addProject.nameLabel' | translate }}
+
+        <input class="mt-8 mb-32 w-100 inp" formControlName="title" placeholder="Project name" type="text" />
+      </label>
+    </form>
+
+    <div class="bottom pt-32">
+      <button (click)="closeModal.emit(true)" class="cancel mr-16 w-50">
+        {{ 'general.cancelLabel' | translate }}
+      </button>
+      <button (click)="saveDraft()" [disabled]="form.invalid" class="green w-50">
+        {{ 'general.saveLabel' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</neo-modal>

@@ -1,0 +1,23 @@
+@use 'colors';
+
+.community-item {
+  min-height: 120px;
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-200;
+}
+.state-wrapper {
+  padding: 5px 8px;
+  user-select: none;
+
+  svg-icon {
+    color: colors.$aqua-400;
+  }
+
+  &:hover {
+    background: colors.$blue-5;
+
+    svg-icon {
+      color: colors.$blue-5;
+    }
+  }
+}

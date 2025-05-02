@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="../../styles/buttons.css" rel="stylesheet">
+    <link href="../../styles/flexbox.css" rel="stylesheet">
+    <link href="../../styles/fonts.css" rel="stylesheet">
+    <link href="../../styles/inputs.css" rel="stylesheet">
+    <link href="../../styles/spacing.css" rel="stylesheet">
+    <link href="../../styles/text.css" rel="stylesheet">
+    <link href="../../styles/index.css" rel="stylesheet">
+</head>
+<body class="d-flex align-center">
+<div class="p-relative background-wrapper d-flex align-start justify-center">
+    <!--link to web app-->
+    <a href=""><img class="pt-48 c-pointer" src="../../assets/images/logo.svg" alt="neo logo"/></a>
+    <img class="p-absolute" src="../../assets/images/vector.svg" alt="vector image"/>
+</div>
+
+<div class="flex-column align-center form-wrapper pt-48 p-relative">
+    <div class="flex-column align-start pb-96">
+        <h2 class="text-neo-blue">Login</h2>
+
+        <p class="text-blue-500 text-s pt-12 pb-16">
+            Explanatory content that confirms for the user they’re in the right place, doing the correct registration
+            action.
+        </p>
+
+        <div class="separator"></div>
+
+        <form class="flex-column w-100 pt-24">
+            <div class="flex-column w-100">
+                <label class="text-neo-blue neo-arial text-s pb-12" for="email">Email</label>
+                <!--add class "error" to input in case invalid input value -->
+                <input id="email" type="text" autofocus
+                       pattern="^[a-zA-Z0-9!#$%&'+^_`{}~-]+(?:\.[a-zA-Z0-9!#$%&'+^_`{}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
+                       aria-label="Email Address"/>
+                <!--Error message-->
+                <!--<p class="text-error text-xs pt-8">Email invalid message</p>-->
+            </div>
+
+            <div class="flex-column w-100 pt-24 pb-56">
+                <label class="text-neo-blue neo-arial text-s pb-12" for="password">Password</label>
+                <!--add class "error" to input in case invalid input value -->
+                <input type="password" id="password" name="Password" aria-label="Password"
+                       autocomplete="current-password" aria-required="true">                <!--Error message-->
+                <!--<p class="text-error text-xs pt-8">Password invalid message</p>-->
+                <a class="text-s text-blue-200 align-self-end mt-8" href="#">Forgot password?</a>
+            </div>
+
+            <button>Login</button>
+
+            <div class="d-flex text-s align-self-center pt-24">
+                <span class="text-neo-blue">New user?</span> &nbsp;
+                <a class="text-dark-green" href="#">Create an account</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

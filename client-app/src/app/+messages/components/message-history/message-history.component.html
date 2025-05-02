@@ -1,0 +1,384 @@
+<ng-container *ngIf="currentUser$ | async as currentUser">
+  <button (click)="goBack()" class="btn-connect back-btn d-flex align-center pb-4">
+    <svg-icon class="pr-4 back-btn-img-s" key="left-arrow"></svg-icon>
+    Back
+  </button>
+  <ng-container *ngIf="conversationInfo$ | async as conversationInfo">
+    <div class="flex-column h-100">
+      <div class="d-flex flex-between align-center pb-16">
+        <div class="flex-column max-w-60">
+          <h2 class="subject-header text-neo-near-black mb-12">
+            {{ conversationInfo.subject }}
+          </h2>
+
+          <div *ngIf="conversationInfo?.project">
+            <a class="btn-xs project-item d-flex align-center text-arial"
+              routerLink="/projects/{{ conversationInfo.project?.id }}">
+              <svg-icon class="ml-8 arrow-purple" fontSize="16px" key="ufo-vector"></svg-icon>
+              <span class="subject-title">
+                {{ conversationInfo?.project?.title }}
+                <svg-icon class="ml-8 arrow-purple rotate-180 vertical-align-middle" fontSize="14px"
+                  key="arrow-thin-right"></svg-icon>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <ng-container *ngIf="conversationUser(currentUser, conversationInfo.users) as user">
+            <div class="d-flex align-center">
+              <ng-container *ngIf="conversationInfo?.users?.length === 2">
+                <div class="flex-column pr-16 align-end">
+                  <div class="d-flex align-center">
+                    <span class="text-m text-neo-near-black fw-700 text-capitalize"
+                      [class.c-pointer]="user?.statusId !== userStatuses.Deleted"
+                      [routerLink]="user?.statusId === userStatuses.Deleted ? [] : ['/user-profile/', user?.id]">
+                      {{ user?.statusId === userStatuses.Deleted ? 'Deleted User' : user?.name }}
+                    </span>
+                  </div>
+
+                  <span *ngIf="user?.statusId !== userStatuses.Deleted"
+                    class="text-s text-dark-gray-590 pt-2 text-right">
+                    {{ user?.company }}
+                  </span>
+                </div>
+
+                <neo-user-avatar [user]="getUser(user)" [class.c-pointer]="user?.statusId !== userStatuses.Deleted"
+                  imageSize="size48"
+                  [routerLink]="user?.statusId === userStatuses.Deleted ? [] : ['/user-profile/', user?.id]">
+                </neo-user-avatar>
+              </ng-container>
+
+              <div *ngIf="conversationInfo?.users?.length > 2" class="flex-column">
+                <div class="d-flex align-center">
+                  <div [class.c-pointer]="user?.statusId !== userStatuses.Deleted"
+                    class="user-image-wrapper p-relative flex-center"
+                    *ngFor="let user of conversationUsers(currentUser, conversationInfo.users, 0, 5); let i = index">
+                    <neo-user-avatar [user]="getUser(user)" imageSize="size32"
+                      [routerLink]="user?.statusId === userStatuses.Deleted ? [] : ['/user-profile/', user?.id]">
+                    </neo-user-avatar>
+
+                    <p class="user-tooltip text-xs fw-700 text-white p-absolute"
+                      *ngIf="user?.statusId !== userStatuses.Deleted">
+                      <a routerLink="/user-profile/{{ user.id }}">
+                        {{ user?.statusId === userStatuses.Deleted ? 'Deleted User' : user?.name }}
+                      </a>
+                    </p>
+                  </div>
+
+                  <div *ngIf="conversationInfo?.users?.length > 6"
+                    class="user-image-wrapper z-index-6 c-pointer p-relative">
+                    <div class="counter w-100 h-100 text-xs text-blue-500 fw-700 flex-center"
+                      [class.background-blue-400]="userListActive"
+                      (click)="userListActive = !userListActive; userListClick = true">
+                      <svg-icon key="close" class="text-white" fontSize="16px" *ngIf="userListActive; else counter">
+                      </svg-icon>
+
+                      <ng-template #counter> +{{ userCount }} </ng-template>
+                    </div>
+
+                    <div class="p-absolute right-0 users-list top-0 p-6"
+                      [ngClass]="userListActive ? 'd-flex' : 'd-none'" (click)="userListClick = true">
+                      <div class="overflow-container">
+                        <ng-container *ngFor="
+                            let user of conversationUsers(
+                              currentUser,
+                              conversationInfo.users,
+                              5,
+                              conversationInfo.users.length
+                            )
+                          ">
+                          <a class="user d-flex align-center gap-8" routerLink="/user-profile/{{ user.id }}">
+                            <neo-user-avatar [user]="getUser(user)" imageSize="size24">
+                            </neo-user-avatar>
+
+                            <span class="text-xs text-neo-near-black">
+                              {{ user?.statusId === userStatuses.Deleted ? 'Deleted User' : user?.name }}
+                            </span>
+                          </a>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="message-history h-100 p-relative flex-column justify-end p-24 history">
+        <div #messageHistory class="scrolled" (scroll)="onScroll()">
+          <ng-container *ngIf="messages?.length">
+            <div *ngFor="let message of messages; let messageIndex = index" class="flex-column">
+              <div *ngIf="isToday(message.createdOn) && messageIndex === 0"
+                class="day-separator-wrapper d-flex align-center w-100">
+                <div class="line w-100"></div>
+
+                <div class="chip text-s fw-700 d-flex align-center text-neo-near-black text-uppercase">
+                  {{ 'general.todayLabel' | translate }}
+                </div>
+
+                <div class="line w-100"></div>
+              </div>
+
+              <div [class.align-end]="message.user.id === currentUser.id" class="flex-column mb-8">
+                <div [class.row-reverse]="message.user.id === currentUser.id"
+                  [class.c-pointer]="message.user?.statusId !== userStatuses.Deleted"
+                  class="pt-10 pr-10 pl-10 d-flex align-center max-w-fit" [routerLink]="
+                    message.user?.statusId === userStatuses.Deleted && !message.showActions ? [] : ['/user-profile/', message.user?.id]
+                  ">
+                  <neo-user-avatar [class.ml-10]="message.user.id === currentUser.id"
+                    [class.mr-10]="message.user.id !== currentUser.id"
+                    [user]="message.user.id === currentUser.id ? currentUser : getUser(message.user)"
+                    imageSize="size32"></neo-user-avatar>
+
+                  <span [class.ml-8]="message.user.id === currentUser.id"
+                    [class.mr-8]="message.user.id !== currentUser.id" class="text-s fw-700 text-neo-near-black">
+                    {{
+                    message.user?.statusId === userStatuses.Deleted ? 'Deleted User' :
+                    message.user.id === currentUser.id ? "You" : message.user?.name
+                    }}
+                  </span>
+
+
+                  <div class="text-s text-dark-gray-590" *ngIf="message.statusId == 1">
+                    <span class="italic">{{ message.modifiedOn != message.createdOn ? 'Edited: ' : '' }}</span>
+                    {{ message.modifiedOn | timeAgo }}
+                  </div>
+                </div>
+                <div class="align-center d-flex" (mouseenter)="onMouseEnter(message)"
+                  (mouseleave)="onMouseLeave(message)"
+                  [ngClass]="message.user.id === currentUser.id ? 'justify-end' : 'justify-start'">
+                  <div [class.reverse]="message.user.id === currentUser.id" class="message text-neo-blue gap-8"
+                    *ngIf="!message.showEdit">
+                    <div class="flex-column gap-8 tooltip">
+                      <div class="tooltip">
+                        <span [innerHTML]="message.text" class="message-content ellipsis-wrap text-s"
+                          [class.italic]="message.statusId == 0"></span>
+                        <div class="tooltiptext"
+                          *ngIf="message.showActions && message.user.id === currentUser.id && message.statusId == 1">
+                          <span class="edit" (click)="editMessage(message)">
+                            <svg-icon class="mr-10 action" key="pencil" title="Edit"></svg-icon>
+                          </span>
+                          <span class="delete" (click)="deleteMessage(message)">
+                            <svg-icon class="mr-10 action" key="trash-can" title="Delete"></svg-icon>
+                          </span>
+                        </div>
+                      </div>
+
+                      <ng-container *ngIf="message.statusId != 0">
+
+                        <ng-container *ngFor="let link of message?.attachments">
+                          <a *ngIf="link.type === attachmentType.Link"
+                            [href]="link.link.startsWith('www') ? '//' + link.link : link.link"
+                            class="underline text-neo-blue" referrerpolicy="no-referrer-when-downgrade" target="_blank">
+                            {{ link.text }}
+                          </a>
+                        </ng-container>
+
+                        <ng-container *ngIf="getAttachments(messageIndex) as images">
+                          <div class="d-flex gap-8 flex-wrap" [class.pt-8]="message.text" *ngIf="images?.length">
+                            <img (click)="
+                            selectedMessage = messageIndex; currentImageIndex = imageIndex; imageViewModal = true
+                          " *ngFor="let media of images; let imageIndex = index" [alt]="media.image.name"
+                              [src]="media.image.uri" class="attachment c-pointer" />
+                          </div>
+                        </ng-container>
+
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-100 editor" *ngIf="message.showEdit">
+                  <neo-edit-message (respond)="respond($event)" [message]="message"
+                    [currentUser]="currentUser"></neo-edit-message>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div *ngIf="isInConversation(currentUser, conversationInfo)"
+        class="message-history flex-column text-s h-100 p-24 gap-16">
+        <div class="d-flex align-start message-input" [ngClass]="{ focused: isTextEditorFocused }">
+          <neo-user-avatar [user]="currentUser" class="pt-4" imageSize="size32">
+          </neo-user-avatar>
+
+          <neo-text-editor #editorComponent class="w-100 pt-4" minHeight="37px"
+            [placeholder]="'messages.writeMessageLabel' | translate" (focused)="isTextEditorFocused = true"
+            (blurred)="isTextEditorFocused = false" (click)="disableScrollDown = false;" (emitValue)="sendMessage()">
+          </neo-text-editor>
+        </div>
+
+        <div *ngIf="links?.length" class="d-flex align-center gap-8 flex-wrap">
+          <span *ngFor="let link of links; let index = index" class="link d-flex align-center text-xs">
+            {{ link.text }}
+
+            <svg-icon (click)="links.splice(index, 1);disableScrollDown=false;" fontSize="10px" width="10px"
+              height="10px" class="remove-link-icon ml-10 c-pointer" key="close-thin"></svg-icon>
+          </span>
+        </div>
+
+        <div class="d-flex align-center justify-between">
+          <div class="d-flex gap-16 buttons-wrapper h-100">
+            <button (click)="contactUsModal = true; disableScrollDown=false;"
+              class="btn-msg-connect-link d-flex align-center ">
+              <span class="ml-8 flex-center">
+                {{ 'messages.connectNEONetworkLabel' | translate }}
+                <svg-icon class="ml-12" fontSize="16px" key="right-arrow"></svg-icon>
+              </span>
+            </button>
+
+            <button (click)="linkProjectModal = true"
+              *ngIf="!conversationInfo?.project && !hideProjectAttachButton(currentUser, conversationInfo?.users)"
+              class="btn-msg-connect-link d-flex align-center ">
+
+              {{ 'messages.linkToProjectLabel' | translate }}
+              <span class="flex-center pl-10">
+                <svg-icon fontSize="16px" key="projects"></svg-icon>
+              </span>
+            </button>
+
+            <button (click)="attachToInitiative = true;trackAttachToInitiativeActivity()" class="btn-initiative btn-msg-connect-link align-center" *ngIf="checkIfUserIsCorporate(currentUser)">
+              <span class="ml-8 mr-8 btn-text flex-center">
+                {{ 'initiative.attachContent.attachMsgContentLabel' | translate }}
+                <svg-icon class="ml-8" fontSize="16px" key="idea-bulb"></svg-icon>
+              </span>
+            </button>
+
+            <div class="d-flex align-center gap-8">
+              <ng-container *ngFor="let attachment of attachments; let index = index">
+                <div class="attachment">
+                  <svg-icon (click)="removeAttachment(index)" class="text-blue-400 close c-pointer" key="fill-close"
+                    size="xxl"></svg-icon>
+
+                  <img class="c-pointer"
+                    (click)="selectedMessage = null; currentImageIndex = index; imageViewModal = true"
+                    [alt]="attachment.name" [src]="attachment.uri" />
+                </div>
+              </ng-container>
+
+              <div *ngIf="isLoading" class="loading flex-center">
+                <svg-icon class="text-sky-blue" key="loading" size="md"></svg-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex gap-16">
+            <button (click)="linkModal = true" class="btn-square c-pointer d-flex align-center justify-center">
+              <svg-icon class="" fontSize="20px" key="link">
+              </svg-icon>
+            </button>
+
+            <button class="btn-square c-pointer d-flex align-center justify-center"
+              (click)="fileInput.click(); disableScrollDown=false;">
+              <svg-icon class="" fontSize="20px" key="media">
+              </svg-icon>
+            </button>
+
+            <input #fileInput (change)="onFileSelect($event)" (click)="fileInput.value = ''"
+              accept="image/png, image/gif, image/jpeg" class="d-none" type="file" />
+
+            <button (click)="sendMessage()" [disabled]="disabled" class="btn-l green d-flex align-center w-min-initial">
+              {{ 'messages.sendLabel' | translate }}
+              <svg-icon class="ml-10" fontSize="20px" key="send">
+              </svg-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--		LINK PROJECT MODAL -->
+    <neo-modal class="title-h2 custom-modal-height" (closed)="closeLinkProjectModal()" size="medium"
+      *ngIf="linkProjectModal" title="{{ 'messages.linkToProjectLabel' | translate }}">
+      <form [formGroup]="projectFormGroup" class="flex-column w-100 find-project-form">
+
+        <span class="text-dark-gray-580 pt-16 text-s">{{ 'messages.linkToProjectText' | translate }}</span>
+
+        <label class="text-neo-near-black text-s neo-arial mt-20 mb-8" for="projectId">
+          {{ 'messages.projectUrl' | translate }}
+        </label>
+
+
+        <neo-search-bar resultsHeight="150px" (inputChange)="searchProject($event)" class="msg-project-search-box"
+          (selectedResult)="setProject($event)" (clearInput)="projectFormGroup.controls['projectId'].reset()"
+          [error]="hasError('projectId', 'formGroup')" [results]="projects$ | async" id="projectId">
+        </neo-search-bar>
+
+        <neo-control-error [fieldName]="'messages.projectUrl' | translate" [submitted]="projectFormSubmitted"
+          [errors]="projectFormGroup.controls['projectId'].errors">
+        </neo-control-error>
+
+        <div class="d-flex justify-end w-100 pt-32 popup-controls">
+          <button type="button" (click)="closeLinkProjectModal()"
+            class="btn-l cancel mr-16 w-min-initial w-50 align-center">
+            {{ 'general.cancelLabel' | translate }}
+          </button>
+
+          <button type="button" (click)="linkToProject(conversationInfo)"
+            [class.cancel]="projectFormGroup.controls['projectId']?.value === null"
+            [class.green]="projectFormGroup.controls['projectId']?.value !== null"
+            class="btn-l w-min-initial w-50 align-center">
+            {{ 'messages.addProjectLabel' | translate }}
+          </button>
+        </div>
+      </form>
+    </neo-modal>
+
+    <!--	LINKS MODAL -->
+    <neo-modal size="medium" class="title-h2" (closed)="closeLinksModal()" *ngIf="linkModal"
+      title="{{ 'messages.addLinkLabel' | translate }}">
+      <form [formGroup]="linkFormGroup" class="flex-column w-100">
+        <div class="flex-column pt-20">
+          <neo-text-input formControlName="text" class="text-neo-near-black"
+            [labelName]="'messages.linkTitleLabel' | translate" [submitted]="linksFormSubmitted">
+          </neo-text-input>
+        </div>
+
+        <div class="flex-column pt-16">
+          <neo-text-input formControlName="link" class="text-neo-near-black"
+            [labelName]="'general.linkLabel' | translate" [submitted]="linksFormSubmitted">
+          </neo-text-input>
+        </div>
+
+        <div class="d-flex justify-end w-100 pt-32">
+          <button (click)="closeLinksModal()" class="btn-l cancel mr-16 w-min-initial w-50">
+            {{ 'general.cancelLabel' | translate }}
+          </button>
+
+          <button (click)="saveLink()" class="btn-l green w-min-initial w-50">
+            {{ 'messages.addLinkLabel' | translate }}
+          </button>
+        </div>
+      </form>
+    </neo-modal>
+
+    <!--	DELETE MODAL -->
+    <neo-modal (closed)="closeDeletePopup()" *ngIf="showDeleteModal" size="small"
+      [title]="'messages.deleteModal.titleLabel' | translate" class="title-h2">
+
+      <div class="popup-controls pt-24 d-flex">
+        <button (click)="closeDeletePopup()" class="btn-cancel blue-50-frame mr-16  w-50">
+          {{ 'general.cancelLabel' | translate }}
+        </button>
+
+        <button (click)="confirmDelete()" class="btn-confirm w-50">
+          {{ 'messages.deleteModal.confirmLabel' | translate }}
+        </button>
+      </div>
+    </neo-modal>
+
+    <neo-contact-neo-network (closed)="contactUsModal = false" *ngIf="contactUsModal"></neo-contact-neo-network>
+
+    <neo-image-view (closed)="imageViewModal = false" *ngIf="imageViewModal" [currentIndex]="currentImageIndex"
+      [images]="getAttachments(selectedMessage)">
+    </neo-image-view>
+  </ng-container>
+</ng-container>
+
+<neo-attach-to-initiative *ngIf="attachToInitiative" (closed)="attachToInitiative = false" 
+  [typeName]="'general.messageLabel' | translate" 
+  [initiativeContentType]="contentType" [contentId]="discussionId"></neo-attach-to-initiative> 

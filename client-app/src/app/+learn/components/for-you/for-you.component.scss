@@ -1,0 +1,11 @@
+@use 'colors';
+
+.title{
+color: colors.$near-black-400;
+font-size: 20px;
+line-height: 21px;
+}
+
+.post-width{
+    width: calc(100% / 3);
+}

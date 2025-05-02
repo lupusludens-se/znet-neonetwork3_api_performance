@@ -1,0 +1,90 @@
+<div class="main">
+  <div class="top flex-between mb-24">
+    <div class="left">
+      <h3 class="section-title neo-arial pb-6">{{ 'events.selectUsersToInviteLabel' | translate }}</h3>
+      <p class="text">{{ 'events.loadUsersTextLabel' | translate }}</p>
+    </div>
+
+    <button
+      (click)="loadMatchingUsers()"
+      [disabled]="disabled"
+      class="btn-display">
+      {{ 'events.loadMatchingUsers' | translate }}
+    </button>
+  </div>
+
+  <div class="list-wrapper d-flex">
+    <div class="list mr-24">
+      <div class="p-relative w-100 d-flex align-center search-wrapper">
+        <svg-icon
+          class="p-absolute search-icon"
+          key="search"
+          size="lg"></svg-icon>
+
+        <input
+          (keyup)="searchStrSubject.next(searchInput.value)"
+          [formControl]="searchInput"
+          class="w-100 pl-32 search-input"
+          placeholder="{{ 'events.usersSearchPlaceholder' | translate }}"
+          type="text" />
+      </div>
+
+      <div class="list-options-wrapper">
+        <neo-blue-checkbox
+          (selectCheckbox)="chooseUser(user)"
+          *ngFor="let user of matchedUsers"
+          [checked]="user.selected || user.isInvited"
+          [class.disabled]="user.isInvited"
+          [name]="user.name"
+          [user]="user"
+          [value]="user.id"
+          class="mb-8">
+        </neo-blue-checkbox>
+
+        <span
+          class="text-small text-dark-gray-590"
+          *ngIf="!matchedUsers?.length && searchInput?.value">
+          {{ 'events.nothingFoundForLabel' | translate }}: "{{ searchInput.value }}"
+        </span>
+      </div>
+    </div>
+
+    <div class="selected">
+      <neo-filter-header
+        (clearFilters)="clearAllUsers()"
+        [filterName]="'events.usersSearchFilterNameLabel' | translate"
+        [showClearButton]="anySelectedUser()">
+      </neo-filter-header>
+
+      <div class="selected-options-wrapper">
+        <div
+          *ngFor="let user of selectedUsers"
+          [class.disabled]="user.isInvited"
+          class="option mr-8 mb-8">
+          {{ user.name }}, {{ user.company }}
+
+          <button
+            (click)="removeUser(user)"
+            *ngIf="!user.isInvited"
+            class="btn-remove d-flex align-center">
+            <svg-icon
+              class="remove-option-icon ml-8"
+              key="cross"
+              size="sm"></svg-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button
+    (click)="selectAllMatchingUsers()"
+    *ngIf="matchedUsers?.length"
+    [disabled]="allUsersSelected"
+    class="btn-add mt-18 mb-32">
+    <svg-icon
+      class="mr-8"
+      key="plus-in-circle"></svg-icon>
+    {{ 'events.selectAllMatchingUsersLabel' | translate }}
+  </button>
+</div>

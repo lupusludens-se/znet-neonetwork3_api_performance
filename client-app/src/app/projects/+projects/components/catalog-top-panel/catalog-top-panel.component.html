@@ -1,0 +1,47 @@
+<div class="top-panel flex-between">
+  <div class="left d-flex">
+    <svg-icon class="ufo-icon mr-40" key="ufo-vector"></svg-icon>
+    <div class="flex-column">
+      <h2 class="title mb-8 neo-arial">{{ 'projects.exploreProjectsLabel' | translate }}</h2>
+      <p class="text w-80">
+        {{ 'projects.exploreProjectsDescription' | translate }}
+      </p>
+     
+      <div class="mt-38 d-flex">
+        <a
+          class="mr-34 d-flex align-center z-index-1"
+          (click)="onTechnologiesSolutionsClick('technologies')"
+          [routerLink]="['/technologies']">
+          {{ 'projects.solutions.aboutTechnologiesLabel' | translate }}
+          <svg-icon class="ml-8" key="right-arrow-in-circle"></svg-icon>
+        </a>
+        <a
+          class="mr-34 d-flex align-center z-index-1"
+          (click)="onTechnologiesSolutionsClick('solutions')"
+          [routerLink]="['/solutions']">
+          {{ 'projects.solutions.aboutSolutionsLabel' | translate }}
+          <svg-icon class="ml-8" key="right-arrow-in-circle"></svg-icon>
+        </a>
+    </div>
+  </div>
+  </div>
+  <img
+    alt="headline-background-image"
+    class="img"
+    src="assets/images/project-category-background-image.svg"
+  />
+  <div class="right d-flex align-center">
+
+    <div class="connect-wrapper flex-column neo-arial">
+      <p class="grey-text mb-8">{{ 'projects.solutions.strategicAssistanceLabel' | translate }}</p>
+      <p class="white-text mb-16">{{ 'projects.solutions.needHelpLabel' | translate }}</p>
+      <button (click)="onContactNEONetworkClick()" class="btn flex-center top-panel-btn-white project-catalog-top-panel-btn">
+        {{ 'projects.connectNeoNetworkLabel' | translate }}
+        <svg-icon class="ml-10" key="right-arrow"></svg-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<neo-contact-neo-network (closed)="contactUsModal = false" *ngIf="contactUsModal"></neo-contact-neo-network>

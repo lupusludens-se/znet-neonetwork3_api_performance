@@ -1,0 +1,31 @@
+<button (click)="setPage(currentPage - 1)" [class.disabled]="currentPage === 1"
+  class="page prev  flex-center mr-32">
+  <svg-icon class="mr-6" key="arrow-thin" size="md"></svg-icon>
+  Prev
+</button>
+
+<button (click)="setPage(1)" [class.current]="currentPage === 1" class="page">
+  1
+</button>
+
+<button *ngIf="currentPage > this.pagesLeftRightShow + 2" class="page fake">
+  ...
+</button>
+
+<button (click)="setPage(page)" *ngFor="let page of pages" [class.current]="currentPage === page" class="page">
+  {{ page }}
+</button>
+
+<button *ngIf="currentPage < lastPage - (this.pagesLeftRightShow + 1)" class="page fake">
+  ...
+</button>
+
+<button (click)="setPage(lastPage)" [class.current]="currentPage === lastPage" class="page">
+  {{ lastPage }}
+</button>
+
+<button (click)="setPage(currentPage + 1)" [class.disabled]="currentPage === lastPage"
+  class="page next flex-center ml-32">
+  Next
+  <svg-icon class="ml-6" key="arrow-thin" size="md"></svg-icon>
+</button>

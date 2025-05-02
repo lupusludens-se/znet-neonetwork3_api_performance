@@ -1,0 +1,73 @@
+<div
+  class="w-100 h-100 tile-wrapper"
+  (click)= "goToLink('projects/' +  post?.id )">
+  <div class="d-flex h-100" >
+    <div
+      class="left-section">
+      <img
+        src="{{ post.imageUrl }}"
+        alt="project-item" />
+    </div>
+    <div class="right-section pr-16">
+      <div class="d-flex flex-column h-100">
+        <div class="title-height">
+          <span class="title text-ellipsis">{{ post.title }}</span>
+        </div>
+        <div class="title-height">
+          <span class="sub-title text-ellipsis">{{ post.subTitle }} </span>
+        </div>
+        <div class="d-flex justify-between align-end flex-grow-1 pt-4 pb-4">
+          <div class="d-flex flex-column justify-center">
+            <img
+              class="company-logo"
+              src="{{
+                post.companyImage !== undefined && post.companyImage !== null
+                  ? post.companyImage
+                  : 'assets/images/default-company-icon.svg'
+              }}"
+              alt="" />
+          </div>
+          <div
+            class="d-flex flex-row ml-4 mb-4"
+            *ngIf="recentlyViewed">
+            <span class="categoryTag">
+              <a
+                class="text-aqua-400 text-ellipsis text-ellipsis-1"
+                (click)="$event.preventDefault(); $event.stopPropagation(); tagClick.emit()"
+                routerLink="/topics"
+                [queryParams]="{
+                  id: post.projectCategory.id,
+                  name: post.projectCategory.name,
+                  type: taxonomyType
+                }"
+                >{{ post.projectCategory.name }}</a
+              >
+            </span>
+          </div>
+          <div
+            class="d-flex flex-column justify-center pb-10"
+            *ngIf="!recentlyViewed">
+            <ng-container *ngIf="post.tag !== null && post.tag === 'New'; else trending">
+              <span class="new-trending-tag"> 
+                <label class="tag">{{ 'dashboard.new' | translate }}</label>
+                <svg-icon
+                  class="svg-icon-height"
+                  key="sparkles">
+                </svg-icon>
+              </span>
+            </ng-container>
+            <ng-template #trending>
+              <span class="new-trending-tag" *ngIf="post.tag !== null">
+                <label class="tag">{{ 'dashboard.trending' | translate }}</label>
+                <svg-icon
+                  class="svg-icon-height"
+                  key="arrow-up">
+                </svg-icon>
+              </span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

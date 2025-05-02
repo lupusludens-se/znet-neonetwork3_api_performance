@@ -1,0 +1,43 @@
+{
+  "name": "playwright_zn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "regression:test:mac": "npx playwright test --config playwright.config.js --reporter=list",
+    "regression:test:mac:headed": "npx playwright test --config playwright.config.js --reporter=list --headed",
+    "regression:test:mac:chromium": "target_env='test' npx playwright test --reporter=list --project=Chromium",
+    "regression:test:mac:firefox": "target_env='test' npx playwright test --reporter=list --project=Firefox",
+    "regression:test:mac:safari": "target_env='test' npx playwright test --reporter=list --project=Safari",
+    "regression:preprod:mac:chromium": "target_env='preprod' npx playwright test --reporter=list --project=Chromium",
+    "regression:preprod:mac:firefox": "target_env='preprod' npx playwright test --reporter=list --project=Firefox",
+    "regression:preprod:mac:safari": "target_env='preprod' npx playwright test --reporter=list --project=Safari",
+    "regression:test:win": "$env:target_env='test'; npx playwright test --reporter=list; remove-item env:\target_env",
+    "regression:test:win:headed": "$env:target_env='test'; npx playwright test --reporter=list --headed; remove-item env:\target_env",
+    "regression:test:win:chromium": "$env:target_env='test'; npx playwright test --reporter=list --project=Chromium; remove-item env:\target_env",
+    "regression:test:win:firefox": "$env:target_env='test'; npx playwright test --reporter=list --project=Firefox; remove-item env:\target_env",
+    "regression:test:win:safari": "$env:target_env='test'; npx playwright test --reporter=list --project=Safari; remove-item env:\target_env",
+    "regression:preprod:win:chromium": "$env:target_env='preprod'; npx playwright test --reporter=list --project=Chromium; remove-item env:\target_env",
+    "regression:preprod:win:firefox": "$env:target_env='preprod'; npx playwright test --reporter=list --project=Firefox; remove-item env:\target_env",
+    "regression:preprod:win:safari": "$env:target_env='preprod'; npx playwright test --reporter=list --project=Safari; remove-item env:\target_env",
+    "regression:allProjectsTests:test:win": "$env:target_env='test'; npx playwright test --grep \"@all_projects_parallel\" --reporter=list",
+    "regression:projectsCoreGroup:test:win": "$env:target_env='test'; npx playwright test --grep \"@core_projects\" --reporter=list",
+    "regression:projectsSecondaryGroup:test:win": "$env:target_env='test'; npx playwright test --grep \"@secondary_projects\" --reporter=list",
+    "regression:projectsSmallGroup:test:win": "$env:target_env='test'; npx playwright test --grep \"@small_projects\" --reporter=list",
+    "regression:EmergingTechnologies:allProjectsTests:test:win": "$env:target_env='test'; npx playwright test tests/project-types-tests/EmergingTechnologies.spec.js --reporter=list"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "1.50.1",
+    "@types/node": "20.12.7"
+  },
+  "dependencies": {
+    "@faker-js/faker": "9.5.0",
+    "csv-parse": "5.5.6",
+    "dotenv": "16.4.7",
+    "lighthouse": "^12.6.0",
+    "playwright-lighthouse": "^4.0.0"
+  }
+}

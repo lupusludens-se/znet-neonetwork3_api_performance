@@ -1,0 +1,155 @@
+<div
+  class="events-swiper flex-column w-100 carousel-container"
+  [ngClass]="{ 'mb-24': highlightedEvents?.length, single: highlightedEvents?.length === 1 }">
+  <div
+    class="swiper-wrapper d-flex flex-nowrap w-100"
+    [ngStyle]="{ transform: 'translateX(calc(' + getSlideTranslate(index) + '))' }">
+    <div
+      *ngFor="let event of highlightedEvents; let i = index"
+      (mouseover)="stopAutoplay()"
+      (mouseleave)="startAutoplay()"
+      class="swiper-slide py-40 px-32 w-100 p-relative"
+      [style.marginRight.px]="marginRight">
+      <div
+        *ngIf="canEdit && isUserLoaded"
+        class="p-absolute top-12 right-12">
+        <button
+          class="edit-btn d-flex align-center justify-center text-white"
+          (click)="openEditEventDetails(event.id)">
+          <svg-icon
+            width="18px"
+            class="text-white d-flex mr-8"
+            key="pencil"></svg-icon>
+          {{ 'actions.editLabel' | translate }}
+        </button>
+      </div>
+
+      <div class="slide-content h-100 d-flex flex-column justify-between">
+        <div class="top-blocks">
+          <div class="event-details d-flex text-m align-center">
+            <div
+              *ngIf="event.shortDates"
+              class="detail-block date-block d-flex align-center mr-16 text-white">
+              <svg-icon
+                class="mr-4"
+                key="event-calendar"></svg-icon>
+              <div class="dates-label ellipsis">{{ event.shortDates }}</div>
+              <div
+                *ngIf="event.moreDatesCount"
+                class="more-dates-count inverted-colors ml-4">
+                +{{ event.moreDatesCount }}
+              </div>
+            </div>
+            <div
+              *ngIf="event.shortTimes"
+              class="detail-block time-block d-flex align-center mr-16 text-white">
+              <svg-icon
+                class="mr-4"
+                key="event-timer"></svg-icon>
+              <div class="dates-label ellipsis">{{ event.shortTimes }}</div>
+              <div
+                *ngIf="event.moreOccurrencesCount"
+                class="more-dates-count inverted-colors ml-4">
+                +{{ event.moreOccurrencesCount }}
+              </div>
+            </div>
+            <div
+              *ngIf="event.locationType >= 0"
+              class="detail-block location-label px-10 event-type align-center mr-16 text-white"
+              [ngClass]="{ ellipsis: event.locationType === EventLocationType.InPerson }">
+              {{ event.locationType === EventLocationType.InPerson ? (event.location | slice: 0:60) : 'Virtual'
+              }}<ng-container *ngIf="event.locationType === EventLocationType.InPerson && event.location?.length > 60"
+                >...</ng-container
+              >
+            </div>
+          </div>
+
+          <div class="main-block flex-between align-center">
+            <div class="general-information">
+              <div
+                (click)="openEventDetails(event)"
+                class="subject c-pointer w-fit-content text-white mt-8 mb-8 d-flex">
+                {{ event.subject }}
+              </div>
+              <div class="event-description text-white mb-16">
+                {{ event.description }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-blocks">
+          <div
+            *ngIf="event.moderators?.length"
+            class="event-details d-flex moderators">
+            <div class="text-small fw-700 d-flex align-center text-white moderators-label">
+              {{ 'events.moderatorsViewLabel' | translate }}:
+            </div>
+            <div class="moderator-items d-flex align-center">
+              <ng-container *ngFor="let moderator of displayedModerators[i]; let j = index">
+                <div
+                  *ngIf="moderator?.user || moderator?.name"
+                  class="d-flex align-center ml-16">
+                  <neo-user-avatar
+                    [imageSize]="'size24'"
+                    [user]="moderator?.user"></neo-user-avatar>
+                  <div
+                    (click)="openModeratorProfile(moderator?.user)"
+                    [ngClass]="{ selectable: moderator?.user }"
+                    class="moderator-name text-small text-blue-10 fw-700 ml-8">
+                    {{ moderator.name | slice: 0:50
+                    }}<ng-container *ngIf="moderator.name?.length > 50">...</ng-container>
+                  </div>
+                </div>
+              </ng-container>
+              <div
+                *ngIf="event.moderators?.length > displayedModerators[i]?.length"
+                [title]="omittedModerators[i]"
+                class="more-count-label ml-16 py-2 px-8 c-default">
+                +{{ event.moderators.length - displayedModerators[i].length }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="isUserLoaded"
+        class="attending-block d-flex align-center absolute-center-y right-32">
+        <h6 class="mr-24 attendingLabel">{{ 'events.areYouAttendingLabel' | translate }}?</h6>
+
+        <div class="d-flex event-attending-btns">
+          <button
+            [class.active]="event.isAttending === true"
+            class="attending-btn d-flex align-center justify-center text-white mr-8"
+            (click)="saveEventAttendingStatus(event, true)">
+            Yes
+          </button>
+          <button
+            [class.active]="event.isAttending === false"
+            class="attending-btn d-flex align-center justify-center text-white"
+            (click)="saveEventAttendingStatus(event, false)">
+            No
+          </button>
+        </div>
+      </div>
+
+      <div
+        *ngIf="swiperBullets?.length > 1"
+        class="bottom-32 right-32 absolute d-flex align-center">
+        <div class="d-flex">
+          <div
+            *ngFor="let bullet of swiperBullets; let i = index"
+            class="swiper-pagination-bullet"
+            [class.swiper-pagination-bullet-active]="bullet === index"
+            (click)="index = i"></div>
+        </div>
+      </div>
+
+      <img
+        class="absolute right-24-rem bottom-0 pointer-events-none"
+        src="assets/images/event-slider-background-image.svg"
+        alt="event-slide-background" />
+    </div>
+  </div>
+</div>

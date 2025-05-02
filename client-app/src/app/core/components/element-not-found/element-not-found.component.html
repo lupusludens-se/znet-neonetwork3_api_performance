@@ -1,0 +1,12 @@
+<div class="flex-column justify-center align-center h-100 bk-white">
+  <div class="empty-state-circle flex-center">
+    <svg-icon [key]="data?.iconKey" width="64px" height="64px" class="dark-gray-590"></svg-icon>
+  </div>
+
+  <h4 class="text-neo-near-black text-center pt-32 text-xxl">{{ data?.mainTextTranslate | translate }}</h4>
+
+  <button class="green btn flex-center mt-32" [routerLink]="data?.buttonLink">
+    <svg-icon class="mr-12" height="18px" key="left-arrow" width="18px"></svg-icon>
+    {{ data?.buttonTextTranslate | translate }}
+  </button>
+</div>

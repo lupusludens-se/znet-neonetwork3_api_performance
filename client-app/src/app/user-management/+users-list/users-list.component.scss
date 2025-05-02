@@ -1,0 +1,167 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+.content {
+  // * area to fit bottom item dropdown menu
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 110%;
+  color: colors.$near-black-400;
+}
+
+.btn-add-user {
+  width: 144px;
+  height: 45px;
+  font-size: 14px;
+  color: colors.$dark-gray-40;
+  text-transform: capitalize;
+}
+
+.btn-export-user {
+  width: 144px;
+  height: 45px;
+  font-size: 14px;
+  background: colors.$dark-gray-40;
+  text-transform: capitalize;
+  border-radius: 8px;
+  border: 1px solid colors.$purple-300;
+  color: colors.$purple-200;
+  box-shadow: 0 1px 3px rgba(0, 31, 81, 0.07);
+
+  &:hover {
+    border-radius: 8px;
+    border: 1px solid colors.$purple-500;
+    color: colors.$purple-500;
+  }
+
+}
+
+.filters {
+  width: 240px;
+  max-width:  240px;
+  background: colors.$white;
+}
+
+.table-wrapper {
+  width: 100%;
+}
+
+.table {
+  cursor: default;
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background-color: colors.$dark-gray-450;
+    text-transform: uppercase;
+    color: #1d122b;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+
+    td {
+      height: 40px;
+
+      .caret {
+        transition: all 0.2s ease;
+        vertical-align: middle;
+        margin-bottom: 2px;
+
+        &.up {
+          transform: rotate(180deg);
+          transition: all 0.2s ease;
+        }
+      }
+    }
+
+    .click-area {
+      width: fit-content;
+      cursor: pointer;
+    }
+  }
+
+  tbody {
+    background-color: colors.$white;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    /* identical to box height, or 21px */
+
+    color: colors.$dark-gray-515;
+  }
+}
+
+td {
+  height: 76px;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+  /* Add this line to ensure equal column widths */
+
+
+
+  .user {
+    width: 30%;
+  }
+
+
+
+  .company {
+    width: 20%;
+    color: colors.$near-black-400;
+    font-weight: 400;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+  }
+
+  .type {
+    width: 20%;
+    letter-spacing: 0.01em;
+  }
+
+  .status {
+    width: 20%;
+    letter-spacing: 0.01em;
+  }
+
+  .user-approver {
+    width: 18%;
+    letter-spacing: 0.01em;
+  }
+}
+
+.name {
+  font-weight: 700;
+  color: colors.$near-black-400;
+  cursor: pointer;
+  max-width: 190px;
+}
+
+.options {
+  width: 8%;
+}
+
+neo-table-row {
+  display: table-row;
+  border: 1px solid colors.$blue-25;
+  border-top: none;
+}
+
+.sorthighlight {
+  color: #209cd1;
+}
+
+.row:hover {
+  background-color: colors.$blue-5;
+}

@@ -1,0 +1,76 @@
+<div
+  class="wrapper"
+  (wheel)="$event.preventDefault()">
+  <div
+    class="content"
+    #modal>
+    
+      <svg-icon
+        key="close"
+        class="btn-close mr-10 text-blue-200"
+        [fontSize]="24"(click)="onClose()"></svg-icon>     
+
+    <ng-container *ngIf="!showSuccess; else success">
+      <div>
+        <h2 class="title neo-arial">
+          {{ 'projects.projectDetails.contactSolutionProviderModal.titleLabel' | translate }}
+        </h2>
+      </div>
+
+      <p class="text mt-12 mb-24 pb-12">
+        {{ 'projects.projectDetails.contactSolutionProviderModal.subTitlePart1Label' | translate }}
+        {{ project.company?.name
+        }}{{ 'projects.projectDetails.contactSolutionProviderModal.subTitlePart2Label' | translate }}
+      </p>      
+
+      <textarea
+        [(ngModel)]="message"
+        [placeholder]="
+          'projects.projectDetails.contactSolutionProviderModal.messagePlaceholder' | translate
+        "></textarea>
+
+      <div class="controls d-flex mt-32 justify-end">
+        <button
+          class="btn btn-cancel mr-16 flex-center"
+          (click)="onNevermindButtonClick()">
+          {{ 'projects.projectDetails.contactSolutionProviderModal.nevermindButton' | translate }}
+        </button>
+
+        <button
+          class="btn btn-contact flex-center mb-8"
+          (click)="sendMessage()">
+          <svg-icon
+            key="chat-fill"
+            class="mr-10"></svg-icon>
+          {{ 'projects.projectDetails.contactSolutionProviderModal.confirmButton' | translate }}
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-template #success>
+      <div class="success-wrapper flex-column align-center">
+        <svg-icon
+          key="envelope-sent"
+          class="envelope mb-32"
+          height="38px"
+          width="60px"></svg-icon>
+
+        <p class="primary-text mb-12">Message Sent</p>
+        <p class="text mb-32 bb-none">We will get back to you shortly.</p>
+
+        <button
+          class="btn btn-contact flex-center"
+          (click)="onClose()">
+          <svg-icon
+            key="left-arrow"
+            class="mr-14"></svg-icon>
+          Back To The Project          
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<div
+  class="overlay"
+  (click)="onClose()"></div>

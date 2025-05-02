@@ -1,0 +1,30 @@
+@use 'colors';
+
+:host {
+  color: colors.$dark-gray-510;
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0.01em;
+}
+
+:host-context(.text-neo-blue){
+  color: colors.$black;
+}
+
+
+.span-heading{
+  font-family: "Arial Rounded MT Bold", serif;
+  color: colors.$near-black-400;
+  font-size: 16px;
+  line-height: 130%;
+}
+
+.link{
+  color: colors.$zeigo-purple;
+   &:hover{
+     color: colors.$purple-400;
+   }
+   &:visited{
+    color: #9C77D4;
+   }
+}

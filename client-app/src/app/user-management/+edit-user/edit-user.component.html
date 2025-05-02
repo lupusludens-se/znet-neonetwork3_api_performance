@@ -1,0 +1,282 @@
+<ng-container *ngIf="!!user">
+  <div class="title-wrapper">
+    <h1 class="title mb-24">{{ 'userManagement.editUserLabel' | translate }}</h1>
+  </div>
+
+  <div
+    [class.disabled]="user?.statusId === userStatuses.Deleted"
+    class="content-wrapper d-flex flex-row justify-between">
+    <div class="bottom d-flex flex-column">
+      <div class="top d-flex mb-24 align-center justify-end">
+        <div
+          *ngIf="user?.statusId !== userStatuses.Active && user?.statusId !== userStatuses.Inactive"
+          [class.deleted]="user?.statusId === userStatuses.Deleted"
+          [class.expired]="user?.statusId === userStatuses.Expired"
+          class="status-label flex-center mr-6">
+          <ng-container *ngIf="user?.statusId === userStatuses.Onboard">
+            {{ 'status.onboardStatusLabel' | translate }}
+          </ng-container>
+
+          <ng-container *ngIf="user?.statusId === userStatuses.Deleted">
+            {{ 'status.deletedStatusLabel' | translate }}
+          </ng-container>
+          <ng-container *ngIf="user?.statusId === userStatuses.Expired">
+            {{ 'status.expiredStatusLabel' | translate }}
+          </ng-container>
+        </div>
+
+        <neo-status-change
+          (statusChanged)="changeStatus($event)"
+          [activeStatusValue]="userStatuses.Active"
+          [currentStatus]="
+            user?.statusId === userStatuses.Active || user?.statusId === userStatuses.Inactive
+              ? user.statusId
+              : userStatuses.Active
+          "
+          [disableClass]="user?.statusId !== userStatuses.Active && user?.statusId !== userStatuses.Inactive"
+          [inactiveStatusValue]="userStatuses.Inactive">
+        </neo-status-change>
+      </div>
+      <div class="d-flex flex-row">
+        <div class="mr-32">
+          <div
+            (click)="fileInput.click()"
+            class="ml-2">
+            <input
+              #fileInput
+              (change)="onFileSelect($event)"
+              (click)="fileInput.value = ''"
+              accept="image/png, image/gif, image/jpeg"
+              class="file-input"
+              name="picture"
+              type="file" />
+
+            <div
+              *ngIf="user"
+              [class.inactive]="user?.statusId === userStatuses.Inactive"
+              class="avatar flex-center">
+              <neo-user-avatar
+                imageSize="size96"
+                [user]="user"></neo-user-avatar>
+            </div>
+          </div>
+          <div
+            *ngIf="user?.statusId !== userStatuses.Onboard && user?.statusId !== userStatuses.Deleted && user?.statusId !== userStatuses.Expired"
+            class="mt-12">
+            <button
+              [routerLink]="'/user-profile/' + user?.id"
+              class="btn-view-profile green-frame flex-center">
+              {{ 'userManagement.form.viewProfileLabel' | translate }}
+              <svg-icon
+                class="ml-8"
+                key="right-arrow"></svg-icon>
+            </button>
+          </div>
+        </div>
+        <form
+          class="primary-form"
+          [formGroup]="form">
+          <h4 class="text-neo-near-black mb-20">{{ 'userManagement.form.PersonalInfoLabel' | translate }}</h4>
+          <div class="controls-row flex-between mb-24 flex-wrap">
+            <neo-text-input
+              [labelName]="'userManagement.form.firstNameLabel' | translate"
+              formControlName="firstName"
+              [placeholder]="'userManagement.form.firstNameLabel' | translate"
+              [submitted]="formSubmitted">
+            </neo-text-input>
+
+            <neo-text-input
+              [labelName]="'userManagement.form.lastNameLabel' | translate"
+              formControlName="lastName"
+              [placeholder]="'userManagement.form.lastNameLabel' | translate"
+              [submitted]="formSubmitted">
+            </neo-text-input>
+          </div>
+
+          <neo-text-input
+            class="mb-24 editUserDisabledControl disabledLabel"
+            [labelName]="'userManagement.form.companyLabel' | translate"
+            formControlName="company"
+            [disabled]="true"
+            [submitted]="formSubmitted">
+          </neo-text-input>
+
+          <neo-text-input
+            class="pb-24 editUserDisabledControl disabledLabel"
+            [labelName]="'userManagement.form.emailLabel' | translate"
+            formControlName="email"
+            [disabled]="true"
+            [placeholder]="'userManagement.form.emailLabel' | translate"
+            [submitted]="formSubmitted">
+          </neo-text-input>
+
+          <div class="controls-row flex-column bottom-part pt-32">
+            <h4 class="text-neo-near-black mb-20">{{ 'userManagement.form.UserPermissionsLabel' | translate }}</h4>
+            <div class="flex-container">
+              <div class="flex-item-left">
+                <neo-radio-control
+                  (valueChanged)="changeUserRole($event)"
+                  [list]="rolesData"
+                  formControlName="role"
+                  [labelName]="'form.userRoleLabel' | translate"
+                  [submitted]="formSubmitted">
+                </neo-radio-control>
+              </div>
+              <div
+                class="flex-item-right flex-container-right"
+                ngClass="{{ EnablePrivateUser ? '' : 'permissions' }}">
+                <neo-blue-checkbox
+                  class="w-fit"
+                  (selectCheckbox)="checkboxClicked(isCheckedPrivate)"
+                  [checked]="isCheckedPrivate">
+                </neo-blue-checkbox>
+                <label class="arial text-s text-neo-near-black pr-4 pt-4 pb-4 pl-2">
+                  <div
+                    class="tooltip"
+                    style="cursor: help">
+                    {{ 'userManagement.form.privateUserLabel' | translate
+                    }}<span class="tooltiptext"
+                      >Private users are not visible on community page and company profile page</span
+                    >
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="permissions mb-32">
+              <p class="section-label mb-24 flex-column text-neo-blue">
+                {{ 'userManagement.form.permissionsLabel' | translate }}
+              </p>
+              <div class="controls-wrapper d-flex flex-wrap">
+                <neo-blue-checkbox
+                  (selectCheckbox)="changeUserPermissions(permission)"
+                  *ngFor="let permission of permissionsData"
+                  [checked]="permission.checked"
+                  [disabled]="permission.disabled"
+                  [name]="permission.name"
+                  value="p{{ permission.id }}">
+                </neo-blue-checkbox>
+              </div>
+            </div>
+          </div>
+          <h4 class="text-neo-near-black mb-20 bottom-part pt-32">
+            {{ 'userManagement.form.LocationLabel' | translate }}
+          </h4>
+          <label class="dropdown-wrapper mb-32 text-input-label neo-arial pt-12 flex-column">
+            {{ 'userManagement.form.countryBasedLabel' | translate }}
+
+            <neo-search-bar
+              class="mt-8"
+              (inputChange)="getCountries($event)"
+              (selectedResult)="chooseCountry($event)"
+              [results]="countriesList"
+              [value]="selectedCountry?.name"
+              [error]="formSubmitted && !selectedCountry?.name"
+              (clearInput)="selectedCountry = null">
+            </neo-search-bar>
+
+            <neo-control-error
+              [errors]="countryError"
+              [fieldName]="'userManagement.form.countryLabel' | translate"
+              [submitted]="formSubmitted">
+            </neo-control-error>
+          </label>
+          <h4 class="text-neo-near-black mb-20 bottom-part pt-32">
+            {{ 'userManagement.form.ReferencesLabel' | translate }}
+          </h4>
+          <label class="dropdown-wrapper text-input-label neo-arial">
+            {{ 'userManagement.form.heardViaLabel' | translate }}
+          </label>
+
+          <neo-dropdown
+            [dropdownOptions]="heardViaList"
+            class="dropdown-wrapper mt-8 mb-8"
+            formControlName="heardViaId">
+          </neo-dropdown>
+
+          <label
+            class="mb-18 text-input-label neo-arial w-50 display-inline flex-between"
+            *ngIf="user.adminComments">
+            {{ 'userManagement.form.adminCommentsLabel' | translate }}
+          </label>
+          <neo-message-control
+            *ngIf="user.adminComments"
+            [displayAttachments]="false"
+            formControlName="adminComments"
+            id="adminComments"
+            maxHeight="200px"
+            [editable]="false"
+            [maxLength]="adminCommentsMaxLength"
+            classes="p-0 text-s">
+          </neo-message-control>
+        </form>
+      </div>
+    </div>
+    <div class="d-flex mr-32 ml-32 flex-column" *ngIf="enableEmailAlertSettings">
+      <div class="d-flex flex-row justify-end">
+        <div class="settings-wrapper pl-32 pr-32">
+          <h4 class="text-neo-near-black mb-20">Email Alert Settings</h4>
+          <form
+            class="flex-column secondary-form"
+            [formGroup]="form">
+            <ng-container *ngFor="let emailAlert of user?.emailAlerts; let last = last">
+              <div class="d-flex flex-column justify-between">
+                <div class="flex-column pb-20">
+                  <label class="dropdown-wrapper text-input-label neo-arial">{{ emailAlert?.title }}</label>
+                  <neo-dropdown
+                    [dropdownOptions]="dropdownOptions(emailAlert?.title)"
+                    class="dropdown-wrapper mt-8 mb-8"
+                    [formControlName]="getControlName(emailAlert?.title)"
+                    (chosenOption)="updateSetting(emailAlert, $event)">
+                  </neo-dropdown>
+                </div>
+              </div>
+            </ng-container>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <neo-form-footer
+    submitButtonName="general.saveChangesLabel"
+    (cancel)="onCancel()"
+    (save)="editUser()"
+    [disabled]="user?.statusId === userStatuses.Deleted">
+  </neo-form-footer>
+
+  <neo-modal
+    (cancel)="cancel()"
+    *ngIf="showModal"
+    size="medium"
+    padding="p-40">
+    <svg-icon
+      (click)="cancel()"
+      class="c-pointer p-absolute top-20 right-20"
+      height="30px"
+      key="close-snackbar"
+      width="30px"></svg-icon>
+
+    <h3 class="mb-6">
+      {{ spAdminConfirmationTitle }}
+    </h3>
+
+    <p class="text-label mb-24">
+      {{ 'userManagement.form.spAdminConfirmationSubTitle' | translate }}
+    </p>
+
+    <div class="popup-controls pt-24 d-flex mt-12">
+      <button
+        (click)="cancel()"
+        class="btn-cancel blue-50-frame mr-16">
+        {{ 'general.cancelLabel' | translate }}
+      </button>
+
+      <button
+        class="btn-confirm duplicate"
+        (click)="proceed()">
+        {{ 'general.yesProceedLabel' | translate }}
+      </button>
+    </div>
+  </neo-modal>
+</ng-container>

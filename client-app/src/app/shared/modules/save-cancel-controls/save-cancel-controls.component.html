@@ -1,0 +1,14 @@
+<div class="controls-wrapper d-flex justify-end">
+  <button
+    (click)="cancel.emit(true)"
+    class="mr-16 btn-cancel text-s flex-center">
+    {{ cancelBtnText }}
+  </button>
+
+  <button
+    (click)="save.emit(true)"
+    [attr.disabled]="disable ? true : null"
+    class="green btn-save text-s flex-center">
+    {{ saveBtnText }}
+  </button>
+</div>

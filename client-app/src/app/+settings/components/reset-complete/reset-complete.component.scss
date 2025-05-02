@@ -1,0 +1,398 @@
+@use 'colors';
+@media only screen and (max-width: 920px) {
+    .reset-complete-background-wrapper {
+        display: none;
+    }
+
+    .background-mobile-wrapper {
+        display: flex !important;
+    }
+
+    #mobile-reset-complete-form-wrapper {
+        padding-top: 20%;
+        display: flex !important;
+
+        neo-footer {
+            left: 0;
+            bottom: 0;
+            position: fixed;
+        }
+    }
+
+    body {
+        position: relative;
+        font-weight: 400;
+        background-color: colors.$dark-gray-20;
+        min-width: 320px;
+        margin: 0;
+        columns: colors.$blue-500;
+    }
+
+    #reset-complete-form {
+        display: none;
+    }
+
+    .set-password {
+        width: 10vh;
+        height: 5vh;
+    }
+
+    .align-start {
+        align-items: center;
+    }
+
+    .justify-center {
+        justify-content: center;
+    }
+
+    .reset-complete-form-wrapper {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height:500px) and (max-width:920px) {
+    #mobile-reset-complete-form-wrapper {
+        display: flex !important;
+        padding-top: 10%;
+
+        neo-footer {
+            left: 0;
+            bottom: 0;
+            position: relative;
+        }
+    }
+
+    .background-mobile-wrapper {
+        display: flex !important;
+        height: 35vh !important;
+    }
+
+    .logo {
+        width: 40vh !important;
+        height: 30vh !important;
+        padding-top: 10px;
+    }
+
+    .set-password {
+        width: 40vh;
+        height: 10vh;
+    }
+
+    .align-start {
+        align-items: center;
+    }
+
+    .justify-center {
+        justify-content: center;
+    }
+
+    .reset-complete-form-wrapper {
+        width: 100%;
+    }
+
+    body .p-relative {
+        position: absolute;
+    }
+}
+
+.background-mobile-wrapper {
+    display: none;
+    width: 100%;
+    text-align: center;
+    height: 25vh;
+    background-image: url('../../../../assets/images/zeigob2c-background-mobile.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.logo {
+    width: 22vh;
+    height: 14vh;
+
+}
+
+#mobile-reset-complete-form-wrapper {
+    display: none;
+}
+
+.w-80 {
+    width: 80% !important;
+}
+
+.m-1 {
+    margin: 1px;
+}
+
+.font-heading {
+    font-size: 2rem !important;
+    line-height: 38.4px !important;
+}
+
+:host {
+    display: flex;
+    width: 100%;
+    background: colors.$dark-gray-20;
+}
+
+.reset-complete-background-wrapper {
+    width: 45%;
+    min-height: 100vh;
+    background-image: url('../../../../assets/images/zeigob2c-background.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    right: 1rem;
+
+    .p-absolute {
+        right: 0;
+        bottom: 0;
+    }
+}
+
+.reset-complete-form-wrapper {
+    width: 65%;
+
+    h1 {
+        font-size: 28px;
+        line-height: 38px;
+    }
+
+    .success-wrapper {
+        text-align: center;
+        max-width: 450px;
+
+        h1 {
+            font-size: 32px;
+            line-height: 38px;
+        }
+    }
+
+    neo-footer {
+        left: 0;
+        bottom: 0;
+    }
+}
+
+re-captcha.is-invalid>div {
+    border: 1px solid colors.$error-input;
+    border-radius: 2px;
+}
+
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+}
+
+.flex-left {
+    width: 42%;
+    display: grid;
+    place-items: center;
+    background-image: url('../../../../assets/images/zeigob2c-background.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    right: 3px;
+    min-height: 100vh;
+}
+
+.flex-right {
+    width: 58%;
+    padding: 5px;
+    display: grid;
+
+    min-height: 100vh;
+}
+
+.reset-complete-form {
+    width: 60% !important;
+    display: grid !important;
+    height: fit-content !important;
+    margin-top: 2.5rem !important;
+    margin-left: 2rem !important;
+}
+
+.vector-img {
+    right: 0;
+    bottom: 0;
+}
+
+.logo-image {
+    top: 4%;
+}
+
+.success-form {
+    flex-direction: column;
+    display: flex;
+
+    .pl-35 {
+        padding-left: 0px !important;
+    }
+}
+
+@media only screen and (max-width: 920px) {
+
+    .flex-container {
+        gap: 5px;
+        flex-direction: column;
+        flex: 1;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
+
+    .flex-left {
+        width: 100%;
+        height: 25vh;
+        background-image: url('../../../../assets/images/zeigob2c-background-mobile.png');
+        display: flex;
+        min-height: 25%;
+        justify-content: center;
+    }
+
+    .flex-right {
+        width: 100% !important;
+        height: 75vh;
+        display: grid;
+        place-items: flex-start;
+
+        img {}
+    }
+
+
+
+    .display-none {
+        display: none;
+    }
+
+    .logo-image {
+        top: auto;
+        // Changed to 35%, it's been already covered in folloeing breakpoints
+        width: 35%;
+    }
+
+    h1 {
+        font-size: 1.3rem !important;
+        line-height: 25px !important;
+    }
+
+    .text-align-center {
+        text-align: center !important;
+        align-items: center;
+    }
+
+    .reset-complete-form {
+        margin-top: 1rem !important;
+        margin-left: 0 !important;
+        padding: 10px;
+    }
+
+    .success-form {
+        width: 100%;
+
+        .pl-35 {
+            padding-left: 0px !important;
+        }
+    }
+
+
+    .flex-right-center-content:not(.reset-complete-form-wrapper) {
+        padding-bottom: 50%;
+        align-items: center;
+
+        button {
+            span:has(.pl-35) {
+                padding-left: 0;
+            }
+        }
+    }
+
+    button.w-80 {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 100px) and (max-width: 545px) {
+
+
+}
+
+@media only screen and (min-width: 545px) and (max-width: 950px) // only screen and (min-width: 840px) and (max-width: 950px) 
+
+    {
+    form {
+        width: 100%;
+    }
+
+
+    .grow-width {
+        flex: 1 0 0;
+    }
+
+    .success-form {
+        padding: 1em;
+    }
+
+    .flex-left {
+        height: 35vh;
+    }
+
+    .success-form~.flex-right {
+        height: 65vh;
+        min-height: 100vh;
+    }
+}
+
+
+@media only screen and (max-height: 500px) {
+    .logo-image {
+        width: 25%;
+    }
+
+    .flex-left {
+        height: 45vh;
+    }
+}
+
+@media only screen and (min-width: 920px) {
+    .flex-right-center-content {
+        place-items: center !important;
+    }
+
+    .success-form {
+        button {
+            justify-content: center;
+        }
+    }
+
+}
+
+@media only screen and (min-width: 100px) and (max-width: 920px) {
+    .flex-right-center-content:not(.reset-complete-form-wrapper) {
+        padding-bottom: 0%;
+        align-items: center;
+    }
+}
+
+@media only screen and (min-width: 480px) {
+    .flex-right {
+        min-height: 100vh;
+    }
+}
+
+
+@media only screen and (min-width: 896px) {
+    .flex-right {
+        min-height: 95vh;
+    }
+}
+
+@media only screen and (min-width: 330px) {
+    .flex-right {
+        text-align: left;
+    }
+}

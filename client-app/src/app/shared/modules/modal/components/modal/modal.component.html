@@ -1,0 +1,32 @@
+<div class="modal flex-colum p-relative {{ size }} {{ padding }}">
+  <img *ngIf="logoPath" src="{{logoPath}}" class="w-100"/>
+  <ng-container *ngIf="title">
+    <div id="modalTitle" class="d-flex align-center">
+      <!-- Zeigo Rebrand : If h2 class name changes, needs to be updated in Terms Of Use CSS file -->
+      <h2 class="text-neo-near-black">{{ title }}</h2>
+
+      <span
+        *ngIf="showBadge && badgeNumber"
+        class="flex-center text-white badge text-s fw-700 ml-6">
+        {{ badgeNumber }}
+      </span>
+    </div>
+
+    <svg-icon
+      (click)="closed.emit(null)"
+      class="close-icon text-blue-200"
+      key="modal-close"
+      fontSize="15x"></svg-icon>
+  </ng-container>
+
+  <div
+    *ngIf="titleSeparator"
+    class="separator mt-16 mb-16"></div>
+
+  <div class="modal-wrapper">
+    <ng-content></ng-content>
+  </div>
+</div>
+<div
+(click)="closed.emit(null)"
+class="overlay"></div>

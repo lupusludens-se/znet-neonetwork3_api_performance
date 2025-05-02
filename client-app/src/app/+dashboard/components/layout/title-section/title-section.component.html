@@ -1,0 +1,26 @@
+<div class="flex-between title-section-wrapper pb-16">
+  <div class="flex-column">
+    <h4 class="text-neo-near-black">{{ title }}</h4>
+    <p *ngIf="subTitle" class="pt-2 subTitle text-blue-200">{{ subTitle }}</p>
+  </div>
+
+  <button
+    *ngIf="linkText && link"
+    (click)="onButtonClick()"
+    [queryParams]="queryParams"
+    class="link text-neo-purple d-flex align-center text-content view-all-btn"
+    routerLink="{{ link }}">
+    <svg-icon *ngIf="iconPosition === 'left'" [key]="icon" [size]="iconSize" class="mr-8"></svg-icon>
+    {{ linkText }}
+    <svg-icon *ngIf="iconPosition === 'right'" [key]="icon" [size]="iconSize" class="ml-8"></svg-icon>
+  </button>
+
+  <button
+    (click)="onButtonClick()"
+    *ngIf="linkText && !link"
+    class="link text-neo-purple d-flex align-center text-content">
+    <svg-icon *ngIf="iconPosition === 'left'" [key]="icon" [size]="iconSize" class="mr-8"></svg-icon>
+    {{ linkText }}
+    <svg-icon *ngIf="iconPosition === 'right'" [key]="icon" [size]="iconSize" class="ml-8"></svg-icon>
+  </button>
+</div>

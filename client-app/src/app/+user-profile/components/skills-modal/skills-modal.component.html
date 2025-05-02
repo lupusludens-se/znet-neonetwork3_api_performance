@@ -1,0 +1,49 @@
+<div class="skills-modal">
+    <div class="content">
+        <button (click)="closeModal.emit()" class="btn-close">
+            <svg-icon class="close-icon text-blue-200" height="14px" key="modal-close" width="14px"></svg-icon>
+        </button>
+        <h3 class="modal-title mb-6 neo-arial">{{ 'userProfile.edit.skillsPopupText' | translate }}</h3>
+
+        <p class="text-s mb-24 text-dark-gray-580">{{ 'userProfile.edit.skillsPopupSubText' | translate }}</p>
+        <form class="mt-20" [formGroup]="form">
+            <h4 class="section-title label mb-8">
+                {{ 'userProfile.edit.skillsLabel' | translate }}
+            </h4>
+            <ng-container class="mt-12" *ngFor="let skillsGroup of skillsByCategory.controls; let i = index">
+                <div [formGroup]="skillsGroup" class="controls-row d-flex url-wrapper mb-12">
+                    <neo-dropdown (ngModelChange)="onProjectTypeChange(skillsGroup)" [dropdownOptions]="categories" dropdownSize="150px" formControlName="projectTypeId"
+                        [placeholderText]="'userProfile.edit.selectProjectTypesLabel'|translate"
+                        [submitted]="formSubmitted">
+                    </neo-dropdown>
+                    <neo-dropdown (click)="onSkillsChange(i,$event)"
+                        [disabled]="!skillsGroup.get('projectTypeId').value" class="ml-20"
+                        [dropdownOptions]="filteredSkills" dropdownSize="150px" formControlName="skillId"
+                        [placeholderText]="'userProfile.edit.selectSkillsTypeLabel'|translate"
+                        [submitted]="formSubmitted">
+                    </neo-dropdown>
+                    <button (click)="removeSkill(i)" class="btn-remove-link ml-10">
+                        <svg-icon height="24px" key="trash-can" width="24px"></svg-icon>
+                    </button>
+                </div>
+                <div *ngIf="skillsByCategory.length === maxSkills && !isSkillRequired && !setDuplicateSkillsError && skillsGroup.get('skillId').value && i === 4"
+                    class="ml-20 mb-20 error">
+                    {{ 'userProfile.edit.limitReachedText' | translate }}
+                </div>
+            </ng-container>
+            <div class="ml-20 mb-20 error" *ngIf="isSkillRequired && !isSkillandCatetegoryRequired">{{ 'userProfile.edit.skillRequiredText' | translate }}</div>
+            <div class="ml-20 mb-20 error" *ngIf="isSkillandCatetegoryRequired">{{ 'userProfile.edit.projectTypeandSkillRequiredText' | translate }}</div>
+            <div *ngIf="setDuplicateSkillsError" class="ml-20 mb-20 error">
+                {{ 'userProfile.edit.duplicateSkillsErrorLabel' | translate }}
+            </div>
+            <button *ngIf="skillsByCategory.length < maxSkills" (click)="addSkill()"
+                class="add-link-btn green-frame mb-20" type="button">
+                {{ 'userProfile.edit.addSkillsLabel' | translate }}
+                <svg-icon class="ml-8" key="thin-plus" size="lg"></svg-icon>
+            </button>
+
+            <neo-save-cancel-controls [cancelBtnText]="'general.cancelLabel' | translate" (cancel)="cancel()"
+                [saveBtnText]="'general.saveLabel' | translate" (save)="onSave()">
+            </neo-save-cancel-controls>
+        </form>
+    </div>

@@ -1,0 +1,98 @@
+@use 'colors';
+
+.text-xl {
+  font-family: 'Arial Rounded MT Bold';
+}
+
+.right {
+  min-width: 308px;
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+
+  .badge {
+    min-width: 19px;
+    height: 19px;
+    background: colors.$aqua-400;
+    border-radius: 500px;
+    color: colors.$dark-gray-30;
+    font-size: 11px;
+  }
+
+  .btn-m {
+    border: 1px solid colors.$dark-gray-200;
+    font-family: Arial, serif;
+  }
+
+  .no-members-wrapper {
+    height: 285px;
+    margin: 0 20px 20px 20px;
+
+    .circle {
+      width: 90px;
+      height: 90px;
+      background: colors.$dark-gray-450;
+      border-radius: 50%;
+      opacity: .5;
+    }
+  }
+}
+
+.link-btn {
+  color: colors.$zeigo-purple;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'Arial Rounded MT Bold';
+
+  &:hover {
+    color: colors.$purple-200;
+  }
+}
+
+.members-wrapper {
+  height: 60vh;
+
+  .members {
+    max-height: calc(60vh - 91px);
+    min-height: 100px;
+    overflow-y: auto;
+    gap: 16px;
+
+    neo-member {
+      width: calc(50% - 8px);
+    }
+  }
+}
+
+.company-right {
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+
+  .badge {
+    min-width: 19px;
+    height: 19px;
+    background: colors.$aqua-400;
+    border-radius: 500px;
+    color: colors.$dark-gray-30;
+    font-size: 11px;
+  }
+
+  .btn-m {
+    border: 1px solid colors.$dark-gray-200;
+    font-family: Arial, serif;
+  }
+
+  .no-members-wrapper {
+    height: 285px;
+    margin: 0 20px 20px 20px;
+
+    .circle {
+      width: 90px;
+      height: 90px;
+      background: colors.$dark-gray-450;
+      border-radius: 50%;
+      opacity: .5;
+    }
+  }
+}

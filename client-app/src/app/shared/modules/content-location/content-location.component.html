@@ -1,0 +1,34 @@
+<ng-container *ngIf="currentUser === null">
+  <ng-container *ngFor="let region of regions; let last = last" neoLockClick>
+    <a class="default-cursor">
+      <a
+      class="info default-cursor">
+      {{ region?.name }}
+    </a>
+
+    <span 
+      class="ml-6 mr-6 text-blue-200 text-xs"
+      *ngIf="!last">
+      •
+    </span>
+    </a>
+
+
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="regions && currentUser !== null">
+  <ng-container *ngFor="let region of regions; let last = last">
+    <a
+      (click)="$event.stopPropagation(); goToTopics(region);"
+      class="info c-pointer">
+      {{ region?.name }}
+    </a>
+
+    <span 
+      class="ml-6 mr-6 text-blue-200 text-xs"
+      *ngIf="!last">
+      •
+    </span>
+  </ng-container>
+</ng-container>

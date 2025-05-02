@@ -1,0 +1,112 @@
+@use 'colors';
+@use 'breakpoints';
+@use 'variables';
+
+.sidebar {
+  width: variables.$onboarding-side-bar-width;
+  background-color: colors.$zeigo-purple;
+  height: 100vh;
+  padding: 32px 64px;
+  cursor: default;
+
+  @media (breakpoints.$medium) {
+    width: variables.$onboarding-side-bar-width-medium;
+  }
+
+  .logo {
+    width: 172px;
+    margin: 0 auto 64px;
+  }
+
+  .title {
+    font-size: 18px;
+    line-height: 130%;
+    color: colors.$dark-gray-30;
+
+    border-bottom: 1px solid colors.$dark-gray-30;
+  }
+
+  ul {
+    position: relative;
+    list-style: none;
+
+    li {
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 130%;
+      color: colors.$dark-gray-510;
+      position: relative;
+      height: 18px;
+
+      &::after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        left: 6px;
+        top: 18px;
+        width: 3px;
+        height: 32px;
+        background-color: colors.$purple-300;
+        z-index: 0;
+      }
+
+      &:last-child {
+        &:after {
+          content: none;
+        }
+      }
+
+      &.filled {
+        color: colors.$white-20;
+
+        &::after {
+          background-color: colors.$purple-300;
+        }
+
+        .decor {
+          width: 15px;
+          height: 15px;
+          background-color: colors.$purple-300;
+          border-radius: 50%;
+        border: 3px solid #5A4E5E;
+        }
+      }
+
+      .decor {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 3px solid colors.$zeigo-purple;
+        background-color: colors.$purple-300;
+      }
+
+      &.active {
+        color: colors.$white-20;
+
+        .decor {
+          width: 15px;
+          height: 15px;
+          border: 3px solid #C7B0CE;
+          background-color: colors.$purple-300;
+          position: relative;
+
+        }
+        
+        &::after {
+          content: '';
+          left: 6px;
+        top: 18px;
+        left: 6px;
+        top: 18px;
+          background-color: colors.$purple-300;
+        }
+
+         &:last-child {
+        &:after {
+          content: none;
+        }
+      }
+      }
+    }
+  }
+}

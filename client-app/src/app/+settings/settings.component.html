@@ -1,0 +1,26 @@
+<h3 class="text-neo-near-black">
+  {{ 'settings.accountSettingLabel' | translate }}
+</h3>
+
+<div class="d-flex gap-12 pb-24 pt-24">
+  <button
+    (click)="changeTab('general')"
+    [class.tab-active]="selectedTab === 'general'"
+    [class.tab-in-active]="selectedTab !== 'general'"
+    class="btn-s blue-50-frame neo-arial d-flex align-center"
+  >
+    {{ 'settings.generalLabel' | translate }}
+  </button>
+
+  <button
+    (click)="changeTab('notification')"
+    [class.tab-active]="selectedTab === 'notification'"
+    [class.tab-in-active]="selectedTab !== 'notification'"
+    class="btn-s blue-50-frame neo-arial d-flex align-center"
+  >
+    {{ 'settings.notificationsLabel' | translate }}
+  </button>
+</div>
+
+<neo-general *ngIf="selectedTab === 'general'"></neo-general>
+<neo-notifications *ngIf="selectedTab === 'notification'"></neo-notifications>

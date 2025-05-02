@@ -1,0 +1,148 @@
+@use 'colors';
+@use 'breakpoints';
+@use 'variables';
+
+.learn-wrapper {
+
+  .top-panel-spacing {
+    padding: 54px 48px;
+  }
+  .top-panel-public{
+    padding: 38px 38px;
+  }
+
+  .search-bar-spacing {
+    padding-top: 24px;
+
+    @media (breakpoints.$medium) {
+      padding-top: 32px;
+    }
+
+    @media (breakpoints.$fullHd) {
+      padding-top: 40px;
+    }
+  }
+
+  .book-icon {
+    width: 59px;
+    height: 46px;
+    margin-right: 28.5px;
+    margin-top: 60px;
+    color: colors.$blue-10;
+  }
+
+  .btn-connect {
+    width: 250px;
+    padding: 14px 24px;
+  }
+
+  .filters-wrapper {
+    max-width: variables.$filters-forum-width;
+    min-width: variables.$filters-forum-width;
+    height: 100%;
+    background: colors.$white;
+
+    .filter-btn {
+      margin-top: 8px;
+      margin-left: 6px;
+      width: 95%;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+  }
+
+  neo-post-link {
+    width: calc(100% / 3);
+  }
+
+  .content-wrapper-width{
+    width: calc(100% - #{variables.$filters-forum-width});
+  }
+
+  .content-wrapper {
+    padding-left: 24px;
+    
+
+    @media (breakpoints.$medium) {
+      padding-left: 32px;
+    }
+
+    @media (breakpoints.$fullHd) {
+      padding-left: 48px;
+    }
+  }
+}
+
+.seperator-near-full{
+  width: 93%;
+  margin-left: 10px;
+  border-top: 1px solid colors.$dark-gray-300;
+}
+
+.title{
+  h2{
+    margin-bottom: 20px;
+    color: colors.$dark-gray-30; 
+  }
+}
+.learn-catalog-link{
+  font-size: 14px;
+  line-height: 21px;
+  color: colors.$blue-10;
+  font-family: 'Arial Rounded MT Bold', serif;
+  text-decoration: underline;
+}
+.filter-title{
+  color: colors.$near-black-400;
+  font-size: 20px;
+  line-height: 21px;
+  }
+
+.strategic-assistance-label{
+  color: colors.$dark-gray-420;
+  line-height: 12px;
+}
+
+.need-help-label{
+  font-size: 16px;
+  line-height: 19px;
+  color: colors.$blue-10;
+}
+
+.learn-bg{
+  background-color: colors.$white;
+  padding-top: 20px;
+  padding-left: 30px;
+  padding-right: 20px;
+}
+
+.learn-count-bg{
+  margin: auto;
+padding: 16px 16px 24px 16px;
+gap: 0px;
+border-radius: 8px;
+border: 1px;
+opacity: 0px;
+background-color: #2e96bf;
+align-content: center;
+}
+
+.learn-count{
+  font-family: Arial Rounded MT Bold;
+font-size: 48px;
+font-weight: 400;
+line-height: 62.4px;
+text-align: center;
+}
+.article-text{
+  font-family: Arial Rounded MT Bold;
+font-size: 16px;
+font-weight: 400;
+text-align: center;
+}
+.pt-15
+{
+  padding-top: 15px;
+}

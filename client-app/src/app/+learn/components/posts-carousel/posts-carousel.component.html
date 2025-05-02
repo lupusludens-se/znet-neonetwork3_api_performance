@@ -1,0 +1,47 @@
+<div class="d-flex">
+<div class="w-100">
+  <h4
+    class="pb-16 title pb-16 c-pointer"
+    (click)="setIndex()">
+    {{ title | translate }}
+  </h4> 
+</div>
+  <div class="pb-16 mr-16 d-flex align-end">
+    <button
+    (click)="backward()"
+    [disabled]="!index"
+    class="border flex-center mr-6">
+    <svg-icon key="arrow-left"></svg-icon>
+  </button>
+
+  <button
+    (click)="forward()"
+    [disabled]="postData?.count + index <= 3"
+    class="border flex-center">
+    <svg-icon key="arrow-right"></svg-icon>
+  </button>
+  </div>
+
+</div>
+<div class="flex-column w-100 carousel-container">
+  <div
+    class="d-flex slide-wrapper w-100"
+    style="transform:translateX(calc(100% / 3 * {{ index }}))">
+    <div
+      *ngFor="let post of postData.dataList"
+      class="slide w-100">
+      <neo-post-link
+        (saveClick)="post.isSaved = $event"
+        [post]="post"
+        class="w-100"></neo-post-link>
+    </div>
+  </div>
+
+  <div
+    *ngIf="postData?.count"
+    class="w-100 d-flex align-center mt-16 mb-16">
+    <div class="w-100 line mr-16"></div>
+
+    
+  </div>
+</div>

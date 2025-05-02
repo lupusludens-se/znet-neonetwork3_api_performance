@@ -1,0 +1,74 @@
+@use 'colors';
+@use 'breakpoints';
+
+.solution-wrapper {
+  height: 570px;
+
+  @media (breakpoints.$medium) {
+    height: 670px;
+  }
+
+  &:hover {
+    filter: drop-shadow(0px 20px 80px rgba(0, 15, 31, 0.25));
+
+    .image-overlay {
+      display: flex;
+    }
+
+    .solution-details {
+      background-image: url('../../../../assets/images/landing/solutions/vector.svg');
+      background-repeat: no-repeat;
+      background-position: bottom;
+      background-color: #194b7d;
+
+      @media (breakpoints.$fullHd) {
+        background-size: cover;
+      }
+
+      .details {
+        display: flex;
+      }
+    }
+  }
+
+  &:first-of-type {
+    border-right: 1px solid #3c6389;
+  }
+
+  .image-overlay {
+    display: none;
+    top: 0;
+    background: linear-gradient(0deg, rgba(11, 59, 107, 0.3), rgba(11, 59, 107, 0.3));
+  }
+
+  .solution-details {
+    bottom: 0;
+    background: colors.$neo-blue;
+
+    h1 {
+      line-height: 57px;
+
+      @media (max-width: 1400px) {
+        font-size: 32px;
+      }
+    }
+
+    .details {
+      display: none;
+    }
+
+    .green-frame {
+      background: transparent;
+      color: colors.$white;
+      font-size: 16px;
+      line-height: 20px;
+      padding: 16px 24px;
+      max-height: 52px;
+
+      &:hover {
+        background: colors.$lime;
+        color: colors.$neo-blue;
+      }
+    }
+  }
+}

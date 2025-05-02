@@ -1,0 +1,37 @@
+<div class="content flex-column">
+  <div class="top flex-between align-center mb-24">
+    <div class="text-wrapper">
+      <h3 class="text-neo-near-black mb-8">{{ 'projects.addProject.whatTypeOfProjectLabel' | translate }}</h3>
+      <p class="text-m text-dark-gray-580">{{ 'projects.addProject.chooseOneLabel' | translate }}.</p>
+    </div>
+  </div>
+
+  <div *ngIf="typesList" class="controls-wrapper d-flex flex-wrap gap-8">
+    <button
+      (click)="selectInterest(type)"
+      *ngFor="let type of typesList"
+      [class.disabled]="selectedType && type.id !== selectedType?.id"
+      [class.selected]="type.id === selectedType?.id"
+      class="d-flex flex-center neo-arial checkbox-wrapper"
+    >
+      <svg-icon
+        [key]="selectedType ? (type.id !== selectedType.id ? 'block' : 'cross') : 'plus'"
+        class="plus-icon mr-8"
+				height="15px"
+				width="15px"
+				fontSize='15px'
+      >
+      </svg-icon>
+
+      {{ type.name }}
+    </button>
+  </div>
+</div>
+
+<neo-form-footer
+  (cancel)="addProjectService.exitFlow()"
+  (save)="changeStep()"
+  [disabled]="controlContainer.control.get('categoryId').invalid"
+  icon="add-project-thin-right-arrow"
+  submitButtonName="Next"
+></neo-form-footer>

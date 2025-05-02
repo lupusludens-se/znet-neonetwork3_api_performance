@@ -1,0 +1,138 @@
+<div *ngIf="!isPublicUser">
+  <div class="top-panel flex-between">
+    <div class="left">
+      <h2 class="title mb-8 neo-arial">{{ 'projects.solutions.solutionsLabel' | translate }}</h2>
+      <p class="text mb-18">{{ 'projects.solutions.solutionsInfoLabel' | translate }}</p>
+
+      <div class="d-flex">
+        <a
+          (click)="showModal = true"
+          class="mr-34 d-flex align-center z-index-1">
+          {{ 'projects.solutions.whatAreScopesLabel' | translate }}
+          <svg-icon
+            class="ml-8"
+            key="information"></svg-icon>
+        </a>
+        <a
+          class="mr-34 d-flex align-center z-index-1"
+          [routerLink]="['/technologies']">
+          {{ 'projects.solutions.aboutTechnologiesLabel' | translate }}
+          <svg-icon
+            class="ml-8"
+            key="right-arrow-in-circle"></svg-icon>
+        </a>
+      </div>
+    </div>
+    <img
+      alt="headline-background-image"
+      class="img"
+      src="assets/images/project-category-background-image.svg" />
+    <div class="right d-flex align-center">
+      <div class="connect-wrapper flex-column neo-arial">
+        <p class="grey-text mb-8">{{ 'projects.solutions.strategicAssistanceLabel' | translate }}</p>
+        <p class="white-text mb-16">{{ 'projects.solutions.needHelpLabel' | translate }}</p>
+
+        <button
+          (click)="contactUsModal = true"
+          class="btn top-panel-btn-white flex-center">
+          {{ 'projects.solutions.contactNeoLabel' | translate }}
+          <svg-icon
+            class="ml-10"
+            key="right-arrow"></svg-icon>
+        </button>
+      </div>
+    </div>
+
+    <svg-icon
+      class="lines-decor text-blue-100"
+      key="top-lines-vector"></svg-icon>
+  </div>
+  <div class="d-flex flex-wrap mt-24 gap-12 w-100">
+    <neo-project-solutions-tile
+      *ngFor="let solution of solutions"
+      [solution]="solution"
+      class="tile">
+    </neo-project-solutions-tile>
+  </div>
+</div>
+
+<div *ngIf="isPublicUser">
+  <div class="flex-column solutions-wrapper">
+    <neo-top-panel
+      imageCssClasses="l-250px w-599px h-249px t-28px text-dark-gray-30"
+      imageUrl="assets/images/project-category-background-image.svg">
+      <div class="public-top-panel d-flex z-index-1 w-100">
+        <div class="flex-column w-100">
+          <div class="d-flex">
+            <div>
+              <svg-icon
+                class="projects-icon"
+                key="projects"></svg-icon>
+            </div>
+            <div class="flex-column title pt-10">
+              <h2>{{ 'projects.solutions.publicUserSolutionsLabel' | translate }}</h2>
+
+              <p class="pt-20 text-s w-100 mb-18">
+                {{ 'projects.solutions.publicUserSolutionsInfoLabel' | translate }}
+              </p>
+              <p class="pt-5 text-s w-100 mb-20">
+                {{ 'projects.solutions.publicUserSolutionsInterestLabel1' | translate }}
+                <a class="banner-create-account-link" [routerLink]="['/sign-up']"[queryParams]="{ source: signTrackingSourceEnum }">
+                  {{ 'projects.solutions.publicUserSolutionsInterestLabel2' | translate }}</a>
+                {{ 'projects.solutions.publicUserSolutionsInterestLabel3' | translate }}
+              </p>
+              <div class="d-flex">
+              <a
+                (click)="showModal = true"
+                class="mr-34 d-flex align-center z-index-1">
+                {{ 'projects.solutions.whatAreScopesLabel' | translate }}
+                <svg-icon
+                  class="ml-8"
+                  key="information"></svg-icon>
+              </a>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </neo-top-panel>
+  </div>
+  <div class="d-flex flex-wrap mt-24 gap-24 w-100">
+    <neo-project-solutions-tile
+      *ngFor="let solution of solutions"
+      [solution]="solution"
+      class="public-tile">
+    </neo-project-solutions-tile>
+  </div>
+  
+</div>
+
+
+
+<neo-contact-neo-network
+  (closed)="contactUsModal = false"
+  *ngIf="contactUsModal"></neo-contact-neo-network>
+
+<neo-modal
+  (closed)="showModal = false"
+  *ngIf="showModal"
+  [padding]="'p-32'"
+  [size]="'large'"
+  class="title-h2"
+  [title]="'projects.solutions.whatAreScopesLabel' | translate">
+  <div class="w-100 line mr-16"></div>
+  <div class="scope-element mt-32">
+    <h4 class="text-scope-label">{{ 'projects.solutions.scope1Label' | translate }}</h4>
+    <p class="text-scope-description">{{ 'projects.solutions.scope1DescriptionLabel' | translate }}</p>
+  </div>
+
+  <div class="scope-element mt-12">
+    <h4 class="text-scope-label">{{ 'projects.solutions.scope2Label' | translate }}</h4>
+    <p class="text-scope-description">{{ 'projects.solutions.scope2DescriptionLabel' | translate }}</p>
+  </div>
+
+  <div class="scope-element mt-12">
+    <h4 class="text-scope-label">{{ 'projects.solutions.scope3Label' | translate }}</h4>
+    <p class="text-scope-description">{{ 'projects.solutions.scope3DescriptionLabel' | translate }}</p>
+  </div>
+</neo-modal>

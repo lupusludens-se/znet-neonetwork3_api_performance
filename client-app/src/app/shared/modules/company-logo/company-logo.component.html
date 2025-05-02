@@ -1,0 +1,10 @@
+<div class="company flex-center flex-column" [class]="imageSize">
+  <ng-container *ngIf="!company.image">
+    <svg-icon class="text-dark-gray-515" key="companies-icon" size="xxl" width="60px" height="20px"></svg-icon>
+    <h6 *ngIf="imageSize === 'large'" class="pt-12 pl-12 pr-12 text-center text-neo-blue ellipsis">
+      {{ company?.name }}
+    </h6>
+  </ng-container>
+
+  <img *ngIf="company.image?.uri" [alt]="company.name" [src]="company.image?.uri" class="company-logo" />
+</div>

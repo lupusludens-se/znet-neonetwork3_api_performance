@@ -1,0 +1,120 @@
+<aside class="right-panel">
+  <h4 class="pb-24 title neo-arial mb-24">{{ 'onboarding.progressLabel' | translate }}</h4>
+
+  <ul>
+    <li class="main-item active">
+      <span class="big-decor mr-8"></span>
+      {{ 'events.createAnEventLabel' | translate }}
+    </li>
+    <li>
+      <ul class="sub-list">
+        <li
+          [class.filled]="stepsValue.subject"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="stepsValue.subject"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.eventNameLabel' | translate }}
+        </li>
+        <li
+          [class.filled]="stepsValue.eventType"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="stepsValue.eventType"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.eventTypeLabel' | translate }}
+        </li>
+        <li
+          [class.filled]="stepsValue.occurrences?.length > 0"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="stepsValue.occurrences?.length > 0"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.eventDatesLabel' | translate }}
+        </li>
+        <li
+          [class.filled]="stepsValue.location"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="stepsValue.location"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.locationLabel' | translate }}
+        </li>
+        <li
+          [class.filled]="stepsValue.userRegistration"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="stepsValue.userRegistration"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.userRegistrationLabel' | translate }} ({{ 'general.optionalLabel' | translate }})
+        </li>
+        <li
+          [class.filled]="stepsValue.description"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="stepsValue.description"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.descriptionOfEventLabel' | translate }} ({{ 'general.optionalLabel' | translate }})
+        </li>
+        <li
+          [class.filled]="stepsValue.highlights"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="stepsValue.highlights"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.eventHighlightsLabel' | translate }} ({{ 'general.optionalLabel' | translate }})
+        </li>
+        <li
+          [class.filled]="!!stepsValue.moderators[0]?.name"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="!!stepsValue.moderators[0]?.name"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.moderatorsLabel' | translate }}
+        </li>
+        <li
+          [class.filled]="stepsValue.categories.length > 0"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="stepsValue.categories.length > 0"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.tagsLabel' | translate }}
+        </li> 
+
+        <li
+          [class.filled]="!!stepsValue.links[0]?.name || stepsValue?.recordings?.[0]?.url"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="!!stepsValue.links[0]?.name || stepsValue?.recordings?.[0]?.url"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.contentLinksLabel' | translate }} ({{ 'general.optionalLabel' | translate }})
+        </li>
+      </ul>
+    </li>
+
+    <li class="mt-16 main-item">
+      <span class="big-decor mr-8"></span>
+      {{ 'events.eventInvitesLabel' | translate }}
+    </li>
+  </ul>
+</aside>

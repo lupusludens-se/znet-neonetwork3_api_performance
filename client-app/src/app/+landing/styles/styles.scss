@@ -1,0 +1,12 @@
+@use 'breakpoints';
+
+$small-container: 1100px;
+$medium-container: 1220px;
+
+.container {
+  width: $small-container;
+
+  @media (breakpoints.$medium) {
+    width: $medium-container;
+  }
+}

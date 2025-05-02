@@ -1,0 +1,128 @@
+@use 'colors';
+@use 'variables';
+
+.form-wrapper {
+  padding: 24px 32px;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+  background: colors.$white;
+  max-width: 874px;
+  width: 100%;
+}
+
+.logo-not-detected {
+  font-size: 12px;
+  line-height: 130%;
+}
+
+.btn-s {
+  width: 156px;
+  min-height: 47px;
+  background: colors.$zeigo-purple;
+  color: colors.$dark-gray-40;
+  border-radius: 8px;
+
+  &:hover,
+  &:focus {
+    background: colors.$purple-400;
+  }
+}
+
+.btn-c {
+  width: 156px;
+  min-height: 47px;
+  background: colors.$dark-gray-40;
+  border: 1px solid colors.$purple-300;
+  color: colors.$purple-200;
+  border-radius: 8px;
+
+  &:hover {
+    color: colors.$purple-500;
+    background: colors.$dark-gray-40;
+    border: 1px solid colors.$purple-500;
+  }
+
+  &:active {
+    color: colors.$purple-500;
+    background: colors.$dark-gray-40;
+    border: 1px solid colors.$purple-300;
+  }
+}
+
+.icon-wrapper {
+  width: 140px;
+  height: 86px;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+}
+
+textarea {
+  height: 120px;
+}
+
+.flex-between .btn-l {
+  text-transform: capitalize;
+  font-family: Arial, serif;
+  padding: 16px;
+  min-width: fit-content;
+}
+
+
+form {
+  width: 652px;
+
+  .disabled {
+    user-select: none;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
+.btn-add {
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  font-size: 14px; 
+  background: colors.$dark-gray-40;
+  color: colors.$purple-200;
+  border: 1px solid colors.$purple-300;
+  border-radius: 8px;  
+  width: fit-content;
+  padding: 8px 20px;
+  text-transform: capitalize;
+
+  &:hover{
+    border: 1px solid colors.$purple-500;
+    color: colors.$purple-500;
+  }
+}
+
+.btn-delete {
+  color: colors.$blue-100;
+}
+
+.upload-logo {
+  background: #F9F8F9;
+  padding: 12px 8px 12px 8px;
+  height: 20%;  
+}
+
+.no-logo {
+  min-width: 140px;
+  min-height: 90px;
+  background-color: white;
+}
+
+.btn-delete-div {
+  padding: 13px; 
+  background-color: colors.$dark-gray-450; 
+  border-radius: 8px;
+  &:hover{
+    background: colors.$dark-gray-250;
+  }
+}
+

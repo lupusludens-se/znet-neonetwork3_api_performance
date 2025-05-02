@@ -1,0 +1,148 @@
+@use 'colors';
+
+.main {
+  padding: 24px;
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+
+  .section-title {
+    font-size: 16px;
+    line-height: 20px;
+    color: colors.$near-black-400;
+  }
+
+  .text {
+    font-size: 14px;
+    line-height: 130%;
+    color: colors.$dark-gray-590;
+    letter-spacing: 0.14px;
+  }
+
+  .btn-display {
+    width: fit-content;
+    padding: 10px 16px;
+    background: colors.$zeigo-purple;
+    color: colors.$dark-gray-40;
+    border-radius: 8px;
+
+    &:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    &:hover{
+      background: colors.$purple-400;
+    }
+  }
+
+  .list-wrapper {
+    height: 280px;
+  }
+
+  .list {
+    min-width: 320px;
+    border: 1px solid colors.$blue-50;
+    border-radius: 2px;
+
+    .search-wrapper {
+      color: colors.$dark-gray-590;
+      padding: 10px 12px;
+      position: relative;
+
+      .search-icon {
+        position: absolute;
+        left: 22px;
+      }
+
+      .search-input {
+        height: 33px;
+        background-color: colors.$purple-10;
+        border-radius: 2px;
+        font-size: 12px;
+        line-height: 140%;
+        color: colors.$dark-gray-750;
+        border: none;
+
+        &::placeholder {
+          color: colors.$dark-gray-515;          
+          font-size: 12px;
+          line-height: 140%;
+        }
+      }
+    }
+
+    .list-options-wrapper {
+      padding: 10px 12px;
+      border-top: 1px solid colors.$dark-gray-200;
+      height: 226px;
+      overflow: auto;
+    }
+  }
+
+  .selected {
+    width: 100%;
+
+    .selected-options-wrapper {
+      height: 244px;
+      overflow: auto;
+    }
+
+    .option {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 28px;
+      background: colors.$blue-20;
+      border-radius: 2px;
+      font-size: 12px;
+      line-height: 140%;
+      color: colors.$aqua-400;
+      padding: 5px 8px;
+
+      &.disabled {
+        opacity: 0.7;
+        cursor: default;
+      }
+
+      .btn-remove {
+        color: colors.$aqua-400;
+      }
+    }
+  }
+}
+neo-blue-checkbox {
+  display: block;
+  background: colors.$white;
+
+  &.disabled {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  &:hover {
+    background: rgba(58, 36, 86, 0.05) !important;
+  }
+}
+
+.btn-select-all {
+  height: 32px;
+  padding: 8px 12px;
+  width: fit-content;
+}
+
+.no-result {
+  color: colors.$red;
+  font-size: 14px;
+}
+.green-frame{
+  &:hover{
+    background: colors.$dark-gray-40;
+    color: colors.$purple-500;
+    border: 1px solid colors.$purple-500;
+  }
+  &:disabled{
+    background: colors.$dark-gray-40;
+    color: colors.$dark-gray-280;
+    border: 1px solid colors.$dark-gray-450;
+  }
+}

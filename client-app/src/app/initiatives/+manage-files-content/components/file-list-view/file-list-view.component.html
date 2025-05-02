@@ -1,0 +1,254 @@
+<div>
+  <button
+    (click)="goBack()"
+    class="btn-connect back-btn d-flex align-center pb-4">
+    <svg-icon
+      class="pr-4 back-btn-img-s"
+      key="left-arrow"></svg-icon>
+    {{ 'general.backLabel' | translate }}
+  </button>
+
+  <div class="d-flex mt-24">
+    <div class="d-flex w-50 align-center">
+      <svg-icon
+        class="file-icon mr-10 mt-2"
+        key="file"></svg-icon>
+      <h2 class="header">{{ 'general.filesLabel' | translate }}</h2>
+      <p
+        class="info-text neo-arial tooltip"
+        *ngIf="initiativeFiles.dataList.length > 0">
+        <svg-icon
+          class="file-info-icon"
+          key="info-text"></svg-icon>
+        <span
+          class="tooltiptext"
+          [innerHTML]="'initiative.viewInitiative.permittedFileDescription' | translate">
+        </span>
+      </p>
+    </div>
+    <div
+      class="justify-end d-flex w-50"
+      *ngIf="initiativeFiles.dataList?.length > 0">
+      <button
+        class="btn-upload"
+        (click)="checkFileCount(); trackFileActivity()">
+        <svg-icon
+          key="upload-icon"
+          class="mr-10"></svg-icon
+        >{{ 'general.uploadLabel' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-12">
+    <p class="subtext">{{ 'initiative.viewAllFilesInitiative.subTextLabel' | translate }}</p>
+  </div>
+
+  <div class="content mt-32 d-flex">
+    <div class="table-wrapper flex-column">
+      <ng-container *ngIf="initiativeFiles.count > 0">
+        <table class="table mb-24">
+          <thead>
+            <tr>
+              <td class="width-10"></td>
+              <td class="w-40">
+                <div
+                  class="click-area"
+                  (click)="sortCriteriaSelection('nameAsc', sortingCriteria.name)">
+                  {{ 'initiative.fileManagement.table.nameCol' | translate }}
+                  <svg-icon
+                    [class.sorthighlight]="nameAsc"
+                    class="text-blue-200 ml-6 caret"
+                    key="table-row-sort-up"
+                    size="md"></svg-icon>
+                  <svg-icon
+                    [class.sorthighlight]="tdTitleClick === sortingCriteria.name && !nameAsc"
+                    class="text-blue-200 ml-1 caret"
+                    key="table-row-sort-down"
+                    size="md"></svg-icon>
+                </div>
+              </td>
+              <td class="w-10">
+                <div
+                  class="click-area"
+                  (click)="sortCriteriaSelection('typeAsc', sortingCriteria.type)">
+                  {{ 'initiative.fileManagement.table.typeCol' | translate }}
+                  <svg-icon
+                    [class.sorthighlight]="typeAsc"
+                    class="text-blue-200 ml-6 caret"
+                    key="table-row-sort-up"
+                    size="md"></svg-icon>
+                  <svg-icon
+                    [class.sorthighlight]="tdTitleClick === sortingCriteria.type && !typeAsc"
+                    class="text-blue-200 ml-1 caret"
+                    key="table-row-sort-down"
+                    size="md"></svg-icon>
+                </div>
+              </td>
+              <td class="w-10">
+                <div
+                  class="click-area"
+                  (click)="sortCriteriaSelection('sizeAsc', sortingCriteria.size)">
+                  {{ 'initiative.fileManagement.table.sizeCol' | translate }}
+                  <svg-icon
+                    [class.sorthighlight]="sizeAsc"
+                    class="text-blue-200 ml-6 caret"
+                    key="table-row-sort-up"
+                    size="md"></svg-icon>
+                  <svg-icon
+                    [class.sorthighlight]="tdTitleClick === sortingCriteria.size && !sizeAsc"
+                    class="text-blue-200 ml-1 caret"
+                    key="table-row-sort-down"
+                    size="md"></svg-icon>
+                </div>
+              </td>
+              <td class="w-15">
+                <div
+                  class="click-area"
+                  (click)="sortCriteriaSelection('dateAsc', sortingCriteria.date)">
+                  {{ 'initiative.fileManagement.table.dateCol' | translate }}
+                  <svg-icon
+                    [class.sorthighlight]="dateAsc"
+                    class="text-blue-200 ml-6 caret"
+                    key="table-row-sort-up"
+                    size="md"></svg-icon>
+                  <svg-icon
+                    [class.sorthighlight]="tdTitleClick === sortingCriteria.date && !dateAsc"
+                    class="text-blue-200 ml-1 caret"
+                    key="table-row-sort-down"
+                    size="md"></svg-icon>
+                </div>
+              </td>
+              <td class="w-15">
+                <div
+                  class="click-area">
+                  {{ 'initiative.fileManagement.table.uploadedByCol' | translate }}                  
+                </div>
+              </td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="currentUser">
+            <neo-file-table-row
+              *ngFor="let file of initiativeFiles.dataList"
+              [isAdmin]="isAdmin"
+              [fileDetails]="file"
+              [hasAccessToDeleteForInitiativeFiles]="hasAccessToDeleteForInitiativeFiles(file)"
+              class="row"
+              (deleteFileClick)="deleteFile($event)" 
+              (downloadFileClick)="downloadFile(file.blobName, file.actualFileTitle, file.extension)">
+            </neo-file-table-row>
+            </ng-container>
+          </tbody>
+        </table>
+      </ng-container>
+
+      <ng-container *ngIf="initiativeFiles.count === 0">
+        <div class="flex-column no-file-container w-100">
+          <svg-icon
+            class="file-icon"
+            key="file"></svg-icon>
+          <h3 class="pt-20">{{ 'initiative.viewInitiative.addFilesLabel' | translate }}</h3>
+          <div
+            class="pt-20 file-description"
+            [innerHTML]="'initiative.viewInitiative.permittedFileDescription' | translate"></div>
+          <button
+            class="btn-upload mt-10 d-flex"
+            (click)="fileUploadModal = true; trackFileActivity()">
+            <svg-icon
+              key="upload-icon"
+              class="mr-4"></svg-icon
+            >{{ 'general.uploadLabel' | translate }}
+          </button>
+        </div>
+      </ng-container>
+
+      <neo-pagination
+        *ngIf="paging && paging.total > defaultItemPerPage"
+        (changePage)="changePage($event)"
+        [defaultItemPerPage]="defaultItemPerPage"
+        [paging]="paging"
+        class="pt-24 mb-64">
+      </neo-pagination>
+    </div>
+  </div>
+</div>
+
+<neo-modal
+  (closed)="closeDeletePopup()"
+  *ngIf="showDeleteModal"
+  size="medium"
+  [title]="'initiative.viewInitiative.deleteInitiativeFileTitleLabel' | translate"
+  class="title-h2">
+  <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+    {{ 'initiative.viewInitiative.deleteSavedContentPopUpSubTitle' | translate }}
+  </p>
+  <div  class="popup-controls mt-10 d-flex">
+    <button
+      (click)="closeDeletePopup()"
+      class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button
+      (click)="confirmDelete()"
+      class="btn-confirm w-50">
+      {{ 'general.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>
+
+<neo-modal
+  (closed)="closePopup()"
+  *ngIf="showFileDuplicateModal"
+  size="medium" class="primary-scope"
+  title=" ">
+  <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+    {{ 'initiative.viewInitiative.fileDuplicate1Label' | translate }} <b>{{ fileName }}.{{ fileExtension }}</b
+    >.
+    {{ 'initiative.viewInitiative.fileDuplicate2Label' | translate }}
+  </p>
+  <div  [ngClass]="{'centered': disableReplace === true}" class="popup-controls mt-10 d-flex">
+    <button *ngIf="!disableReplace"
+      (click)="replaceFile()"
+      class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.replaceLabel' | translate }}
+    </button>
+    <button
+      (click)="keepBothTheFiles()"
+      class="btn-confirm w-50">
+      {{ 'general.keepBothLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>
+
+<neo-modal
+  (closed)="closeFileMaxPopup()"
+  *ngIf="showFileMaxModal"
+  size="extra-medium"
+  [title]="'initiative.viewInitiative.maximumFileCapacityLabel' | translate">
+  <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+    {{ 'initiative.viewInitiative.maximumFileDescriptionCapacityLabel' | translate }}
+  </p>
+  <div class="popup-controls mt-10 d-flex">
+    <button
+      (click)="closeFileMaxPopup()"
+      class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button
+      (click)="contactUsModal = true"
+      class="btn-confirm w-50">
+      {{ 'messages.connectNEONetworkLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>
+
+<neo-file-upload
+  (closed)="fileUploadModal = false"
+  (fileSelected)="onFileSelect($event)"
+  *ngIf="fileUploadModal" class="secondary-scope" [fileDescription]="fileDescription"></neo-file-upload>
+
+<neo-contact-neo-network
+  (closed)="contactUsModal = false; showFileMaxModal = false"
+  *ngIf="contactUsModal"></neo-contact-neo-network>

@@ -1,0 +1,23 @@
+<div
+  class="d-flex align-center pl-32 w-100 search-input"
+  (click)="preventCloseOnClick()">
+  <svg-icon
+    class="search-icon text-blue-200"
+    key="search"
+    size="xl"></svg-icon>
+
+  <input
+    #searchInput
+    [(ngModel)]="value"
+    (keydown.enter)="search()"
+    class="w-100"
+    placeholder="{{ placeholder | translate }}..."
+    type="text" />
+
+  <svg-icon
+    class="search-icon text-blue-200 c-pointer mr-12"
+    key="close-in-circle"
+    size="xl"
+    (click)="toggleSearchBox()">
+  </svg-icon>
+</div>

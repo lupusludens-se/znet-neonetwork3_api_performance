@@ -1,0 +1,47 @@
+@use 'colors';
+
+.saved-content-wrapper {
+  box-shadow: 0 5px 20px rgba(7, 30, 53, 0.3);
+  background: colors.$white;
+  width: 480px;
+  min-height: 570px;
+  max-height: 570px;
+  top: 44px;
+  z-index: 120;
+  border-radius: 2px;
+  right: -190px;
+
+  .chip {
+    width: 25px;
+    height: 25px;
+    background: colors.$gray;
+    border-radius: 50%;
+    font-weight: 700;
+  }
+
+  .link {
+    &:hover {
+      color: colors.$purple-400;
+    }
+  }
+
+  .separator {
+    border-color: colors.$dark-gray-200;
+  }
+
+  .saved-content {
+    overflow-y: auto;
+    height: 580px;
+    padding-top: 8px;
+  }
+
+  .blue-100-frame {
+    line-height: initial;
+
+    &:hover {
+      background: colors.$blue-500;
+      color: colors.$white !important;
+      border-color: colors.$blue-500;
+    }
+  }
+}

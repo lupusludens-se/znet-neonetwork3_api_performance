@@ -1,0 +1,78 @@
+@use 'colors';
+
+.top-panel {
+  padding: 54px 40px;
+  z-index: 1;
+  height: 168px;
+
+  .badge {
+    background: colors.$red-100;
+    border-radius: 25px;
+    padding: 4px 6px;
+    border-radius: 50%;
+    right: -15px;
+    top: -7px;
+    min-width: 27px;
+    height: 27px;
+    color: colors.$dark-gray-30;
+  }
+}
+
+.empty-wrapper {
+  border: 1px solid colors.$dark-gray-300;
+  border-radius: 4px;
+  background: colors.$dark-gray-20;
+
+}
+
+.tools-empty-wrapper {
+  border-radius: 4px;
+  padding: 24px 32px;
+  background: colors.$dark-gray-20;
+  border: 1px solid colors.$dark-gray-300;
+}
+
+.btn-browse-company {
+  padding: 13px 18px;
+  padding-right: 4px;
+}
+
+.btnCancel {
+  background: colors.$dark-gray-450;
+  border-radius: 8px;
+  color: colors.$dark-gray-590;
+  &:hover {
+    background: colors.$dark-gray-250;
+  }
+} 
+.inner-wrapper {
+	max-height: 50vh;
+	overflow-y: auto;
+}
+.container{
+  display: flex;
+  flex-wrap: wrap;
+}
+.container > div  {
+  flex: 45%;
+  align-items: flex-start;
+  margin-right: 12px;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  gap: 10px;
+  border: 1px solid colors.$light-gray;
+  background: colors.$white;
+  color: colors.$dark-gray-590;
+  box-shadow: 0px 2px 8px rgba(111, 110, 119, 0.5);  
+  &:hover{
+    border: 1px solid colors.$dark-gray-850;;
+    box-shadow: 0px 2px 8px rgba(111, 110, 119, 0.5);  
+    color: colors.$zeigo-purple;
+    cursor: pointer;
+  }
+}
+
+.container > div.second  {
+  margin-right: 0px; 
+}

@@ -1,0 +1,115 @@
+@use 'colors';
+
+.tile-wrapper {
+  border-radius: 8px;
+  border: 1px solid colors.$light-gray;
+  background: colors.$white;
+  overflow: hidden;
+
+  &:hover {
+    border: 1px solid colors.$dark-gray-850;
+    cursor: pointer;
+  }
+
+  .left-section {
+    width: 35%;
+    padding-right: 12px;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 6px 0px 0px 6px;
+      object-fit: fill;
+    }
+  }
+
+  .right-section {
+    width: 65%;
+    letter-spacing: 0.14px;
+    line-height: 130%;
+
+    .text-ellipsis {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      width: 100%;
+      padding-right: 12px;
+    }
+
+    .text-ellipsis-3 {
+      -webkit-line-clamp: 3 !important;
+    }
+    .text-ellipsis-1 {
+      -webkit-line-clamp: 1 !important;
+    }
+
+    .title-height {
+      max-height: 50px;
+    }
+    .title-height-80 {
+      height: 80px;
+      max-height: 100px;
+    }
+
+    .title {
+      padding-top: 12px;
+      font-size: 18px;
+      font-family: 'Arial Rounded MT Bold';
+      line-height: 130%;
+      color: colors.$near-black-400;
+    }
+
+    .sub-title {
+      color: colors.$dark-gray-590;
+      padding-top: 8px;
+    }
+
+        .company-logo{
+            height: 40px;
+            width: 60px;
+            object-fit: contain;
+        }
+
+    .tag {
+      color: colors.$red;
+      font-size: 14px;
+      padding-right: 2px;
+    }
+
+    .svg-icon-height {
+      line-height: 20px;
+    }
+
+    .new-trending-tag{
+      background: rgba(249, 164, 164, 0.12);
+      padding: 6px;
+      border-radius: 2px;
+    }
+
+    .categoryTag {
+      padding: 8px;
+      border-radius: 2px;
+      font-size: 12px;
+      line-height: 130%;
+      background: colors.$blue-20;
+
+      &:hover {
+        background: colors.$light-blue-20;
+        border-radius: 2px;
+        cursor: pointer;
+        color: colors.$aqua-400;
+      }
+
+      &:visited {
+        color: colors.$aqua-400;
+      }
+
+      &:active {
+        background: colors.$blue-20;
+        border-radius: 2px;
+        color: colors.$aqua-400;
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+@use 'colors';
+
+:host {
+  height: 116px;
+  border-radius: 8px;
+  width: calc((100% / 4) - 6px);
+  background: colors.$white;
+  border: 1px solid colors.$violet-5;
+  border-radius: 8px;
+
+  &:hover {
+    background: colors.$white;
+    border: 1px solid colors.$violet-5;
+    box-shadow: 0px 2px 8px rgba(134, 132, 141, 0.16);
+    border-radius: 8px;
+  }
+}
+
+.company-image {
+  object-fit: contain;
+  width: 135px;
+  height: 70px;
+
+  &.empty {
+    width: 20px;
+    height: 20px;
+  }
+}

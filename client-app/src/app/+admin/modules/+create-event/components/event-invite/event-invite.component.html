@@ -1,0 +1,146 @@
+<div class="control-wrapper nobackground label">
+  <div class="d-flex align-center mb-24">
+    <h3 class="d-flex align-center">{{ 'events.eventInvitesLabel' | translate }}</h3>
+    <div class="sub-label optional ml-6" *ngIf="isPublicEvent">({{ 'events.optionalForPublicEventsLabel' | translate }})</div>
+  </div>
+</div>
+
+<div class="container mb-96">
+  <form [formGroup]="form">
+    <div class="control-wrapper">
+      <h4 class="label pb-4">{{ 'events.eventInvitesLabel' | translate }}</h4>
+      <span class="sub-label mt-2">{{ 'events.selectAllWhoApplyLabel' | translate }}</span>
+
+      <div class="types-wrapper d-flex mt-12">
+        <ng-container *ngFor="let role of userRoles; let i = index">
+          <input
+            [id]="role.name + i"
+            [value]="role.id"
+            type="checkbox" />
+
+          <label
+            (click)="saveRole(role.id)"
+            [for]="role.name + i"
+            [ngClass]="{ selected: role.checked }"
+            class="mr-12 align-center select-button">
+            <svg-icon
+              *ngIf="!role.checked"
+              [key]="'plus'"
+              class="mr-8"></svg-icon>
+            <svg-icon
+              *ngIf="role.checked"
+              [key]="'cross'"
+              width="14px"
+              height="14px"
+              class="mr-10 text-blue-100 mt-1"></svg-icon>
+            {{ role.name }}
+          </label>
+        </ng-container>
+      </div>
+
+      <neo-control-error
+        [errors]="form.controls['invitedRoles']?.errors"
+        [fieldName]="'events.eventInvitesLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-control-error>
+    </div>
+
+    <div class="sections-divider d-flex align-center" *ngIf="!isPublicEvent">
+      <span class="text">{{ 'events.additionalInviteCriteriaLabel' | translate }}</span>
+      <div class="line"></div>
+    </div>
+
+    <div class="control-wrapper">
+      <h4 class="label mb-12">{{ 'events.whichRegionLabel' | translate }}</h4>
+
+      <neo-event-regions></neo-event-regions>
+    </div>
+
+    <div class="control-wrapper">
+      <h4 class="label mb-12">{{ 'events.usersInterestedInLabel' | translate }}</h4>
+
+      <neo-interests-topic
+        (selectedTopics)="addCategory($event)"
+        [topics]="categoriesList"></neo-interests-topic>
+    </div>
+
+    <neo-event-users
+      (selectedUsersUpdated)="addUsersToPayload($event)"
+      [disabled]="form.invalid">
+    </neo-event-users>
+  </form>
+</div>
+
+<aside class="right-panel">
+  <h4 class="pb-24 title neo-arial mb-24">{{ 'onboarding.progressLabel' | translate }}</h4>
+
+  <ul>
+    <li class="mt-16 main-item checked">
+      <svg-icon
+        class="mr-8"
+        key="check-in-blue"
+        size="xxl"></svg-icon>
+      {{ 'events.createAnEventLabel' | translate }}
+    </li>
+
+    <li class="main-item active">
+      <span class="big-decor mr-8"></span>
+      {{ 'events.eventInvitesLabel' | translate }}
+    </li>
+    <li>
+      <ul class="sub-list">
+        <li
+          [class.filled]="form.controls['invitedRoles'].value?.length"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="form.controls['invitedRoles'].value?.length"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.eventInvitesLabel' | translate }}
+        </li>
+        <li
+          [class.filled]="form.controls['invitedRegions'].value?.length"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="form.controls['invitedRegions'].value?.length"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.regionsLabel' | translate }} ({{ 'general.optionalLabel' | translate }})
+        </li>
+        <li
+          [class.filled]="form.controls['invitedCategories'].value?.length"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="form.controls['invitedCategories'].value?.length"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.usersInterestedLabel' | translate }} ({{ 'general.optionalLabel' | translate }})
+        </li>
+        <li
+          [class.filled]="form.controls['invitedUsers'].value?.length"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="form.controls['invitedUsers'].value?.length"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.companiesUsersLabel' | translate }} ({{ 'general.optionalLabel' | translate }})
+        </li>
+      </ul>
+    </li>
+  </ul>
+</aside>
+
+<neo-form-footer
+  (backButtonClick)="goBack()"
+  (cancel)="onCancel()"
+  (save)="saveEvent()"
+  [backButton]="true"
+  [submitButtonName]="'events.publishEventLabel' | translate"
+  backButtonIcon="footer-left-arrow-thin"
+  class="form-footer"
+  iconSize="xxl">
+</neo-form-footer>

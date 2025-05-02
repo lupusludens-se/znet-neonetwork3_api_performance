@@ -1,0 +1,61 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 50;
+  width: calc(100% - #{variables.$navbar-width-media});
+  height: variables.$header-height;
+  background: colors.$white;
+  box-shadow: 0 1px 3px rgba(0, 31, 81, 0.07);
+
+  @media (breakpoints.$medium) {
+    width: calc(100% - #{variables.$navbar-width});
+  }
+
+  .round-image {
+    height: 36px;
+    width: 36px;
+    object-fit: cover;
+  }
+
+  .circle {
+    &.saved {
+      svg-icon {
+        margin-top: -2px;
+      }
+    }
+
+    .badge {
+      right: -12px;
+    }
+  }
+}
+
+.h-47{
+  height: 47px;
+}
+
+.vert-line {
+  height: 47px;
+  border-left: 1px solid #E1CAE7;
+ }
+
+.btn-tertiary{
+  border: 1px solid colors.$purple-300;
+  background-color: colors.$dark-gray-40;
+  border-radius: 8px;
+  color: colors.$purple-200;
+  height: 47px;
+  &:hover{
+    border: 1px solid  colors.$purple-500;
+    color: colors.$purple-500;
+  }
+}
+
+.svgIcon{
+  vertical-align: middle;
+}

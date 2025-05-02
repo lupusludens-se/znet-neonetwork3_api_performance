@@ -1,0 +1,151 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+$btn-height: 40px;
+$btn-padding: 0 10px;
+$border-radius: 8px;
+$font-family: 'Arial Rounded MT Bold', sans-serif;
+
+.container {
+  .section-header {
+    .tooltip {
+      cursor: help;
+      position: relative;
+
+      .tooltiptext {
+        visibility: hidden;
+        width: 472px;
+        background-color: colors.$white;
+        color: colors.$near-black-400;
+        border-radius: 6px;
+        font-size: small;
+        position: absolute;
+        z-index: 1;
+        bottom: 149%;
+        left: 599%;
+        transform: translate(-50%);
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+        padding: 12px;
+        border: 1px solid colors.$purple-160;
+      }
+
+      &:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-family: $font-family;
+      font-weight: 700;
+      padding-left: 5px;
+      margin-right: 10px;
+    }
+
+    .btn-tertiary {
+      align-items: center;
+      border: 1px solid colors.$purple-300;
+      background-color: colors.$dark-gray-40;
+      border-radius: $border-radius;
+      color: colors.$purple-200;
+      height: $btn-height;
+      padding: $btn-padding;
+      cursor: pointer;
+
+      &:hover {
+        border: 1px solid colors.$purple-500;
+        color: colors.$purple-500;
+      }
+
+      .icon {
+        font-size: 20px !important;
+        padding-right: 5px;
+      }
+
+      .view-all-btn {
+        color: colors.$purple-200;
+      }
+    }
+  }
+
+  .file-icon {
+    color: colors.$blue-650;
+    width: 32px;
+    height: 32px;
+  }
+
+  .file-info-icon {
+    color: colors.$dark-gray-590;
+    width: 18px;
+    height: 18px;
+    cursor: help;
+  }
+
+  .section {
+    margin-bottom: 10px;
+    border: 1px solid colors.$purple-180;
+    padding: 12px 16px;
+    border-radius: $border-radius;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+
+    &:hover {
+      border: 1px solid colors.$purple-200;
+    }
+
+    .div-img {
+      padding-right: 15px;
+
+      img {
+        height: 80px;
+        width: 100%;
+        object-fit: fill;
+        cursor: pointer;
+      }
+    }
+
+    .title {
+      color: #5d5d60;
+      font-weight: 700;
+      line-height: 18.2px;
+
+      .sub-title {
+        color: colors.$dark-gray-545;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 19.6px;
+      }
+    }
+  }
+
+  .card {
+    height: 360px;
+    overflow-y: auto;
+
+    .three-dots {
+      color: colors.$dark-gray-590;
+    }
+
+    .w-92 {
+      width: 92%;
+    }
+  }
+}
+
+.primary-scope {
+  position: relative;
+  z-index: 3 !important;
+}
+
+.secondary-scope {
+  position: relative;
+  z-index: 2 !important;
+}
+
+.popup-controls.centered {
+  justify-content: center !important;
+}

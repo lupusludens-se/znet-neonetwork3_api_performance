@@ -1,0 +1,62 @@
+<td [class.transparent]="feedback.feedbackUser.statusId === userStatuses.Inactive || feedback.feedbackUser.statusId === userStatuses.Deleted"
+  class="pl-24 d-flex align-center c-pointer ellipsis name-cell">
+
+  <neo-user-avatar
+    [user]="feedback.feedbackUser"
+    class="mr-12"
+    imageSize="size24"  *ngIf="!feedback.feedbackUser.requestDeleteDate"></neo-user-avatar>
+  <ng-container  *ngIf="feedback.feedbackUser.requestDeleteDate">
+    <svg-icon
+      key="trash-can"
+      class="ml-4 mr-12" ></svg-icon>
+  </ng-container>
+  <span class="name ellipsis" [title]="feedback.feedbackUser.name">{{ feedback.feedbackUser.lastName }}, {{ feedback.feedbackUser.firstName }}</span>
+</td>
+
+<td 
+[class.transparent]="feedback.feedbackUser.statusId === userStatuses.Inactive || feedback.feedbackUser.statusId === userStatuses.Deleted"
+  class="pl-24 c-pointer ellipsis company-cell">
+  <span class="company" [title]="feedback.feedbackUser.company">{{ feedback.feedbackUser.company }}</span>
+</td>
+
+<td
+[class.transparent]="feedback.feedbackUser.statusId === userStatuses.Inactive || feedback.feedbackUser.statusId === userStatuses.Deleted"
+  class="pl-24 c-pointer">
+  <span
+    *ngFor="let role of feedback.roles"
+    class="role {{ getClassNamesBasedonRole(role)}}">
+    {{ role?.name }}
+  </span>
+</td>
+
+<td
+  class="pl-24 c-pointer">
+  <span class="ratings">
+    <div class="d-flex">
+      <svg-icon
+        *ngFor="let star of [1,2,3,4,5]"
+        class="feedback-star"
+        [key]="star <= feedback.rating ? 'feedback-star-filled' : 'feedback-star'"
+        fontSize="16px"
+        [ngClass]="{ selected: star <= feedback.rating }"></svg-icon>
+    </div>
+  </span>
+</td>
+
+<td  class="pl-24 ellipsis c-pointer name-cell">
+  <span class="comments" [title]="feedback.comments">{{ feedback.comments }}</span>
+</td>
+
+<td class="pl-24 ellipsis c-pointer name-cell">
+    <span class="date">{{ feedback.createdOn | timeAgo }}</span>
+</td>
+
+<td class="pl-24 ellipsis c-pointer options pr-12">
+  <div class="flex-center">
+    <button
+      class="light-green d-flex align-center justify-center rotate-180 ml-6">
+      <svg-icon size="sm" key="arrow-thin-right"></svg-icon>
+    </button>
+  </div>
+</td>
+

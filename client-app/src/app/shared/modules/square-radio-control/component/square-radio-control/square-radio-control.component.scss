@@ -1,0 +1,44 @@
+@use 'colors';
+
+:host {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    display: none;
+  }
+
+  .input-wrapper {
+    label {
+      width: 48px;
+      border: 1px solid colors.$blue-50;
+      border-radius: 2px;
+
+      &.active {
+        border: 2px solid colors.$blue-100;
+        font-weight: 700;
+      }
+
+      &.disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+    }
+  }
+}
+
+:host.text-zeigo-near-black {
+  .input-wrapper {
+    label {
+      border: none;
+      border-radius: 8px;
+      background: colors.$dark-gray-450;
+      color: colors.$dark-gray-590;
+      font-family: 'Arial Rounded MT Bold', serif;
+
+      &.active {
+        border: 2px solid #959191;
+      }
+    }
+  }
+}

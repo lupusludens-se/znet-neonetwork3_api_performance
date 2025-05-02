@@ -1,0 +1,312 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.title {
+  line-height: 110%;
+  color: colors.$near-black-400;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.table-wrapper {
+  width: 100%;
+}
+
+.table {
+  cursor: default;
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background-color: colors.$dark-gray-450;
+    text-transform: uppercase;
+    color: #1d122b;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+
+    td {
+      height: 40px;
+
+      .caret {
+        transition: all 0.2s ease;
+        vertical-align: middle;
+        margin-bottom: 2px;
+
+        &.up {
+          transform: rotate(180deg);
+          transition: all 0.2s ease;
+        }
+      }
+    }
+
+    .click-area {
+      width: fit-content;
+      cursor: pointer;
+    }
+  }
+
+  tbody {
+    background-color: colors.$white;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+
+    .company {
+      &.inactive {
+        color: colors.$red;
+        font-weight: 700;
+      }
+
+      .company-name {
+        max-width: 290px;
+        line-height: 18.2px;
+      }
+
+      svg-icon {
+        min-width: 16px;
+        min-height: 16px;
+      }
+    }
+
+    .user {
+      font-weight: 700;
+      color: colors.$near-black-400;
+    }
+
+    .company {
+      font-size: 12px;
+      color: colors.$near-black-400;
+    }
+
+    .date {
+      font-size: 12px;
+      color: colors.$near-black-400;
+    }
+
+    .role-label {
+      max-width: 150px;
+      padding: 4px 10px 4px 12px;
+      border-radius: 500px;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 140%;
+
+      &.corporation {
+        border: 1px solid rgba(112, 70, 164, 0.2);
+        color: colors.$purple-390;
+      }
+
+      &.solution {
+        border: 1px solid rgba(0, 131, 188, 0.2);
+        color: colors.$aqua-600;
+      }
+
+      &.admin {
+        border: 1px solid rgba(103, 125, 160, 0.2);
+        color: colors.$blue-400;
+      }
+
+      &.spadmin {
+        border: 1px solid rgba(0, 131, 188, 0.2);
+        color: colors.$aqua-600;
+      }
+    
+      &.internal {
+        border: 1px solid rgba(0, 149, 48, 0.2);
+        color: colors.$dark-green;
+      }
+    }
+  }
+}
+
+td {
+  height: 74px;
+}
+
+.company,
+.user {
+  max-width: 220px;
+
+  @media (breakpoints.$medium) {
+    width: 30%;
+  }
+}
+
+.role,
+.date {
+  max-width: 17%;
+  letter-spacing: 0.01em;
+
+  @media (breakpoints.$medium) {
+    width: 17%;
+  }
+}
+
+.name {
+  font-weight: 700;
+  color: colors.$neo-blue;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.controls {
+  width: 223px;
+
+  &.denied {
+    background-color: rgb(250 250 250 / 50%);
+  }
+
+  &.inactive {
+    background-color: #fff9f9;
+  }
+
+  button {
+    height: 32px;
+    width: 80px;
+    text-transform: capitalize;
+    border-radius: 8px;
+    border: 1px solid colors.$purple-300;
+    padding: 17px;
+
+    &.btn-deny {
+      background: colors.$dark-gray-40;
+      color: colors.$purple-200;
+
+      &:hover {
+        transition: all 0.1s ease;
+        color: colors.$purple-500;
+        border: 1px solid colors.$purple-500;
+      }
+
+      &.denied {
+        background: colors.$zeigo-purple;
+        border: none;
+        color: colors.$dark-gray-40;
+
+        &:hover {
+          background: colors.$purple-400;
+          border: none;
+        }
+      }
+    }
+
+    &.btn-approve {
+      background: colors.$dark-gray-40;
+      color: colors.$purple-200;
+
+      &.denied {
+        background: transparent;
+        border: 1px solid colors.$dark-gray-450;
+        color: colors.$dark-gray-280;
+        pointer-events: none;
+      }
+
+      &:disabled {
+        opacity: 0.4;
+        pointer-events: none;
+        border: 1px solid colors.$dark-gray-450;
+        color: colors.$dark-gray-280;
+        cursor: default;
+      }
+
+      &:hover {
+        transition: all 0.1s ease;
+        color: colors.$purple-500;
+        border: 1px solid colors.$purple-500;
+      }
+    }
+  }
+}
+
+/*MODAL*/
+.modal-title {
+  font-size: 24px;
+  line-height: 120%;
+  color: colors.$near-black-400;
+}
+
+.bottom {
+  border-top: 1px solid colors.$dark-gray-200;
+
+  button {
+    height: 42px;
+    padding: 12px 16px;
+
+    &.btn-cancel {
+      width: 50%;
+      background: colors.$dark-gray-450;
+      color: colors.$dark-gray-590;
+      border: none;
+
+      &:hover {
+        background-color: colors.$dark-gray-250;
+      }
+    }
+
+    &.btn-confirm {
+      background: colors.$zeigo-purple;
+      color: colors.$dark-gray-40;
+      width: 50%;
+      border-radius: 8px;
+
+      &:hover {
+        background-color: colors.$purple-400;
+      }
+    }
+  }
+}
+
+.close-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: colors.$dark-gray-590;
+
+  &:hover {
+    color: colors.$near-black-400;
+  }
+}
+
+.svg-icon-red {
+  color: colors.$red;
+}
+
+.sorthighlight {
+  color: #209cd1;
+}
+
+.row {
+  cursor: pointer;
+  line-height: 1;
+
+  &.denied {
+    background-color: #f4f4f4;
+  }
+
+  &.inactive {
+    background-color: #fff9f9;
+  }
+
+  &:hover {
+    background-color: colors.$blue-5;
+  }
+
+}

@@ -1,0 +1,23 @@
+export enum NotificationTypeEnum {
+  CommentsMyTopic = 1,
+  LikesMyTopic,
+  RepliesToMyComment,
+  RepliesToTopicIFollow,
+  MentionsMeInComment,
+  InvitesMeToEvent,
+  ChangesToEventInvited,
+  FollowsMe,
+  MessagesMe,
+  AdminAlert,
+  ChangesToProjectISaved,
+  CompanyIFollowPostProject,
+  UserRegistered,
+  CompanyIFollowAddEmployee,
+  UserDeleted,
+  NewForumCreated,
+  NewPrivateForumCreated,
+  UserAutoApproved,
+  ContactZeigoNetwork,
+  NewInitiativeCreated,
+  NewFeedback
+}

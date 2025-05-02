@@ -1,0 +1,160 @@
+<div class="flex-column mb-96">
+  <div class="flex-between align-center mb-24">
+    <div class="top-wrapper">
+      <h3 class="text-neo-near-black mb-8">
+        {{
+          (this.controlContainer.control.get('categoryId').value?.slug === projectTypes.OffsitePpa
+            ? 'projects.addProject.offsitePpaLabel'
+            : 'projects.addProject.aggregatedPpaLabel'
+          ) | translate
+        }}
+      </h3>
+
+      <p class="text-m text-dark-gray-580">{{ 'projects.addProject.enterProjectPublicDetailsLabel' | translate }}</p>
+
+      <p class="d-flex align-center text-s text-neo-near-black project-sub-label mt-8">
+        <svg-icon
+          class="text-neo-dark-green mr-8"
+          key="alert-filled"></svg-icon>
+
+        {{ 'projects.addProject.inputsVisibleLabel' | translate }}.
+      </p>
+    </div>
+  </div>
+
+  <div class="controls-wrapper">
+    <form [formGroup]="form">
+      <div class="mb-32 d-flex">
+        <h6 class="text-neo-near-black">
+          {{ 'projects.addProject.locationLabel' | translate }}
+        </h6>
+        <p class="text-neo-near-black text-s">&nbsp;-&nbsp;{{ 'projects.addProject.searchAddressLabel' | translate }}</p>
+      </div>
+
+      <div
+        class="map h-100 mb-8"
+        id="map"></div>
+
+      <neo-control-error
+        [errors]="form.controls['latitude'].errors"
+        [fieldName]="'projects.addProject.locationLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-control-error>
+
+      <neo-dropdown
+        (chosenOption)="setControlValue($event, 'isoRtoId')"
+        [dropdownOptions]="isoList"
+        [submitted]="formSubmitted"
+        [labelName]="'projects.addProject.isoRtoLabel' | translate"
+        [optionalText]="'general.optionalLabel' | translate"
+        class="mb-32 mt-32 long-input text-zeigo-near-black"
+        formControlName="isoRto">
+      </neo-dropdown>
+
+      <neo-dropdown
+        (chosenOption)="setControlValue($event, 'productTypeId')"
+        [dropdownOptions]="projectTypeList"
+        [submitted]="formSubmitted"
+        [labelName]="'projects.addProject.productTypeLabel' | translate"
+        class="mb-32 long-input text-zeigo-near-black"
+        formControlName="productType">
+      </neo-dropdown>
+
+      <neo-date-input
+        [labelName]="'projects.addProject.commercialOperationDateLabel' | translate"
+        [submitted]="formSubmitted"
+        formControlName="commercialOperationDate"
+        class="mb-32 long-input text-zeigo-near-black">
+      </neo-date-input>
+
+      <div class="long-input mb-24">
+        <h6 class="text-neo-near-black text-m pb-12">
+          {{ 'projects.addProject.valueToOfftakerLabel' | translate }}
+        </h6>
+
+        <neo-blue-checkbox
+          (selectCheckbox)="chooseValuesToOfftakers(val, !!val.selected); val.selected = !val.selected"
+          *ngFor="let val of offtakerValueList; let last = last"
+          [checked]="val.selected"
+          [class.mb-8]="!last"
+          [name]="val.name"
+          [value]="val.id"
+          class="arial fw-400 mb-8">
+        </neo-blue-checkbox>
+
+        <neo-control-error
+          [errors]="form.controls['valuesToOfftakers'].errors"
+          [fieldName]="'projects.addProject.valueToOfftakerLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-control-error>
+      </div>
+
+      <neo-number-input
+        formControlName="ppaTermYearsLength"
+        class="mb-32 text-zeigo-near-black"
+        width="162px"
+        [labelName]="'projects.addProject.ppaTermLengthLabel' | translate"
+        [subLabel]="'projects.addProject.yearsLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-number-input>
+
+      <neo-number-input
+        formControlName="totalProjectNameplateMWACCapacity"
+        class="mb-32 text-zeigo-near-black"
+        width="162px"
+        [labelName]="'projects.addProject.totalProjectNameplateLabel' | translate"
+        [subLabel]="'projects.addProject.mwacLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-number-input>
+
+      <neo-number-input
+        formControlName="totalProjectExpectedAnnualMWhProductionP50"
+        class="mb-32 text-zeigo-near-black full-width"
+        width="162px"
+        [labelName]="'projects.addProject.totalProjectExpectedProdLabel' | translate"
+        [subLabel]="'projects.addProject.mwhlabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-number-input>
+
+      <neo-number-input
+        formControlName="minimumOfftakeMWhVolumeRequired"
+        class="mb-32 text-zeigo-near-black"
+        width="162px"
+        [labelName]="'projects.addProject.minimumOfftakeVolLabel' | translate"
+        [subLabel]="'projects.addProject.mwhlabel' | translate"
+        [allowDecimal]="true"
+        [submitted]="formSubmitted">
+      </neo-number-input>
+
+      <neo-textarea-control
+        formControlName="notesForPotentialOfftakers"
+        class="text-zeigo-near-black"
+        height="176px"
+        placeholder="Notes"
+        [labelName]="'projects.addProject.notesForOfftakersLabel' | translate"
+        [optionalText]="'general.optionalLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-textarea-control>
+    </form>
+  </div>
+</div>
+
+<neo-form-footer
+  (backButtonClick)="goBack(stepsList.ProjectGeography)"
+  (cancel)="addProjectService.exitFlow()"
+  (draftButtonClick)="saveDraft()"
+  (save)="changeStep(stepsList.OffsitePpaPrivate)"
+  [backButton]="true"
+  [draftButtonText]="'projects.addProject.saveAsDraftsLabel' | translate"
+  [draftButton]="true"
+  backButtonIcon="footer-left-arrow-thin"
+  icon="add-project-thin-right-arrow"
+  submitButtonName="Next">
+</neo-form-footer>
+
+<neo-draft-modal
+  (closeModal)="showDraftModal = false"
+  *ngIf="showDraftModal"
+  [projectTypeSlug]="projectTypes.OffsitePpa"
+  [title]= addProjectService.currentFlowData.project.title>
+</neo-draft-modal>

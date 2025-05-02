@@ -1,0 +1,91 @@
+<h3 class="neo-arial mb-24 project-type">Emerging Technologies</h3>
+<label class="input-label d-flex">{{ 'projects.addProject.minimumVolumeRequiredLabel' | translate }}</label>
+<div class="d-flex flex-start">
+  <neo-number-input
+    formControlName="minimumAnnualValue"
+    class="mb-32 text-zeigo-near-black w-fit-content"
+    [labelName]="'projects.addProject.minimumVolumeRequiredLabel' | translate"
+    width="100px" [showLabel]="false"    
+    [allowFloat]="true"
+    [allowDecimal]="true"  
+    [submitted]="formSubmitted">
+  </neo-number-input>
+
+  <neo-dropdown
+    formControlName="energyUnit" 
+    class="mb-32 text-zeigo-near-black w-fit-content ml-12 w-150"
+    (chosenOption)="setControlValue($event.id, 'energyUnitId')"
+    [dropdownOptions]="energyUnits"    
+    [submitted]="formSubmitted">
+  </neo-dropdown>
+</div>
+<div class="long-input mb-24">
+  <h6 class="text-neo-near-black pb-12">
+    {{ 'projects.addProject.contractStructureAvailableLAbel' | translate }}
+  </h6>
+
+  <neo-blue-checkbox
+    (selectCheckbox)="chooseCheckboxControlVal(val, !!val.selected, 'contractStructures'); val.selected = !val.selected"
+    *ngFor="let val of contractStructure; let last = last"
+    [checked]="val.selected"
+    [class.mb-8]="!last"
+    [name]="val.name"
+    [value]="val.id"
+    class="arial fw-400 mb-8">
+  </neo-blue-checkbox>
+
+  <neo-control-error
+    [errors]="controlContainer.control.get('contractStructures')?.errors"
+    [fieldName]="'projects.addProject.contractStructureAvailableLAbel' | translate"
+    [submitted]="formSubmitted">
+  </neo-control-error>
+</div>
+
+<neo-number-input
+  formControlName="minimumTermLength"
+  class="mb-32 text-zeigo-near-black"
+  width="162px"
+  [labelName]="'projects.addProject.minimumTermLengthAvailableLabel' | translate"
+  [optionalText]="'projects.addProject.optionalIfApplicableLabel' | translate"
+  [subLabel]="'projects.addProject.yearsLabel' | translate"
+  [submitted]="formSubmitted">
+</neo-number-input>
+
+<div class="long-input mb-24">
+  <h6 class="text-zeigo-near-black pb-12">
+    {{ 'projects.addProject.valueProvidedLabel' | translate }}
+  </h6>
+
+  <neo-blue-checkbox
+    (selectCheckbox)="chooseCheckboxControlVal(val, !!val.selected, 'valuesProvided'); val.selected = !val.selected"
+    *ngFor="let val of valueProvidedList; let last = last"
+    [checked]="val.selected"
+    [class.mb-8]="!last"
+    [name]="val.name"
+    [value]="val.id"
+    class="arial fw-400 mb-8">
+  </neo-blue-checkbox>
+
+  <neo-control-error
+    [errors]="controlContainer.control.get('valuesProvided')?.errors"
+    [fieldName]="'projects.addProject.valueProvidedLabel' | translate"
+    [submitted]="formSubmitted">
+  </neo-control-error>
+</div>
+
+<neo-text-input
+  class="mb-32 text-neo-near-black"
+  formControlName="timeAndUrgencyConsiderations"
+  [labelName]="'projects.addProject.timeAndUrgencyLabel' | translate"
+  [optionalText]="'general.optionalLabel' | translate"
+  [submitted]="formSubmitted">
+</neo-text-input>
+
+<neo-textarea-control
+  class="text-zeigo-near-black"
+  formControlName="additionalComments"
+  height="176px"
+  [labelName]="'projects.addProject.additionalCommentsLabel' | translate"
+  [optionalText]="'general.optionalLabel' | translate"
+  [submitted]="formSubmitted">
+</neo-textarea-control>

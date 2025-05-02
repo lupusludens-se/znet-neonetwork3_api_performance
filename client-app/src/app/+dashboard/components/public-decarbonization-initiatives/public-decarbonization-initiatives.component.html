@@ -1,0 +1,43 @@
+<div class="d-flex w-100 top-container justify-between">
+    <div class="d-flex flex-column w-85 flex-left">
+        <h3 class="text-neo-near-black trending-label pb-2">
+            {{ title }}
+        </h3>
+
+        <div class="pb-16">
+            <span class="pt-2 trending-sub-label">{{ subTitle }}</span>
+        </div>
+    </div>
+    <button class="btn-learnMore flex-center" routerLink="/initiatives"(click)="onLearnMoreClick()">
+        {{ 'general.learnMoreLabel' | translate }}
+        <svg-icon class="mr-12 ml-6" iconSize="md" fontSize="14px" key="right-arrow"></svg-icon>
+    </button>
+</div>
+<div class="progress-tracker-wrapper mr-10" routerLink="/initiatives">
+    <div class="initiative-item mb-10 c-pointer">
+        <div class="d-flex justify-between w-100 align-center"><span class="fg-1 d-flex flex-column max-w-50 mr-2">
+                <h4>{{ 'initiative.publicDashboard.progressTracker.title' | translate }}</h4>
+            </span>
+            <div class="status-wrapper max-w-fit ml-12"><span class="status-label">{{ 'general.statusLabel' | translate|uppercase }}:</span><span
+                    class="status">{{ 'initiative.publicDashboard.progressTracker.status' | translate }}</span></div>
+        </div>
+        <div class="w-100">
+            <neo-initiative-progress-tracker></neo-initiative-progress-tracker>
+        </div>
+        <div class="horizontal-line"></div>
+        <div class="flex-container w-100">
+            <div class="d-flex  gap-4 initiative-footer">
+                <div class="initiative-tag">
+                    <div class="flex-center pb-6 pl-8 pr-8 pt-6 tag">
+                        {{ 'initiative.publicDashboard.progressTracker.defaultCategoryName' | translate }}
+                    </div>
+                </div>
+                    <div class="location">
+                        <div class="info">
+                            {{ 'initiative.publicDashboard.progressTracker.defaultRegion' | translate }}
+                        </div>                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

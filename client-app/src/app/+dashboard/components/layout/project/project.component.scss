@@ -1,0 +1,30 @@
+@use 'colors';
+
+:host {
+  height: 185px;
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+  width: calc((100% / 3) - 6px);
+
+  &:hover {
+    box-shadow: 0 4px 12px rgb(0 31 81 / 12%);
+
+    background: colors.$blue-10;
+    border: 1px solid colors.$violet-5;
+    box-shadow: 0px 2px 8px rgba(134, 132, 141, 0.16);
+    border-radius: 8px;
+
+  }
+}
+
+.project-company-image {
+  object-fit: contain;
+  width: 135px;
+  height: 70px;
+
+  &.empty {
+    width: 20px;
+    height: 20px;
+  }
+}

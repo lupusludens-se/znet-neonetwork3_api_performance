@@ -1,0 +1,20 @@
+<div #inputEl (click)="inputClick()" [class.opened]="showDropdown" class="c-pointer input-wrapper">
+  <input [(ngModel)]="selectedOption.displayName" [readonly]="true" type="text" />
+
+  <svg-icon [class.opened]="showDropdown" key="caret-down"></svg-icon>
+</div>
+
+<div [class.opened]="showDropdown" class="dropdown-wrapper">
+  <div class="dropdown-container">
+    <div class="scroll-container scroll-list-default">
+      <div
+        (click)="chooseOption(item); showDropdown = false"
+        *ngFor="let item of dropdownOptions"
+        [class.selected]="item.id === selectedOption.id"
+        class="dropdown-item"
+      >
+        {{ item.displayName }}
+      </div>
+    </div>
+  </div>
+</div>

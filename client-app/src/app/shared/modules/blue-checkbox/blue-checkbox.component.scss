@@ -1,0 +1,132 @@
+@use 'colors';
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  position: relative;
+  padding: 4px;
+  margin-bottom: 5px;
+
+  &.checked {
+    span {
+      &::before {
+        border: 1px solid colors.$sky-blue;
+      }
+    }
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  input {
+    display: none;
+  }
+
+  span {
+    &:before {
+      content: '';
+      -webkit-appearance: none;
+      background: colors.$white;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      width: 18px;
+      min-width: 18px;
+      height: 18px;
+      min-height: 18px;
+      border: 1px solid colors.$dark-gray-515;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+
+    &.checked::before {
+      background-color: colors.$zeigo-purple;
+      border: 1px solid var(--basic-neutral-200, #4b4b4b);
+    }
+
+    &:hover {
+      &::before {
+        cursor: pointer;
+        border: 1px solid colors.$zeigo-purple;
+      }
+    }
+  }
+
+  .check-icon {
+    position: absolute;
+    margin-left: 1px;
+    color: colors.$white;
+    z-index: 1;
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 130%;
+    color: colors.$near-black-400; //this for default checkbox
+    cursor: pointer;
+  }
+}
+
+:host.text-accept {
+
+  //Zeigo: this is added to have purple color for label in I accept in signup page
+  span {
+    color: colors.$zeigo-purple;
+    text-decoration: underline;
+  }
+}
+
+:host.text-accept-demo {
+
+  span {
+    color: colors.$zeigo-purple;
+    text-decoration: none;
+    width: 600px; 
+  }
+
+
+}
+
+:host.label-grey {
+  label {
+    //for forum listing technology checkbox
+    color: colors.$dark-gray-515;
+
+    span.d-flex.align-center.text-s.checked {
+      color: colors.$near-black-400;
+    }
+  }
+
+  .checkbox-wrapper {
+    .check-icon {
+      border-radius: 4px;
+
+      &:hover {
+        &::before {
+          box-shadow: 0 0 0 1px transparent;
+        }
+      }
+    }
+  }
+}
+
+:host.permissions-checkbox {
+  .check-icon {
+    margin-left: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  .checkbox-wrapper {
+    label {
+      cursor: none !important;
+    }
+  }
+}

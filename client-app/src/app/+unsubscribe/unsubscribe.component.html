@@ -1,0 +1,90 @@
+<div class="flex-container">
+  <div class="flex-left p-relative">
+    <img alt="neo logo" class="c-pointer absolute logo-image " routerLink=""
+      src="assets/images/zeigologo-sidebar.png" />
+    <img alt="vector image" class="vector-img absolute display-none"
+      src="assets/images/sign-up/sign-up-background-vector.svg" />
+  </div>
+  <div class="flex-right align-center p-relative pt-48 unsubscribe-form-wrapper flex-right-center-content"
+    [class.unsubscribe-form]="!showSuccess">
+    <div class="pb-12 success-form" [class.flex-right-center-content]="showSuccess">
+      <ng-container *ngIf="!showSuccess && email && !showAlreadyUnsubscribedMsg">
+        <h1 class="text-header">{{ 'unsubscribe.titleLabel' | translate }}</h1>
+        <p class="text-subtitle text-s pt-12 pb-16 w-80">
+          {{ 'unsubscribe.descriptionLabel' | translate }}
+        </p>
+        <div class="separator"></div>
+        <form [formGroup]="formGroup" class="flex-column pt-24 ml-32">
+
+          <div class="">
+            <div class="email-field-label"> {{ 'unsubscribe.emailAddressLabel' | translate }}</div>
+            <div class="email-field">{{email}}</div>
+          </div>
+
+          <neo-radio-control (valueChanged)="changeType($event)" [list]="types" [submitted]="formSubmitted"
+                             [labelName]="'unsubscribe.typeLabel' | translate" class="mt-24 mb-10" formControlName="typeId" id="typeId">
+          </neo-radio-control>
+
+          <p *ngIf="showTypeError" class="text-error text-xs pb-20">
+            {{ 'unsubscribe.TypeOption' | translate }}
+            {{ 'general.requiredLabel' | translate }}
+          </p>
+          <button (click)="unsubscribe()" class="btn-l green w-90 mt-10" [disabled]="TypeSelected < 0">
+            {{ 'unsubscribe.submitLabel' | translate }}
+          </button>
+
+          <div class="flex-center pt-24 align-self-center">
+            <button (click)="login()" class="link text-s text-neo-purple ml-4 underline">
+              <b>{{ 'landing.header.loginLabel' | translate }}</b>
+            </button>
+
+            <p class="text-s text-neo-purple pl-4">
+              to manage all email preference
+            </p>
+          </div>
+        </form>
+      </ng-container>
+
+      <ng-container *ngIf="(!showSuccess && !email && hasLoaded && !showAlreadyUnsubscribedMsg) || (hasLoaded && !email)">
+        <div class="text-center">
+          <img alt="user icon align-center" width="8%" src="assets/images/user-checked.svg" />
+          <h1 class="text-header pt-32">{{ 'unsubscribe.Invalid' | translate }}</h1>
+          <p class="text-s pt-12 text-blue-200 text-center">
+            {{ 'unsubscribe.InvalidMessage' | translate }}
+          </p>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="showSuccess && !showAlreadyUnsubscribedMsg" class="">
+        <div class="text-center pt-75">
+          <img alt="user icon align-center" width="8%" src="assets/images/user-checked.svg" />
+          <ng-container *ngIf="TypeSelected ==emailAlertFrequencyEnum.Off">
+            <h1 class="text-header pt-32">{{ 'unsubscribe.successOffLabel' | translate }}</h1>
+            <p class="text-s pt-12 text-blue-200 text-center">
+              {{ 'unsubscribe.OffMessage' | translate }}
+            </p>
+          </ng-container>
+          <ng-container *ngIf="TypeSelected == emailAlertFrequencyEnum.Monthly ||
+                    TypeSelected == emailAlertFrequencyEnum.Daily || TypeSelected == emailAlertFrequencyEnum.Weekly">
+            <h1 class="text-header pt-32">{{ 'unsubscribe.successMonthlyLabel' | translate }}</h1>
+            <p class="text-s pt-12 text-blue-200 text-center">
+              {{ 'unsubscribe.Message' | translate }} {{emailAlertFrequencyEnum[TypeSelected]?.toLowerCase()}}.
+            </p>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="showAlreadyUnsubscribedMsg" class="">
+        <div class="text-center">
+          <img alt="user icon align-center" width="8%" src="assets/images/user-checked.svg" />
+          <p class="text-s pt-12 text-blue-200 text-center">
+            {{ 'unsubscribe.AlreadyUnsubscribed' | translate }}
+          </p>
+        </div>
+      </ng-container>
+    </div>
+    <neo-footer (termOfUseModalClosed)="termOfUseModal = false" [removeLogo]="true" [termOfUseModal]="termOfUseModal"
+      [forRegistration]="true" class="w-100" [class.footer]="showSuccess">
+    </neo-footer>
+  </div>
+</div>

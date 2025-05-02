@@ -1,0 +1,162 @@
+<h2
+  class="saved-tab-title pb-24"
+  *ngIf="!shortVersion">
+  {{ 'saved.savedLabel' | translate }}
+</h2>
+
+<neo-search-bar
+  *ngIf="!shortVersion"
+  (clearInput)="clearResults()"
+  (inputChange)="searchResults($event)">
+</neo-search-bar>
+
+<div
+  *ngIf="badgeData"
+  [ngClass]="shortVersion ? 'd-flex pl-30 pr-30 mr-10' : 'd-flex gap-12 pt-24 pb-24'">
+  <button
+    (click)="changeTab(null)"
+    [class.active]="selectedType === null"
+    class="btn-s btn-s-hover neo-arial d-flex align-center">
+    {{ 'general.allLabel' | translate }}
+
+    <div
+      *ngIf="badgeData.articlesCount + badgeData.projectsCount + badgeData.forumsCount > 0"
+      class="flex-center badge text-xxs fw-700 text-white ml-8">
+      {{ badgeData.articlesCount + badgeData.projectsCount + badgeData.forumsCount }}
+    </div>
+  </button>
+
+  <button
+    *ngIf="!isCurrentUserIsSolutionProvider && authService.currentUser() | async"
+    (click)="changeTab(savedContentType.Project)"
+    [class.active]="selectedType === savedContentType.Project"
+    class="btn-s btn-s-hover neo-arial d-flex align-center">
+    {{ 'saved.projectsLabel' | translate }}
+
+    <div
+      *ngIf="badgeData.projectsCount"
+      class="flex-center badge text-xxs fw-700 text-white ml-8">
+      {{ badgeData.projectsCount }}
+    </div>
+  </button>
+
+  <button
+    (click)="changeTab(savedContentType.Article)"
+    [class.active]="selectedType === savedContentType.Article"
+    class="btn-s btn-s-hover neo-arial d-flex align-center">
+    {{ 'learn.learnLabel' | translate }}
+
+    <div
+      *ngIf="badgeData.articlesCount"
+      class="flex-center badge text-xxs fw-700 text-white ml-8">
+      {{ badgeData.articlesCount }}
+    </div>
+  </button>
+
+  <button
+    (click)="changeTab(savedContentType.Forum)"
+    [class.active]="selectedType === savedContentType.Forum"
+    class="btn-s btn-s-hover neo-arial d-flex align-center">
+    {{ 'forum.forumLabel' | translate }}
+
+    <div
+      *ngIf="badgeData.forumsCount"
+      class="flex-center badge text-xxs fw-700 text-white ml-8">
+      {{ badgeData?.forumsCount }}
+    </div>
+  </button>
+</div>
+
+<div
+  *ngIf="savedContent?.count && savedContent?.dataList?.length"
+  [ngClass]="shortVersion ? 'saved-content-wrapper-short p-40' : 'saved-content-wrapper p-40'">
+  <div
+    *ngFor="let content of savedContent?.dataList; let last = last"
+    class="flex-column p-relative">
+    <svg-icon
+      *ngIf="!shortVersion"
+      (click)="removeFromSaved$.next(content)"
+      class="text-aqua-400 p-absolute star-position c-pointer"
+      fontSize="19px"
+      key="star-filled">
+    </svg-icon>
+
+    <p
+      *ngIf="selectedType === null"
+      class="text-xxs text-purple-400 text-uppercase neo-arial d-flex align-center pb-10">
+      <svg-icon
+        [key]="content.type | contentTypeIcon"
+        class="mr-6"
+        fontSize="20px"></svg-icon>
+
+      {{ content.type | contentTypeIcon }}
+    </p>
+
+    <h4
+      [routerLink]="getLink(content)"
+      class="text-dark-gray-750 c-pointer title">
+      {{ content.title }}
+    </h4>
+    <p
+      [innerHTML]="getDescription(content.description)"
+      [ngClass]="shortVersion ? 'text-dark-gray-580 pt-8 description' : 'text-dark-gray-580 pt-8'"></p>
+
+    <div
+      *ngIf="
+        !shortVersion &&
+        (content.regions?.length ||
+          content.technologies?.length ||
+          content.categories?.length ||
+          content.solutions?.length)
+      "
+      class="d-flex align-center w-100 pt-16 gap-16">
+      <neo-content-tag
+        *ngFor="let tag of content?.tags.slice(0, 2)"
+        [tag]="tag"
+        [type]="tag.type"
+        fontSize="16">
+      </neo-content-tag>
+
+      <a [routerLink]="getLink(content)">
+        <neo-content-tag
+          *ngIf="content?.tags?.length > 2"
+          tagText="+{{ content?.tags?.length - 2 }}"
+          fontSize="16">
+        </neo-content-tag>
+      </a>
+
+      <neo-content-location
+        *ngIf="content.type !== savedContentType.Forum"
+        [regions]="content.regions"></neo-content-location>
+    </div>
+
+    <div
+      *ngIf="!last"
+      class="separator mb-16 mt-20"></div>
+  </div>
+</div>
+<div class="flex-column saved-content">
+  <neo-saved-content-loader
+    [showWrapper]="true"
+    *ngIf="(loading || savedContent === null) && shortVersion"
+    class="mt-20 w-100"></neo-saved-content-loader>
+</div>
+<neo-pagination
+  (changePage)="changePage($event)"
+  *ngIf="!shortVersion && savedContent?.count > defaultPerPage"
+  [defaultItemPerPage]="defaultPerPage"
+  [paging]="paging"
+  class="pt-24">
+</neo-pagination>
+
+<neo-empty-page
+  *ngIf="savedContent && !savedContent?.count && !savedContent?.dataList?.length && !search"
+  [headlinePart1]="'saved.emptyTitleLabel' | translate"
+  [headlinePart2]="'saved.emptyDescriptionLabel' | translate"
+  [iconKey]="selectedType | contentTypeIcon">
+</neo-empty-page>
+
+<neo-no-results
+  *ngIf="!savedContent?.count && !savedContent?.dataList?.length && search"
+  [searchedStr]="search">
+</neo-no-results>

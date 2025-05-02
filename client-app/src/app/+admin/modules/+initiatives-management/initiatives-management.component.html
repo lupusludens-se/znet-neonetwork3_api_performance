@@ -1,0 +1,120 @@
+<div class="top flex-between align-center mb-24">
+  <h1 class="title">{{ 'initiativeManagement.pageTitleLabel' | translate }}</h1>
+  <div class="buttons-wrapper d-flex">
+    <button
+      class="btn-export-initiative flex-center mr-12"
+      (click)="exportModal = true">
+      <svg-icon
+        key="upload-square"
+        class="mr-8" size="xl"></svg-icon>
+      {{ 'initiativeManagement.exportInitiativesLabel' | translate }}
+    </button>
+  </div>
+</div>
+
+<neo-search-bar [value]="searchVal" (inputChange)="getInitiativesBySearch($event)"
+  (clearInput)="getInitiativesBySearch('')"></neo-search-bar>
+
+<div class="content mt-32 d-flex">
+  <div class="table-wrapper flex-column">
+    <ng-container *ngIf="initiativesList?.length; else noResults">
+      <table class="table mb-24">
+        <thead>
+          <tr>
+            <td class="pl-24 titleCol">
+              <div class="click-area">
+                {{ 'initiativeManagement.table.titleCol' | translate }}
+              </div>
+            </td>
+            <td class="pl-24 projectType">
+              <div class="click-area"
+                (click)="sortCriteriaSelection('categoryAsc', sortingCriteria.category, 'companyAsc', 'phaseAsc', 'changedOnAsc','statusNameAsc')">
+                {{ 'initiativeManagement.table.projectTypeCol' | translate }}
+                <svg-icon [class.sorthighlight]="categoryAsc" class="text-blue-200 ml-6 caret" key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon [class.sorthighlight]="tdTitleClick === sortingCriteria.category && !categoryAsc"
+                  class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+              </div>
+            </td>
+            <td class="pl-24 company">
+              <div class="click-area" (click)="
+                    sortCriteriaSelection('companyAsc', sortingCriteria.company, 'categoryAsc', 'phaseAsc', 'changedOnAsc','statusNameAsc')
+                  ">
+                {{ 'initiativeManagement.table.companyCol' | translate }}
+                <svg-icon [class.sorthighlight]="companyAsc" class="text-blue-200 ml-6 caret" key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon [class.sorthighlight]="tdTitleClick === sortingCriteria.company && !companyAsc"
+                  class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+              </div>
+            </td>
+            <td class="pl-24 user ellipsis">
+              {{ 'initiativeManagement.table.userCol' | translate }}
+            </td>
+            <td class="pl-24 ellipsis geography">
+              {{ 'initiativeManagement.table.geographyCol' | translate }}
+            </td>
+            <td class="pl-24 phase">
+              <div class="click-area" (click)="
+                  sortCriteriaSelection('phaseAsc', sortingCriteria.phase, 'companyAsc', 'categoryAsc', 'changedOnAsc','statusNameAsc')
+                ">{{ 'initiativeManagement.table.phaseCol' | translate }}
+                <svg-icon [class.sorthighlight]="phaseAsc" class="text-blue-200 ml-6 caret" key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon [class.sorthighlight]="tdTitleClick === sortingCriteria.phase && !phaseAsc"
+                  class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+              </div>
+            </td>
+            <td class="pl-12 updatedDate">
+              <div class="click-area" (click)="
+                  sortCriteriaSelection('changedOnAsc', sortingCriteria.changedon, 'phaseAsc', 'companyAsc', 'categoryAsc','statusNameAsc')
+                ">{{ 'initiativeManagement.table.lastUpdatedCol' | translate }}
+                <svg-icon [class.sorthighlight]="changedOnAsc" class="text-blue-200 ml-6 caret" key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon [class.sorthighlight]="tdTitleClick === sortingCriteria.changedon && !changedOnAsc"
+                  class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+              </div>
+            </td>
+            <td class="pl-12 status status-cell pr-12">
+              <div class="click-area" (click)="
+                  sortCriteriaSelection('statusNameAsc', sortingCriteria.statusname, 'phaseAsc', 'companyAsc', 'categoryAsc', 'changedOnAsc')
+                ">{{ 'initiativeManagement.table.statusCol' | translate }}
+                <svg-icon [class.sorthighlight]="statusNameAsc" class="text-blue-200 ml-6 caret" key="table-row-sort-up"
+                  size="md"></svg-icon>
+                <svg-icon [class.sorthighlight]="tdTitleClick === sortingCriteria.statusname && !statusNameAsc"
+                  class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+              </div>
+            </td>
+          </tr>
+        </thead>
+
+        <tbody>
+          <neo-initiative-table-row
+            [class.transparent]="initiative.statusId === initiativeStatus.Draft || initiative.statusId === initiativeStatus.Deleted"
+            *ngFor="let initiative of initiativesList" [initiative]="initiative"  (click)="!(initiative.statusId === initiativeStatus.Draft || initiative.statusId === initiativeStatus.Deleted) && openInitiative(initiative)"
+            [ngClass]="{'row-hover' : initiative.statusId === initiativeStatus.Active}">
+          </neo-initiative-table-row>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <ng-template #noResults>
+      <neo-no-results [searchedStr]="searchString"></neo-no-results>
+    </ng-template>
+
+    <neo-pagination *ngIf="initiativesList?.length > 0 && paging && paging.total > defaultItemPerPage" [paging]="paging"
+      [defaultItemPerPage]="defaultItemPerPage" (changePage)="changePage($event)" class="pt-24 mb-64">
+    </neo-pagination>
+    <neo-empty-page class="empty-page" *ngIf="initiativesList && !initiativesList?.length"
+      [headlinePart1]="'general.emptyStateLabel' | translate" iconKey="topic">
+    </neo-empty-page>
+  </div>
+</div>
+<neo-export-modal
+    *ngIf="exportModal"
+    [title]="'initiativeManagement.exportInitiativesLabel' | translate"
+    [subText]="'initiativeManagement.startExportInitiativesLabel' | translate"
+    (closeModal)="exportModal = false"
+    [exportModule]="exportModule"
+    [recordsCount]="paging.total"
+    itemsFoundDesc="user Initiatives"
+    [params]="requestParams">
+  </neo-export-modal>

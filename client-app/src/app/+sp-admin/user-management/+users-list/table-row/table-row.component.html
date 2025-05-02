@@ -1,0 +1,68 @@
+<td
+  [class.transparent]="user.statusId === userStatuses.Inactive || user.statusId === userStatuses.Deleted"
+  class="pl-24 d-flex align-center c-pointer ellipsis name-cell">
+  <neo-user-avatar
+    [user]="user"
+    class="mr-12"
+    imageSize="size24"
+    *ngIf="!user.requestDeleteDate"></neo-user-avatar>
+  <ng-container *ngIf="user.requestDeleteDate">
+    <svg-icon
+      key="trash-can"
+      class="ml-4 mr-12"></svg-icon>
+  </ng-container>
+  <span class="name ellipsis" title="{{ user.lastName }}, {{ user.firstName }}">{{ user.lastName }}, {{ user.firstName }}</span>
+</td>
+
+<td
+  class="pl-24 c-pointer ellipsis company-cell">
+  <span class="company" title="{{user.userProfile?.jobTitle}}">{{ user.userProfile?.jobTitle ?? '---' }}</span>
+</td>
+
+<td
+  class="pl-24 c-pointer ellipsis company-cell">
+  <span class="company" title="{{user.email}}">{{ user.email }}</span>
+</td>
+
+<td
+  class="pl-24 c-pointer">
+  <span class="status {{ user.statusName | lowercase }}">
+    {{ user.statusName }}
+  </span>
+</td>
+
+<td class="pl-24 options-cell pr-24" *ngIf="currentUser$ | async as currentUser">  
+  <button *ngIf="user.id !== currentUser.id && user.statusName !== 'Inactive'"
+    (click)="deleteUserClick()"
+    class="action remove">
+    <div>
+      <svg-icon
+        class="remove-item-icon mr-8"
+        key="trash-can"
+        size="xl"></svg-icon
+      >
+    </div>
+  </button>
+</td>
+
+<neo-modal
+  (cancel)="showModal = false"
+  (closed)="showModal = false"
+  *ngIf="showModal"
+  class="title-h2"
+  title="{{ 'general.inactiveModal.titleLabel' | translate }}">
+
+  <div class="popup-controls pt-24 d-flex">
+    <button
+      (click)="showModal = false"
+      class="btn-cancel blue-50-frame mr-16">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+
+    <button
+      (click)="deactivateUser()"
+      class="btn-confirm">
+      {{ 'general.inactiveModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

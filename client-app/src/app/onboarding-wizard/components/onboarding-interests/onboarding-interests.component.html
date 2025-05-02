@@ -1,0 +1,38 @@
+<div class="content flex-column">
+  <div class="top flex-between align-center mb-24">
+    <div class="text-wrapper pr-40">
+      <h2 class="title neo-arial">{{'onboarding.interestsStepLabel' | translate}}</h2>
+      <p class="text-s pt-8 text-dark-gray-580 ">
+				{{'onboarding.interestsStepDescrLabel' | translate}}
+      </p>
+    </div>
+
+    <button (click)="selectAll()" [class.selected-all]="selectedAll" class="btn-all green-frame flex-center">
+      <svg-icon class="mr-10" [key]="selectedAll ? 'cross' : 'plus'" size="md"></svg-icon>
+			{{ (selectedAll ? 'onboarding.clearAllLAbel' : 'projects.addProject.applyAllLabel') | translate }}
+    </button>
+  </div>
+
+  <div *ngIf="categoriesList" class="control-wrapper d-flex flex-wrap gap-8">
+    <button
+      (click)="selectInterest(cat)"
+      *ngFor="let cat of categoriesList"
+      [class.selected]="cat.selected"
+      class="d-flex flex-center neo-arial checkbox-wrapper">
+      <svg-icon [key]="cat.selected ? 'cross' : 'plus'" class="plus-icon mr-8" height="16" width="16"></svg-icon>
+      {{ cat.name }}
+    </button>
+  </div>
+
+	<neo-control-error
+		[errors]="controlContainer.control.get('categories').errors"
+		[fieldName]="'onboarding.interestsStepLabel' | translate"
+		[submitted]="formSubmitted">
+	</neo-control-error>
+</div>
+
+<neo-wizard-nav-controls
+  (goNext)="goForward(stepsList.DecarbonizationSolutions)"
+  (goBack)="changeStep(stepsList.GeographicalPurview)">
+</neo-wizard-nav-controls>
+ 

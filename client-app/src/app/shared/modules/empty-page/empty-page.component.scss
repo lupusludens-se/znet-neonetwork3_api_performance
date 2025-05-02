@@ -1,0 +1,51 @@
+@import 'colors';
+
+:host {
+  height: 100%;
+}
+
+h3 {
+  line-height: 140%;
+  max-width: 420px;
+}
+
+.description {
+  max-width: 450px; // Project Add Project Text Length to be in single line
+  text-align: center;
+}
+
+.btn {
+  width: 174px;
+  height: 45px;
+  font-size: 14px;
+}
+
+.empty-state-circle {
+  width: 90px; //Zeigo Rebrand : Project Catalog
+  height: 90px; //Zeigo Rebrand : Project Catalog
+  background: $dark-gray-450; //Zeigo Rebrand : Project Catalog
+  border-radius: 50%;
+}
+
+:host.empty-search-msg {
+  h3 {
+    max-width: fit-content;
+  }
+}
+
+:host.empty-project-list {
+  .justify-center {
+    justify-content: flex-start;
+  }
+}
+
+:host.no-max-width {
+  .description {
+    max-width: fit-content;
+  }
+  h3 {
+    max-width: fit-content;
+  }
+}
+
+

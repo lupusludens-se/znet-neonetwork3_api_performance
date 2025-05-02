@@ -1,0 +1,138 @@
+<ng-container *ngIf="!isMessageSent">
+  <neo-modal
+    (closed)="closed.emit()"
+    [title]="'landing.contact.contactNeoLabel' | translate"
+    class="contact-us title-h2"
+    padding="p-32-48"
+    size="extra-medium">
+    <p class="description-text pt-12 pb-16">
+      {{ 'landing.contact.descriptionLabel' | translate }}
+    </p>
+
+    <div class="separator"></div>
+
+    <form [formGroup]="formGroup" class="flex-column w-100">
+      <div class="flex-between gap-32 pt-24">
+        <div class="flex-column w-100">
+          <label class="text-dark-gray-590 neo-arial text-s" for="first-name">
+            {{ 'userManagement.form.firstNameLabel' | translate }}
+          </label>
+
+          <input
+            [class.error]="hasError('firstName')"
+            class="mt-12"
+            formControlName="firstName"
+            id="first-name"
+            type="text" />
+
+          <p *ngIf="hasError('firstName')" class="text-error text-s pt-8">
+            {{ 'userManagement.form.firstNameLabel' | translate }}
+            {{ 'general.requiredLabel' | translate }}
+          </p>
+        </div>
+
+        <div class="flex-column w-100">
+          <label class="text-dark-gray-590 neo-arial text-s" for="last-name">
+            {{ 'userManagement.form.lastNameLabel' | translate }}
+          </label>
+
+          <input
+            [class.error]="hasError('lastName')"
+            class="mt-12"
+            formControlName="lastName"
+            id="last-name"
+            type="text" />
+
+          <p *ngIf="hasError('lastName')" class="text-error text-s pt-8">
+            {{ 'userManagement.form.lastNameLabel' | translate }}
+            {{ 'general.requiredLabel' | translate }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex-between gap-32 pt-24">
+        <div class="flex-column w-100">
+          <label class="text-dark-gray-590 neo-arial text-s" for="email">
+            {{ 'userManagement.form.emailLabel' | translate }}
+          </label>
+
+          <input [class.error]="hasError('email')" class="mt-12" formControlName="email" id="email" type="text" />
+
+          <p *ngIf="hasError('email')" class="text-error text-s pt-8">
+            {{ 'userManagement.form.emailLabel' | translate }}
+
+            <span *ngIf="formGroup?.get('email')?.errors?.url">{{ 'general.notValidLabel' | translate }}</span>
+
+            <span *ngIf="formGroup?.get('email')?.errors?.required">{{ 'general.requiredLabel' | translate }}</span>
+          </p>
+        </div>
+
+        <div class="flex-column w-100">
+          <label class="text-dark-gray-590 neo-arial text-s" for="company">
+            {{ 'title.companyLabel' | translate }}
+          </label>
+
+          <input [class.error]="hasError('company')" class="mt-12" formControlName="company" id="company" type="text" />
+
+          <p *ngIf="hasError('company')" class="text-error text-s pt-8">
+            {{ 'title.companyLabel' | translate }}
+            {{ 'general.requiredLabel' | translate }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex-column pt-24 pb-24">
+        <label class="text-dark-gray-590 text-s fw-700 pb-8" for="additional-comments">
+          {{ 'messages.messageLabel' | translate }}
+        </label>
+
+        <textarea
+          [class.error]="hasError('message')"
+          class="p-16"
+          formControlName="message"
+          id="additional-comments"
+          rows="5"></textarea>
+
+        <p *ngIf="hasError('message')" class="text-error text-s pt-8">
+          {{ 'messages.messageLabel' | translate }}
+          {{ 'general.requiredLabel' | translate }}
+        </p>
+      </div>
+
+      <div class="captcha-wrapper pb-24">
+        <div [class.is-invalid]="hasError('recaptchaToken')">
+          <re-captcha id="recaptcha" (resolved)="formGroup.get('recaptchaToken').setValue($event)"></re-captcha>
+        </div>
+
+        <p class="text-error text-s pt-8" *ngIf="hasError('recaptchaToken')">
+          {{ 'general.captchaLabel' | translate }}
+          {{ 'general.requiredLabel' | translate }}
+        </p>
+      </div>
+
+      <button (click)="sendMessage()" class="btn-l green btn-send">
+        {{ 'landing.contact.sendMessageLabel' | translate }}
+      </button>
+    </form>
+  </neo-modal>
+</ng-container>
+<ng-container *ngIf="!!isMessageSent">
+  <neo-modal (closed)="closed.emit()" [title]="' '" class="sent" size="extra-medium">
+    <div class="sent-content-wrapper flex-center flex-column">
+      <svg-icon class="sent-icon" key="email-sent"></svg-icon>
+      <div class="mt-32">
+        <div class="flex-center sent-label neo-arial">
+          {{ 'landing.contact.sentLabel' | translate }}
+        </div>
+
+        <div class="message-receive mt-12">
+          {{ 'landing.contact.messageReceivedLabel' | translate }}
+        </div>
+      </div>
+      <button (click)="closed.emit()" class="btn-l green mt-32 d-flex justify-center">
+        {{ 'landing.contact.backHomeLabel' | translate }}
+        <svg-icon class="ml-14" key="right-arrow"></svg-icon>
+      </button>
+    </div>
+  </neo-modal>
+</ng-container>

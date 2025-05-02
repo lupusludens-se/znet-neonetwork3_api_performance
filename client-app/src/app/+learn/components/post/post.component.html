@@ -1,0 +1,76 @@
+<div class="post-details-wrapper" *ngIf="postData">
+  <div class="d-flex m-8 mr-0">
+    <div class="flex-column w-50">
+      <button (click)="goBack()" class="btn-connect d-flex back-btn pb-4">
+        <svg-icon class="pr-4 back-btn-img-s" key="left-arrow"></svg-icon>
+        Back
+      </button>
+    </div>
+    <div class="flex-column w-50 align-end" *ngIf="isCorporateUser">
+      <button (click)="attachToInitiative = true;trackAttachToInitiativeActivity();" class="btn-initiative align-center">
+        <span class="ml-8 mr-8 btn-text flex-center">
+          {{ 'initiative.attachContent.attachContentLabel' | translate }}
+          <svg-icon class="ml-8" fontSize="16px" key="idea-bulb"></svg-icon>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="flex-column post-details">
+    <span class="text-uppercase d-flex align-center post-type">
+      <svg-icon class="mr-8 post-type-svg" key="{{ getNeoType(postData.typeId) | neoTypeToIcon }}"></svg-icon>
+      {{ getNeoType(postData.typeId) }}
+    </span>
+
+    <h1 class="pt-12 title">
+      {{ postData.title }}
+    </h1>
+
+    <span class="text-s pt-12 post-date">
+      {{ postData.date | date: 'fullDate' }}
+    </span>
+
+    <div class="separator mt-24 mb-24"></div>
+
+    <div [innerHTML]="postData.content | safe" class="post-content"></div>
+  </div>
+
+  <div class="post-details d-flex justify-between">
+    <div class="d-flex flex-wrap gap-4">
+      <neo-content-tag *ngFor="let tag of postData.postTags" [tag]="tag" [type]="tag.taxonomy | toId" fontSize="12">
+      </neo-content-tag>
+
+      <div *ngIf="postData.regionTags" class="ml-16 d-flex align-center">
+        <neo-content-location [regions]="postData?.regionTags"></neo-content-location>
+      </div>
+    </div>
+
+    <div class="d-flex align-center">
+      <button (click)="showMessage('general.linkCopiedLabel')" class="link text-s d-flex align-center button">
+        <svg-icon class="mr-8" key="pin" size="xxl"></svg-icon>
+        {{ 'general.linkLabel' | translate }}
+      </button>
+
+      <button *ngIf="auth.isLoggedIn()" (click)="savePost(postData.id)"
+        class="link text-s d-flex align-center ml-34 button">
+        <svg-icon [class.text-purple-200]="postData.isSaved" [key]="postData.isSaved ? 'star-filled' : 'star'"
+          class="mr-8 star" size="xxl"></svg-icon>
+        {{ 'general.saveLabel' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="suggestedPostData?.length">
+    <h3 class="pt-28">
+      {{ 'learn.suggestedLabel' | translate }}
+    </h3>
+
+    <div class="d-flex pt-24 gap-24">
+      <neo-post-link (click)="fetchPostData$.next(post.id)" (saveClick)="post.isSaved = $event"
+        *ngFor="let post of suggestedPostData" [post]="post" [class]="'bg-white'"
+        [style.width]="'calc((100% / ' + suggestedPostData.length + '))'"></neo-post-link>
+    </div>
+  </ng-container>
+</div>
+<neo-attach-to-initiative (closed)="attachToInitiative = false" [initiativeContentType]="contentType"
+  [contentId]="articleId" [typeName]="'general.contentLabel' | translate"
+  *ngIf="attachToInitiative"></neo-attach-to-initiative>

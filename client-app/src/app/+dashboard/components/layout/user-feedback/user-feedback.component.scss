@@ -1,0 +1,87 @@
+@use 'colors';
+
+.feedback-wrapper {
+  background-color: colors.$blue-20;
+  border-radius: 8px;
+
+
+  .feedback-icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .feedback-label {
+    color: colors.$dark-gray-350;
+    font-size: 11px;
+    letter-spacing: 0.07em;
+  }
+
+  .feedback-star {
+    width: 40px;
+    height: 38px;
+    color: #7958A4;
+    cursor: pointer;
+
+    &:hover {
+      color: colors.$dark-gray-590;
+    }
+  }
+
+  .text-area {
+    height: 130px;
+    border-radius: 2px;
+  }
+
+  .text-area .ng-dirty {
+    border-color: 1px solid colors.$red;
+  }
+
+  .close-icon {
+    width: 26px;
+    height: 20px;
+  }
+
+  .submitted-label {
+    font-size: 24px;
+    line-height: 20.8px;
+    font-weight: 700;
+  }
+
+  .submitted-description {
+    font-size: 15px;
+  }
+
+  .p-error {
+    color: colors.$error-red;
+    font-size: 12px;
+    padding-top: 4px;
+  }
+
+
+  .btn-submit {
+    margin-left: 80%;
+    margin-top: 12px;
+    height: 38px;
+    width: 15%;
+    text-align: center;
+    padding: 13px 12px;
+    color: colors.$white !important;
+    background: colors.$zeigo-purple;
+
+    &:hover {
+      background: colors.$purple-400 !important;
+    }
+  }
+
+  .show {
+    display: initial;
+  }
+
+  .hide {
+    display: none;
+  }
+}
+
+.success-form {
+  width: 75%;
+}

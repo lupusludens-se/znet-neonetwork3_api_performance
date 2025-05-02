@@ -1,0 +1,127 @@
+@use 'colors';
+
+.filter-wrapper {
+  background: colors.$white;
+
+  border-radius: 4px;
+  height: 52px;
+  overflow: hidden;
+  //width: 99%; //making this from 100 to 96 for community page. 96 - forum, 99- community
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+    border: none;
+
+    .filter-btn {
+      border: none;
+    }
+  }
+
+  &.expanded {
+    box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+    border: none;
+    height: fit-content;
+    animation: expand 0.1s ease-in;
+
+    .filter-btn {
+      border-radius: 2px 2px 0 0;
+      border-bottom: 1px solid colors.$dark-gray-200;
+
+      &:hover {
+        box-shadow: none;
+      }
+    }
+
+    .arrow {
+      transform: rotate(180deg);
+    }
+  }
+
+  &.collapsed {
+    height: 52px;
+    animation: collapse 0.1s ease-out;
+  }
+
+  .filter-btn {
+    border-radius: 0;
+    border: 1px solid colors.$violet-5;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
+  .filter-body {
+    height: 100%;
+    padding: 16px 12px;
+
+    &.hierarchical {
+      padding: 0;
+    }
+
+    label {
+      color: colors.$blue-500;
+    }
+
+    div[class*='neo-filters'] {
+      &:hover {
+        background: rgba(58, 36, 86, 0.05);
+      }
+    }
+    div[class*='parent-title-wrapper'] {
+      div[class*='justify-between'] {
+        &:hover {
+          background: rgba(58, 36, 86, 0.05);
+        }
+      }
+    }
+    div[class*='parent-wrapper'] {
+      div[class*='parent-body-wrapper'] {
+        div{
+          &:hover {
+            background: rgba(58, 36, 86, 0.05);
+          }
+        }
+      }
+    }
+  }
+
+  .counter {
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background: colors.$blue-20; //added style for counter element for the filter params selected in forum listing page
+    border-radius: 25px;
+    color: colors.$aqua-400;
+  }
+}
+
+@keyframes expand {
+  0% {
+    height: 52px;
+  }
+
+  100% {
+    height: 100%;
+  }
+}
+
+@keyframes collapse {
+  0% {
+    height: 100%;
+  }
+
+  100% {
+    height: 52px;
+  }
+}
+
+host.text-grey {
+  .filter-btn {
+    font-size: 15px; 
+  }
+}

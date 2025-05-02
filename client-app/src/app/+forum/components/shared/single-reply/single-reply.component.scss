@@ -1,0 +1,148 @@
+@use 'colors';
+
+:host {
+  display: flex;
+}
+
+.response-wrapper {
+  border-radius: 2px;
+  background-color: colors.$white;
+
+  &.pinned {  
+    border-left: 4px solid colors.$aqua-400;
+  }
+
+  .response {
+    &.expanded {
+      position: relative;
+
+      &::before {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: 47px;
+        left: 11px;
+        width: 23px;
+        height: calc(100% - 58px);
+        border: 1.5px solid colors.$dark-gray-420;
+        border-radius: 0 0 0 8px;
+        border-top: none;
+        border-right: none;
+      }
+    }
+
+    .user-name{
+      color: colors.$near-black-400;
+      font-size: 12px;
+      line-height: 130%;
+    }
+
+    .user-details{
+      color: colors.$dark-gray-580;
+      font-size: 12px;
+      line-height: 140%;
+    }
+  }
+
+  .respond-textbox{
+    border: 1px solid var(--gray-300, colors.$dark-gray-410);
+    background: colors.$white;
+    border-radius: 8px;
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    &:hover{
+      border: 1px solid colors.$dark-gray-510;    
+    }
+    &:active{
+      border: 1.5px solid colors.$zeigo-purple;
+    }
+  }
+}
+
+.reply-width {
+  max-width: 840px;
+  color: colors.$dark-gray-580;
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0.14px;
+}
+
+.view-replies {
+  color: colors.$zeigo-purple;
+  font-size: 14px;
+  line-height: 150%;
+
+  &:hover {
+    color: colors.$purple-400;
+  }
+}
+
+.action {
+  color: colors.$dark-gray-590;
+  height: 24px;
+  width: 24px;
+
+  &.active {
+    color: colors.$aqua-400;    
+  }
+
+  &:not(.active):hover{
+        color: colors.$aqua-400;
+        background-color: colors.$blue-20 ;
+        border-radius: 50%;
+  } 
+}
+
+.svg-icon-details{
+  color: colors.$dark-gray-750;
+  font-size: 14px;
+  font-family: 'Arial Rounded MT Bold';
+  line-height: 130%;
+  letter-spacing: 0.14px;
+}
+
+.forum-pencil-icon{  
+  margin-right: 20px;
+  margin-top: 2px;
+}
+
+.edited-comment{
+  font-style: italic;
+  padding-left: 5px;
+}
+
+.comment-delete-label{
+  color: colors.$near-black-400;
+  line-height: 120%;
+}
+
+.btn-modal{
+  width: 266px;
+  height: 47px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Arial Rounded MT Bold';
+  line-height: 150%;
+
+  &.cancel{
+     background: colors.$dark-gray-450;
+     color: colors.$dark-gray-590;
+
+     &:hover{
+      background: colors.$dark-gray-250;
+     }
+  }
+
+  &.delete{
+    background: colors.$zeigo-purple;
+    color: colors.$dark-gray-40;
+
+    &:hover{
+      background: colors.$purple-400;
+     }
+ }
+}
+
+.follow-text{
+  font-weight: 700;
+  line-height: 130%;
+}

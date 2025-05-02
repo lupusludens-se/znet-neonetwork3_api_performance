@@ -1,0 +1,9 @@
+<button (click)="changeActiveState()" [ngClass]="{ active: isActive === name }" class="filter-btn d-flex arial">
+  <span class="d-flex align-center">
+    <span class="icon-wrapper p-6 flex-center mr-10">
+      <svg-icon key="{{ icon }}"></svg-icon>
+    </span>
+
+    {{ name }}
+  </span>
+</button>

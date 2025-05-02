@@ -1,0 +1,80 @@
+@use 'colors';
+
+.neo-table {
+  cursor: default;
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background-color: colors.$dark-gray-450;
+    font-size: 14px;
+    line-height: 130%;
+    text-transform: uppercase;
+    color: colors.$blue-800;
+    font-weight: 400;
+    letter-spacing: 0.14px;
+
+    td {
+      height: 40px;
+      user-select: none;
+
+      &.options {
+        width: 100px;
+      }
+
+      .order-direction {
+        transition: all 0.2s ease;
+        vertical-align: middle;
+        margin-bottom: 2px;
+
+        &.asc {
+          transform: rotate(180deg);
+          transition: all 0.2s ease;
+        }
+      }
+    }
+  }
+
+  tbody {
+    font-size: 14px;
+    color: colors.$near-black-400;
+    line-height: 130%;
+
+    tr {
+      background: colors.$white;
+      border-bottom: 1px solid colors.$blue-25;
+      border-left: 1px solid colors.$blue-25;
+      border-right: 1px solid colors.$blue-25;
+
+      &:hover {
+        background: colors.$blue-5;
+      }
+
+      td {
+        height: 76px;
+
+        &.disabled {
+          opacity: 0.5;
+        }
+
+        .image {
+          width: 22px;
+          height: 22px;
+        }
+
+        .tool-name{
+          font-weight: 700;
+        }
+      }
+    }
+
+    .btn-square {
+      width: 37px;
+      height: 37px;
+    }
+  }
+  .sorthighlight {
+    color: #209cd1;
+  }
+  
+}

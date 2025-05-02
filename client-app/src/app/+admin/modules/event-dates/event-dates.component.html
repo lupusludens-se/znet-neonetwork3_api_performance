@@ -1,0 +1,116 @@
+<div class="control-wrapper">
+  <label>{{ 'events.eventDatesLabel' | translate }}</label>
+
+  <div
+    class="event-dates d-flex align-center mt-12"
+    [class.error]="formSubmitted && controlContainer.control.get('occurrences')?.errors">
+    <span
+      *ngIf="!eventDates?.length"
+      class="placeholder">
+      {{ 'events.chooseDatesLabel' | translate }}
+    </span>
+
+    <div class="date-tags d-flex flex-wrap">
+      <div
+        *ngFor="let date of eventDates | slice: 0:7; let i = index"
+        class="tag mr-8 flex-center">
+        {{ date.eventDate | date: 'MMM dd' }}
+
+        <button
+          (click)="removeDate(i, date)"
+          class="btn-clear ml-6 flex-center">
+          <svg-icon
+            key="cross"
+            size="sm"></svg-icon>
+        </button>
+      </div>
+
+      <div
+        *ngIf="eventDates?.length > 7"
+        class="tag decor">
+        ...
+      </div>
+    </div>
+
+    <div
+      #calendarWrapper
+      class="calendar-wrapper">
+      <div
+        *ngIf="showCalendar"
+        class="calendar">
+        <ejs-calendar
+          (change)="changeEventDate($event)"
+          [isMultiSelection]="true"
+          [min]="minDate"
+          [values]="datepickerDatesList"
+          [showTodayButton]="false"
+          (created)="afterCalendarCreated()"
+          dayHeaderFormat="Abbreviated"
+          cssClass="defaultCalendarDatepicker editEventDates"
+          (navigated)="afterNavigated($event)"
+          (valueChange)="afterValueChanged()"
+          #ejsCalendar>
+        </ejs-calendar>
+      </div>
+
+      <button
+        (click)="toggleCalendarDropdown()"
+        [class.toggled]="showCalendar"
+        class="calendar-toggle"
+        #toggleCalendarButton>
+        <svg-icon
+          key="caret-down"
+          size="md"></svg-icon>
+      </button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="eventDates?.length">
+    <p class="sub-timezone-label bold mt-24 time-zone">
+      {{ 'events.timeZoneLabel' | translate }}
+    </p>
+
+    <neo-timezones-dropdown
+      (chosenOption)="changeOccurrenceTimezone($event?.id)"
+      *ngIf="selectedTimezone"
+      [dropdownOptions]="timezonesList"
+      [selectedOption]="selectedTimezone"
+      class="mb-24">
+    </neo-timezones-dropdown>
+
+    <ng-container *ngFor="let eventDay of eventDates; let dateIndex = index">
+      <p class="date mb-8">
+        {{ eventDay.eventDate | date: 'longDate' }}
+      </p>
+
+      <ng-container *ngFor="let eventTimes of eventDay.eventTime; let timeIndex = index">
+        <neo-time-range
+          (removeTimeSlot)="removeTimeFromDate(dateIndex, timeIndex)"
+          (timeUpdated)="updateTime($event, dateIndex, timeIndex)"
+          [eventTime]="eventTimes"
+          [formSubmitted]="formSubmitted"
+          class="mb-8 d-flex">
+        </neo-time-range>
+      </ng-container>
+
+      <button
+        (click)="addTimeToDate(dateIndex)"
+        class="btn-add mt-14">
+        <svg-icon
+          class="mr-8"
+          key="plus-in-circle-inverted"></svg-icon>
+        {{ 'events.addTimeLabel' | translate }}
+      </button>
+
+      <div
+        *ngIf="eventDates.length > 1 && dateIndex !== eventDates.length - 1"
+        class="line"></div>
+    </ng-container>
+  </ng-container>
+
+  <neo-control-error
+    [errors]="controlContainer.control.get('occurrences')?.errors"
+    [fieldName]="'events.eventDatesLabel' | translate"
+    [submitted]="formSubmitted">
+  </neo-control-error>
+</div>

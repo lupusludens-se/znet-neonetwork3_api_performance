@@ -1,0 +1,56 @@
+<div
+  class="d-flex content-wrapper p-relative text-dark-gray-30 h-100 {{ size }}"
+  routerLink="/learn/{{ id }}"
+  (click)="postClick.emit()"
+  style="
+    background: url('{{ image }}');
+  ">
+  <div class="backdrop"></div>
+  <div class="content {{ size }}">
+    <a class="text-xxxl neo-arial text-dark-gray-30">
+      {{ title }}
+    </a>
+
+    <p
+      *ngIf="size === 'wide'"
+      [innerHTML]="getDescription(description)"
+      class="pt-8 text-s"></p>
+
+    <div
+      [ngClass]="size === 'wide' ? 'pt-16' : 'pt-12'"
+      class="d-flex gap-8 flex-wrap">
+      <a
+        *ngFor="let tag of tags.slice(0, 2)"
+        class="tag text-dark-gray-30"
+        (click)="$event.preventDefault(); $event.stopPropagation(); tagClick.emit()"
+        routerLink="/topics"
+        [queryParams]="{
+          id: tag.id,
+          name: tag.name,
+          type: tag.taxonomy | toId
+        }">
+        {{ tag.name }}
+      </a>
+
+      <a
+        class="tag text-dark-gray-30"
+        *ngIf="tags?.length > 2"
+        routerLink="/learn/{{ id }}">
+        +{{ tags?.length - 2 }}
+      </a>
+    </div>
+  </div>
+
+  <div
+    class="p-absolute background-overlay {{ size }}"
+    routerLink="/learn/{{ id }}"></div>
+
+  <div class="save-icon-corner">
+    <svg-icon
+      [class.saved]="isSaved"
+      [key]="'star-outline'"
+      class="favorite-icon"
+      (click)="$event.stopPropagation(); save()">
+    </svg-icon>
+  </div>
+</div>

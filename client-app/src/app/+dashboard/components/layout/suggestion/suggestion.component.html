@@ -1,0 +1,30 @@
+<div *ngIf="suggestions?.length" class="d-flex interests-wrapper p-24 p-relative">
+  <svg-icon class="sun-icon" key="sun"></svg-icon>
+  <svg-icon
+    (click)="closeSuggestion()"
+    class="p-absolute top-16 right-16 text-neo-purple c-pointer"
+    key="close"></svg-icon>
+
+  <div class="flex-column pl-20">
+    <div class="text-xxs header text-uppercase neo-arial">
+      {{ 'dashboard.completeYourProfileLabel' | translate }}
+    </div>
+
+    <h5 class="text-dark-gray-750 pt-6 pb-16">
+      {{ suggestionText | translate }}
+    </h5>
+
+    <div class="d-flex">
+      <button (click)="skipSuggestionInfo()" class="skip-bg text-xs text-dark-gray-450">
+        {{ 'general.skipLabel' | translate }}
+      </button>
+
+      <button
+        class="ml-8 dark-green text-xs yes-btn"
+        (click)="yesClick.emit()"
+        routerLink="/user-profile/{{ (currentUser$ | async)?.id }}/edit">
+        {{ 'general.yesLabel' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

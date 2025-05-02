@@ -1,0 +1,72 @@
+@import '../../../../styles/colors.scss';
+
+.unclickable-route {
+  cursor: default;
+  text-decoration: none !important;
+  pointer-events: none !important;
+  color: $dark-gray-510 !important;
+  font-weight: 400 !important
+}
+
+ul {
+  & {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    & {
+      display: inline-flex;
+    }
+
+    a {
+      max-width: 450px;
+      color: $near-black-400;
+    }
+
+    a:hover {
+      color: $near-black-400;
+      text-decoration-line: underline;
+      font-weight: 700;
+    }
+
+    &:first-child:hover {
+      //background-color: $gray-hover;
+    }
+
+    &:last-child a {
+      color: $dark-gray-510;
+      font-weight: 400;
+    }
+
+    &:not(:first-child):before {
+      content: '/';
+      color: $dark-gray-590;
+      margin-right: 12px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+    }
+		& svg-icon:nth-child(2) {
+		  display: none;
+		}
+	
+		&:not(.notHover):hover  svg-icon:nth-child(1) {
+		  display: none;
+		}
+	
+		&:not(.notHover):hover svg-icon:nth-child(2) {
+		  display: block;
+		}
+  }
+  .notHover {
+	pointer-events: none;
+  }
+}
+.disableRedirection{
+  cursor: default !important;
+  text-decoration: none !important;
+  color: $dark-gray-510 !important;
+  font-weight: 400 !important
+}

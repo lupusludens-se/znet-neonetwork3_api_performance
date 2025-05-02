@@ -1,0 +1,115 @@
+@use 'colors';
+@use 'variables';
+
+.saved-tab-title {
+  color: colors.$near-black-400 !important;
+  margin-bottom: 0 !important;
+}
+.content-wrapper {
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+}
+.saved-content-wrapper {
+  background: colors.$white;
+  border: none;
+  border-radius: 2px;
+}
+
+.saved-content-wrapper-short {
+  background: colors.$white;
+  border: none;
+  border-radius: 2px;
+  overflow-y: auto;
+  max-height: 420px;
+}
+
+.title{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  &:hover{
+    color: colors.$zeigo-purple;
+    text-decoration: underline;
+    text-decoration-color: colors.$zeigo-purple;
+  }
+}
+
+.description {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn-s {
+  &.active {
+    background: colors.$zeigo-purple;
+    color: colors.$white;
+    .badge {
+      background: colors.$dark-gray-40;
+      color: colors.$zeigo-purple;
+    }
+    &:hover{
+      background: colors.$purple-400;
+    }
+  }
+
+  .badge {
+    min-width: 20px;
+    height: 20px;
+    border-radius: 25px;
+    background: colors.$zeigo-purple;
+    color: colors.$white;
+  }
+
+  border-radius: 8px;
+  color: colors.$zeigo-purple;
+}
+
+.icon-color {
+  color: colors.$purple-400;
+}
+
+.star-position {
+  top: -4px;
+  right: -4px;
+}
+
+.separator {
+  border-color: colors.$violet-5;
+}
+
+.tag-wrapper {
+  padding: 6px 8px;
+  background: colors.$gray;
+  border-radius: 2px;
+}
+
+neo-empty-page {
+  display: block;
+  height: calc(100vh - 252px - (#{variables.$header-height} + #{variables.$footer-height}));
+}
+
+.btn-s-hover {
+  padding: 13px 21px;
+  max-height: 47px;
+}
+.btn-s-hover:not(.active) {
+  &:hover {
+    border-radius: 8px;
+    background: colors.$dark-gray-250;
+  }
+}
+
+.saved-content {
+  padding: 10px 16px;
+  background: colors.$white;
+  border-radius: 2px;
+
+  .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: colors.$blue-25;
+  }
+}

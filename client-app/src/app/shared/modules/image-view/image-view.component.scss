@@ -1,0 +1,58 @@
+@use 'colors';
+
+.overlay {
+  position: fixed;
+  z-index: 60;
+  top: 0;
+  left: 0;
+  width: 9999px;
+  height: 9999px;
+  background: colors.$dark-gray-30;
+  opacity: 0.8;
+}
+
+.image-wrapper {
+  max-width: 544px;
+  width: 100%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 61;
+
+  .close-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: colors.$white;
+    color: colors.$neo-blue;
+  }
+
+  img {
+    max-height: 600px;
+    height: 100%;
+  }
+
+  .point {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: colors.$white;
+    opacity: 0.5;
+
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  .navigation {
+    height: 50px;
+    width: 50px;
+    color: colors.$white;
+
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+}

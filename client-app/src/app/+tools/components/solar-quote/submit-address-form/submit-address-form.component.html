@@ -1,0 +1,262 @@
+<form
+  [formGroup]="formGroup"
+  class="flex-column">
+  <neo-text-input
+    class="text-zeigo-near-black"
+    formControlName="siteAddress"
+    [labelName]="'solarQuote.siteAddressLabel' | translate"
+    [submitted]="formSubmitted">
+  </neo-text-input>
+
+  <neo-number-input
+    class="mt-12 text-zeigo-near-black"
+    formControlName="annualPower"
+    [labelName]="'solarQuote.annualPowerLabel' | translate"
+    [submitted]="formSubmitted"
+    [thousandsSeparator]="false">
+  </neo-number-input>
+  <div class="mt-12 customControl">
+    <neo-radio-control
+      id="roofAvailable"
+      [flexDirection]="'row'"
+      formControlName="roofAvailable"
+      (valueChanged)="clearInputs($event, ['roofArea', 'roofAreaType'])"
+      class="innerInp mb-8 text-zeigo-near-black"
+      [list]="questionOptions"
+      [labelName]="'solarQuote.roofAvailableLabel' | translate"
+      [submitted]="formSubmitted">
+    </neo-radio-control>
+
+    <div
+      [ngClass]="{ disabled: formGroup.get('roofAvailable').value === 0 }"
+      class="flex-column control">
+      <label class="text-s neo-arial text-dark-gray-590 pb-8">
+        {{ 'solarQuote.roofAreaLabel' | translate }}
+      </label>
+
+      <div class="d-flex gap-8 area-controls-wrapper">
+        <neo-number-input
+          class="innerInp text-zeigo-near-black"
+          formControlName="roofArea"
+          [disabled]="formGroup.get('roofAvailable').value === 0 ? true : null"
+          [labelName]="'solarQuote.roofAreaLabel' | translate"
+          [showLabel]="false"
+          [thousandsSeparator]="false">
+        </neo-number-input>
+
+        <neo-square-radio-control
+          class="text-zeigo-near-black"
+          [disabled]="formGroup.get('roofAvailable').value === 0 ? true : null"
+          [list]="areaTypeOptions"
+          formControlName="roofAreaType">
+        </neo-square-radio-control>
+      </div>
+
+      <neo-control-error
+        [errors]="
+          formGroup.controls['roofAvailable'].value === 1 &&
+          (formGroup.controls['roofAreaType'].value === null || !formGroup.controls['roofArea'].value)
+            ? { required: true }
+            : null
+        "
+        [fieldName]="
+          !formGroup.controls['roofArea'].value
+            ? ('solarQuote.roofAreaLabel' | translate)
+            : ('solarQuote.rooftopAreaErrorLabel' | translate)
+        "
+        [submitted]="formSubmitted">
+      </neo-control-error>
+      <neo-control-error
+        [errors]="formGroup.controls['roofArea'].value?.length > 10 ? { maxlength: {requiredLength: 10} } : null"
+        [fieldName]="'solarQuote.roofAreaLabel' | translate"
+        [submitted]="formSubmitted">
+        </neo-control-error>
+    </div>
+  </div>
+  <div class="mt-12 customControl">
+    <neo-radio-control
+      id="landAvailable"
+      [flexDirection]="'row'"
+      formControlName="landAvailable"
+      (valueChanged)="clearInputs($event, ['landArea', 'landAreaType'])"
+      class="innerInp mb-8 text-zeigo-near-black"
+      [list]="questionOptions"
+      [labelName]="'solarQuote.landAvailableLabel' | translate"
+      [submitted]="formSubmitted">
+    </neo-radio-control>
+
+    <div
+      [ngClass]="{ disabled: formGroup.get('landAvailable').value === 0 }"
+      class="flex-column control">
+      <label class="text-s neo-arial text-dark-gray-590 pb-8">
+        {{ 'solarQuote.landAreaLabel' | translate }}
+      </label>
+
+      <div class="d-flex gap-8 area-controls-wrapper">
+        <neo-number-input
+          class="innerInp text-zeigo-near-black"
+          formControlName="landArea"
+          [disabled]="formGroup.get('landAvailable').value === 0 ? true : null"
+          [labelName]="'solarQuote.landAreaLabel' | translate"
+          [showLabel]="false"
+          [thousandsSeparator]="false">
+        </neo-number-input>
+
+        <neo-square-radio-control
+          class="text-zeigo-near-black"
+          [disabled]="formGroup.get('landAvailable').value === 0 ? true : null"
+          [list]="areaTypeOptions"
+          formControlName="landAreaType">
+        </neo-square-radio-control>
+      </div>
+
+      <neo-control-error
+        [errors]="
+          formGroup.controls['landAvailable'].value === 1 &&
+          (formGroup.controls['landAreaType'].value === null || !formGroup.controls['landArea'].value)
+            ? { required: true }
+            : null
+        "
+        [fieldName]="
+          !formGroup.get('landArea').value
+            ? ('solarQuote.landAreaLabel' | translate)
+            : ('solarQuote.groundmountAreaErrorLabel' | translate)
+        "
+        [submitted]="formSubmitted">
+      </neo-control-error>
+      <neo-control-error
+        [errors]="formGroup.controls['landArea'].value?.length > 15 ? { maxlength: {requiredLength: 15} } : null"
+        [fieldName]="'solarQuote.landAreaLabel' | translate"
+        [submitted]="formSubmitted">
+        </neo-control-error>
+    </div>
+  </div>
+
+  <div class="mt-12 customControl">
+    <neo-radio-control
+      id="carportAvailable"
+      [flexDirection]="'row'"
+      formControlName="carportAvailable"
+      (valueChanged)="clearInputs($event, ['carportArea', 'carportAreaType'])"
+      class="mb-8 innerInp text-zeigo-near-black"
+      [list]="questionOptions"
+      [labelName]="'solarQuote.carportAvailableLabel' | translate"
+      [submitted]="formSubmitted">
+    </neo-radio-control>
+
+    <div
+      [ngClass]="{ disabled: formGroup.get('carportAvailable').value === 0 }"
+      class="flex-column control">
+      <label class="text-s neo-arial text-dark-gray-590 pb-8">
+        {{ 'solarQuote.carportAreaLabel' | translate }}
+      </label>
+
+      <div class="d-flex gap-8 area-controls-wrapper">
+        <neo-number-input
+          class="innerInp text-zeigo-near-black"
+          formControlName="carportArea"
+          [disabled]="formGroup.get('carportAvailable').value === 0 ? true : null"
+          [labelName]="'solarQuote.carportAreaLabel' | translate"
+          [showLabel]="false"
+          [thousandsSeparator]="false">
+        </neo-number-input>
+
+        <neo-square-radio-control
+          class="text-zeigo-near-black"
+          [disabled]="formGroup.get('carportAvailable')?.value === 0 ? true : null"
+          [list]="areaTypeOptions"
+          formControlName="carportAreaType">
+        </neo-square-radio-control>
+      </div>
+
+      <neo-control-error
+        [errors]="
+          formGroup.controls['carportAvailable'].value === 1 &&
+          (formGroup.controls['carportAreaType'].value === null || !formGroup.controls['carportArea'].value)
+            ? { required: true }
+            : null
+        "
+        [fieldName]="
+          !formGroup.get('carportArea').value
+            ? ('solarQuote.carportAreaLabel' | translate)
+            : ('solarQuote.carportAreaErrorLabel' | translate)
+        "
+        [submitted]="formSubmitted">
+      </neo-control-error>
+      <neo-control-error
+        [errors]="formGroup.controls['carportArea'].value?.length > 15 ? { maxlength: {requiredLength: 15} } : null"
+        [fieldName]="'solarQuote.carportAreaLabel' | translate"
+        [submitted]="formSubmitted">
+        </neo-control-error>
+    </div>
+  </div>
+
+  <neo-radio-control
+    id="buildingOwned"
+    [flexDirection]="'row'"
+    class="text-zeigo-near-black mt-12"
+    formControlName="buildingOwned"
+    [list]="ownQuestionOptions"
+    [labelName]="'solarQuote.buildingOwnedLabel' | translate"
+    [submitted]="formSubmitted">
+  </neo-radio-control>
+
+  <div class="flex-column mt-12 customControl">
+    <label class="text-m neo-arial text-neo-near-black">
+      {{ 'solarQuote.contractStructuresLabel' | translate }}
+    </label>
+
+    <neo-blue-checkbox
+      (selectCheckbox)="setCheckboxStatus('contractStructures', contactStructureOptions[key])"
+      *ngFor="let key of getKeys(contactStructureOptions)"
+      [checked]="formGroup.get('contractStructures').value.includes(contactStructureOptions[key])"
+      [name]="'solarQuote.options.contract.' + key | translate"
+      [value]="contactStructureOptions[key]"
+      [textSize]="'text-m'"
+      class="pt-8 text-zeigo-near-black">
+    </neo-blue-checkbox>
+
+    <neo-control-error
+      [errors]="formGroup.controls['contractStructures'].errors"
+      [fieldName]="'solarQuote.contractStructuresErrorLabel' | translate"
+      [submitted]="formSubmitted">
+    </neo-control-error>
+  </div>
+
+  <div class="flex-column mt-12 customControl">
+    <label class="text-m neo-arial text-neo-near-black">
+      {{ 'solarQuote.interestsLabel' | translate }}
+    </label>
+
+    <neo-blue-checkbox
+      (selectCheckbox)="setCheckboxStatus('interests', quoteInterestsOptions[key])"
+      *ngFor="let key of getKeys(quoteInterestsOptions)"
+      [checked]="formGroup.get('interests').value.includes(quoteInterestsOptions[key])"
+      [name]="'solarQuote.options.interests.' + key | translate"
+      [value]="quoteInterestsOptions[key]"
+      [textSize]="'text-m'"
+      class="pt-8 text-zeigo-near-black">
+    </neo-blue-checkbox>
+
+    <neo-control-error
+      [errors]="formGroup.controls['interests'].errors"
+      [fieldName]="'solarQuote.interestsErrorLabel' | translate"
+      [submitted]="formSubmitted">
+    </neo-control-error>
+  </div>
+
+  <neo-textarea-control
+    class="text-zeigo-near-black mt-12"
+    formControlName="additionalComments"
+    [disabled]="formGroup.get('carportAvailable').value === 0 ? true : null"
+    [labelName]="'solarQuote.additionalCommentsLabel' | translate"
+    [submitted]="formSubmitted">
+  </neo-textarea-control>
+</form>
+
+<neo-form-footer
+  (cancel)="onCancel()"
+  (save)="save()"
+  icon="right-arrow"
+  submitButtonName="solarQuote.requestQuoteLabel">
+</neo-form-footer>

@@ -1,0 +1,5 @@
+# Default code owner for the entire repository
+*       @SE-Sustainability-Business/znet
+
+# Code owners for specific directories
+automation-script-new/ @genericlamse @eugene1se @liliiakhusainova-se @priyasubramanian-se @lupusludens-se

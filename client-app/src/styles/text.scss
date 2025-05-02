@@ -1,0 +1,308 @@
+@use 'colors';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+h7 {
+  font-weight: 400;
+  font-family: 'Arial Rounded MT Bold', serif;
+}
+
+// headlines
+h1 {
+  font-size: 48px;
+  line-height: 43px;
+}
+
+h2 {
+  font-size: 28px;
+  line-height: 30px;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+h4 {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+h5 {
+  font-size: 16px;
+  line-height: 20px;
+  color: colors.$neo-blue;
+}
+
+h6 {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+h7 {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+// text
+.text-xxxl,
+.text-xxl,
+.text-xl,
+.text-m,
+.text-s,
+.text-xs,
+.text-xxs {
+  letter-spacing: 0.01em;
+}
+
+.text-xxxl {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.text-xxl {
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.text-xl {
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.text-m {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.text-s {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.text-small {
+  font-size: 12px;
+  line-height: 12px;
+}
+
+.text-xs {
+  font-size: 12px;
+  line-height: 17px;
+  letter-spacing: 0.01em;
+}
+
+.text-xxs {
+  font-size: 11px;
+  line-height: 16px;
+}
+
+// text colors
+.text-black {
+  color: colors.$black; //Zeigo Rebrand : Terms Of Use
+}
+
+.text-white {
+  color: colors.$white;
+}
+
+.text-neo-blue {
+  color: colors.$neo-blue;
+}
+
+.text-neo-purple {
+  color: colors.$zeigo-purple; //for signup page component
+}
+
+.text-blue-100 {
+  color: colors.$blue-100;
+}
+
+.text-blue-10 {
+  color: colors.$blue-10;
+}
+
+.text-blue-10 {
+  color: colors.$blue-10;
+}
+
+
+.text-blue-200 {
+  color: colors.$dark-gray-590; //signup-search-icon, signup success form, forum listing view region bullet point, icons in the forum listing view-taxanomy section.
+}
+
+.text-blue-300 {
+  color: colors.$blue-300;
+}
+
+
+.text-blue-400 {
+  color: colors.$blue-400 !important;
+}
+
+.text-blue-500 {
+  color: colors.$blue-500;
+}
+
+.text-blue-600 {
+  color: colors.$blue-600;
+}
+
+.text-sky-blue {
+  color: colors.$sky-blue;
+}
+
+.text-aqua-400 {
+  color: colors.$aqua-400;
+}
+
+.text-white-20 {
+  color: colors.$white-20;
+}
+
+// This class is only applicable for Links within the Message - Zeigo
+.text-dark-green {
+  color: colors.$zeigo-purple !important;
+  font-weight: 400 !important;
+
+  &:hover {
+    color: colors.$purple-400 !important;
+  }
+}
+
+// Replacement For text-dark-green - Zeigo
+.text-neo-dark-green {
+  color: colors.$dark-green !important;
+}
+
+.text-dark-green-hover {
+  color: colors.$dark-green-hover !important;
+}
+
+.text-life-green {
+  color: colors.$life-green !important;
+}
+
+.text-lime {
+  color: colors.$lime;
+}
+
+.text-light-purple{
+  color: colors.$purple-350;
+}
+
+.text-error {
+  color: colors.$error-red; //Zeigo rebrand : Color change for Error on Forms
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-capitalize {
+  text-transform: capitalize !important;
+}
+
+.text-initial {
+  text-transform: initial !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-underline:hover {
+  text-decoration: underline;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.fw-400 {
+  font-weight: 400;
+  font-family: Arial, serif;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.text-gray-510 {
+  color: colors.$dark-gray-510 //Zeigo Rebrand : Terms Of Use Description Text Color
+}
+
+.text-dark-gray-750 {
+  color: colors.$dark-gray-750; //signup-page country search dropdown item selector highlighter
+}
+
+.text-dark-gray-505 {
+  color: colors.$dark-gray-505
+}
+
+.text-dark-gray-590 {
+  color: colors.$dark-gray-590 //Zeigo Rebrand : Contact NEO Network Modal
+}
+
+.text-neo-aqua {
+  color: colors.$aqua-400;
+}
+
+.text-neo-near-black {
+  color: colors.$near-black-400;
+}
+
+.text-dark-gray-800 {
+  color: colors.$dark-gray-800;
+}
+
+.text-dark-gray-280 {
+  color: colors.$dark-gray-280;
+}
+
+.text-dark-gray-515 {
+  color: colors.$dark-gray-515;
+}
+
+.text-dark-gray-545 {
+  color: colors.$dark-gray-545;
+}
+
+.text-dark-gray-580 {
+  color: colors.$dark-gray-580;
+}
+
+.text-dark-gray-30 {
+  color: colors.$dark-gray-30;
+}
+
+.text-purple-200 {
+  color: colors.$purple-200;
+}
+
+.text-purple-400 {
+  color: colors.$purple-400;
+}
+
+.text-dark-gray-450 {
+  background: colors.$dark-gray-450;
+} 
+
+.text-asterisk {
+  color: colors.$red; //Zeigo rebrand : Color change for Error on Forms
+}

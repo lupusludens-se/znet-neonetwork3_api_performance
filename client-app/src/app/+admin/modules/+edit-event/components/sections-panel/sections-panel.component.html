@@ -1,0 +1,166 @@
+<aside class="right-panel">
+  <h4 class="pb-24 title neo-arial mb-24">{{ 'onboarding.progressLabel' | translate }}</h4>
+
+  <ul>
+    <li class="main-item active">
+      <span class="big-decor mr-8"></span>
+      {{ 'events.eventLabel' | translate }}
+    </li>
+    <li>
+      <ul class="sub-list">
+        <li
+          [class.filled]="createEventForm?.value.subject"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="createEventForm?.value.subject"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.eventNameLabel' | translate }}
+        </li>
+        <li
+        [class.filled]="createEventForm?.controls['eventType'].valid"
+        class="sub-item">
+        <span class="decor">
+          <svg-icon
+            *ngIf="createEventForm?.controls['eventType'].valid"
+            key="check-in-blue"></svg-icon>
+        </span>
+        {{ 'events.eventTypeLabel' | translate }}
+      </li>
+        <li
+          [class.filled]="createEventForm?.controls['occurrences'].valid"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="createEventForm?.controls['occurrences'].valid"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.eventDatesLabel' | translate }}
+        </li>
+        <li
+          [class.filled]="createEventForm?.value.location"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="createEventForm?.value.location"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.locationLabel' | translate }}
+        </li>
+        <li
+          [class.filled]="createEventForm?.value.userRegistration"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="createEventForm?.value.userRegistration"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.userRegistrationLabel' | translate }}
+          <span class="optional-label ml-4">({{ 'general.optionalLabel' | translate }})</span>
+        </li>
+        <li
+          [class.filled]="createEventForm?.value.description"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="createEventForm?.value.description"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.descriptionOfEventLabel' | translate }}
+          <span class="optional-label ml-4">({{ 'general.optionalLabel' | translate }})</span>
+        </li>
+        <li
+          [class.filled]="createEventForm?.value.highlights"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="createEventForm?.value.highlights"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.eventHighlightsLabel' | translate }}
+          <span class="optional-label ml-4">({{ 'general.optionalLabel' | translate }})</span>
+        </li>
+        <li
+          [class.filled]="createEventForm?.controls['moderators'].value[0]?.name"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="createEventForm?.controls['moderators'].value[0]?.name"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.moderatorsLabel' | translate }}
+        </li>
+        <li
+          [class.filled]="createEventForm?.controls['categories'].valid"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="createEventForm?.controls['categories'].valid"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.tagsLabel' | translate }}
+        </li>
+        <li
+          [class.filled]="createEventForm?.value?.links?.length >= 1 || createEventForm?.value?.recordings?.length >=1"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="createEventForm?.value?.links?.length >= 1  || createEventForm?.value?.recordings?.length >=1"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.contentLinksLabel' | translate }}
+          <span class="optional-label ml-4">({{ 'general.optionalLabel' | translate }})</span>
+        </li>
+      </ul>
+    </li>
+
+    <li class="mt-16 main-item active">
+      <span class="big-decor mr-8"></span>
+      {{ 'events.eventInvitesLabel' | translate }}
+    </li>
+    <li>
+      <ul class="sub-list">
+        <li class="sub-item filled">
+          <span class="decor">
+            <svg-icon key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.eventInvitesLabel' | translate }}
+        </li>
+        <li
+          [class.filled]="inviteForm.controls['invitedRegions'].value?.length > 0"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="inviteForm.controls['invitedRegions'].value?.length > 0"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.regionsLabel' | translate }}
+          <span class="optional-label ml-4">({{ 'general.optionalLabel' | translate }})</span>
+        </li>
+        <li
+          [class.filled]="eventsService.currentFormValue.value?.invitedCategories?.length > 0"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="eventsService.currentFormValue.value?.invitedCategories?.length > 0"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.usersInterestedLabel' | translate }}
+          <span class="optional-label ml-4">({{ 'general.optionalLabel' | translate }})</span>
+        </li>
+        <li
+          [class.filled]="eventsService.currentFormValue.value?.invitedUsers?.length > 0"
+          class="sub-item">
+          <span class="decor">
+            <svg-icon
+              *ngIf="eventsService.currentFormValue.value?.invitedUsers?.length > 0"
+              key="check-in-blue"></svg-icon>
+          </span>
+          {{ 'events.companiesUsersLabel' | translate }}
+          <span class="optional-label ml-4">({{ 'general.optionalLabel' | translate }})</span>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</aside>

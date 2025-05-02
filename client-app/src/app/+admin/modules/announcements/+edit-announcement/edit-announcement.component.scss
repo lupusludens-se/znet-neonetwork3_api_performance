@@ -1,0 +1,129 @@
+@use 'colors';
+@use 'variables';
+
+.title {
+  font-size: 24px;
+  line-height: 120%;
+  color: colors.$near-black-400;
+}
+
+.top {
+  .controls {
+    width: 164px;
+    height: 34px;
+    background-color: colors.$dark-gray-200;
+    padding: 2px;
+    border-radius: 500px;
+
+    .btn-active,
+    .btn-inactive {
+      font-family: 'Arial', sans-serif;
+      color: colors.$near-black-400;
+      font-weight: 700;
+      font-size: 14px;
+      height: 100%;
+      width: 80px;
+      border-radius: 500px;
+    }
+
+    .btn-active {
+      &.active {
+        background: colors.$dark-green;
+        color: colors.$white;
+      }
+    }
+
+    .btn-inactive {
+      &.active {
+        background: colors.$error-red;
+        color: colors.$dark-gray-30;
+      }
+    }
+  }
+}
+
+.content {
+  width: 874px;
+  background-color: colors.$white;
+  padding: 24px 32px;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+}
+
+.image-area {
+  height: 200px;
+
+  .file-input {
+    display: none;
+  }
+
+  .announcement-img {
+    width: 380px;
+    height: 100%;
+    object-fit: cover;
+
+    &.opaque {
+      opacity: 0.1;
+    }
+  }
+
+  .controls {
+    width: 430px;
+    border: 1px dashed colors.$blue-100;
+    border-left: none;
+
+    .btn-add {
+      width: 240px;
+      height: 37px;
+      border-radius: 8px;
+      background: colors.$zeigo-purple;
+      color: colors.$dark-gray-40;
+      line-height: 150%;
+      font-size: 14px;
+    }
+
+    .btn-remove {
+      width: 240px;
+      height: 37px;
+      letter-spacing: 0.01em;
+      color: colors.$error-red;
+      font-size: 14px;
+      line-height: 150%;
+      &:hover{
+        background: #FFF8F8;
+      }
+    }
+
+    .info {
+      width: 240px;
+      text-align: center;
+      font-size: 12px;
+      line-height: 140%;
+      color: colors.$dark-gray-590;
+    }
+  }
+}
+
+.text-input-label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  line-height: 20px;
+  color: colors.$dark-gray-590;
+}
+
+.counter {
+  font-size: 12px;
+  line-height: 20px;
+  color: colors.$dark-gray-590;
+  position: absolute;
+  right: 0;
+  font-family: 'Arial Rounded MT Bold', sans-serif;
+}
+
+.form-footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}

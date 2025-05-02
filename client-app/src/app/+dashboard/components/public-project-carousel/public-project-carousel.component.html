@@ -1,0 +1,95 @@
+<div class="d-flex w-100 top-container justify-between" *ngIf="loading">
+  <div class="d-flex flex-column w-70 flex-left">
+    <h3 class="trending-label pb-2">
+      {{ title }}
+    </h3>
+
+    <div class="pb-16" *ngIf="subTitle?.length > 0">
+      <span class="trending-sub-label">{{ subTitle }}</span>
+    </div>
+  </div>
+
+  <div class="d-flex w-30 justify-end" [ngClass]="{ 'mt-12': subTitle?.length > 0 }">
+    <button (click)="backward()" *ngIf="(!recentlyViewed && postData.length > 3)" class="border flex-center mr-6">
+      <svg-icon key="arrow-left"></svg-icon>
+    </button>
+
+    <button (click)="forward()" [disabled]="circlesArr | disableCarousel :  position"
+      *ngIf="(!recentlyViewed && postData.length > 3)" class="border flex-center">
+      <svg-icon key="arrow-right"></svg-icon>
+    </button>
+
+    <button class="btn-ViewAll flex-center lock-icon" [routerLink]="'/solutions'"(click)="onProjectsAllClick()">
+      {{ 'general.viewAllLabel' | translate }}
+      <svg-icon class="ml-6" size="md" key="right-arrow"></svg-icon>
+    </button>
+  </div>
+</div>
+
+<div class="flex-column w-100 carousel-container">
+  <div class="d-flex slide-wrapper w-100"
+    style.transform="translateX(calc(100% / {{ postsCountPerSlide }}  * {{ position }} ))">
+    <div *ngFor="let post of postData" class="slide w-100">
+      <ng-container class="w-100">
+        <div class="w-100 h-100 tile-wrapper">
+          <div class="d-flex h-100">
+            <div class="left-section">
+              <img src="{{ post.imageUrl }}" alt="project-item" />
+            </div>
+            <div class="right-section pr-16">
+              <div class="d-flex flex-column h-100 lock-icon" neoLockClick [src]="activityEnum"
+                [data]="{title: post.title, actionType: projectActionType }">
+                <div class="title-height">
+                  <span class="title text-ellipsis">
+                    <svg-icon class="lock" key="lock-private-content" class="text-aqua-400"></svg-icon>
+                    {{ post.title }}
+                  </span>
+                </div>
+                <div class="title-height pt-4">
+                  <span class="sub-title text-ellipsis">{{ post.subTitle }} </span>
+                </div>
+                <div class="d-flex justify-between align-end flex-grow-1 pt-4 pb-4">
+                  <div class="d-flex justify-center pb-10">
+                    <span class="geography-tag">
+                      <label class="geography-tag-item">{{ post.geography?.split(',')?.[0] }}
+                        {{post.geography?.split(',')?.length > 1 ? '...' : ''}}</label>
+                    </span>
+                  </div>
+                  <div class="d-flex flex-column justify-center pb-10">
+                    <ng-container *ngIf="post.trendingTag !== null && post.trendingTag === 'New'; else trending">
+                      <span class="new-trending-tag">
+                        <label class="tag">{{ 'dashboard.new' | translate }}</label>
+                        <svg-icon class="svg-icon-height" key="sparkles">
+                        </svg-icon>
+                      </span>
+                    </ng-container>
+                    <ng-template #trending>
+                      <span class="new-trending-tag" *ngIf="post.trendingTag !== null">
+                        <label class="tag">{{ 'dashboard.trending' | translate }}</label>
+                        <svg-icon class="svg-icon-height" key="arrow-up">
+                        </svg-icon>
+                      </span>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+
+    </div>
+  </div>
+  <div *ngIf="postData?.length > 0 && circlesArr?.length > 0">
+    <div class="progress-bar pt-12">
+      <div *ngFor="let element of circlesArr; index as i" class="circle" [class.active]="
+            element === position || (i > 0 && i < totalSlides && circlesArr[i - 1] > position && element < position)
+          "></div>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-center" *ngIf="(postData === null || postData?.length <= 0) && loading === true">
+  <label class="no-label">{{ 'dashboard.noNewAndTrendingLabel' | translate }}</label>
+</div>

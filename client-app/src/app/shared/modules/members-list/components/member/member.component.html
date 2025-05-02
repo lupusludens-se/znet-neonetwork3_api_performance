@@ -1,0 +1,120 @@
+<ng-container *ngIf="!isCompanyProfile">
+  <div
+    [class.border]="bordered"
+    class="person d-flex pb-32 align-center justify-between">
+    <div class="d-flex align-center">
+      <neo-user-avatar
+        [user]="user"
+        class="mr-8"
+        imageSize="size32"></neo-user-avatar>
+
+      <div class="name-wrapper flex-column"> 
+        <h6
+          class="text-neo-near-black c-pointer  custom-ellipsis"
+          (click)="emitUserClick()">
+          {{ user.firstName }} {{ user.lastName }}
+        </h6>
+
+        <p
+          *ngIf="user?.company && user.statusId !== userStatuses.Deleted"
+          class="text-small text-dark-gray-590">
+          {{ user?.company }}
+        </p>
+
+        <p
+          *ngIf="user?.jobTitle"
+          class="ellipsis text-small text-dark-gray-590 mt-2">
+          {{ user?.jobTitle }}
+        </p>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showActions && user.statusId !== userStatuses.Deleted"
+      class="d-flex align-center pl-12">
+      <svg-icon
+        (click)="followClick.emit(user)"
+        [class.text-aqua-400]="user?.isFollowed"
+        [key]="user?.isFollowed ? 'check-circle' : 'add-circle'"
+        [class.icon24]="user?.isFollowed"
+        class="add-hover c-pointer"
+        fontSize="20px"></svg-icon>
+
+      <svg-icon
+        [queryParams]="{ userId: user.id }"
+        [routerLink]="['/messages/new-message']"
+        class="add-hover c-pointer ml-12"
+        key="chat-transparent"
+        height="22px"
+        size="xl"
+        width="22px"></svg-icon>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="isCompanyProfile">
+  <div
+    [class.border]="bordered"
+    class="company-person d-flex pb-32 align-center">
+    <div class="d-flex align-center" [ngClass]="{'w-80':isCompanyFollowers,'w-50' : !isCompanyFollowers }">
+      <neo-user-avatar
+        [user]="user"
+        class="mr-8"
+        imageSize="size32"></neo-user-avatar>
+
+      <div class="pr-12 flex-column">
+        <h6
+          class="name-wrapper text-neo-near-black c-pointer"
+          [routerLink]="user.statusId === userStatuses.Deleted ? [] : ['/user-profile/', user.id]">
+          {{ user.firstName }} {{ user.lastName }}
+        </h6>
+
+        <p
+          *ngIf="user?.company && user.statusId !== userStatuses.Deleted"
+          class="ellipsis text-small text-dark-gray-590">
+          {{ user?.company }}
+        </p>
+      </div>
+    </div>
+
+    <div class="flex-column pl-12 pr-12 w-30" *ngIf="!isCompanyFollowers">
+      <div class="followers">
+        {{ user?.followersCount }}
+        {{ (user?.followersCount > 1 ? 'userProfile.followers' : 'userProfile.follower') | translate }}
+      </div>
+      <span class="tooltip c-pointer">
+        <div class="country-wrapper">
+          {{ user?.country?.name }} <ng-container *ngIf="user?.userProfile?.state?.name">,</ng-container>
+          {{ user?.userProfile?.state?.name }}
+        </div>
+        <span class="tooltiptext text-xs">
+          {{ user?.country?.name }} <ng-container *ngIf="user?.userProfile?.state?.name">,</ng-container>
+          {{ user?.userProfile?.state?.name }}
+        </span>
+      </span>
+    </div>
+
+    <div
+      *ngIf="showActions && user.statusId !== userStatuses.Deleted"
+      class="d-flex align-center pl-12 w-20"  [ngClass]="{'justify-end':isCompanyFollowers}">
+      <div>
+        <svg-icon
+          (click)="followClick.emit(user)"
+          [class.text-aqua-400]="user?.isFollowed"
+          [key]="user?.isFollowed ? 'check-circle' : 'add-circle'"
+          [class.icon24]="user?.isFollowed"
+          class="add-hover c-pointer"
+          fontSize="20px"></svg-icon>
+      </div>
+      <div>
+        <svg-icon
+          [queryParams]="{ userId: user.id }"
+          [routerLink]="['/messages/new-message']"
+          class="add-hover c-pointer ml-12"
+          key="chat-transparent"
+          height="22px"
+          size="xl"
+          width="22px"></svg-icon>
+      </div>
+    </div>
+  </div>
+</ng-container>

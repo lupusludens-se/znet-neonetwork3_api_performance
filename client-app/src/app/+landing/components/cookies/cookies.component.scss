@@ -1,0 +1,24 @@
+@use 'colors';
+
+:host {
+  background: colors.$white;
+  box-shadow: 0 5px 20px rgba(7, 30, 53, 0.2);
+  position: fixed;
+  z-index: 10;
+  right: 12px;
+  bottom: 12px;
+  width: 480px;
+}
+
+.btn-m {
+  padding: 12px 15px;
+  &.policy {
+    color: colors.$blue-400;
+    border: 1px solid colors.$dark-gray-300;
+    border-radius: 2px;
+
+    &:hover {
+      background: colors.$lime;
+    }
+  }
+}

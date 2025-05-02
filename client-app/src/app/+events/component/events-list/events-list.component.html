@@ -1,0 +1,26 @@
+<ng-container *ngIf="currentUser$ | async as currentUser">
+  <ng-container *ngIf="!!eventsData?.dataList?.length">
+    <div class="events-view-wrapper d-flex flex-wrap">
+      <ng-container *ngFor="let eventData of eventsData?.dataList">
+        <neo-event-item
+          (changeAttendance)="changeAttendance(eventData.id, $event)"
+          (click)="openDetails(eventData.id)"
+          [currentUser]="currentUser"
+          [eventData]="eventData"
+          class="c-pointer">
+        </neo-event-item>
+      </ng-container>
+    </div>
+
+    <neo-pagination
+      (changePage)="changePage($event)"
+      *ngIf="eventsData?.count > defaultItemPerPage"
+      [defaultItemPerPage]="defaultItemPerPage"
+      [paging]="requestData">
+    </neo-pagination>
+  </ng-container>
+</ng-container>
+
+<neo-no-results
+  *ngIf="!eventsData?.dataList?.length && searchInput"
+  [searchedStr]="searchInput"></neo-no-results>

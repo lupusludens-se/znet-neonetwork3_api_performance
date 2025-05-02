@@ -1,0 +1,94 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+.container {
+  .section-header {
+    .section-title {
+      font-size: 24px;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      font-weight: 700;
+      padding-left: 5px;
+    }
+
+    .communication-icon {
+      color: colors.$blue-650;
+    }
+
+    .btn-tertiary {
+      align-items: center;
+      border: 1px solid colors.$purple-300;
+      background-color: colors.$dark-gray-40;
+      border-radius: 8px;
+      color: colors.$purple-200;
+      height: 40px;
+      padding-left: 10px;
+      cursor: pointer;
+
+      &:hover {
+        border-color: colors.$purple-500;
+        color: colors.$purple-500;
+      }
+
+      .eye-icon {
+        font-size: 20px !important;
+        padding-right: 5px;
+      }
+
+      .view-all-btn {
+        color: colors.$purple-200;
+      }
+    }
+  }
+
+  .card {
+    height: 360px;
+    overflow-y: auto;
+    padding: 10px;
+  }
+
+  .three-dots {
+    color: colors.$dark-gray-590;
+  }
+
+  .w-98 {
+    width: 98%;
+  }
+
+  .border,
+  .message-wrapper-last {
+    border: 1px solid colors.$dark-gray-420;    
+    margin-bottom: 4px;    
+    border-radius: 8px;
+  }
+ 
+
+  .border:not(:last-child) {
+    border-bottom: 0;
+  }
+
+  .msg-saved-section {
+    height: 380px;
+  }
+  
+}
+.team-section {
+  padding: 12px;
+  background: colors.$purple-20;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid colors.$purple-160;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  
+}
+.lock-icon {
+  svg-icon {
+    pointer-events: none !important;
+    font-size: 30px;
+    width: 20px;
+    height: 20px;
+  }
+  cursor: pointer;
+}

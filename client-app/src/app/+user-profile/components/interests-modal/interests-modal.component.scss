@@ -1,0 +1,42 @@
+@use 'colors';
+
+.interests-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(134, 132, 141, 0.3);
+
+  .content {
+    position: relative;
+    width: 839px;
+    border-radius: 2px;
+    background-color: colors.$dark-gray-20;
+    padding: 36px 32px 32px;
+
+    .btn-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: colors.$blue-200;
+
+      .close-icon {
+        &:hover {
+          color: colors.$near-black-400;
+        }
+      }
+    }
+    
+    .modal-text {
+      font-size: 14px;
+      line-height: 130%;
+      letter-spacing: 0.01em;
+      color: colors.$blue-500;
+    }
+  }
+}

@@ -1,0 +1,331 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+.list-min-full-height {
+  min-height: calc(100vh - 252px - (#{variables.$header-height} + #{variables.$footer-height}));
+}
+
+.btn-s {
+  &.active {
+    border-color: colors.$blue-400;
+    background: colors.$blue-400;
+    color: colors.$white;
+
+    .badge {
+      background: colors.$blue-300;
+      color: colors.$white;
+    }
+  }
+
+  .badge {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(218, 225, 236, 0.5);
+    color: colors.$blue-400;
+  }
+}
+
+.header {
+  background-color: colors.$dark-gray-450;
+  border: 1px solid colors.$dark-gray-420;
+  transition: all 0.05s ease-in-out;
+  height: 40px;
+  color: #1d122b;
+  font-family: 'Arial';
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.message:hover {
+  transition: all 0.05s ease-in-out;
+  background: colors.$white;
+}
+
+.message-wrapper {
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-420;
+  transition: all 0.05s ease-in-out;
+  border-top: none;
+  height: auto;
+
+  &:hover {
+    background: colors.$purple-10;
+
+    .message:hover {
+      transition: all 0.05s ease-in-out;
+      background: colors.$white;
+    }
+
+    .timer-icon {
+      color: colors.$dark-gray-590;
+    }
+
+    .view-btn {
+      transition: all 0.05s ease-in-out;
+      color: colors.$zeigo-purple;
+
+      &:hover {
+        color: colors.$purple-200;
+      }
+    }
+
+    .lead-btn {
+      transition: all 0.05s ease-in-out;
+      color: colors.$zeigo-purple;
+
+      &:hover {
+        color: colors.$purple-200;
+      }
+    }
+
+
+  }
+
+  &.new {
+    border-left: 5px solid colors.$aqua-400;
+  }
+
+  .user-name {
+    font-size: 14px;
+    line-height: 24px;
+
+    @media (breakpoints.$medium) {
+      font-size: 16px;
+    }
+  }
+
+  .unread-messages-count {
+    min-width: 20px;
+    height: 20px;
+    padding: 1px 4px;
+    background: colors.$aqua-400;
+    border-radius: 500px;
+    color: colors.$blue-10;
+  }
+
+  .message-block {
+    width: 48%;
+    max-width: 48%;
+
+    @media (breakpoints.$medium) {
+      width: 60%;
+      max-width: 60%;
+    }
+
+    .subject-label {
+      color: colors.$dark-gray-590;
+      font-size: 14px;
+      line-height: 130%;
+      font-family: 'Arial Rounded MT';
+    }
+
+    .subject {
+      color: colors.$near-black-400;
+      font-family: 'Arial Rounded MT Bold';
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 130%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 330px;
+    }
+  }
+
+  .message {
+    background: colors.$dark-gray-450;
+    padding: 12px 16px 16px;
+    border-radius: 0px 10px 10px 10px;
+    width: 400px;
+
+    .message-content {
+      overflow-wrap: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+  }
+
+  .user-image-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 6px solid colors.$dark-gray-30;
+    margin-left: -11px;
+    border-bottom-color: transparent;
+
+    &:hover {
+      .user-tooltip {
+        display: initial;
+      }
+    }
+
+    .counter {
+      user-select: none;
+      border-radius: 50%;
+      background: colors.$blue-20;
+    }
+
+    .user-tooltip {
+      display: none;
+      padding: 8px 8px;
+      background: colors.$white-20;
+      border-radius: 8px;
+      box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.1), 0px 4px 6px -2px rgba(16, 24, 40, 0.05);
+      white-space: nowrap;
+      bottom: -35px;
+
+      a {
+        color: colors.$near-black-400;
+
+        &:visited {
+          color: colors.$near-black-400;
+        }
+      }
+    }
+  }
+
+  .z-index-6 {
+    z-index: 6;
+  }
+
+  .link-align {
+    vertical-align: sub;
+  }
+
+  .lead-btn,
+  .view-btn {
+    svg-icon {
+      line-height: 1;
+      width: 13px;
+      height: 13px;
+      font-size: 13px;
+
+      @media (breakpoints.$medium) {
+        width: 16px;
+        height: 16px;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .right-block {
+    .lead-label {
+      color: colors.$blue-40;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 130%;
+      border-radius: 0px 0px 0px 15px;
+      border: 1px solid colors.$green-700;
+      background: colors.$green-700;
+      padding: 8px 25px;
+      gap: 4px;
+      text-align: center;
+    }
+  }
+
+}
+
+.inbox-btn {
+  border-radius: 8px !important;
+  border: none;
+}
+
+.network-btn {
+  border-radius: 8px !important;
+  border: none;
+}
+
+.inbox-btn.active,
+.network-btn.active {
+  background: colors.$zeigo-purple;
+  color: colors.$dark-gray-40 !important;
+
+  &:hover {
+    background: colors.$purple-400;
+  }
+}
+
+.inbox-btn.inactive,
+.network-btn.inactive {
+  background: colors.$dark-gray-450;
+  color: colors.$dark-gray-590;
+}
+
+.inbox-btn.inactive:hover,
+.network-btn.inactive:hover {
+  background: colors.$dark-gray-250;
+  color: colors.$dark-gray-590;
+}
+
+neo-empty-page {
+  display: block;
+  margin-top: -26px;
+}
+
+.view-btn {
+  font-family: 'Arial Rounded MT Bold';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  text-transform: capitalize;
+  color: colors.$zeigo-purple;
+}
+
+.lead-btn {
+  font-family: 'Arial Rounded MT Bold';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  text-transform: capitalize;
+  color: colors.$zeigo-purple;
+}
+
+.leadMsg {
+  background: colors.$dark-gray-450;
+  border: 1px solid colors.$dark-gray-450;
+  padding: 12px 16px 16px;
+  border-radius: 0px 10px 10px 10px;
+}
+
+.sortInput {
+  select {
+    border: none;
+    background: inherit;
+  }
+
+  padding: 12px;
+  gap:8px;
+}
+
+
+.label-filter {
+  color: #57595E;
+  line-height: 130%;
+  letter-spacing: 0.14px;
+}
+
+.disabled {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+.message-lable {
+  font-weight: 700;
+  text-align: center;
+  line-height: 20px;  
+  font-family: "Arial Rounded MT Bold", serif;
+}
+
+.message-wrapper-first {
+  border-top: 1px solid colors.$dark-gray-420;
+}

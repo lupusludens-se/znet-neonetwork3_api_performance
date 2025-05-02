@@ -1,0 +1,117 @@
+@use 'colors';
+
+:host {
+  position: relative;
+}
+
+.filter-wrapper {
+  &.expanded {
+    .horizontal {
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+      background: colors.$white;
+      box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+
+      .parent-wrapper {
+        &.collapsed {
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}
+
+:host.ppaMapFilter {
+  .filter-wrapper {
+    &.expanded {
+      width: 250px;
+      box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+      .horizontal {
+        overflow-y: auto;
+        width: 250px;
+        height: 350px;
+        .parent-wrapper {
+          &.collapsed {
+            overflow: visible;
+          }
+        }
+      }
+    }
+    
+  &.collapsed {
+    width: 250px;
+    animation: none;
+  }
+  }
+}
+
+.parent-wrapper {
+  height: 48px;
+
+  .parent-title-wrapper {
+    .child-wrapper:not(.pb-8) {
+      border-bottom: 1px solid colors.$dark-gray-200;
+      padding-top: 7px;
+      padding-right: 1px;
+    }
+  }
+  &.expanded {
+    height: 100%;
+
+    .parent-expanding {
+      transform: rotate(180deg);
+    }
+
+    .parent-body-wrapper {
+      padding: 8px 8px 8px 24px;
+    }
+  }
+
+  &.collapsed {
+    height: 48px;
+
+    .parent-body-wrapper {
+      padding: 0;
+    }
+  }
+
+  .parent-title-wrapper {
+    padding: 0px 6px;
+  }
+
+  .parent-body-wrapper {
+    max-height: 148px;
+    overflow-y: scroll;
+  }
+
+  .parent-expanding {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .search-input {
+    .search-icon {
+      left: 10px;
+    }
+
+    .close-icon {
+      right: 10px;
+    }
+
+    input {
+      background: colors.$dark-gray-100;
+      border: none;
+      border-radius: 2px;
+      padding-left: 32px;
+      font-size: 12px;
+      color: colors.$neo-blue;
+
+      &::placeholder {
+        color: colors.$neo-blue;
+        font-size: 12px;
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<div class="confirm-announcement-modal-wrapper">
+  <h3 class="title mb-24 d-flex align-center">
+    <svg-icon class="alert-icon mr-6" height="30px" key="alert-filled" width="30px"></svg-icon>
+    {{ 'announcement.warning.warningLabel' | translate }}
+  </h3>
+  <svg-icon
+  (click)="onEditClick()"
+  class="text-blue-200 c-pointer p-absolute top-20 right-20 close-hover"
+  key="modal-close"
+  width="30px"></svg-icon>
+  
+  <ul class="pb-12 mb-24 text-dark-gray-580 text-s">
+    <li>{{ 'announcement.warning.anotherAnnouncementLabel' | translate }}</li>
+    <li>{{ 'announcement.warning.savingNewLabel' | translate }}</li>
+    <li>{{ 'announcement.warning.confirmOrEditLabel' | translate }}</li>
+    <li>{{ 'announcement.warning.bothAnnouncementLabel' | translate }}</li>
+  </ul>
+  
+  <div class="controls d-flex justify-end">
+    <button (click)="onEditClick()" class="btn-edit mr-16">{{ 'actions.editLabel' | translate }}</button>
+    <button (click)="confirmChanges.emit(true)" class="btn-confirm green">
+      {{ 'actions.confirmLabel' | translate }}
+    </button>
+  </div>
+</div>
+

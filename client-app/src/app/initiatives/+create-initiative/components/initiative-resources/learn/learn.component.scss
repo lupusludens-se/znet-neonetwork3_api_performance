@@ -1,0 +1,87 @@
+@use 'colors';
+
+.tile-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.tile {
+  width: calc(25% - 10px);
+  height: 283px;
+  overflow: hidden;
+  position: relative;
+  background: colors.$white-10;
+  border-radius: 8px;
+  margin: 5px;
+
+  &.selected {
+    border: 2px solid colors.$purple-300;
+
+    &:hover {
+      background: colors.$blue-5;
+    }
+  }
+
+  &:hover {
+    background: colors.$blue-5;
+    border: 1px solid #e2e1e1;
+    box-shadow: 0px 2px 8px rgba(134, 132, 141, 0.16);
+  }
+}
+
+.section-content {
+  background: colors.$white;
+  border-radius: 2px;
+  padding-left: 32px;
+  padding-right: 32px;
+
+  .img {
+    border-bottom: 150px solid colors.$red-5;
+  }
+}
+
+.section-line {
+  height: 0px;
+  border-radius: 4px;
+  border-bottom: 6px solid colors.$violet-5;
+}
+.section-line-big {
+  max-width: 100%;
+}
+
+.section-line-first {
+  margin-top: 20%;
+}
+
+.section-content-5 {
+  padding-top: 40px;
+}
+
+.section-content {
+  background: colors.$white;
+  border-radius: 2px;
+  padding-left: 32px;
+  padding-right: 32px;
+
+  .img {
+    border-bottom: 150px solid colors.$red-5;
+  }
+}
+
+.section-line {
+  height: 0px;
+  border-radius: 4px;
+  border-bottom: 6px solid colors.$violet-5;
+}
+.section-line-big {
+  max-width: 100%;
+}
+
+.section-line-first {
+  margin-top: 20%;
+}
+
+.section-content-5 {
+  padding-top: 40px;
+}

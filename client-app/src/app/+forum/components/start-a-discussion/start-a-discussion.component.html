@@ -1,0 +1,201 @@
+<button
+    (click)="goBack()"
+    class="btn-connect back-btn d-flex align-center pb-4">
+    <svg-icon
+      class="pr-4 back-btn-img-s"
+      key="left-arrow"></svg-icon>
+    Back
+  </button>
+<h2
+class="text-neo-near-black"
+  [class.pb-24]="createDiscussion">
+  {{ 'forum.startDiscussionLabel' | translate }}
+</h2>
+
+<p
+  class="text-s text-dark-gray-580 pb-24 pt-8"
+  *ngIf="!createDiscussion">
+  {{ 'forum.startDiscussionSubLabel' | translate }}
+</p>
+
+<neo-discussion-search
+ class="forum-search"
+  (createDiscussion)="navigateToNewDiscussion()"
+  (inputChange)="search($event)"
+  (paste)="searchPaste($event)"
+  (selectedResult)="navigateToDiscussion($event)"
+  *ngIf="!createDiscussion"
+  [pageSearchControl]="true"
+  [placeholder]="'forum.startDiscussionPlaceholderLabel' | translate"
+  [results]="searchResults">
+</neo-discussion-search>
+
+<ng-container *ngIf="currentUser$ | async as currentUser">
+  <form
+    *ngIf="createDiscussion"
+    [formGroup]="formGroup"
+    class="flex-column mb-64">
+    <div class="flex-column p-24 control-wrapper">
+      <label
+        class="text-neo-near-black neo-arial text-m pb-12 flex-between"
+        for="title">
+        {{ 'form.titleLabel' | translate }}
+      </label>
+
+      <input
+        [class.error]="hasError('title')"
+        [maxLength]="250"
+        class="medium pl-16"
+        formControlName="title"
+        id="title"
+        type="text" />
+
+      <p
+        *ngIf="hasError('title')"
+        class="text-error pt-8 text-s">
+        {{ 'form.titleLabel' | translate }}
+        {{ 'general.requiredLabel' | translate }}
+      </p>
+    </div>
+
+    <div class="p-relative flex-column p-24 control-wrapper mt-12">
+      <label
+        class="text-neo-near-black neo-arial text-m pb-6 flex-between"
+        for="description">
+        {{ 'form.discussionLabel' | translate }}
+      </label>
+
+      
+      <div class="pb-12 required arial text-s"> {{ 'general.requiredText' | translate }} <span class="p-absolute right-24 counter text-s fw-700 text-dark-gray-590">
+        {{ descriptionCount || 0 }}/{{ DESCRIPTION_TEXT_MAX_LENGTH }}
+      </span></div>
+
+      <neo-message-control
+        (fileSelected)="fileSelected$.next($event)"
+        (symbolsCount)="descriptionCount = $event"
+        [attachments]="attachments"
+        [maxLength]="DESCRIPTION_MAX_LENGTH"
+        [hasError]="hasError('description')"
+        [isLoading]="isLoading"
+        formControlName="description"
+        id="description"
+        classes="p-0 text-s">
+      </neo-message-control>
+
+      <p
+        *ngIf="hasDescriptionError('description')"
+        class="text-error pt-8 text-s">
+        {{ descriptionErrorMessage }}
+      </p>
+    </div>
+
+    <div
+      class="d-flex align-start p-24 control-wrapper mt-12"
+      *ngIf="permissionService.userHasPermission(currentUser, permissionTypes.ForumManagement)">
+      <label class="d-flex c-pointer">
+        <neo-blue-checkbox
+          (selectCheckbox)="formGroup.get('isPinned').setValue($event?.target?.checked)"
+          [checked]="formGroup.get('isPinned').value"></neo-blue-checkbox>
+
+        <span class="flex-column pl-12">
+          <h6 class="text-m text-neo-near-black">
+            {{ 'forum.pinDiscussionLabel' | translate }}
+          </h6>
+
+          <p class="text-s text-dark-gray-580 pt-2">
+            {{ 'forum.pinDiscussionSubLabel' | translate }}
+          </p>
+        </span>
+      </label>
+    </div>
+
+    <div class="flex-column p-24 control-wrapper mt-12 text-m">
+      <div class="d-flex align-center pb-12 neo-arial text-neo-near-black text-m">
+        <span >
+          {{ 'forum.topicsLabel' | translate }}
+        </span>
+        &nbsp;
+        <span
+          [class.text-error]="hasError('topics')"
+          class="">
+          {{ 'forum.topicsSubLabel' | translate }}
+        </span>
+      </div>
+
+      <div class="d-flex flex-wrap gap-8">
+        <ng-container *ngIf="categories$ | async as categories">
+          <neo-select-item
+            class="forum-selectitems"
+            (add)="addItem('topics', $event)"
+            *ngFor="let category of categories"
+            [item]="category"
+            [maxSelectedItems]="3"
+            [selectedItems]="formGroup.get('topics').value">
+          </neo-select-item>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="flex-column p-24 control-wrapper mt-12">
+      <div class="d-flex align-center pb-12 neo-arial text-neo-near-black text-m">
+        <span>
+          {{ 'forum.locationSpecificLabel' | translate }} {{ 'forum.locationSpecificSubLabel' | translate }}
+        </span> 
+      </div>
+
+      <div class="d-flex align-start">
+        <div class="d-flex align-center">
+          <button
+            (click)="resetRegions()"
+            [class.btn-forum-location-selected]="!locationSpecific"
+            class="tab mr-8">
+            {{ 'general.noLabel' | translate }}
+          </button>
+
+          <button
+            (click)="locationSpecific = true"
+            [class.btn-forum-location-selected]="locationSpecific"
+            class="tab mr-16">
+            {{ 'general.yesLabel' | translate }}
+          </button>
+
+          <svg-icon
+            class="text-blue-200 mr-16"
+            height="24px"
+            key="forward"
+            width="24px"></svg-icon>
+        </div>
+
+        <div
+          [class.disabled]="!locationSpecific"
+          class="d-flex flex-wrap gap-8">
+          <ng-container *ngIf="regions$ | async as regions">
+            <neo-select-item
+              class="forum-selectitems"
+              (add)="addItem('regions', $event)"
+              *ngFor="let region of regions"
+              [item]="region"
+              [selectedItems]="formGroup.get('regions').value">
+            </neo-select-item>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <neo-forum-users (selectedUsersUpdated)="selectedUsersUpdated($event)"> </neo-forum-users>
+  </form>
+</ng-container>
+
+<neo-form-footer
+  (backButtonClick)="backClick()"
+  (cancel)="cancelClick()"
+  (save)="saveData()"
+  *ngIf="createDiscussion"
+  [backButton]="true"
+  [iconOnLeftSide]="false"
+  [submitButtonName]="'forum.postDiscussionLabel' | translate"
+  backButtonIcon="left-arrow-thin"
+  class="neo-form-footer forum-post capitalize"
+  icon="arrow-thin-right"
+  iconSize="l">
+</neo-form-footer>

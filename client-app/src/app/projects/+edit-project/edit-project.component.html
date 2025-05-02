@@ -1,0 +1,374 @@
+<ng-container *ngIf="!!project">
+  <h2 class="title neo-arial mb-24">
+    {{ project?.statusId === projectStatuses.Draft ? 'Edit Project Draft' : 'Edit Project' }}
+  </h2>
+
+  <!-- Project Type -->
+  <div class="section-text flex-column collapsed">
+    <div class="top flex-between align-center ignore-padding">
+      <h3 class="sub-title neo-arial">Project Type</h3>
+      <h3 class="text neo-arial">{{ project?.category.name }}</h3>
+    </div>
+  </div>
+
+  <!-- Technologies -->
+  <div *ngIf="checkIfToShow(project?.category.slug)" [class.collapsed]="!sectionsList.showTechnologies"
+    class="section-wrapper flex-column">
+    <div class="top flex-between align-center ignore-padding">
+      <h3 class="sub-title neo-arial">Technologies</h3>
+
+      <div class="d-flex align-center">
+        <span *ngIf="technologiesError && !sectionsList.showTechnologies"><svg-icon size="xxs" class="mr-8 text-error"
+            key="alert-filled">
+          </svg-icon>
+        </span>
+
+        <button (click)="toggleSection('showTechnologies')"
+          [class.error]="technologiesError && !sectionsList.showTechnologies" class="close-section flex-center ml-12">
+          {{ sectionsList.showTechnologies ? 'View Less' : 'View More' }}
+          <svg-icon [key]="sectionsList.showTechnologies ? 'project-up-arrow' : 'project-down-arrow'" class="m-8"
+            fontSize="16px" size="md"></svg-icon>
+        </button>
+      </div>
+    </div>
+
+    <p [class.mt-32]="!sectionsList.showTechnologies" class="text-s text-dark-gray-590 mt-4">
+      <!--Select all that apply.-->
+    </p>
+    <neo-edit-project-technologies
+      (changeSelectedTechnologies)="project.technologies = $event; (project.technologies?.length > 0 ? technologiesError = null : technologiesError = { required: true } )"
+      [technologiesError]="technologiesError" [formSubmitted]="true"
+      [preSelectedTechnologies]="project?.technologies" [selectedTypeId]="project?.categoryId">
+    </neo-edit-project-technologies>
+  </div>
+
+  <!-- Project Geography -->
+  <div [class.collapsed]="!sectionsList.showRegions" class="section-wrapper flex-column">
+    <div class="top flex-between align-center ignore-padding">
+      <h3 class="sub-title neo-arial">Project Geography</h3>
+
+      <div class="d-flex align-center">
+        <span *ngIf="regionsValidationError && !sectionsList.showRegions">
+          <svg-icon size="xxs" class="mr-8 text-error" key="alert-filled">
+          </svg-icon>
+        </span>
+
+        <button (click)="toggleSection('showRegions')"
+          [class.error]="regionsValidationError && !sectionsList.showRegions" class="close-section flex-center ml-12">
+          {{ sectionsList.showRegions ? 'View Less' : 'View More' }}
+          <svg-icon [key]="sectionsList.showRegions ? 'project-up-arrow' : 'project-down-arrow'" class="m-8"
+            fontSize="16px" size="md">
+          </svg-icon>
+        </button>
+      </div>
+    </div>
+
+    <p [class.mt-32]="!sectionsList.showRegions" class="text-s text-dark-gray-590 mt-4">
+      <!--Select all that apply.-->
+    </p>
+
+    <neo-geographic-interest class="geography-wrapper" *ngIf="continents?.length > 0"
+      (selectedRegionsChange)="updateRegions($event); (project.regions?.length > 0 ? regionsValidationError = null : regionsValidationError = { required: true } )"
+      [continents]="continents" [preSelectedRegions]="project?.regions">
+    </neo-geographic-interest>
+
+    <neo-control-error class="mt-6" [errors]="!project?.regions?.length ? { required: true } : null"
+      fieldName="Project Geography" [submitted]="formSubmitted">
+    </neo-control-error>
+  </div>
+
+  <!-- Project Details -->
+  <div [class.collapsed]="!sectionsList.showProjectDetails" class="section-wrapper flex-column">
+    <div class="top flex-between align-center ignore-padding">
+      <h3 class="sub-title neo-arial">{{ project?.category?.slug === projectTypes.AggregatedPpa ||
+        project?.category?.slug === projectTypes.OffsitePpa ?
+        ('projects.addProject.projectPublicDetailsLabel' | translate) :
+        'projects.addProject.projectDetailsLabel' | translate }}</h3>
+
+      <div class="d-flex align-center">
+        <span *ngIf="(projectDetailsValidationError || upsideShareError) && !sectionsList.showProjectDetails">
+          <svg-icon size="xxs" class="mr-8 text-error" key="alert-filled">
+          </svg-icon>
+        </span>
+
+        <button (click)="toggleSection('showProjectDetails')"
+          [class.error]="(projectDetailsValidationError || upsideShareError) && !sectionsList.showProjectDetails"
+          class="close-section flex-center ml-12">
+          {{ sectionsList.showProjectDetails ? 'View Less' : 'View More' }}
+          <svg-icon [key]="sectionsList.showProjectDetails ? 'project-up-arrow' : 'project-down-arrow'" class="m-8"
+            fontSize="16px" size="md"></svg-icon>
+        </button>
+      </div>
+    </div>
+
+    <ng-container [ngSwitch]="project?.category?.slug">
+      <p class="d-flex align-center text-s text-neo-near-black project-sub-label">
+        <span class="ignore-padding">
+          <svg-icon class="text-neo-dark-green mr-8" key="alert-filled"></svg-icon>
+        </span>
+
+        {{ 'projects.addProject.inputsVisiblePublicLabel' | translate }}.
+      </p>
+      <form [formGroup]="projectDetailsForm">
+        <neo-edit-project-battery-storage [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.BatteryStorage" [class.mt-32]="!sectionsList.showProjectDetails"
+          [project]="project">
+        </neo-edit-project-battery-storage>
+
+        <neo-edit-project-carbon-offset [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.CarbonOffset" [class.mt-32]="!sectionsList.showProjectDetails"
+          [project]="project">
+        </neo-edit-project-carbon-offset>
+
+        <neo-edit-project-community-solar [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.CommunitySolar" [class.mt-32]="!sectionsList.showProjectDetails"
+          [project]="project">
+        </neo-edit-project-community-solar>
+
+        <neo-edit-project-eac-purchasing [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.EacPurchasing" [class.mt-32]="!sectionsList.showProjectDetails"
+          [project]="project">
+        </neo-edit-project-eac-purchasing>
+
+        <neo-edit-project-efficiency-audit [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.EfficiencyAudit" [class.mt-32]="!sectionsList.showProjectDetails"
+          [project]="project">
+        </neo-edit-project-efficiency-audit>
+
+        <neo-edit-project-efficiency-measures [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.EfficiencyEquipmentMeasures" [class.mt-32]="!sectionsList.showProjectDetails"
+          [project]="project">
+        </neo-edit-project-efficiency-measures>
+
+        <neo-edit-project-emerging-technologies [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.EmergingTechnologies" [class.mt-32]="!sectionsList.showProjectDetails"
+          [project]="project">
+        </neo-edit-project-emerging-technologies>
+
+        <neo-edit-project-ev-charging [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.EvCharging" [class.mt-32]="!sectionsList.showProjectDetails" [project]="project">
+        </neo-edit-project-ev-charging>
+
+        <neo-edit-project-fuel-cells [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.FuelCells" [class.mt-32]="!sectionsList.showProjectDetails" [project]="project">
+        </neo-edit-project-fuel-cells>
+
+        <neo-edit-project-onsilte-solar [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.OnsiteSolar" [class.mt-32]="!sectionsList.showProjectDetails" [project]="project">
+        </neo-edit-project-onsilte-solar>
+
+        <neo-edit-project-renewable-electricity [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.RenewableRetail" [class.mt-32]="!sectionsList.showProjectDetails"
+          [project]="project">
+        </neo-edit-project-renewable-electricity>
+
+        <neo-edit-project-green-tariff [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.UtilityGreenTariff" [class.mt-32]="!sectionsList.showProjectDetails"
+          [project]="project">
+        </neo-edit-project-green-tariff>
+
+        <neo-edit-project-ppa [upsideShareError]="upsideShareError"
+          [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted" *ngSwitchCase="projectTypes.OffsitePpa"
+          [class.mt-32]="!sectionsList.showProjectDetails" [project]="project">
+        </neo-edit-project-ppa>
+
+        <neo-edit-project-ppa [upsideShareError]="upsideShareError"
+          [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.AggregatedPpa" [class.mt-32]="!sectionsList.showProjectDetails"
+          [project]="project">
+        </neo-edit-project-ppa>
+      </form>
+    </ng-container>
+  </div>
+
+  <!-- Private Project Details -->
+  <div
+    *ngIf="project?.category?.slug === projectTypes.AggregatedPpa || project?.category?.slug === projectTypes.OffsitePpa"
+    [class.collapsed]="!sectionsList.showProjectPrivateDetails" class="section-wrapper flex-column">
+    <div class="top flex-between align-center ignore-padding">
+      <h3 class="sub-title neo-arial">{{ 'projects.addProject.projectPrivateDetailsLabel' | translate }}</h3>
+
+      <div class="d-flex align-center">
+        <span *ngIf="(projectDetailsValidationError || upsideShareError) && !sectionsList.showProjectPrivateDetails">
+          <svg-icon size="xxs" class="mr-8 text-error" key="alert-filled">
+          </svg-icon>
+        </span>
+
+        <button (click)="toggleSection('showProjectPrivateDetails')"
+          [class.error]="(projectDetailsValidationError || upsideShareError) && !sectionsList.showProjectPrivateDetails"
+          class="close-section flex-center ml-12">
+          {{ sectionsList.showProjectPrivateDetails ? 'View Less' : 'View More' }}
+          <svg-icon [key]="sectionsList.showProjectPrivateDetails ? 'project-up-arrow' : 'project-down-arrow'"
+            class="m-8" fontSize="16px" size="md"></svg-icon>
+        </button>
+      </div>
+    </div>
+    <ng-container [ngSwitch]="project?.category?.slug">
+      <p class="d-flex align-center text-s text-neo-near-black project-sub-label">
+        <span class="ignore-padding">
+          <svg-icon class="text-neo-dark-green mr-8" key="alert-filled"></svg-icon>
+        </span>
+
+        {{ 'projects.addProject.inputsVisiblePrivateLabel' | translate }}.
+      </p>
+
+      <form [formGroup]="projectDetailsForm">
+        <neo-edit-project-private-ppa [upsideShareError]="upsideShareError"
+          [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted" *ngSwitchCase="projectTypes.OffsitePpa"
+          [class.mt-32]="!sectionsList.showProjectPrivateDetails" [project]="project">
+        </neo-edit-project-private-ppa>
+
+        <neo-edit-project-private-ppa [upsideShareError]="upsideShareError"
+          [formSubmitted]="formSubmitted ? formSubmitted : draftFormSubmitted"
+          *ngSwitchCase="projectTypes.AggregatedPpa" [class.mt-32]="!sectionsList.showProjectPrivateDetails"
+          [project]="project">
+        </neo-edit-project-private-ppa>
+      </form>
+    </ng-container>
+  </div>
+
+  <!-- Project Description -->
+  <div [class.collapsed]="!sectionsList.showOverview" class="section-wrapper flex-column overview-section">
+    <div class="top flex-between align-center ignore-padding">
+      <h3 class="sub-title neo-arial mb-16">{{ 'projects.addProject.overviewLabel' | translate }}</h3>
+
+      <div class="right d-flex mb-16">
+        <neo-status-change class="project-active-inactive" (statusChanged)="changeStatus($event)"
+          *ngIf="sectionsList.showOverview" [activeStatusValue]="projectStatuses.Active" [currentStatus]="
+            project?.statusId === projectStatuses.Active || project?.statusId === projectStatuses.Inactive
+              ? project.statusId
+              : projectStatuses.Active
+          " [disableClass]="
+            project?.statusId !== projectStatuses.Active && project?.statusId !== projectStatuses.Inactive
+          " [inactiveStatusValue]="projectStatuses.Inactive">
+        </neo-status-change>
+
+        <div class="d-flex align-center">
+          <span *ngIf="(projectDescritionValidationError || deletedOwnerError) && !sectionsList.showOverview">
+            <svg-icon size="xxs" class="mr-8 text-error" key="alert-filled">
+            </svg-icon>
+          </span>
+
+          <button (click)="toggleSection('showOverview')"
+            [class.error]="(projectDescritionValidationError || deletedOwnerError) && !sectionsList.showOverview"
+            class="close-section flex-center ml-12">
+            {{ sectionsList.showOverview ? 'View Less' : 'View More' }}
+            <svg-icon [key]="sectionsList.showOverview ? 'project-up-arrow' : 'project-down-arrow'" class="m-8"
+              fontSize="16px" size="md"></svg-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <section *ngIf="sectionsList.showOverview" class="section">
+      <form [formGroup]="form" class="flex-column">
+        <label *ngIf="
+            permissionService.userHasPermission(authService.currentUser() | async, permissionTypes.ProjectsManageAll) || 
+            permissionService.userHasPermission(authService.currentUser() | async, permissionTypes.ManageCompanyProjects)
+          " class="mb-32">
+          {{ 'projects.addProject.publishedByLabel' | translate }}
+
+          <neo-users-search (clearInput)="clearSearch()" (selectedResult)="chooseUser($event)"
+            [displayImage]="publishedByUser?.image?.uri" [displayName]="generateUserDisplayName(publishedByUser)"
+            [searchWithMention]="false" [showOnlyProjectPublishers]="true" [companyCategoryId]="project?.categoryId"
+            class="mt-8 publishedby-wrapper" placeholder="Select user">
+          </neo-users-search>
+
+          <neo-control-error class="mt-6" [errors]="deletedOwnerError" fieldName="Publisher"
+            [submitted]="formSubmitted">
+          </neo-control-error>
+        </label>
+
+        <label>
+          {{ 'projects.addProject.titleLabel' | translate }}
+          <span class="counter-wrapper flex-between mb-8 pl-pb-0-imp">
+            <p class="hint-info arial pl-pb-0-imp">
+              {{ 'projects.addProject.titleDescriptionLabel' | translate }}
+            </p>
+            <span class="counter">{{ form.controls['title'].value?.length }}/{{ titleMaxLength }}</span>
+          </span>
+
+          <neo-text-input class="text-neo-near-black" formControlName="title" placeholder="Text" [showLabel]="false"
+            [labelName]="'projects.addProject.titleLabel' | translate" [submitted]="formSubmitted"
+            [maxLength]="titleMaxLength">
+          </neo-text-input>
+        </label>
+
+        <label class="mb-32">
+          {{ 'projects.addProject.subTitleLabel' | translate }}
+          <span class="counter-wrapper flex-between mb-8 pl-pb-0-imp">
+            <p class="hint-info pl-pb-0-imp">
+              {{ 'projects.addProject.useWordsLabel' | translate }}
+            </p>
+            <span class="counter">{{ form.controls['subTitle'].value.length }}/{{ subTitleMaxLength }}</span>
+          </span>
+
+          <neo-textarea-control class="text-zeigo-near-black" formControlName="subTitle" height="176px"
+            [showLabel]="false" [labelName]="'projects.addProject.subTitleLabel' | translate"
+            [submitted]="formSubmitted" [maxLength]="subTitleMaxLength">
+          </neo-textarea-control>
+        </label>
+
+        <label class="mb-32">
+          {{ 'projects.addProject.opportunityLabel' | translate }}
+          <span class="counter-wrapper flex-between mb-8 pl-pb-0-imp">
+            <p class="hint-info arial pl-pb-0-imp">
+              {{ 'projects.addProject.opportunityAdditionalDetailsLabel' | translate }}
+            </p>
+            <span class="counter">{{ opportunityLength }}/{{ opportunityTextMaxLength }}</span>
+          </span>
+
+          <neo-message-control (symbolsCount)="onOpportunityLengthChanged($event)" [displayAttachments]="false"
+            [hasError]="
+              formSubmitted && (!form.controls['opportunity'].value || form.controls['opportunity'].value === '<br>')
+            " formControlName="opportunity" id="opportunity" class="mt-8" maxHeight="200px"
+            [maxLength]="opportunityMaxLength" classes="p-0 text-s">
+          </neo-message-control>
+
+          <neo-control-error class="mt-6" [errors]="
+              this.opportunityLength > this.opportunityTextMaxLength
+                ? { maxlength: { requiredLength: 4000 } }
+                : !form.controls['opportunity'].value || form.controls['opportunity'].value === '<br>'
+                ? { required: true }
+                : null
+            " [fieldName]="'projects.addProject.opportunityLabel' | translate" [submitted]="formSubmitted">
+          </neo-control-error>
+        </label>
+
+        <label class="mb-32">
+          {{ 'projects.addProject.aboutLabel' | translate }}
+          <span class="counter-wrapper flex-between mb-8 pl-pb-0-imp">
+            <p class="hint-info pl-pb-0-imp">
+              {{ 'projects.addProject.leaveDescriptionLabel' | translate }}
+            </p>
+            <span class="counter">{{ descriptionLength }}/{{ descriptionTextMaxLength }}</span>
+          </span>
+
+          <neo-message-control (symbolsCount)="onDescriptionLengthChanged($event)" [displayAttachments]="false"
+            [hasError]="
+              formSubmitted && (!form.controls['description'].value || form.controls['description'].value === '<br>')
+            " class="mt-8" formControlName="description" id="about"
+            (valueChanged)="form.controls['description'].updateValueAndValidity()" maxHeight="200px"
+            [maxLength]="descriptionMaxLength" classes="p-0 text-s">
+          </neo-message-control>
+
+          <neo-control-error class="mt-6" [errors]="
+              this.descriptionLength > this.descriptionTextMaxLength
+                ? { maxlength: { requiredLength: 4000 } }
+                : !form.controls['description'].value || form.controls['description'].value === '<br>'
+                ? { required: true }
+                : null
+            " [fieldName]="'projects.addProject.aboutLabel' | translate" [submitted]="formSubmitted">
+          </neo-control-error>
+        </label>
+      </form>
+    </section>
+  </div>
+
+  <neo-form-footer (cancel)="goBack()" (draftButtonClick)="publishProject(projectStatuses.Draft)"
+    (save)="publishProject()" [draftButtonDisabled]="!form.value.title"
+    [draftButtonText]="'projects.addProject.saveAsDraftsLabel' | translate"
+    [draftButton]="project?.statusId === projectStatuses.Draft"
+    [submitButtonName]="project?.statusId !== projectStatuses.Draft ? 'Save Changes' : 'Publish'" icon="right-arrow">
+  </neo-form-footer>
+</ng-container>

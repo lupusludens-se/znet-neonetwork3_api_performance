@@ -1,0 +1,81 @@
+<div class="d-flex">
+  <div class="solution-wrapper p-relative flex-column w-50">
+    <img alt="Solution Test" class="w-100" src="assets/images/landing/solutions/people.png" />
+
+    <div class="image-overlay p-absolute w-100 h-100"></div>
+
+    <div class="solution-details flex-column flex-center p-64 p-absolute w-100">
+      <h1 class="text-white text-capitalize neo-arial-light text-center">
+        Organizational leaders <br />
+        looking to decarbonize
+      </h1>
+
+      <div class="pt-24 flex-column details">
+        <p class="text-m d-flex align-center text-white">
+          <svg-icon class="text-lime mr-12" key="check"></svg-icon>
+          Evaluate your readiness, baseline, budget, and more
+        </p>
+
+        <p class="text-m d-flex align-center text-white pt-8">
+          <svg-icon class="text-lime mr-12" key="check"></svg-icon>
+          Explore a range of solutions across your entire footprint
+        </p>
+
+        <p class="text-m d-flex align-center text-white pt-8">
+          <svg-icon class="text-lime mr-12" key="check"></svg-icon>
+          Engage with experts and peers to share best practices
+        </p>
+      </div>
+
+      <button
+        [queryParams]="{ role: userRoles.Corporation }"
+        [routerLink]="['../sign-up']"
+        class="btn-l green-frame text-capitalize d-flex align-center mt-32"
+      >
+        {{ 'landing.solutions.getStartedLabel' | translate }}
+
+        <svg-icon class="ml-16" key="right-arrow"></svg-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="solution-wrapper p-relative flex-column w-50">
+    <img alt="Solution Test" class="w-100" src="assets/images/landing/solutions/solar-panels.png" />
+
+    <div class="image-overlay p-absolute w-100 h-100"></div>
+
+    <div class="solution-details flex-column flex-center p-64 p-absolute w-100">
+      <h1 class="text-white text-capitalize neo-arial-light text-center">
+        Project developers and <br />
+        technology providers
+      </h1>
+
+      <div class="pt-24 flex-column details">
+        <p class="text-m d-flex align-center text-white">
+          <svg-icon class="text-lime mr-12" key="check"></svg-icon>
+          Get help navigating the rapidly changing corporate renewables market
+        </p>
+
+        <p class="text-m d-flex align-center text-white pt-8">
+          <svg-icon class="text-lime mr-12" key="check"></svg-icon>
+          Meet corporate buyers looking for renewable energy solutions at exclusive events
+        </p>
+
+        <p class="text-m d-flex align-center text-white pt-8">
+          <svg-icon class="text-lime mr-12" key="check"></svg-icon>
+          Proactively promote your unique decarbonization opportunities within an active community
+        </p>
+      </div>
+
+      <button
+        [queryParams]="{ role: userRoles.SolutionProvider }"
+        [routerLink]="['../sign-up']"
+        class="btn-l green-frame text-capitalize d-flex align-center mt-32"
+      >
+        {{ 'landing.solutions.getStartedLabel' | translate }}
+
+        <svg-icon class="ml-16" key="right-arrow"></svg-icon>
+      </button>
+    </div>
+  </div>
+</div>

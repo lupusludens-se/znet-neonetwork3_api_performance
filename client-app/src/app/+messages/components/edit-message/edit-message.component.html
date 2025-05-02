@@ -1,0 +1,36 @@
+<div class="d-flex message-input align-start focused">
+  <neo-user-avatar [user]="currentUser" class="pt-4" imageSize="size32">
+  </neo-user-avatar>
+  <neo-text-editor #editorComponent (emitValue)="setMessage($event)" [editorValue]="message.text"
+    [emitDataOnEnter]="false" [clearOnEmit]="false" [placeholder]="'messages.writeMessageLabel' | translate"
+    class="max-w-82" [classes]="'edit-message'" minHeight="37px"></neo-text-editor>
+</div>
+
+<div class="d-flex justify-end mt-10">
+  <span class="errorMessage" *ngIf="message.showRequiredMessage">
+    {{'messages.requiredLabel'|translate}}
+  </span>
+  <span class="edit-cancel" (click)="cancelEditMessage(message)">
+    <svg-icon class="mr-10 action cancel-svg" key="plus" title="Cancel"></svg-icon>
+  </span>
+  <span class="edit-save" (click)="saveMessage(message)">
+    <svg-icon class="mr-10 action" key="thin-tick-mark" title="Edit"></svg-icon>
+  </span>
+</div>
+
+
+
+<!--	DISCARD MODAL -->
+<neo-modal (closed)="showDiscardModal = false" *ngIf="showDiscardModal" size="small"
+  [title]="'messages.discardModal.titleLabel' | translate" class="title-h2">
+
+  <div class="popup-controls pt-24 d-flex">
+    <button (click)="showDiscardModal = false" class="btn-cancel blue-50-frame mr-16  w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+
+    <button (click)="confirmDiscard()" class="btn-confirm w-50">
+      {{ 'messages.discardModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

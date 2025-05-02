@@ -1,0 +1,44 @@
+
+<h4 *ngIf="title">{{title}}</h4>
+<div *ngIf="networkStats" class="stats-wrapper d-flex align-center mt-32 w-100 p-relative">
+<div class="tile flex-column h-80">
+    <div class="stat">
+        <h2 class="stat-count flex-center">
+            {{corporateCompanyCount + "+"}}
+        </h2>
+        <div class="stat-title flex-center">
+            {{ 'networkStats.corporateCompaniesLabel' | translate }}
+        </div>
+    </div>
+</div>
+<div class="tile flex-column h-80 stat-separator">
+    <div class="stat">
+        <h2 class="stat-count flex-center">
+            {{projectCount + "+"}}
+        </h2>
+        <div class="stat-title flex-center">
+            {{ 'networkStats.greenProjectLable' | translate }}
+        </div>
+    </div>
+</div>
+<div class="tile flex-column h-80 stat-separator">
+    <div class="stat">
+        <h2 class="stat-count flex-center">
+            {{articleMarketBriefCount + "+"}}
+        </h2>
+        <div class="stat-title flex-center">
+            {{ 'networkStats.marketBriefLable' | translate }}
+        </div>
+    </div>
+</div>
+<div class="tile flex-column h-80 stat-separator">
+    <div class="stat">
+        <h2 class="stat-count flex-center">
+            {{solutionProviderCompanyCount + "+"}}
+        </h2>
+        <div class="stat-title flex-center">
+            {{ 'networkStats.spUserLable' | translate }}
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,22 @@
+<div class="tile-item flex-between p-24 h-100" (click)='$event.preventDefault(); browse()'>
+  <div class="flex-column">
+    <h4 class="text-h2">{{ technology.name }}</h4>
+
+    <p class="text-description pt-8">{{ technology.description }}</p>
+    <div class="w-100 line mr-16"></div>
+    <div class="d-flex flex-wrap pt-16 gap-12 w-100">
+      <neo-project-tag
+				(click)='$event.stopPropagation()'
+        *ngFor="let resources of technology.resources"
+        [tag]="resources">
+			</neo-project-tag>
+    </div>
+  </div>
+
+  <div
+    class="light-green flex-center">
+    <svg-icon
+      key="right-arrow">
+		</svg-icon>
+  </div>
+</div>

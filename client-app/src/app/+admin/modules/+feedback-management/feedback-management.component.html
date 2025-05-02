@@ -1,0 +1,145 @@
+<div class="top flex-between align-center mb-24">
+    <h1 class="title">{{ 'feedbackManagement.pageTitleLabel' | translate }}</h1>
+  
+    <div class="buttons-wrapper d-flex">
+      <button
+        class="btn-export-feedback flex-center mr-12"
+        (click)="exportModal = true">
+        <svg-icon
+          key="upload-square"
+          class="mr-8" size="xl"></svg-icon>
+        {{ 'feedbackManagement.exportFeedbacksLabel' | translate }}
+      </button>
+    </div>
+  </div>
+  
+  <div class="content mt-32 d-flex">
+    <div class="table-wrapper flex-column">
+      <ng-container *ngIf="pageData?.dataList?.length; else noResults">
+        <table class="table mb-24">
+          <thead>
+            <tr>
+              <td class="pl-24 user">
+                <div
+                  class="click-area"
+                  (click)="sortCriteriaSelection('lastNameAsc', sortingCriteria.lastName, 'companyAsc', 'ratingAsc', 'createdDateAsc'
+                  )">
+                  {{ 'feedbackManagement.table.userCol' | translate }}
+                  <svg-icon
+                    [class.sorthighlight]="lastNameAsc"
+                    class="text-blue-200 ml-6 caret"
+                    key="table-row-sort-up"
+                    size="md"></svg-icon>
+                  <svg-icon
+                    [class.sorthighlight]="tdTitleClick === sortingCriteria.lastName && !lastNameAsc"
+                    class="text-blue-200 ml-1 caret"
+                    key="table-row-sort-down"
+                    size="md"></svg-icon>
+                </div>
+              </td>
+              <td class="pl-24 company">
+                <div
+                  class="click-area"
+                  (click)="sortCriteriaSelection('companyAsc', sortingCriteria.company, 'lastNameAsc', 'ratingAsc', 'createdDateAsc')">
+                  {{ 'feedbackManagement.table.companyCol' | translate }}
+                  <svg-icon
+                    [class.sorthighlight]="companyAsc"
+                    class="text-blue-200 ml-6 caret"
+                    key="table-row-sort-up"
+                    size="md"></svg-icon>
+                  <svg-icon
+                    [class.sorthighlight]="tdTitleClick === sortingCriteria.company && !companyAsc"
+                    class="text-blue-200 ml-1 caret"
+                    key="table-row-sort-down"
+                    size="md"></svg-icon>
+                </div>
+              </td>
+              <td class="pl-24 type">
+                {{ 'feedbackManagement.table.roleCol' | translate }}
+              </td>
+              <td class="pl-24 ratings ratings-cell">
+                <div
+                  class="click-area"
+                  (click)="
+                    sortCriteriaSelection('ratingAsc', sortingCriteria.rating, 'companyAsc', 'lastNameAsc', 'createdOnAsc')
+                  ">
+                  {{ 'feedbackManagement.table.ratingsCol' | translate }}
+                  <svg-icon
+                    [class.sorthighlight]="ratingAsc"
+                    class="text-blue-200 ml-6 caret"
+                    key="table-row-sort-up"
+                    size="md"></svg-icon>
+                  <svg-icon
+                    [class.sorthighlight]="tdTitleClick === sortingCriteria.rating && !ratingAsc"
+                    class="text-blue-200 ml-1 caret"
+                    key="table-row-sort-down"
+                    size="md"></svg-icon>
+                </div>
+              </td>
+              <td class="pl-24 user ellipsis comments">
+                {{ 'feedbackManagement.table.commentsCol' | translate }}
+              </td>
+              <td class="pl-24 date"><div
+                class="click-area"
+                (click)="
+                  sortCriteriaSelection('createdDateAsc', sortingCriteria.createdOn, 'ratingAsc', 'companyAsc', 'lastNameAsc')
+                ">{{ 'feedbackManagement.table.dateCol' | translate }}
+                <svg-icon
+                    [class.sorthighlight]="createdDateAsc"
+                    class="text-blue-200 ml-6 caret"
+                    key="table-row-sort-up"
+                    size="md"></svg-icon>
+                  <svg-icon
+                    [class.sorthighlight]="tdTitleClick === sortingCriteria.createdOn && !createdDateAsc"
+                    class="text-blue-200 ml-1 caret"
+                    key="table-row-sort-down"
+                    size="md"></svg-icon>
+              </div>
+              </td>
+              <td class="pl-24 options pr-12">
+              </td>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <neo-feedback-table-row
+              *ngFor="let feedback of pageData?.dataList"
+              (click)="redirectToFeedbackDetails(feedback.id)"
+              [feedback]="feedback"
+              (updateFeedback)="fetchFeedbacks()"
+              class="row">
+            </neo-feedback-table-row>
+          </tbody>
+        </table>
+      </ng-container>
+  
+      <ng-template #noResults>
+        <neo-no-results [searchedStr]="searchString"></neo-no-results>
+      </ng-template>
+  
+      <neo-pagination
+        *ngIf="pageData?.dataList?.length > 0 && paging && paging.total > defaultItemPerPage"
+        [paging]="paging"
+        [defaultItemPerPage]="defaultItemPerPage"
+        (changePage)="changePage($event)"  class="pt-24 mb-64">
+      </neo-pagination>
+      <neo-empty-page
+      class="empty-page"
+      *ngIf="pageData?.dataList && !pageData?.dataList?.length"
+      [headlinePart1]="'general.emptyStateLabel' | translate"
+      iconKey="topic">
+    </neo-empty-page>
+    </div>
+  </div>
+  
+  <neo-export-modal
+    *ngIf="exportModal"
+    [title]="'feedbackManagement.exportFeedbacksLabel' | translate"
+    [subText]="'feedbackManagement.startExportFeedbacksLabel' | translate"
+    (closeModal)="exportModal = false"
+    [exportModule]="exportModule"
+    [recordsCount]="paging.total"
+    itemsFoundDesc="user feedbacks"
+    [params]="requestParams">
+  </neo-export-modal>
+  

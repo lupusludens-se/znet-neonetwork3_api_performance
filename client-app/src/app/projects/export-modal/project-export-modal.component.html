@@ -1,0 +1,41 @@
+<div class="modal flex-colum">
+  <svg-icon key="close" class="text-neo-near-black close" size="xxl" (click)="closeModal.emit(true)"></svg-icon>
+  <h2 class="text-neo-near-black neo-arial title">{{ 'projects.exportProjectsLabel' | translate }}</h2>
+  <p class="text-m text-dark-gray-580 mb-24">{{ 'projects.startExportProjectsLabel' | translate }}</p>
+  <ng-container *ngIf="!fileIsReady && !progress">
+    <button class="btn-export mb-24 neo-arial flex-center" (click)="requestFile()">
+      <svg-icon key="play-button" size="xl" class="mr-12"></svg-icon>
+      {{ 'userManagement.startExportBtn' | translate }}
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="progress">
+    <div class="progress flex-center mb-24">{{ 'userManagement.exportLabel' | translate }}...</div>
+  </ng-container>
+
+  <ng-container *ngIf="fileIsReady">
+    <div class="ready d-flex mb-24">
+      <svg-icon key="upload-square" class="mr-12" width="32px" height="32px"></svg-icon>
+
+      <div class="text flex-column">
+        <p class="primary-text neo-arial">{{ fileName }}</p>
+        <p class="secondary-text">Found {{ projectCount }} projects</p>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="buttons-wrapper d-flex justify-end">
+    <button class="mr-16 btn-cancel blue-100-frame mr-16" (click)="closeModal.emit(true)">
+      Cancel
+    </button>
+    <button (click)="downloadFile()" class="green btn-download d-flex justify-center align-center"
+      [disabled]="!fileIsReady">
+      <svg-icon
+        key="download"
+        class="mr-8" size="xl"></svg-icon>
+        {{ 'userManagement.downloadFileBtn' | translate }} 
+    </button>
+  </div>
+</div>
+
+<div class="overlay" (click)="closeModal.emit(true)"></div>

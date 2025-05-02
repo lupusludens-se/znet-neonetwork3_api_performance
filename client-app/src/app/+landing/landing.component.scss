@@ -1,0 +1,7 @@
+@use 'colors';
+@use 'breakpoints';
+@use './styles/styles' as styles;
+
+:host {
+  width: 100%;
+}

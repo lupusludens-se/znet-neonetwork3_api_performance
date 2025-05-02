@@ -1,0 +1,52 @@
+@use 'colors';
+@use 'breakpoints';
+
+.tile {
+  overflow: hidden;
+  position: relative;
+  background: colors.$white-10;
+  border: 1px solid colors.$dark-gray-420;
+  margin: 1px;
+  height: auto;
+  transition: all 0.05s ease-in-out;
+  border-radius: 8px;
+  margin-bottom: 5px;
+
+  &:hover {
+    background: colors.$blue-5;
+  }
+
+  &.selected {
+    margin: 1px;
+    border: 2px solid colors.$purple-300;
+  }
+}
+
+.message-wrapper-first {
+  border-top: 1px solid colors.$dark-gray-420; 
+}
+
+
+.no-saved-container {
+  padding: 80px;
+  align-items: center;
+  background-color: colors.$purple-20;
+  border: 1px solid colors.$purple-160;
+  border-radius: 12px;
+
+  .no-saved-description {
+    color: colors.$dark-gray-545;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+
+  .communication-bubble-icon {
+    color: colors.$purple-300;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+.w-97 {
+  width: 97%;
+}

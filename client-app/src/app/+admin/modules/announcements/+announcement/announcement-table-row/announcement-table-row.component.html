@@ -1,0 +1,65 @@
+<td (click)="goToAnnouncement(announcement.id)" [class.opaque]="!announcement.isActive" class="pl-24 name-col">
+  {{ announcement.name }}
+</td>
+
+<td (click)="goToAnnouncement(announcement.id)" [class.opaque]="!announcement.isActive" class="pl-18 audience-col">
+  <span
+    [class.all]="announcement.audienceId === rolesList.All"
+    [class.internal]="announcement.audienceId === rolesList.Internal"
+    [class.provider]="announcement.audienceId === rolesList.SolutionProvider"
+    class="audience">
+    {{ announcement.audience }}
+  </span>
+</td>
+
+<td (click)="goToAnnouncement(announcement.id)" class="pl-20 status-col">
+  <span [class.inactive]="!announcement.isActive" class="status flex-center">
+    {{ (announcement.isActive ? 'status.activeStatusLabel' : 'status.inactiveStatusLabel') | translate }}
+  </span>
+</td>
+
+<td class="options-cell">
+  <neo-menu
+    (optionClick)="optionClick($event)"
+    [options]="menuOptions"
+    activeIcon="cross"
+    cssClasses="flex-center"
+    icon="three-dots">
+  </neo-menu>
+</td>
+
+<neo-modal (cancel)="showDeleteModal = false" *ngIf="showDeleteModal">
+  <svg-icon
+    (click)="showDeleteModal = false"
+    class="text-blue-200 c-pointer p-absolute top-20 right-20 close-hover"
+    height="16px"
+    key="modal-close"
+    width="16px"></svg-icon>
+
+  <div class="delete-modal">
+    <h3 class="mb-6 title">
+      {{ 'general.deleteModal.titleLabel' | translate }}
+    </h3>
+    <p class="text-s text-blue-500 mb-20 text">
+      {{ 'general.deleteModal.textLabel' | translate }}
+    </p>
+
+    <div class="popup-controls pt-24 d-flex">
+      <button (click)="showDeleteModal = false" class="btn btn-cancel mr-16">
+        {{ 'general.cancelLabel' | translate }}
+      </button>
+
+      <button (click)="deleteAnnouncement(announcement.id)" class="btn btn-confirm">
+        {{ 'general.deleteModal.confirmLabel' | translate }}
+      </button>
+    </div>
+  </div>
+</neo-modal>
+
+<neo-modal *ngIf="showConfirmAnnouncement">
+  <neo-confirm-announcement
+    (closeModal)="showConfirmAnnouncement = false"
+    (confirmChanges)="updateAnnouncementStatus(announcement.id, true, true)"
+    [announcementId]="announcement.id">
+  </neo-confirm-announcement>
+</neo-modal>

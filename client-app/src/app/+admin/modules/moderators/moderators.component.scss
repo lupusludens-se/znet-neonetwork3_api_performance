@@ -1,0 +1,47 @@
+@use 'colors';
+@use 'breakpoints';
+
+.control-wrapper {
+  .label {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    font-size: 16px;
+    line-height: 130%;
+    color: colors.$near-black-400;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+    border-radius: 8px;
+    border: 1px solid colors.$dark-gray-280;
+    background: colors.$blue-10;
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    color: colors.$dark-gray-510;
+}
+
+neo-users-search,
+input {
+  width: 50%;
+  height: 48px;
+}
+
+.search-wrapper {
+  position: relative;
+
+  .results {
+    width: 283px;
+    height: fit-content;
+    max-height: 192px;
+    overflow: auto;
+    background: colors.$white;
+    box-shadow: 0 5px 20px rgba(7, 30, 53, 0.3);
+    border-radius: 2px;
+  }
+}
+
+.label span {
+  width: calc(50% - 13px);
+}

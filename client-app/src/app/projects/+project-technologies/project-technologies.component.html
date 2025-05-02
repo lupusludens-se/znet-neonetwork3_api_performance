@@ -1,0 +1,94 @@
+<div class="top-panel flex-between">
+  <div class="left">
+    <h2 class="title mb-8 neo-arial">
+      {{ 'projects.techonologies.techonologiesLabel' | translate }}
+    </h2>
+    <p class="text mb-18">
+      {{ 'projects.techonologies.techonologiesInfoLabel' | translate }}
+    </p>
+
+    <div class="d-flex link">
+      <a
+        (click)="showModal = true"
+        class="mr-34 d-flex align-center z-index-1">
+        {{ 'projects.solutions.whatAreScopesLabel' | translate }}
+        <svg-icon
+          class="ml-8"
+          key="information"></svg-icon>
+      </a>
+
+      <a
+        class="mr-34 d-flex align-center z-index-1"
+        [routerLink]="['/solutions']">
+        {{ 'projects.solutions.aboutSolutionsLabel' | translate }}
+        <svg-icon
+          class="ml-8"
+          key="right-arrow-in-circle"></svg-icon>
+      </a>
+    </div>
+  </div>
+  <img
+    alt="headline-background-image"
+    class="img"
+    src="assets/images/project-category-background-image.svg" />
+  <div class="right d-flex align-center">
+    <div class="connect-wrapper flex-column neo-arial">
+      <p class="grey-text mb-8">
+        {{ 'projects.solutions.strategicAssistanceLabel' | translate }}
+      </p>
+      <p class="white-text mb-16">
+        {{ 'projects.solutions.needHelpLabel' | translate }}
+      </p>
+      <button
+        (click)="contactUsModal = true"
+        class="btn top-panel-btn-white flex-center">
+        {{ 'projects.solutions.contactNeoLabel' | translate }}
+        <svg-icon
+          class="ml-10"
+          key="right-arrow"></svg-icon>
+      </button>
+    </div>
+  </div>
+
+  <svg-icon
+    class="lines-decor text-blue-100"
+    key="top-lines-vector">
+  </svg-icon>
+</div>
+
+<div class="d-flex flex-wrap mt-24 gap-12 w-100">
+  <neo-project-technologies-tile
+    *ngFor="let technology of technologies"
+    [technology]="technology"
+    class="tile">
+  </neo-project-technologies-tile>
+</div>
+
+<neo-contact-neo-network
+  (closed)="contactUsModal = false"
+  *ngIf="contactUsModal">
+</neo-contact-neo-network>
+
+<neo-modal
+  (closed)="showModal = false"
+  *ngIf="showModal"
+  [padding]="'p-32'"
+  [size]="'large'"
+  class="title-h2"
+  [title]="'projects.solutions.whatAreScopesLabel' | translate">
+  <div class="w-100 line mr-16"></div>
+  <div class="scope-element mt-32">
+    <h4 class="text-scope-label">{{ 'projects.solutions.scope1Label' | translate }}</h4>
+    <p class="text-scope-description">{{ 'projects.solutions.scope1DescriptionLabel' | translate }}</p>
+  </div>
+
+  <div class="scope-element mt-12">
+    <h4 class="text-scope-label">{{ 'projects.solutions.scope2Label' | translate }}</h4>
+    <p class="text-scope-description">{{ 'projects.solutions.scope2DescriptionLabel' | translate }}</p>
+  </div>
+
+  <div class="scope-element mt-12">
+    <h4 class="text-scope-label">{{ 'projects.solutions.scope3Label' | translate }}</h4>
+    <p class="text-scope-description">{{ 'projects.solutions.scope3DescriptionLabel' | translate }}</p>
+  </div>
+</neo-modal>

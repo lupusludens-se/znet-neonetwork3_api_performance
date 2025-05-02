@@ -1,0 +1,33 @@
+<label [class.text-error]="error" class="d-flex align-center gap-8 multiselect-wrapper p-8" for="search">
+  <div class="d-flex flex-wrap align-center gap-8 selected-options-wrapper">
+    <div *ngFor="let selectedResult of selectedResults; let index = index"
+      class="option d-flex align-center pl-4 pr-12">
+      <neo-user-avatar [user]="getImage(selectedResult)" imageSize="size24"></neo-user-avatar>
+      <span class="text-s text-neo-near-black ml-6">
+        {{ selectedResult.name.split(',')[0] }}
+      </span>
+
+      <svg-icon (click)="removeUser(index)" class="remove-item-icon ml-10 text-dark-gray-590 c-pointer" key="close-thin"
+        size="sm"></svg-icon>
+    </div>
+
+    <div class="d-flex p-relative search-wrapper">
+      <!--<svg-icon class="text-dark-gray-590 close c-pointer mr-10 mt-6" key="search" size="xxl">
+      </svg-icon>-->
+      <input #searchInput [(ngModel)]="value" [disabled]="selectedResults?.length === maxSelection"
+        class="p-0 small w-100" id="search" [placeholder]="selectedResults.length ? '' : (placeholder | translate)"
+        type="text" />
+
+      <div *ngIf="results?.length && resultsListOpen" class="p-absolute search-results-wrapper p-6">
+        <div class="search-results-inner-wrapper w-100 pr-6">
+          <div (click)="optionClick(result)" *ngFor="let result of results"
+            class="d-flex align-center search-option w-100 c-pointer">
+            <neo-user-avatar [user]="getImage(result)" imageSize="size24"></neo-user-avatar>
+
+            <span [innerHTML]="result.displayName" class="text-s text-neo-near-black ml-8"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</label>

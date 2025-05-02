@@ -1,0 +1,94 @@
+@use 'colors';
+
+.h-200px {
+  height: 200px;
+  z-index: 1;
+}
+
+.avatar {
+  width: 160px;
+  height: 98px;
+  flex-shrink: 0;
+  background: colors.$white;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.btn-square {
+  width: 45px;
+  height: 45px;
+  border: 1px solid colors.$white-20;
+  border-radius: 8px;
+  color: colors.$white;
+  &:hover {
+    background: colors.$blue-550;
+  }
+}
+
+.main-content {
+  .about-wrapper,
+  .solutions,
+  .live-projects-wrapper {
+    background: colors.$white;
+    border: 1px solid colors.$dark-gray-200;
+    border-radius: 2px;
+    padding: 24px 24px 32px;
+
+    .section-title {
+      font-size: 12px;
+      line-height: 20px;
+      text-transform: uppercase;
+      color: colors.$near-black-400;
+      letter-spacing: 0.24px;
+    }
+
+    .text-s.text-neo-dark-green {
+      letter-spacing: 0.01em;
+      text-decoration-line: underline;
+    }
+  }
+}
+
+.links-wrapper {
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0.01em;
+  text-decoration-line: underline;
+
+  a {
+    color: colors.$zeigo-purple;
+  }
+}
+
+.link-btn {
+  color: colors.$zeigo-purple;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'Arial Rounded MT Bold';
+
+  &:hover {
+    color: colors.$purple-200;
+  }
+}
+
+.w-left-section {
+  min-width: 500px;
+}
+
+.members-wrapper {
+  height: 60vh;
+
+  .members {
+    max-height: calc(60vh - 91px);
+    min-height: 100px;
+    overflow-y: auto;
+    gap: 16px;
+
+    neo-member {
+      width: calc(50% - 8px);
+    }
+  }
+}
+

@@ -1,0 +1,182 @@
+
+<div class="h-100 w-100" *ngIf="post?.isPublicArticle || this.currentUser != null">
+  <div
+    neoCtrlClick
+    class="flex-column post-wrapper"
+    (ctrlClickEvent)="routeToLearnPage($event, '/learn/' + post?.id)">
+    <div class="p-relative d-flex justify-center">
+      <div class="img-background-wrapper c-pointer">
+        <div class="backdrop"></div>
+        <img
+          alt="{{ post ? post?.title : title }}"
+          class="c-pointer"
+          src="{{ post ? post?.imageUrl : image }}" />
+      </div>
+
+      <div class="save-icon-corner" *ngIf="this.currentUser">
+        <svg-icon
+          (click)="$event.stopPropagation(); save(post?.id)"
+          [class.saved]="post?.isSaved"
+          [key]="'star-outline'"
+          class="favorite-icon">
+        </svg-icon>
+      </div>
+
+      <ng-container *ngIf="post?.typeId">
+        <svg-icon
+          [key]="getNeoType(post?.typeId) | neoTypeToIcon"
+          class="p-absolute bottom-8 right-8 text-white c-pointer">
+        </svg-icon>
+
+        <div neoCtrlClick
+          *ngIf="post?.typeId === postType.Video"
+          class="play-button flex-center p-absolute align-self-center c-pointer"
+          (ctrlClickEvent)="routeToLearnPage($event, '/learn/' + post?.id)">
+          <svg-icon
+            key="play"
+            size="sm"></svg-icon>
+        </div>
+      </ng-container>
+    </div>
+
+    <div neoCtrlClick
+      class="flex-column p-16"
+      (ctrlClickEvent)="routeToLearnPage($event, '/learn/' + post?.id)">
+      <span
+        *ngIf="post?.typeId"
+        class="neo-arial text-xxs text-uppercase max-w-fit post-type">
+        {{ getNeoType(post?.typeId) }}
+      </span>
+
+      <div class="d-flex">       
+        <div class="flex-column">
+          <h6 class="pt-6 c-pointer max-w-fit flex-column">
+            <a
+              class="post-title"
+              (click)="$event.stopPropagation(); postClick.emit(); routeToLearnPage(false, '/learn/' + post?.id)"
+              
+              >{{ post ? post?.title : title }}
+            </a>
+          </h6>
+        </div>
+      </div>
+
+      <div (click)="handleClick($event)" class="d-flex flex-wrap pt-12 gap-4">
+        <ng-container *ngIf="post && this.currentUser">
+          <span
+            *ngFor="let tag of post.postTags"
+            [queryParams]="{
+              id: tag.id,
+              name: tag.name,
+              type: tag.taxonomy | toId
+            }"
+            class="tag-wrapper c-pointer"
+            routerLink="/topics"
+            (click)="$event.stopPropagation(); $event.preventDefault(); tagClick.emit()">
+            {{ tag.name }}
+          </span>
+
+          <span neoCtrlClick
+            class="tag-wrapper c-pointer"
+            (ctrlClickEvent)="routeToLearnPage($event, '/learn/' + post?.id)"
+            *ngIf="tagsNumber > 0">
+            +{{ tagsNumber }}
+          </span>
+        </ng-container>
+        <ng-container class="no-event" *ngIf="post &&  !currentUser">
+          <span
+            *ngFor="let tag of post.postTags"
+            [queryParams]="{
+              id: tag.id,
+              name: tag.name,
+              type: tag.taxonomy | toId
+            }"
+            class="public-tag-wrapper default-cursor"
+           
+            (click)="$event.stopPropagation(); $event.preventDefault(); tagClick.emit()">
+            {{ tag.name }}
+          </span>
+       
+          <span
+            class="public-tag-wrapper default-cursor" 
+            (click)="$event.stopPropagation(); $event.preventDefault(); tagClick.emit()"
+            *ngIf="tagsNumber > 0">
+            +{{ tagsNumber }}
+          </span>
+        </ng-container>       
+      </div>
+    </div>
+  </div>
+</div>
+<div class="h-100 w-100 lock-icon c-pointer" [src]="activityTypeEnum" [data]="{id: post?.id, title: post?.title}" *ngIf="!post?.isPublicArticle && !this.currentUser" neoLockClick>
+  <div
+    class="flex-column post-wrapper">
+    <div class="p-relative d-flex justify-center">
+      <div class="img-background-wrapper">
+        <div class="backdrop"></div>
+        <img
+          alt="{{ post ? post?.title : title }}"
+          class="c-pointer"
+          src="{{ post ? post?.imageUrl : image }}" />
+      </div>   
+
+      <ng-container *ngIf="post?.typeId">
+        <svg-icon
+          [key]="getNeoType(post?.typeId) | neoTypeToIcon"
+          class="p-absolute bottom-8 right-8 text-white c-pointer">
+        </svg-icon>
+
+        <div
+          *ngIf="post?.typeId === postType.Video"
+          class="play-button flex-center p-absolute align-self-center c-pointer">
+          <svg-icon
+            key="play"
+            size="sm"></svg-icon>
+        </div>
+      </ng-container>
+    </div>
+
+    <div
+      class="flex-column p-16">
+      <span
+        *ngIf="post?.typeId"
+        class="neo-arial text-xxs text-uppercase max-w-fit post-type">
+        {{ getNeoType(post?.typeId) }}
+      </span>
+
+      <div class="d-flex lock-icon" >
+        <div class="flex-column justify-center no-event">
+          <svg-icon key="lock-private-content" class="text-aqua-400"></svg-icon>
+        </div>
+        <div class="flex-column">
+          <h6 class="pt-6 ml-8 c-pointer max-w-fit flex-column">
+            <a
+              class="post-title"
+              >{{ post ? post?.title : title }}
+            </a>
+          </h6>
+        </div>
+      </div>
+      <div (click)="handleClick($event)"  class="d-flex flex-wrap pt-12 gap-4 default-cursor">
+        <ng-container *ngIf="post">
+          <span
+            *ngFor="let tag of post.postTags"
+            [queryParams]="{
+              id: tag.id,
+              name: tag.name,
+              type: tag.taxonomy | toId
+            }"
+            class="public-tag-wrapper">
+            {{ tag.name }}
+          </span>
+
+          <span
+          class="public-tag-wrapper"
+            *ngIf="tagsNumber > 0">
+            +{{ tagsNumber }}
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

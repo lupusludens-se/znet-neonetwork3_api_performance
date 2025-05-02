@@ -1,0 +1,38 @@
+<div class="filter-wrapper {{ expandedState }}" neoClickOutside (clickOutside)="closeExpansion()">
+  <button (click)="changeExpandingState()" class="filter-btn text-neo-near-black d-flex align-center justify-between">
+    <span class="d-flex align-center flex-grow-1">
+      <span *ngIf="showIcon" class="icon-wrapper p-6 flex-center mr-10">
+        <svg-icon key="{{ icon }}"></svg-icon>
+      </span>
+      {{ name }}
+    </span>
+
+
+    <ng-container *ngIf="getSelectedNumber">
+      <span class="counter text-xxs  text-xxs text-neo-aqua fw-700 flex-center p-2 ml-10">
+        {{ getSelectedNumber }}
+      </span>
+    </ng-container>
+
+    <svg-icon class="arrow text-blue-200" key="down-arrow" size="xxl">
+    </svg-icon>
+  </button>
+  <div *ngIf="taxonomy" [class.horizontal]="horizontalLayout" class="filter-body flex-column hierarchical"><ng-container
+      *ngFor="let data of taxonomy; let i = index">
+      <div class="flex-column parent-wrapper {{ data.expandedState }}" *ngIf="!data.hide">
+        <div class="flex-column justify-center parent-title-wrapper">
+
+          <div [ngClass]="{
+              'pb-8': data.length && data.expandedState === 'expanded'
+            }" class="d-flex child-wrapper justify-between">
+            <div class="pb-4 pt-4 d-flex align-center">
+              <neo-blue-checkbox (selectCheckbox)="click(i)" [checked]="data.checked" [disabled]="data.disabled"
+                [name]="data.name" [value]="data.id" class="mr-8 h-initial label-grey" textSize="text-s">
+              </neo-blue-checkbox>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

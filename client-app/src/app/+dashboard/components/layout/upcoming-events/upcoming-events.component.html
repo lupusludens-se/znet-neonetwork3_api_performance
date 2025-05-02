@@ -1,0 +1,64 @@
+<div
+  [ngClass]="cssClasses"
+  class="upcoming-events-wrapper">
+  <div
+    class="event-wrapper flex-between align-center"
+    [ngClass]="{ 'pt-24 pb-12 pl-24 pr-12': isPublicUser, 'p-24': !isPublicUser }">
+    <div
+      class="w-100"
+      #wrapper>
+      <div class="d-flex align-center headline-wrapper">
+        <div
+          *ngIf="isTodayBetween || isToDate || isFromDate"
+          class="text-white text-xs fw-400 mr-10">
+          {{ 'general.todayLabel' | translate }}
+        </div>
+
+        <div class="text-dark-gray-545 text-xs pr-4">{{ eventDate }}</div>
+
+        <div
+          *ngIf="event.moreDatesCount"
+          class="more-dates-count date ml-2">
+          +{{ event.moreDatesCount }}
+        </div>
+      </div>
+
+      <div class="d-flex flex-between">
+        <h5 class="subject text-dark-gray-750 pt-4">{{ event.subject }}</h5>
+        <div
+          class="flex-center">
+          <button
+            class="light-green d-flex align-center justify-center rotate-180"
+            routerLink="/events/{{ event.id }}"
+            (click)="eventClick.emit()">
+            <svg-icon
+              size="sm"
+              key="arrow-thin-right"></svg-icon>
+          </button>
+        </div>
+      </div>
+      <ng-container *ngTemplateOutlet="eventInfoTemplate"></ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #eventInfoTemplate>
+  <div
+  #block
+  class="date-block align-center pt-4 text-xs fw-700">
+  <svg-icon
+    class="mr-4 middle"
+    key="event-timer"></svg-icon>
+  <span>{{ event?.shortTimes }}</span>
+  <div
+    *ngIf="event.moreOccurrencesCount"
+    class="more-dates-count ml-2">
+    +{{ event.moreOccurrencesCount }}
+  </div>
+  <neo-dot-decor
+    [class.white]="block?.offsetWidth > wrapper?.offsetWidth"
+    class="middle"></neo-dot-decor>
+  <br *ngIf="block?.offsetWidth > wrapper?.offsetWidth" />
+  <span class="eventLocationType">{{ eventLocationType | translate }} </span>
+</div>
+</ng-template>

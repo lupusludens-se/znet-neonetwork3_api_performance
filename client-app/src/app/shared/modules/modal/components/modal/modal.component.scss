@@ -1,0 +1,161 @@
+@use 'colors';
+
+// Zeigo Rebrand : Terms Of Use Title Css
+:host.title-h2 {
+  .text-neo-near-black {
+    color: colors.$near-black-400;
+    font-size: 24px;
+    line-height: 130%;
+  }
+}
+
+:host.title-h2-purple {
+  .text-neo-near-black {
+    color: colors.$zeigo-purple;
+    font-size: 24px;
+    line-height: 130%;
+  }
+}
+
+:host.title-badge {
+  .modal {
+    .badge {
+      background: colors.$aqua-400;
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  z-index: 60;
+  top: 0;
+  left: 0;
+  width: 9999px;
+  height: 9999px;
+  background: rgba(134, 132, 141, 0.3);
+}
+
+.btn-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  color: colors.$dark-gray-590;
+
+  &:hover {
+    color: colors.$near-black-400; //Zeigo Rebrand Changes : Terms Of Use Popup
+  }
+}
+
+.modal {
+  max-width: 544px;
+  width: 100%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 61;
+  background-color: colors.$dark-gray-30; //Zeigo Rebrand : Tool cusotmise button Popup , Terms Of Use , Contact Zeigo Network popup
+  box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+  border-radius: 2px;
+
+  &.small {
+    max-width: 544px;
+    width: 100%;
+  }
+
+  &.medium {
+    max-width: 660px;
+    width: 100%;
+  }
+
+  &.extra-medium {
+    max-width: 760px;
+    width: 100%;
+  }
+
+  &.large {
+    max-width: 840px;
+    width: 100%;
+  }
+
+  &.fit-content {
+    max-width: fit-content;
+    width: 100%;
+  }
+
+  &.p-32-48 {
+    padding: 32px 48px;
+  }
+
+  .modal-wrapper {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .btn-l {
+    min-width: initial;
+  }
+
+  input {
+    height: 48px;
+    padding: 0 16px;
+  }
+
+  .close-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+
+    &:hover {
+      color: colors.$near-black-400; //Zeigo Rebrand Changes : Terms Of Use Popup
+    }
+  }
+
+  .badge {
+    min-width: 26px;
+    height: 26px;
+    background: colors.$sky-blue;
+    border-radius: 500px;
+  }
+}
+
+
+:host.custom-modal-height {
+  .modal .modal-wrapper {
+    overflow-y: revert;
+    padding-bottom: 8px;
+  }
+}
+
+:host.custom-modal-height-tool {
+  .modal .modal-wrapper {
+    overflow-y: hidden;
+  }
+}
+
+:host.modal-schedule-demo {
+  div.p-32 {
+    padding: 0%;
+  }
+
+  .text-neo-near-black {
+    margin-top: 4%;
+    margin-left: 3%;
+    font-size: 32px;
+    color: colors.$near-black-400;
+  }
+}
+
+:host.modal-thankyou {
+  div.p-32 {
+    padding: 0%;
+  } 
+  
+  .text-neo-near-black {
+    margin-top: 4%;
+    margin-left: 8%;
+    font-size: 32px;
+  }
+}

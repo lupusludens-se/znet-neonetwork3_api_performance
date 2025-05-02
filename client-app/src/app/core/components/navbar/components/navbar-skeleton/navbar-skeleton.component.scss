@@ -1,0 +1,47 @@
+@use 'colors';
+
+:host {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.rectangle{
+  border: 2px solid colors.$blue-500;
+  height: 48px;
+  max-width: 196px;
+  border-radius: 2px;
+}
+
+.menu-item {
+  width: 100%;
+  padding: 14px 12px 14px 9px;
+  margin-top: 2px;
+  max-width: 196px;
+}
+
+.selected-item {
+  background: rgba(255, 255, 255, 0.10);
+  border-right: 3px solid colors.$white;
+  border-radius: 2px;
+}
+
+.circle {
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.line {
+  width: 96px;
+  height: 0px;
+  border-bottom: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.mt-30-percent{
+  margin-top: 30%;
+}
+ 

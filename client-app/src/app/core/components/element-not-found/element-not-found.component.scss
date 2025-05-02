@@ -1,0 +1,35 @@
+@use 'colors';
+
+:host {
+  height: 100%;
+}
+
+h3 {
+  line-height: 140%;
+  max-width: 430px;
+}
+
+.btn {
+  padding: 16px 20px 16px 24px;
+  font-size: 14px;
+  text-transform: capitalize;
+  background: none;
+  color: colors.$zeigo-purple;
+
+  &:hover {
+    color: colors.$purple-200;
+    background: none;
+  }
+}
+
+.empty-state-circle {
+  width: 90px;
+  height: 90px;
+  background: colors.$dark-gray-450;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.bk-white {
+  background-color: colors.$white;
+}

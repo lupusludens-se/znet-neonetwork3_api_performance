@@ -1,0 +1,61 @@
+<div
+  [class.disabled]="disabled"
+  [class.error]="error && submitted"
+  [class.page-search]="pageSearchControl"
+  class="p-relative w-100 d-flex align-center search-input search-input-border-radius"
+  [class.remove-bg]="isRemoveBg"
+  (focusin)="isActive = true"
+  (focusout)="isActive = false"
+  [class.active]="isActive">
+  <svg-icon
+    class="p-absolute left-16 search-icon text-blue-200"
+    key="search"
+    size="xl">
+  </svg-icon>
+
+  <input
+    #searchEl
+    [(ngModel)]="value"
+    [disabled]="disabled"
+    [class.error]="error"
+    class="w-100 pl-48 {{ size }}"
+    [ngClass]="{ 'pr-40 search-focus': value?.length > 0 && !disabled && !searchOnEnter && showErrorIcon }"
+    (keydown.enter)="emitSearch()"
+    placeholder="{{ placeholder | translate }}"
+    type="text" />
+
+  <svg-icon
+    (click)="error ? $event.preventDefault() : clear()"
+    *ngIf="value?.length > 0 && !disabled && !searchOnEnter && showErrorIcon"
+    [class.error]="error"
+    [key]="error ? (errorIcon ? errorIcon : 'alert-filled') : 'cross'" size="md"
+    class="p-absolute right-16 close-icon">
+  </svg-icon>
+
+  <button
+    class="p-absolute right-8 btn-s"
+    *ngIf="searchOnEnter"
+    (click)="emitSearch()">
+    {{ 'general.searchLabel' | translate }}
+  </button>
+
+  <div class="results-container" *ngIf="results?.length > 0 && value?.length > 0 && showResults">
+  <div
+    class="results-wrapper"
+    [style.max-height]="resultsHeight">
+    <div
+      (click)="selectItem(result)"
+      (mouseout)="showArrow = null"
+      (mouseover)="showArrow = result.id"
+      *ngFor="let result of results"
+      class="text-dark-gray-750 text-s arial c-pointer flex-between align-center">
+      <p [innerHTML]="result.displayName"></p>
+      <svg-icon
+        *ngIf="pageSearchControl && showArrow === result.id"
+        key="right-arrow"
+        size="md"></svg-icon>
+    </div>
+  </div>
+</div>
+</div>
+ 

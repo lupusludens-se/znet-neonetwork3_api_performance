@@ -1,0 +1,225 @@
+<div class="flex-column mb-96">
+  <div class="d-flex form-wrapper">
+    <div class="flex-column upload-logo mt-8 align-center">
+      <ng-container *ngIf="!formData?.image?.uri">
+        <div class="flex-column align-center bg-white no-logo">
+          <svg-icon class="size24 mt-24 text-dark-gray-590" key="cameraicon"></svg-icon>
+          <span class="logo-not-detected text-dark-gray-515 mt-12">{{
+            'companyManagement.form.logoNotDetectedLabel' | translate
+            }}</span>
+        </div>
+      </ng-container>
+
+      <div *ngIf="formData?.image?.uri" class="icon-wrapper flex-center">
+        <img [alt]="formData?.name" [src]="formData?.image?.uri" class="w-100" />
+      </div>
+
+      <input #fileInput (change)="onFileSelect($event)" (click)="fileInput.value = ''"
+        accept="image/png, image/gif, image/jpeg" class="d-none" type="file" />
+      <div *ngIf="!isAdd && !isSECompany" class="d-flex w-100 justify-end pt-10">
+        <neo-status-change (statusChanged)="companyFormGroup.get('statusId').patchValue($event)"
+          [activeStatusValue]="activeCompanyStatus" [currentStatus]="companyFormGroup.get('statusId').value"
+          [inactiveStatusValue]="inactiveCompanyStatus"></neo-status-change>
+      </div>
+      <button (click)="fileInput.click()" class="mt-16 flex-center"
+        [ngClass]="companyFormGroup?.get('imageLogo')?.value ? 'btn-c' : 'btn-s'">
+        {{
+        (companyFormGroup?.get('imageLogo')?.value
+        ? 'companyManagement.changeLogoLabel'
+        : 'companyManagement.uploadLogoLabel'
+        ) | translate
+        }}
+        <svg-icon key="cameraicon" class="ml-10" size="xxl"
+          [color]="companyFormGroup?.get('imageLogo')?.value ? '#643B72' : '#FDFCFF'"></svg-icon>
+      </button>
+
+      <p [class.text-error]="imageLarge" [innerHTML]="'companyManagement.iconDescriptionLabel' | translate"
+        class="text-xs pt-6 pb-24 text-center text-dark-gray-590 w-100"></p>
+
+      <button (click)="removeIcon()" *ngIf="formData?.image?.uri" class="flex-center text-neo-purple">
+        {{ 'companyManagement.removeLogoLabel' | translate }}
+        <svg-icon class="text-neo-purple ml-6" key="trash-can"></svg-icon>
+      </button>
+    </div>
+
+    <form [formGroup]="companyFormGroup" class="flex-column w-100 pl-32">
+      <h4 class="text-neo-near-black pb-24">
+        {{ (isAdd ? 'companyManagement.addCompanyLabel' : 'companyManagement.editCompanyLabel') | translate }}
+      </h4>
+
+      <neo-text-input formControlName="name" class="mb-24"
+        [labelName]="'companyManagement.form.companyNameLabel' | translate" [submitted]="formSubmitted">
+      </neo-text-input>
+
+      <neo-text-input formControlName="companyUrl" class="mb-24" [labelName]="'general.urlLabel' | translate"
+        [submitted]="formSubmitted">
+      </neo-text-input>
+
+      <div class="flex-column mb-24">
+        <label class="text-s text-dark-gray-590 neo-arial mb-8">
+          {{ 'companyManagement.form.countryLabel' | translate }}
+        </label>
+
+        <neo-search-bar (clearInput)="clearSearch()" (inputChange)="getCountries($event)"
+          (selectedResult)="chooseCountry($event)" [results]="countriesList"
+          [error]="formSubmitted && !selectedCountry?.name" [value]="selectedCountry?.name">
+        </neo-search-bar>
+
+        <neo-control-error [errors]="companyFormGroup.controls['countryId'].errors"
+          [fieldName]="'companyManagement.form.countryLabel' | translate" [submitted]="formSubmitted">
+        </neo-control-error>
+      </div>
+
+      <div class="flex-column">
+        <neo-dropdown [dropdownOptions]="industriesList" [submitted]="formSubmitted"
+          [labelName]="'companyManagement.form.industriesLabel' | translate" formControlName="industryId">
+        </neo-dropdown>
+      </div>
+
+      <div class="flex-column">
+        <ng-container>
+          <div class="row-wrapper d-flex pt-8">
+            <neo-dropdown class="mt-24 w-30" [class.selectDisabled]="companyFormGroup.get('mdmKeyId').value.id === 0"
+              [dropdownOptions]="mdmKeys" (ngModelChange)="onMDMKeyChange($event)" [submitted]="formSubmitted"
+              [labelName]="'companyManagement.form.mdmKeyLabel' | translate" formControlName="mdmKeyId">
+            </neo-dropdown>
+
+            <div class="pl-10 w-80 mt-50">
+              <input type="text" (input)="onMDMValueChange($event)" formControlName="mdmValue"
+                placeholder="Maximum 10 digits"
+                onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                maxlength="10" [(ngModel)]="mdmValues" />
+            </div>
+          </div>
+        </ng-container>
+
+        <neo-control-error class="mt-6" [errors]="showMDMError===true ? {mdmKeyErrorMessage } : null"
+          [fieldName]="'companyManagement.form.mdmKeyLabel' | translate" [submitted]="formSubmitted">
+        </neo-control-error>
+      </div>
+      <neo-text-input formControlName="linkedInUrl" class="mt-24 mb-24"
+        [labelName]="'companyManagement.form.linkedinUrlLabel' | translate" [submitted]="formSubmitted">
+      </neo-text-input>
+
+      <div class="flex-column mb-24">
+        <label class="text-s text-dark-gray-590 neo-arial flex-between" for="about">
+          {{ 'companyManagement.form.aboutLabel' | translate }}
+          <span class="counter-wrapper flex-between">
+            <!-- <p class="hint-info arial">
+              {{ 'projects.addProject.leaveDescriptionLabel' | translate }}
+            </p> -->
+            <span class="counter">{{ aboutLength }}/{{ aboutTextMaxLength }}</span>
+          </span>
+        </label>
+        <neo-message-control (symbolsCount)="onAboutLengthChanged($event)" class="mt-8" [displayAttachments]="false"
+          [hasError]="
+            formSubmitted &&
+            (!companyFormGroup.controls['about'].value || companyFormGroup.controls['about'].value === '<br>')
+          " formControlName="about" id="about"
+          (valueChanged)="onAboutLengthChanged($event); companyFormGroup.controls['about'].updateValueAndValidity()"
+          maxHeight="200px" [maxLength]="aboutMaxLength" classes="p-0 text-s">
+        </neo-message-control>
+
+        <neo-control-error class="mt-6" [errors]="
+            this.aboutLength > this.aboutTextMaxLength
+              ? { maxlength: { requiredLength: 4000 } }
+              : !companyFormGroup.controls['about'].value || companyFormGroup.controls['about'].value === '<br>'
+              ? { required: true }
+              : null
+          " [fieldName]="'companyManagement.form.aboutLabel' | translate" [submitted]="formSubmitted">
+        </neo-control-error>
+      </div>
+
+      <div class="flex-column">
+        <label class="text-s text-dark-gray-590 neo-arial">
+          {{ 'general.linkLabel' | translate }}
+        </label>
+
+        <ng-container formArrayName="urlLinks">
+          <div *ngFor="let link of urlLinks.controls; let i = index" [formGroupName]="i"
+            class="row-wrapper d-flex pt-8">
+            <div class="flex-grow-1">
+              <input [placeholder]="'events.linkNameLabel' | translate" class="mr-24" formControlName="urlName"
+                type="text" />
+
+              <p *ngIf="link.dirty && link.errors && link.errors.noUrlName" class="text-error text-xs pt-8">
+                {{link.errors['noUrlName']}} </p>
+            </div>
+
+            <div class="pr-10 flex-grow-1 pl-20">
+              <input [placeholder]="'general.urlLabel' | translate" class="w-100" formControlName="urlLink"
+                type="text" />
+              <p *ngIf="ulrLinkHasError('urlLink', i)" class="text-error text-xs pt-8">
+                {{ 'general.urlLabel' | translate }}
+                {{ 'general.notValidLabel' | translate }}
+              </p>
+              <p *ngIf="link.dirty && link.errors && link.errors.noUrlLink" class="text-error text-xs pt-8">
+                {{link.errors['noUrlLink']}}
+              </p>
+            </div>
+            <div class="btn-delete-div">
+              <button (click)="removeLink(i)" class="btn-delete">
+                <svg-icon key="trash-can" size="xl" class="text-dark-gray-590"></svg-icon>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+        <div>
+          <button (click)="addLink()" class="btn-add mt-18">
+            <svg-icon class="mr-8 text-neo-purple" key="plus-in-transparent-circle" size="xl"></svg-icon>
+            {{ 'companyManagement.form.addContentUrlLabel' | translate }}
+          </button>
+        </div>
+      </div>
+
+      <div class="flex-column" *ngIf="!isSECompany">
+        <h6 class="text-dark-gray-590 pt-32">
+          {{ 'companyManagement.form.roleLabel' | translate }}
+        </h6>
+
+        <div class="controls-wrapper flex-column">
+          <neo-radio-control (valueChanged)="roleChange($event)" [list]="rolesData" formControlName="typeId"
+            class="text-label-near-black">
+          </neo-radio-control>
+
+          <p *ngIf="hasError('typeId') && !titleApiError" class="text-error text-xs pt-8">
+            {{ 'companyManagement.form.roleLabel' | translate }}
+            {{ 'general.requiredLabel' | translate }}
+          </p>
+        </div>
+      </div>
+
+      <div class="d-flex w-100">
+        <div class="flex-column w-50">
+          <h6 class="text-dark-gray-590 pt-32 pb-12">
+            {{ 'companyManagement.form.solutionCapabilitiesLabel' | translate }}
+          </h6>
+          <neo-blue-checkbox (selectCheckbox)="setCategory(category)" *ngFor="let category of categoryList" [checked]="
+              companyFormGroup?.get('categories')?.value?.includes(category?.id) && !disableSolutionCapabilities
+            " [disabled]="disableSolutionCapabilities" [name]="category?.name" class="mt-8" value="{{ category?.id }}">
+          </neo-blue-checkbox>
+
+          <p *ngIf="hasError('categories') && !titleApiError" class="text-error text-xs pt-8">
+            {{ 'companyManagement.form.solutionCapabilitiesLabel' | translate }}
+            {{ 'general.areRequiredLabel' | translate }}
+          </p>
+        </div>
+
+        <div class="flex-column pl-20 w-50">
+          <h6 class="text-dark-gray-590 pt-32 pb-12">
+            {{ 'companyManagement.form.offsitePPALabel' | translate }}
+          </h6>
+          <neo-blue-checkbox (selectCheckbox)="setOffsitePPA(offsitePPA)" *ngFor="let offsitePPA of offsitePPAList"
+            [checked]="companyFormGroup?.get('offsitePPAIds')?.value?.includes(offsitePPA?.id) && !disableOffsitePPAs"
+            [disabled]="disableOffsitePPAs" [name]="offsitePPA?.name" class="mt-8" value="{{ offsitePPA?.id }}">
+          </neo-blue-checkbox>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<neo-form-footer (cancel)="cancelClick()" (save)="saveData()"
+  [submitButtonName]="(isAdd ? 'companyManagement.addCompanyLabel' : 'general.saveChangesLabel') | translate"
+  icon="right-arrow" class="neo-form-footer">
+</neo-form-footer>

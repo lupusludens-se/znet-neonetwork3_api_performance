@@ -1,0 +1,153 @@
+<div *ngIf="authService.currentUser() | async as currentUser">
+    <div>
+        <button (click)="goBack()" class="btn-connect back-btn d-flex align-center pb-4">
+          <svg-icon class="pr-4 back-btn-img-s" key="left-arrow"></svg-icon>
+          {{'general.backLabel' | translate}}
+        </button>
+    </div>
+<div class="initiative-wrapper mb-20" *ngIf="initiativeData">
+    <div class="flex-column">
+        <neo-top-panel imageCssClasses="l-250px w-599px h-249px t-28px text-dark-gray-30"
+            imageUrl="assets/images/project-category-background-image.svg">
+            <div class="top-panel-spacing d-flex z-index-1 w-100">
+                <div class="flex-column">
+                    <div class="d-flex">
+                        <div class="flex-column title">
+                            <h2 class="mb-20">{{ initiativeData.title }}</h2>
+                            <p class="pt-8 text-s w-90">{{ 'initiative.viewInitiative.subTitle' | translate }}</p>
+                        </div>
+                        <div class="flex-column pt-14" *ngIf="!hasAccessToInitiative(currentUser)">
+                            <h4 class="pt-12 pb-24 need-help-label">{{ 'learn.needStrategyLabel' | translate }}</h4>
+                            <div>
+                                <button class="btn-connect top-panel-btn-white d-flex align-center"
+                                    (click)="contactUsModal = true; disableScrollDown=false;">
+                                    {{ 'messages.connectNEONetworkLabel' | translate }}
+                                    <svg-icon class="ml-10" key="right-arrow"></svg-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-end">
+                            <div class="flex-column options-menu">
+                                <button class="d-flex align-center" *ngIf="!hasAccessToInitiative(currentUser)">
+                                    <neo-menu (optionClick)="optionClick($event)" [options]="options" activeIcon="cross"
+                                        class="initiative-banner" icon="three-dots-vertical">
+                                    </neo-menu>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </neo-top-panel>
+    </div>
+</div>
+
+<div class="mb-20" *ngIf="initiativeData">
+    <neo-progress-tracker [initiativeProgress]="initiativeData" [isAdminOrTeamMember]="hasAccessToInitiative(currentUser)"></neo-progress-tracker>
+</div>
+
+<div>
+    <div class="flex-row">
+        <div class="row-col1" *ngIf="initiativeData">
+            <div class="d-flex w-100 justify-center align-center">
+                <svg-icon key="info-initiative-view" class="svg-info" [fontSize]="'33px'"></svg-icon>
+                <div class="edit-title-section">
+                    <h2 class="header">Initiative Information</h2>
+                </div>
+                <div class="edit-button-section" *ngIf="!hasAccessToInitiative(currentUser)">
+                    <button [routerLink]="'/edit-initiative/' + initiativeData.initiativeId"
+                        class="flex-center edit-button">
+                        <svg-icon class="mr-10" key="pencil" size="lg"></svg-icon>
+                        {{ 'actions.editLabel' | translate }}
+                    </button>
+                </div>
+            </div>
+            <div class="w-100 initiative-info">
+                <div class="d-flex edit-section">
+                    <div class="initiative-edit-left pb-10">{{ 'initiative.viewInitiative.name' | translate }}</div>
+                    <div class="initiative-edit-right mb-12">{{initiativeData.title}}</div>
+                </div>
+                <div class="d-flex edit-section">
+                    <div class="initiative-edit-left pb-10">{{ 'initiative.viewInitiative.projectType' | translate }}</div>
+                    <div class="initiative-edit-right mb-12">{{initiativeData.category.name}}</div>
+                </div>
+                <div class="d-flex edit-section">
+                    <div class="initiative-edit-left pb-10">{{ 'initiative.viewInitiative.geographicalRegion' | translate }}</div>
+                    <div class="initiative-edit-right mb-12">
+                        {{regionString}}
+                        <span class="text-blue-200 region-count tooltip" *ngIf="initiativeData?.regions.length > 5">
+                            + {{ initiativeData?.regions.length - 5 }}
+                            <span class="tooltiptext text-xs">{{regionStringTooltip}}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="d-flex edit-section">
+                    <div class="initiative-edit-left pb-10">{{ 'initiative.viewInitiative.createdOnLabel' | translate }}</div>
+                    <div class="initiative-edit-right">{{initiativeData?.createdOn | date : 'MM/dd/yyyy'}}</div>
+                </div>
+                <div class="d-flex edit-section" *ngIf="initiativeData?.createdOn !== initiativeData?.modifiedOn">
+                    <div class="initiative-edit-left pb-10">{{ 'initiative.viewInitiative.lastUpdatedLabel' | translate }}</div>
+                    <div class="initiative-edit-right">{{initiativeData?.modifiedOn | timeAgo : 'MM/dd/yyyy'}}</div>
+                </div>
+                <div class="d-flex edit-section">
+                    <div class="initiative-edit-left pb-10">{{ 'initiative.viewInitiative.ownerLabel' | translate }}</div>
+                    <div class="initiative-edit-right mb-12">{{initiativeData.user.firstName }} {{initiativeData.user.lastName }}</div>
+                </div>
+                <div class="d-flex edit-section" *ngIf="collaborators && collaborators.length > 0">
+                    <div class="initiative-edit-left pb-10">{{ 'initiative.viewInitiative.teamMembersLabel' | translate }}</div>
+                    <div class="initiative-edit-right mb-12">{{collaborators}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row-col2" *ngIf="initiativeData?.initiativeId > 0">
+            <neo-learn-section class="w-100" [initiativeId]="initiativeData.initiativeId"
+                [initiativeTitle]="initiativeData.title" [isAdminOrTeamMember]="hasAccessToInitiative(currentUser)"></neo-learn-section>
+        </div>
+    </div>
+    <div class="flex-row">
+        <div class="row-col1" *ngIf="initiativeData?.initiativeId > 0">
+            <neo-community-section class="w-100" [initiativeId]="initiativeData.initiativeId" [initiativeTitle]="initiativeData.title" [isAdminOrTeamMember]="hasAccessToInitiative(currentUser)"></neo-community-section>
+        </div>
+        <div class="row-col2" *ngIf="initiativeData?.initiativeId > 0">
+            <neo-project-section class="w-100" [initiativeId]="initiativeData.initiativeId"
+                [initiativeTitle]="initiativeData.title" [isAdminOrTeamMember]="hasAccessToInitiative(currentUser)"></neo-project-section>
+        </div>
+    </div>
+    <div class="flex-row">
+        <div class="row-col1 file-section" *ngIf="initiativeData?.initiativeId > 0">
+            <neo-file-section class="w-100" [initiativeProgress]="initiativeData"></neo-file-section>
+        </div>
+        <div class="row-col2" *ngIf="initiativeData?.initiativeId > 0">
+            <neo-tools-section class="w-100" [initiativeId]="initiativeData.initiativeId" [initiativeTitle]="initiativeData.title" [isAdminOrTeamMember]="hasAccessToInitiative(currentUser)"></neo-tools-section>
+        </div>
+    </div>
+</div>
+
+<div class="progress-tracker upcoming mb-20 d-flex" *ngIf="initiativeData?.initiativeId > 0">
+    <neo-message-section class="w-100" [initiativeProgress]="initiativeData" [isAdminOrTeamMember]="hasAccessToInitiative(currentUser)"></neo-message-section>
+</div>
+
+    <div class="beta-section d-flex mb-20" *ngIf="initiativeData">
+        <h4 class="header w-90">{{'initiative.viewInitiative.betaLabelText' | translate}} <span
+                class="feedback-link underline c-pointer" (click)="toggleFeedbackPopup('')">{{'general.hereLabel' |
+                translate}}</span>...</h4>
+        <span class="beta">{{'initiative.viewInitiative.betaLabel' | translate}}</span>
+    </div>
+</div>
+<neo-contact-neo-network (closed)="contactUsModal = false" *ngIf="contactUsModal"></neo-contact-neo-network>
+
+<!-- DELETE MODAL -->
+<neo-modal (closed)="closeDeletePopup()" *ngIf="showDeleteModal" size="medium"
+    [title]="'initiative.deleteInitiative.titleLabel' | translate" class="title-h2">
+    <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+        {{ 'initiative.deleteInitiative.subtTitleLabel' | translate }}
+    </p>
+    <div class="popup-controls mt-10 d-flex">
+        <button (click)="closeDeletePopup()" class="btn-cancel blue-50-frame mr-16 w-50">
+            {{ 'general.cancelLabel' | translate }}
+        </button>
+        <button (click)="confirmDelete()" class="btn-confirm w-50">
+            {{ 'general.deleteModal.confirmLabel' | translate }}
+        </button>
+    </div>
+</neo-modal>

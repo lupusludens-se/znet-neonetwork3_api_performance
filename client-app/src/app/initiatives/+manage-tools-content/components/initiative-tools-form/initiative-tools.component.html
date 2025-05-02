@@ -1,0 +1,51 @@
+<div>
+  <button (click)="goBack()" class="btn-connect back-btn d-flex align-center pb-4">
+    <svg-icon class="pr-4 back-btn-img-s" key="left-arrow"></svg-icon>
+    {{ 'general.backLabel' | translate }}
+  </button>
+
+  <div class="d-flex mt-24 align-center">
+    <div class="tools-icon d-flex align-center w-50">
+      <svg-icon class="mr-10 mt-2" key="tools"></svg-icon>
+      <h2 class="header">{{ 'toolsManagement.toolsLabel' | translate }}</h2>
+    </div>
+    <div class="justify-end d-flex w-50">
+      <button class="btn-save-selection" (click)="saveSelectedContents()" [disabled]="counter === 0">
+        {{ 'general.saveLabel' | translate }}
+        <span *ngIf="counter !== 0">({{ counter }})</span>
+        {{ counter > 1 ? ('general.selectionsLabel' | translate) : ('general.selectionLabel' | translate) }}
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-24">
+    <p class="subtext">
+      {{ selectedTab === 1
+      ? ('initiative.viewInitiative.toolsRecommendedTabSubtextLabel' | translate)
+      : ('initiative.viewInitiative.toolsInitiativeSubTextLabel' | translate)
+      }}
+    </p>
+  </div>
+
+  <div class="d-flex mt-24">
+    <button (click)="changeTab(1)" [ngClass]="{ active: selectedTab === 1, inactive: selectedTab === 2 }"
+      class="btn-tab neo-arial d-flex align-center mr-4">
+      {{ 'general.recommendedLabel' | translate }}
+      <div *ngIf="toolRecommendationsCounter !== ''" class="initiative-counter">{{ toolRecommendationsCounter }}</div>
+    </button>
+
+    <button (click)="changeTab(2)" [ngClass]="{ inactive: selectedTab === 1, active: selectedTab === 2 }"
+      class="btn-tab neo-arial d-flex align-center">
+      {{ 'general.savedLabel' | translate }}
+    </button>
+  </div>
+
+  <div *ngIf="selectedTab === 1" class="mt-16">
+    <neo-initiative-tools-recommended [initiativeId]="initiativeId"
+      (updateRecommendationsCounterforTools)="updateToolsRecommendationsCounter($event)"
+      (counterChange)="handleCounterChange($event)"></neo-initiative-tools-recommended>
+  </div>
+  <div *ngIf="selectedTab === 2" class="mt-16">
+    <neo-initiative-tools-saved [initiativeId]="initiativeId"></neo-initiative-tools-saved>
+  </div>
+</div>

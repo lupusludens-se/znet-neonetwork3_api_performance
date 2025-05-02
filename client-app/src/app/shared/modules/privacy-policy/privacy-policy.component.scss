@@ -1,0 +1,8 @@
+@use 'colors';
+
+:host {
+  color: colors.$blue-500;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.01em;
+}

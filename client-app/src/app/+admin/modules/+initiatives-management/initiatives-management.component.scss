@@ -1,0 +1,273 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+.content {
+  // * area to fit bottom item dropdown menu
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 110%;
+  color: colors.$near-black-400;
+}
+
+.btn-export-initiative {
+  width: 180px;
+  height: 45px;
+  font-size: 14px;
+  background: colors.$dark-gray-40;
+  text-transform: capitalize;
+  border-radius: 8px;
+  border: 1px solid colors.$purple-300;
+  color: colors.$purple-200;
+  box-shadow: 0 1px 3px rgba(0, 31, 81, 0.07);
+
+  &:hover {
+    border-radius: 8px;
+    border: 1px solid colors.$purple-500;
+    color: colors.$purple-500;
+  }
+}
+
+.table-wrapper {
+  width: 100%;
+}
+
+.table {
+  cursor: default;
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background-color: colors.$dark-gray-450;
+    text-transform: uppercase;
+    color: colors.$purple-550;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+
+    td {
+      height: 40px;
+
+      .caret {
+        transition: all 0.2s ease;
+        vertical-align: middle;
+        margin-bottom: 2px;
+
+        &.up {
+          transform: rotate(180deg);
+          transition: all 0.2s ease;
+        }
+      }
+    }
+
+    .click-area {
+      width: fit-content;
+      cursor: pointer;
+    }
+  }
+
+  tbody {
+    background-color: colors.$white;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    /* identical to box height, or 21px */
+
+    color: colors.$dark-gray-515;
+  }
+}
+
+td {
+  height: 76px;
+}
+
+.user {
+  max-width: 20%;
+}
+
+.company {
+  letter-spacing: 0.01em;
+  color: colors.$near-black-400;
+  font-weight: 400;
+  
+  max-width: 220px;
+}
+
+.titleCol {
+  font-weight: 400;
+  color: colors.$near-black-400; 
+  max-width: 30%;
+}
+
+.geography {
+  font-weight: 400;
+  color: colors.$near-black-400;  
+  max-width: 160px;
+  @media only screen and (breakpoints.$small) and (breakpoints.$max-medium) {
+    max-width: 130px;
+  }
+}
+
+.phase,
+.status,
+.projectType {
+  color: colors.$near-black-400;
+  font-weight: 400;
+  max-width: 200px;
+  
+  @media only screen and (breakpoints.$small) and (breakpoints.$max-medium) {
+    max-width: 90px;
+  }
+  @media only screen and (breakpoints.$medium) and (breakpoints.$max-hd) {
+    max-width: 130px;
+  }
+
+}
+
+.phase {
+  width: fit-content;
+  max-width: 130px;
+  text-transform: uppercase;
+}
+
+.name {
+  font-weight: 700;
+  color: colors.$near-black-400;
+ 
+  max-width: 120px;
+  @media only screen and (breakpoints.$small) and (breakpoints.$max-medium) {
+    max-width: 70px;
+  }
+  @media only screen and (breakpoints.$medium) and (breakpoints.$max-hd) {
+    max-width: 100px;
+  }
+}
+
+
+.projectType-cell {
+  min-width: 170px;
+  max-width: 180px;
+
+  @media only screen and (breakpoints.$small) and (breakpoints.$max-medium) {
+    max-width: 90px;
+  }
+  @media only screen and (breakpoints.$medium) and (breakpoints.$max-hd) {
+    max-width: 130px;
+  }
+}
+
+.status-cell {
+  min-width: 120px !important;
+  max-width: 150px;
+
+  @media only screen and (breakpoints.$small) and (breakpoints.$max-medium) {
+    min-width: 60px;
+    max-width: 110px;
+  }
+  @media only screen and (breakpoints.$medium) and (breakpoints.$max-hd) {
+    min-width: 90px;
+    max-width: 125px;
+  }
+}
+
+.updatedDate {
+  min-width: 170px;
+  max-width: 200px;
+  color: colors.$near-black-400;
+
+  @media only screen and (breakpoints.$small) and (breakpoints.$max-medium) {
+    min-width: 110px;
+    max-width: 150px;
+  }
+  @media only screen and (breakpoints.$medium) and (breakpoints.$max-hd) {
+    min-width: 140px;
+    max-width: 180px;
+  }
+}
+
+.titleCol-cell {
+  min-width: 130px;
+  max-width: 160px;
+  
+  @media only screen and (breakpoints.$small) and (breakpoints.$max-medium) {
+    max-width: 110px;
+  }
+  @media only screen and (breakpoints.$medium) and (breakpoints.$max-hd) {
+    max-width: 140px;
+  }
+}
+
+.geography-cell {
+  min-width: 120px;
+  max-width: 160px;
+
+  @media only screen and (breakpoints.$small) and (breakpoints.$max-medium) {
+    max-width: 130px;
+  }
+}
+
+
+.updatedDate-cell {
+  min-width: 150px;
+  max-width: 180px;
+
+  @media only screen and (breakpoints.$small) and (breakpoints.$max-medium) {
+    max-width: 120px;
+  }
+  @media only screen and (breakpoints.$medium) and (breakpoints.$max-hd) {
+    max-width: 140px;
+  }
+}
+
+.company-cell {
+  min-width: 120px;
+  max-width: 160px;
+  @media only screen and (breakpoints.$small) and (breakpoints.$max-medium) {
+    min-width: 70px;
+    max-width: 120px;
+  }
+  
+  @media only screen and (breakpoints.$medium) and (breakpoints.$max-hd) {
+    min-width: 100px;
+    max-width: 150px;
+  }
+}
+
+.phase-cell{
+  min-width: 125px;
+  max-width: 180px;
+
+  @media only screen and (breakpoints.$small) and (breakpoints.$max-medium) {
+    min-width: 80px;
+    max-width: 130px;
+  }
+  @media only screen and (breakpoints.$medium) and (breakpoints.$max-hd) {
+    min-width: 110px;
+    max-width: 170px;
+  }
+}
+
+neo-initiative-table-row {
+  display: table-row;
+  border: 1px solid colors.$blue-25;
+  border-top: none;
+}
+
+.sorthighlight {
+  color: colors.$aqua-700;
+}
+
+.row-hover{
+  &:hover{
+    cursor: pointer;
+    background-color: colors.$blue-5;
+  }
+}

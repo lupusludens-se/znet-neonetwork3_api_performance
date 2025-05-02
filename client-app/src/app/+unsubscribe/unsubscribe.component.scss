@@ -1,0 +1,126 @@
+@use 'colors';
+
+:host {
+    display: flex;
+    width: 100%;
+    background: colors.$dark-gray-20;
+} 
+
+.unsubscribe-form-wrapper {
+    width: 65%;
+
+    h1 {
+        font-size: 28px;
+        line-height: 38px;
+    }
+
+    .success-wrapper {
+        text-align: center;
+        max-width: 450px;
+
+        h1 {
+            font-size: 32px;
+            line-height: 38px;
+        }
+    }
+
+    neo-footer {
+        left: 0;
+        bottom: 0;
+    }
+} 
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+}
+
+.flex-left {
+    width: 42%;
+    display: grid;
+    place-items: center;
+    background-image: url('../../assets/images/zeigob2c-background.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    right: 3px;
+    min-height: 100vh;
+}
+
+.flex-right {
+    width: 58%;
+    padding: 5px;
+    display: grid;
+    min-height: 100vh;
+}
+
+.unsubscribe-form {
+    width: 60% !important;
+    display: grid !important;
+    height: fit-content !important;
+    margin-top: 2.5rem !important;
+    margin-left: 2rem !important;
+}
+
+.vector-img {
+    right: 0;
+    bottom: 0;
+}
+
+.logo-image {
+    top: 4%;
+}
+
+.success-form {
+    flex-direction: column;
+    display: flex;
+
+    .pl-35 {
+        padding-left: 0px !important;
+    }
+}
+
+.email-field{
+    font-family: Arial Rounded MT Bold,serif;
+    font-size: 14px;
+    line-height: 130%;
+    color: colors.$dark-gray-590;
+    width: 90%;
+    opacity: .6;
+    user-select: none;
+    pointer-events: none;
+    border: 1px solid #C8C7CB;
+    background: #F9F8F9;
+    box-shadow: 0 1px 2px #1018280d;
+    height: 48px;
+    padding: 10px;
+    align-items: center;
+    display: flex;
+}
+
+.email-field-label{
+    font-family: Arial Rounded MT Bold,serif;
+    font-size: 14px;
+    line-height: 130%;
+    color: colors.$dark-gray-590;
+    height: 32px;
+    padding: 1px;
+    padding-right: 10px;
+    align-items: center;
+    display: flex;
+}
+
+
+.flex-right-center-content{
+    padding-top: 3%;
+}
+
+.footer
+{
+ margin-top:30%
+}
+
+.pt-75{
+    padding-top: 75px;
+}

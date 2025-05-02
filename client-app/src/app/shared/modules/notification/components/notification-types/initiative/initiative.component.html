@@ -1,0 +1,20 @@
+<p class="two-lines-ellipsis text-s pl-12 text-neo-near-black">
+  {{ 'notificationType.initiativeLabel' | translate }} 
+    <a
+    class="text-neo-near-black fw-700 c-pointer"
+    routerLink="/decarbonization-initiatives/{{ notification?.details?.initiativeId }}">
+    {{ notification?.details?.initiativeTitle }}
+  </a>
+  {{ 'notificationType.createdByLabel' | translate }} 
+    <a
+      class="text-neo-near-black fw-700 c-pointer"
+      routerLink="/user-profile/{{ notification?.details?.userId }}">
+      {{ notification?.details?.userName }}
+    </a>
+    {{ 'notificationType.fromLabel' | translate }}
+    <a
+      class="text-neo-near-black fw-700 c-pointer"
+      routerLink="/company-profile/{{ notification?.details?.companyId }}">
+      {{ notification?.details?.companyName }}
+    </a>
+  </p>

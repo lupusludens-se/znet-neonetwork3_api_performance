@@ -1,0 +1,251 @@
+@use 'colors';
+
+.top {
+  background-color: colors.$aqua-400;
+  height: 244px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0px 0px 19px rgba(164, 163, 163, 0.25);
+  border-radius: 8px;
+
+  .project-type-icon {
+    width: 58px;
+    height: 63px;
+  }
+
+  .btn {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 0;
+    z-index: 1;
+  }
+
+  .btn-contact {
+    background: colors.$lime;
+    text-transform: uppercase;
+    color: colors.$neo-blue;
+
+    &:hover {
+      background: colors.$lime-green-hover;
+    }
+  }
+
+  .contacted {
+    z-index: 1;
+    cursor: default;
+    margin-top: 12px;
+
+    .blue-part {
+      width: 167px;
+      height: 45px;
+      background: colors.$dark-gray-40;
+      border-radius: 8px;
+      gap: 8px;
+
+      font-size: 14px;
+      line-height: 150%;
+      color: colors.$zeigo-purple;
+    }
+
+    .icon-part {
+      width: 48px;
+      height: 45px;
+      background: colors.$dark-gray-40;
+      border-radius: 8px;
+
+      &:hover {
+        background: colors.$dark-gray-250;
+      }
+
+      &:active {
+        background: colors.$zeigo-bight-gray;
+      }
+    }
+  }
+
+  .btn-save {
+    color: colors.$white;
+  }
+
+  .lines-decor {
+    position: absolute;
+    width: 720px;
+    height: 330px;
+    right: -502px;
+    top: 0;
+    opacity: 0.22;
+    z-index: 0;
+  }
+}
+
+.btn-view {
+  background: colors.$dark-gray-40;
+  border: 1px solid colors.$purple-300;
+  border-radius: 8px;
+  color: colors.$purple-200;
+  width: 100%;
+  height: 40px;
+
+  &:hover {
+    background: colors.$dark-gray-40;
+    border: 1px solid colors.$purple-350;
+    color: colors.$purple-500;
+  }
+}
+
+.provider-info,
+.map-wrapper,
+.locations,
+.tags {
+  background: colors.$dark-gray-30;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+  padding: 20px;
+}
+
+.provider-info {
+  .logo {
+    width: 90px;
+    height: 47px;
+    object-fit: contain;
+  }
+
+  .section-header {
+    border-bottom: 1px solid rgb(191 201 217 / 40%);
+
+    .secondary-text {
+      font-size: 12px;
+      line-height: 140%;
+      color: colors.$near-black-400;
+    }
+
+    .name {
+      font-size: 16px;
+      line-height: 130%;
+      color: colors.$near-black-400;
+    }
+  }
+}
+
+.info-wrapper {
+  .param {
+    font-size: 12px;
+    line-height: 140%;
+    color: colors.$dark-gray-510;
+    width: 100px;
+    min-width: 100px;
+    font-family: 'Arial';
+  }
+
+  .param-value {
+    font-size: 14px;
+    line-height: 130%;
+    font-weight: 700;
+    color: colors.$dark-gray-590;
+    font-family: 'Arial Rounded MT Bold';
+  }
+}
+
+.map-wrapper {
+  padding: 0;
+
+  .section-header {
+    padding: 20px;
+
+    .btn-expand {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  img {
+    width: 100%;
+    height: 194px;
+    position: absolute;
+  }
+}
+
+.img {
+  position: absolute;
+  width: 550px;
+  top: 97px;
+  left: -36px;
+}
+
+.section-title {
+  font-size: 16px;
+  line-height: 150%;
+  font-weight: 700;
+  color: colors.$near-black-400;
+}
+
+#map {
+  height: 194px;
+}
+
+/* MAP MODAL */
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 61;
+  width: 100%;
+  height: 100%;
+}
+
+.btn-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  color: colors.$dark-gray-590;
+
+  &:hover {
+    color: colors.$near-black-400; //Zeigo Rebrand Changes : Terms Of Use Popup
+  }
+}
+
+.arrow {
+  width: fit-content;
+  padding: 10px;
+  margin: 0.5em;
+}
+.content {
+  position: relative;
+  width: 77%;
+  height: 80%;
+  box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+  border-radius: 2px;
+  background-color: colors.$dark-gray-30;
+  margin: 4% 12% 5% 12%;
+  padding: 32px;
+
+  .modal-top {
+    border-bottom: 1px solid colors.$blue-100;
+
+    .modal-title {
+      font-size: 24px;
+      line-height: 120%;
+      color: colors.$near-black-400;
+    }
+
+    .modal-subtitle {
+      font-size: 14px;
+      line-height: 130%;
+      color: colors.$dark-gray-580;
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  z-index: 60;
+  top: 0;
+  left: 0;
+  width: 9999px;
+  height: 9999px;
+  background: colors.$blue-950;
+  opacity: 0.8;
+}
+
+/**/

@@ -1,0 +1,42 @@
+<div [class.page-search]="pageSearchControl"
+  class="p-relative w-100 search-input align-center justify-center">
+  <label>
+    Title
+  </label>
+  <div class="d-flex align-center justify-center pt-10">
+    <svg-icon class="p-absolute left-3-rem search-icon text-dark-gray-590" key="search" size="xl"></svg-icon>
+
+    <input #searchEl [(ngModel)]="value" class="w-100 pl-48 {{ size }}" placeholder="{{ placeholder | translate }}"
+      type="text" />
+
+    <div *ngIf="value?.length > 0" class="p-absolute-important results-wrapper">
+      <div *ngIf="results?.length > 0 && value?.length > 0" class="results">
+        <div class="text-m openDiscussionsLabel pb-12">{{ 'forum.openDiscussionsLabel' | translate }}</div>
+        <div (mouseout)="showArrow = null" (mouseover)="showArrow = result.id" *ngFor="let result of results"
+          class="text-dark-gray-590 text-xl c-pointer flex-between align-center arial" routerLink="/forum/topic/{{ result.id }}">
+          <div class="d-flex align-center">
+            <p [innerHTML]="result.displayName"></p>
+
+            <ng-container *ngIf="result?.responsesCount">
+              <neo-vertical-line-decor></neo-vertical-line-decor>
+
+              <svg-icon class="mr-4 response" key="chat-bubble" size="lg"></svg-icon>
+
+              <span class="response text-xs">{{ result?.responsesCount }} {{ 'forum.responsesLabel' | translate }}</span>
+            </ng-container>
+          </div>
+
+          <svg-icon *ngIf="pageSearchControl && showArrow === result?.id" key="right-arrow" fontSize="14px" size="md"></svg-icon>
+        </div>
+      </div>
+
+      <div class="pt-20 pb-10">
+        <button (click)="createDiscussion.emit()" class="btn-l green flex-center w-100">
+          <svg-icon class="mr-10" key="create-new-discussion-icon" size="xxl"></svg-icon>
+
+          {{ 'forum.createDiscussionLabel' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

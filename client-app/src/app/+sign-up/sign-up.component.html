@@ -1,0 +1,151 @@
+<div class="flex-container">
+  <div class="flex-left p-relative">
+    <img alt="neo logo" class="c-pointer absolute logo-image " routerLink=""
+      src="assets/images/zeigologo-sidebar.png" />
+    <img alt="vector image" class="vector-img absolute display-none"
+      src="assets/images/sign-up/sign-up-background-vector.svg" />
+  </div>
+  <div class="flex-right align-center p-relative pt-48 sign-up-form-wrapper flex-right-center-content"
+    [class.sign-up-form]="!showSuccess">
+    <div class="pb-12 success-form" [class.flex-right-center-content]="showSuccess">
+      <ng-container *ngIf="!showSuccess">
+        <h1 class="text-header">{{ 'signUp.titleLabel' | translate }}</h1>
+        <p class="text-subtitle text-s pt-12 pb-16">
+          {{ 'signUp.descriptionLabel' | translate }}
+        </p>
+        <div class="separator"></div>
+
+        <form [formGroup]="formGroup" class="flex-column pt-24">
+          <neo-radio-control (valueChanged)="changeRole($event)" [list]="roles" [submitted]="formSubmitted"
+            [labelName]="'signUp.roleLabel' | translate" [labelForError]="'signUp.errorRoleLabel' | translate" class="mt-12" formControlName="roleId" id="roleId">
+          </neo-radio-control>
+
+          <div class="flex-between gap-32 pt-24 mb-24">
+            <neo-text-input formControlName="firstName" width="314px" class="grow-width"
+              [labelName]="'userManagement.form.firstNameLabel' | translate" [submitted]="formSubmitted">
+            </neo-text-input>
+
+            <neo-text-input formControlName="lastName" width="314px" class="grow-width"
+              [labelName]="'userManagement.form.lastNameLabel' | translate" [submitted]="formSubmitted">
+            </neo-text-input>
+          </div>
+
+          <neo-text-input formControlName="companyName" [disabled]="disableInput ? true : null"
+            [labelName]="'signUp.companyLabel' | translate" [submitted]="formSubmitted"
+            [labelForError]="'signUp.companyNameLabel' | translate">
+          </neo-text-input>
+
+          <div class="flex-column pt-24">
+            <neo-text-input formControlName="email" [labelName]="'userManagement.form.emailLabel' | translate"
+              [submitted]="formSubmitted">
+            </neo-text-input>
+
+            <p *ngIf="emailServerError" class="text-error text-xs pt-8">
+              {{ emailServerError | translate }}
+            </p>
+          </div>
+          <div class="flex-column pt-24">
+            <label class="input-label neo-arial text-s" for="country">
+              {{ 'userManagement.form.countryLabel' | translate }}
+            </label>
+
+            <neo-search-bar (clearInput)="clearCountry()" (inputChange)="searchCountries($event)"
+              (selectedResult)="setCountry($event)" [error]="!!formGroup.controls['countryId'].errors && formSubmitted"
+              [results]="countries$ | async" [submitted]='formSubmitted' class="mt-8" id="country">
+            </neo-search-bar>
+
+            <neo-control-error [submitted]="formSubmitted" [errors]="formGroup.controls['countryId'].errors"
+              [fieldName]="'userProfile.edit.countryLabel' | translate">
+            </neo-control-error>
+          </div>
+
+          <div class="flex-column pt-24">
+            <neo-dropdown [disabled]="disableInput" [dropdownOptions]="heardVia$ | async" [submitted]='formSubmitted'
+              [labelName]="'signUp.heardViaLabel' | translate" class="mt-8 mt-12" formControlName="heardViaId"
+              id="heard-via">
+            </neo-dropdown>
+          </div>
+
+          <div class="flex-column pt-24">
+            <label class="input-label neo-arial flex-between" for="joiningInterestDetails">
+              <div class="d-flex flex-start">
+                <div>{{ 'signUp.joiningInterestLabel' | translate }}</div>
+                <div class="optionalText">(Optional)</div>
+              </div>
+              <span class="align-right counter-wrapper flex-between">
+                <span class="counter">{{ formGroup.controls['joiningInterestDetails'].value?.length ?? 0 }}/{{
+                  joiningInterestDetailsTextMaxLength }}</span>
+              </span>
+            </label>
+            <neo-textarea-control class="neo-arial" formControlName="joiningInterestDetails" height="100px"
+              [submitted]="formSubmitted">
+            </neo-textarea-control>
+            <neo-control-error class="mt-6" [errors]="
+              formGroup.controls['joiningInterestDetails'].value?.length > joiningInterestDetailsTextMaxLength
+                  ? { maxlength: { requiredLength: 200 } }
+                  : null
+              " [fieldName]="'signUp.joiningInterestLabel' | translate" [submitted]="formSubmitted">
+            </neo-control-error>
+          </div>
+
+          <div class="d-flex align-center pt-24">
+            <neo-blue-checkbox [name]="'signUp.iAcceptLabel' | translate"
+              (selectCheckbox)="termsAndConditions = !termsAndConditions" [checked]="termsAndConditions"
+              class="w-fit-content text-accept">
+            </neo-blue-checkbox>
+
+            <button (click)="termOfUseModal = true" type="button"
+              class="link text-neo-purple mb-0-3-rem text-s underline ml-neg-0-4-rem">
+              &nbsp; {{ 'signUp.termsAndConditionLabel' | translate }}
+            </button>
+          </div>
+
+          <neo-control-error [submitted]="formSubmitted" [errors]="termsAndConditions ? null : {required: true}"
+            [fieldName]="'landing.footer.termsOfUseLabel' | translate" class='mb-24'>
+          </neo-control-error>
+
+          <re-captcha (resolved)="formGroup.get('recaptchaToken').setValue($event)"
+            [class.is-invalid]="hasError('recaptchaToken')" id="recaptcha">
+          </re-captcha>
+
+          <neo-control-error [submitted]="formSubmitted" [errors]="formGroup.controls['recaptchaToken'].errors"
+            [fieldName]="'general.captchaLabel' | translate" class='mb-24'>
+          </neo-control-error>
+
+          <button type="button" (click)="createAccount()" class="btn-l green">
+            {{ 'signUp.createMyAccountLabel' | translate }}
+          </button>
+
+          <div class="flex-center pt-24 align-self-center">
+            <p class="text-s text-neo-purple">
+              {{ 'signUp.alreadyHaveAnAccountLabel' | translate }}
+            </p>
+
+            <button type="button" (click)="logIn()" class="link text-s text-neo-purple ml-4">
+              {{ 'landing.header.loginLabel' | translate }}
+            </button>
+          </div>
+        </form>
+      </ng-container>
+
+      <ng-container *ngIf="showSuccess" class="">
+        <img alt="user icon" src="assets/images/user-checked.svg" />
+        <h1 class="text-header pt-32">{{ 'signUp.successLabel' | translate }}</h1>
+        <p class="text-s pt-12 max-w-fit text-blue-200 text-center">
+          {{ 'signUp.successDescriptionLabelLineOne' | translate }}
+        </p>
+        <p class="text-s pt-12 pb-32 text-blue-200 text-center">
+          <span [innerHTML]="'signUp.successDescriptionLabelLineTwo' | translate">
+          </span>
+        </p>
+        <button class="btn-l green d-flex align-center w-100 justify-center text-initial" routerLink="/">
+          {{ 'signUp.discoverPublicDashboardLabel' | translate }}
+          <svg-icon class="ml-14" key="right-arrow"></svg-icon>
+        </button>
+      </ng-container>
+    </div>
+    <neo-footer (termOfUseModalClosed)="termOfUseModal = false" [removeLogo]="true" [termOfUseModal]="termOfUseModal"
+      [forRegistration]="true" class="w-100">
+    </neo-footer>
+  </div>
+</div>

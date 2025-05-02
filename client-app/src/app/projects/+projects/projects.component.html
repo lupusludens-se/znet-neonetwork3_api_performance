@@ -1,0 +1,200 @@
+<main class="main">
+  <neo-catalog-top-panel></neo-catalog-top-panel>
+
+  <div
+    class="search mt-24 flex-between"
+    [class.mb-24]="!showMap"
+    [class.mb-12]="showMap">
+    <neo-search-bar
+      class="search-border-radius-large"
+      [value]="filterState?.search"
+      [pageSearchControl]="true"
+      (inputChange)="searchProjects($event)"
+      (clearInput)="clearSearch()">
+    </neo-search-bar>
+    <button
+      class="btn btn-map flex-center ml-24"
+      (click)="switchViewMode()">
+      {{ (showMap ? 'projects.viewListLabel' : 'projects.viewMapLabel') | translate }}
+      <ng-container *ngIf="showMap; else listIcon">
+        <svg-icon
+          key="list"
+          class="ml-8"></svg-icon>
+      </ng-container>
+
+      <ng-template #listIcon>
+        <svg-icon
+          key="location"
+          class="ml-2"></svg-icon>
+      </ng-template>
+    </button>
+  </div>
+
+  <div
+    class="content d-flex"
+    [class.flex-column]="showMap">
+    <div
+      class="flex-column filters"
+      [class.filters-width]="!showMap">
+      <neo-filter-header
+        [class.filters-map-width]="showMap"
+        [class.align-title-centered]="showMap"
+        [showClearButton]="showClearButton"
+        (clearFilters)="clearAll()">
+        <neo-filter-state
+          [maxAppliedFiltersViewCount]="5"
+          class="ml-8"
+          *ngIf="showMap"></neo-filter-state>
+      </neo-filter-header>
+
+      <neo-filter-state *ngIf="!showMap"></neo-filter-state>
+
+      <div
+        class="filters-wrapper flex-wrap"
+        *ngIf="!showMap">
+        <div class="personal-filters mb-20">
+          <neo-filter-button
+            name="For You"
+            class="mb-8 d-flex mr-10"
+            icon="filter-user-checked"
+            [isActive]="forYouFilterTitle"
+            (clicked)="applyFilter($event)">
+          </neo-filter-button>
+
+          <neo-filter-button
+            name="Saved"
+            class="mb-8 d-flex mr-10"
+            icon="filter-star"
+            [isActive]="title"
+            (clicked)="applyFilter($event)">
+          </neo-filter-button>
+
+          <neo-filter-button
+            name="All Projects"
+            class="mb-1 d-flex mr-10"
+            icon="projects"
+            [isActive]="title"
+            (clicked)="applyFilter($event)">
+          </neo-filter-button>
+        </div>
+        <div class="seperator-near-full ml-10 mb-20"></div>
+        <div class="p-2 ml-10 mr-10">
+          <neo-taxonomy-filter
+            icon="flash"
+            [name]="'filter.solutionsLabel' | translate"
+            [taxonomy]="taxonomyEnum.solutions">
+          </neo-taxonomy-filter>
+        </div>
+        <div class="p-2 ml-10 mr-10">
+          <neo-taxonomy-filter
+            class="mt-8"
+            icon="category"
+            [name]="'filter.categoryLabel' | translate"
+            [taxonomy]="taxonomyEnum.categories">
+          </neo-taxonomy-filter>
+        </div>
+
+        <div class="p-2 ml-10 mr-10">
+          <neo-taxonomy-filter
+            icon="sun"
+            [name]="'filter.technologyLabel' | translate"
+            [taxonomy]="taxonomyEnum.technologies">
+          </neo-taxonomy-filter>
+        </div>
+
+        <div class="p-2 ml-10 mr-10 mb-10">
+          <neo-taxonomy-hierarchical-filter
+            icon="filter-location"
+            [name]="'filter.regionLabel' | translate"
+            [taxonomy]="taxonomyEnum.regions">
+          </neo-taxonomy-hierarchical-filter>
+        </div>
+      </div>
+      <div
+        class="mb-8 d-flex flex-row max-w-80"
+        *ngIf="showMap">
+        <div class="p-2 mr-10 max-w-30">
+          <neo-taxonomy-filter
+            class="ml-8 ppaMapFilter categoryFilter"
+            icon="category"
+            [name]="'filter.categoryLabel' | translate"
+            [horizontalLayout]="true"
+            [taxonomy]="taxonomyEnum.categories"
+            [filterLayout]="'map'">
+          </neo-taxonomy-filter>
+        </div>
+
+        <div class="p-2 ml-10 mr-10 max-w-30">
+          <neo-taxonomy-filter
+            class="ml-8 ppaMapFilter technologyFilter"
+            icon="sun"
+            [name]="'filter.technologyLabel' | translate"
+            [horizontalLayout]="true"
+            [taxonomy]="taxonomyEnum.technologies"
+            [filterLayout]="'map'">
+          </neo-taxonomy-filter>
+        </div>
+
+        <div class="p-2 ml-10 mr-10 mb-10 max-w-30">
+          <neo-taxonomy-hierarchical-filter
+            class="ml-8 ppaMapFilter regionFilter"
+            icon="filter-location"
+            [horizontalLayout]="true"
+            [name]="'filter.regionLabel' | translate"
+            [taxonomy]="taxonomyEnum.regions"
+            [filterLayout]="'map'">
+          </neo-taxonomy-hierarchical-filter>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="d-flex"
+      [class]="showMap ? 'w-100' : 'list-width pl-24'">
+      <ng-container *ngIf="showMap">
+        <neo-projects-map
+          class="mr-32"
+          [projects]="projectsList"></neo-projects-map>
+      </ng-container>
+
+      <div
+        class="catalog flex-column"
+        [class.short]="showMap">
+        <div
+          class="section-top flex-between mb-12"
+          *ngIf="!showMap">
+          <span class="project-title">{{ title }}</span>
+        </div>
+
+        <neo-project-item
+          class="mb-12"
+          (hoverProject)="showMap ? onHover($event) : null"
+          (removeProjectFromSaved)="removeProjectFromSavedList($event)"
+          *ngFor="let project of mapProjectList"
+          [project]="project"
+          id="project-{{ project.id }}">
+        </neo-project-item>
+
+        <neo-pagination
+          *ngIf="mapProjectList?.length > 1 && paging.total > defaultItemPerPage && !showMap"
+          [paging]="paging"
+          (changePage)="updatePaging($event)">
+        </neo-pagination>
+
+        <neo-no-results
+          *ngIf="projectsList !== null && !projectsList?.length && filterState?.search"
+          [searchedStr]="filterState?.search">
+        </neo-no-results>
+
+        <neo-empty-page
+          [class.empty-project-list]="showMap"
+          *ngIf="projectsList && !projectsList?.length && !filterState?.search"
+          [headlinePart1]="'general.emptyStatesHeadline1' | translate"
+          [headlinePart2]="'general.emptyStatesHeadline2' | translate"
+          [line2TextClass]="'text-m'"
+          [iconKey]="'projects'">
+        </neo-empty-page>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,110 @@
+<div class="container w-100 flex-column">
+  <div class="d-flex section-header pb-10">
+    <div class="w-50 d-flex align-center">
+      <svg-icon class="file-icon" key="file"></svg-icon>
+      <div class="section-title">{{ 'general.filesLabel' | translate }}</div>
+
+      <p class="info-text neo-arial tooltip" *ngIf="initiativeFiles.dataList.length > 0">
+        <svg-icon class="file-info-icon" key="info-text"></svg-icon>
+        <span class="tooltiptext" [innerHTML]="'initiative.viewInitiative.permittedFileDescription' | translate"> </span>
+      </p>
+    </div>
+    <div class="w-50 d-flex justify-end"> 
+      <button class="view-all-btn d-flex btn-tertiary" ngClass="{{ initiativeFiles.dataList.length > 0 ? 'mr-10': '' }}" (click)="checkFileCount(); trackFileActivity()" *ngIf="!isAdminOrTeamMember">
+        <svg-icon key="upload-icon" class="btn-upload mr-10"></svg-icon>{{ 'general.uploadLabel' | translate }}
+      </button>
+      <button class="view-all-btn d-flex btn-tertiary" *ngIf="initiativeFiles.dataList.length > 0"
+        (click)="viewAllFiles()">
+        <svg-icon key="eye" class="icon"></svg-icon>{{ 'initiative.viewInitiative.viewAllLabel' | translate }}
+      </button>
+    </div>
+  </div>
+  <div class="load-content-wrapper justify-center" *ngIf="isLoading === true; else filesList">
+    <neo-section-spinner></neo-section-spinner>
+  </div>
+  <ng-template #filesList>
+  <div *ngIf="initiativeFiles.dataList.length > 0">
+    <ng-container>
+      <div class="card" neoInfiniteSectionScroll infiniteScrollThreshold="90%" [infiniteScrollDisabled]="false"
+        (loadMoreData)="onLoadMoreData()">
+        <div class="flex-column section" *ngFor="let dataItem of initiativeFiles.dataList">
+          <div class="d-flex">
+            <div class="div-img">
+              <svg-icon class="file-icon" [key]="getFileKey(dataItem.type)"></svg-icon>
+            </div>
+            <div class="align-center d-flex w-90">
+              <div class="flex-column w-92">
+                <div class="title ellipsis" [title]="dataItem.actualFileTitle + (dataItem.version > 0 ? '(' + dataItem.version + ')': '') + '.' + getFileExtension(dataItem.extension)"
+                  (click)="routeToLearnPage(true, '/learn/' + dataItem?.id, dataItem.id, dataItem.title)">
+                  {{ dataItem.actualFileTitle + (dataItem.version > 0 ? '(' + dataItem.version + ')': '') + '.' + getFileExtension(dataItem.extension) }} <br />
+                  <span class="sub-title">{{ getFileType(dataItem.type) }}</span> 
+                </div>
+              </div>
+              <div *ngIf="hasAccessToDeleteForInitiativeFiles(currentUser,dataItem)" class="three-dots">
+                <button>
+                  <neo-menu (optionClick)="optionClick(dataItem?.id)" [options]="options" activeIcon="cross"
+                    class="files-section" icon="vertical-three-dots"></neo-menu>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>
+  <ng-container *ngIf="initiativeFiles.dataList.length <= 0 && isLoading === false">
+    <neo-initiative-no-content [section]="'Files'"></neo-initiative-no-content>
+  </ng-container>
+  <neo-modal (closed)="closePopup()" *ngIf="showFileDuplicateModal" class="primary-scope" size="medium" title=" ">
+    <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+      {{ 'initiative.viewInitiative.fileDuplicate1Label' | translate }} <b> {{ this.fileName }}.{{ fileExtension }} </b>.
+      {{ 'initiative.viewInitiative.fileDuplicate2Label' | translate }}
+    </p>
+    <div  [ngClass]="{'centered': disableReplace === true}" class="popup-controls mt-10 d-flex">
+      <button (click)="replaceFile()" *ngIf="!disableReplace" class="btn-cancel blue-50-frame mr-16 w-50">
+        {{ 'general.replaceLabel' | translate }}
+      </button>
+      <button (click)="keepBothTheFiles()"  class="btn-confirm w-50">
+        {{ 'general.keepBothLabel' | translate }}
+      </button>
+    </div>
+  </neo-modal>
+  <neo-modal (closed)="closeDeletePopup()" *ngIf="showDeleteModal" size="medium"
+    [title]="'initiative.viewInitiative.deleteInitiativeFileTitleLabel' | translate" class="title-h2">
+    <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+      {{ 'initiative.viewInitiative.deleteSavedContentPopUpSubTitle' | translate }}
+    </p>
+    <div class="popup-controls mt-10 d-flex">
+      <button (click)="closeDeletePopup()" class="btn-cancel blue-50-frame mr-16 w-50">
+        {{ 'general.cancelLabel' | translate }}
+      </button>
+      <button (click)="confirmDelete()" class="btn-confirm w-50">
+        {{ 'general.deleteModal.confirmLabel' | translate }}
+      </button>
+    </div>
+  </neo-modal>
+  <neo-modal (closed)="closeFileMaxPopup()" *ngIf="showFileMaxModal" size="extra-medium"
+  [title]="'initiative.viewInitiative.maximumFileCapacityLabel' | translate">
+    <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+      {{ 'initiative.viewInitiative.maximumFileDescriptionCapacityLabel' | translate }}
+    </p>
+    <div class="popup-controls mt-10 d-flex">
+      <button (click)="closeFileMaxPopup()" class="btn-cancel blue-50-frame mr-16 w-50">
+        {{ 'general.cancelLabel' | translate }}
+      </button>
+      <button (click)="contactUsModal = true" class="btn-confirm w-50">
+        {{ 'messages.connectNEONetworkLabel' | translate }}
+      </button>
+    </div>
+  </neo-modal>
+
+  <neo-file-upload
+  (closed)="fileUploadModal = false"
+  (fileSelected)="onFileSelect($event)"
+  *ngIf="fileUploadModal" class="secondary-scope" [fileDescription]="fileDescription"></neo-file-upload>
+
+  <neo-contact-neo-network
+  (closed)="contactUsModal = false; showFileMaxModal = false" 
+  *ngIf="contactUsModal"></neo-contact-neo-network>
+</div>

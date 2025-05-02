@@ -1,0 +1,38 @@
+<div (click)="closed.emit(null)" class="overlay"></div>
+
+<div class="image-wrapper flex-column flex-center">
+  <div class="d-flex align-center">
+    <svg-icon
+      (click)="currentIndex = currentIndex - 1"
+      [class.disabled]="currentIndex === 0"
+      class="c-pointer navigation mr-90"
+      key="back"
+      size="xxl"
+    ></svg-icon>
+
+    <div class="p-relative">
+      <div (click)="closed.emit(null)" class="close-btn flex-center p-absolute right-8 top-8 c-pointer">
+        <svg-icon key="close" size="xxl"></svg-icon>
+      </div>
+
+      <img [alt]="images[currentIndex].image.name" [src]="images[currentIndex].image.uri" />
+    </div>
+
+    <svg-icon
+      (click)="currentIndex = currentIndex + 1"
+      [class.disabled]="currentIndex === images.length - 1"
+      class="c-pointer navigation ml-90"
+      key="forward"
+      size="xxl"
+    ></svg-icon>
+  </div>
+
+  <div class="d-flex flex-center gap-12 pt-32">
+    <span
+      (click)="currentIndex = index"
+      *ngFor="let image of images; let index = index"
+      [class.active]="currentIndex === index"
+      class="c-pointer point"
+    ></span>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+@use 'colors';
+
+.tools-management {
+  .title{
+    font-size: 24px;
+    line-height: 120%;
+    color: colors.$near-black-400;
+  }
+  .name-cell {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .status-cell {
+    width: 100px;
+  }
+
+  .option-cell {
+    width: 85px;
+  }
+
+  .btn-l {
+    padding: 12px 20px;
+
+    svg-icon {
+      width: 18px;
+      height: 18px;
+    }
+  } 
+
+  .text-label{
+    color: colors.$dark-gray-580;
+    font-size: 16px;
+    line-height: 130%;
+    letter-spacing: 0.16px;
+  }
+}

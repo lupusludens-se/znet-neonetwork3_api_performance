@@ -1,0 +1,66 @@
+<div class="main" *ngIf="currentUser$ | async as currentUser">
+  <div
+    class="flex-column p-24 control-wrapper mt-12"
+    *ngIf="permissionService.userHasPermission(currentUser, permissionTypes.ForumManagement)">
+    <h5 class="text-header">{{ 'forum.privateLabel' | translate }}</h5>
+
+    <p class="text-xs text-dark-gray-580 pt-2 pb-24">
+      {{ 'forum.privateSubLabel' | translate }}
+    </p>
+
+    <div class="d-flex w-100">
+      <div class="flex-column users-filter-wrapper w-40">
+        <div class="search-bar-wrapper">
+          <neo-search-bar
+            (clearInput)="filterUsers('')"
+            (inputChange)="filterUsers($event)"
+            [placeholder]="'forum.searchUsersLabel' | translate"
+            size="small"></neo-search-bar>
+        </div>
+
+        <div
+          *ngIf="users?.length > 0"
+          class="flex-column">
+          <ng-container *ngFor="let user of users">
+            <neo-blue-checkbox
+              (selectCheckbox)="setUser(user)"
+              *ngIf="user.id !== currentUser.id"
+              [checked]="isChecked(selectedUsers,user)"
+              [hideCompany]="true"
+              [name]="user?.lastName + ' ' + user?.firstName + ', ' + user?.company?.name"
+              [user]="user"
+              class="mt-8"
+              imageSize="size16"
+              value="{{ user?.id }}">
+            </neo-blue-checkbox>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="flex-column selected-companies-wrapper pl-20 w-100">
+        <neo-filter-header
+          (clearFilters)="clearSelectedUsers()"
+          [filterName]="'events.usersSearchFilterNameLabel' | translate"
+          [showClearButton]="selectedUsers?.length"></neo-filter-header>
+
+        <div class="separator"></div>
+
+        <div class="d-flex flex-wrap gap-8 pt-8">
+          <ng-container *ngFor="let user of selectedUsers">
+            <div class="filter-state-wrapper flex-center text-xs text-neo-aqua">
+              <neo-user-avatar
+                [user]="user"
+                class="pr-6"
+                imageSize="size16"></neo-user-avatar>
+              {{ user?.lastName + ' ' + user?.firstName + ', ' + user?.company?.name }}
+              <svg-icon
+                (click)="setUser(user)"
+                class="ml-4 c-pointer"
+                key="close"></svg-icon>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

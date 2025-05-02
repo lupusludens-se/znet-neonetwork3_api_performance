@@ -1,0 +1,28 @@
+
+@use 'colors';
+
+.header-line{
+    width: 142px;
+    height: 0px;
+    border-radius: 4px;
+}
+
+.section-content {
+    background: colors.$white;
+    border-radius: 2px;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.section-line{
+    height: 0px;
+    border-radius: 4px;
+    border-bottom: 6px solid colors.$violet-5;
+}
+.section-line-big {
+    max-width: 259px;
+}
+
+.section-line-small {
+    max-width: 211px;
+}

@@ -1,0 +1,178 @@
+@use 'colors';
+@use 'variables';
+
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+	margin-bottom: 135px; /* dropdown height compensation for small height screens*/    
+ }
+.title-wrapper {
+	width: 960px;
+	height: 30px;
+
+	.title {
+		font-size: 24px;
+		line-height: 28.8px;
+		color: colors.$near-black-400;
+	}	
+}
+
+.w-50 {
+  width: 393px;
+}
+
+.content {
+  padding: 32px 32px 48px;
+  width: 755px;
+  background-color: colors.$white;
+}
+
+form {
+  width:100%;
+}
+
+.text-input {
+  margin-top: 8px;
+  padding: 15px 16px;
+  width: 393px;
+  height: 48px;
+}
+
+.text-input-label,
+.section-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  line-height: 130%;
+  color:colors.$dark-gray-590;
+}
+
+.display-inline {
+  display: inline;
+}
+
+.error {
+  font-family: 'Arial', sans-serif;
+  font-size: 12px;
+  line-height: 140%;
+  color: colors.$red;
+
+  a {
+    color: colors.$red;
+  }
+}
+
+.company-link {
+  text-decoration: underline;
+}
+
+neo-text-input,neo-search-bar,
+.heard-via-dropdown{
+	width: 317px;
+}
+
+.align-right{
+  float:right;
+ }
+
+button{
+  height: 45px;
+  text-transform: capitalize; 
+  color: colors.$purple-500;
+
+  &.denied {
+    background: colors.$zeigo-purple;
+    border: none;
+    color: colors.$white;
+    transition: all 0.1s ease;
+    &:hover {
+      background: colors.$purple-400;
+           
+    }
+  }
+  &:disabled{
+      background: linear-gradient(0deg, #F4F2F4, #F4F2F4),linear-gradient(0deg, #FDFCFD, #FDFCFD);
+      border: 1px solid colors.$dark-gray-450;
+      color: colors.$dark-gray-280;
+
+    }
+}
+
+ .flex-end
+ {
+  justify-content: end;
+ }
+
+.w-deny
+{
+width: 75px;
+}
+    
+.w-approve
+{
+  width: 98px;
+}
+
+.label-disabled {
+  color: colors.$dark-gray-280 !important;
+
+}
+
+.label-enabled {
+	color:colors.$dark-gray-590;
+}
+
+.error-label{
+  color: colors.$error-red !important;
+  ;
+}
+
+:host ::ng-deep 
+  { 
+    neo-search-bar div.search-input, neo-dropdown div.dropdown-input-wrapper {
+    &.disabled{
+      opacity: 1;
+    }
+    input[type="text"]
+    {
+      font-size: 16px !important;
+      &:disabled{
+        opacity: 1;
+        } 
+      }
+    }
+    neo-text-input{
+    input{
+      font-size: 16px;
+      }
+    }
+    neo-radio-control div.controls-wrapper{
+      div.radio-controls-wrapper{
+        label{
+          font-size: 16px;
+        }
+      }
+    }
+    *div.dropdown-item{
+      font-family: 'Arial';
+      font-size: 16px !important;
+      }
+  }
+
+.btn-approve{
+  background: colors.$white-30;
+  border-radius: 8px;
+  &:hover {
+    background: colors.$dark-gray-450;   
+    }
+  }
+
+  
+ 
+.text-label {
+  color: colors.$dark-gray-580;
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0.16px;
+} 

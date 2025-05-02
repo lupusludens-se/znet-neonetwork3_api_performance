@@ -1,0 +1,123 @@
+<div class="flex-column projects-wrapper">
+  <h3 class="gray-title mb-8 arial">Create a New Project</h3>
+
+  <form [formGroup]="form">
+    <ng-container [ngSwitch]="addProjectService.currentStep$ | async">
+      <neo-project-type
+        *ngSwitchCase="stepsList.ProjectType"
+        (chosenProjectType)="setProjectType($event?.name)"></neo-project-type>
+      <neo-project-technologies *ngSwitchCase="stepsList.Technologies"></neo-project-technologies>
+      <neo-project-regions
+        [continents]="continents"
+        *ngSwitchCase="stepsList.ProjectGeography"></neo-project-regions>
+
+      <neo-community-solar *ngSwitchCase="stepsList.CommunitySolar"></neo-community-solar>
+      <neo-onsite-solar *ngSwitchCase="stepsList.OnsiteSolar"></neo-onsite-solar>
+      <neo-battery-storage *ngSwitchCase="stepsList.BatteryStorage"></neo-battery-storage>
+      <neo-fuel-cells *ngSwitchCase="stepsList.FuelCells"></neo-fuel-cells>
+      <neo-offsite-ppa *ngSwitchCase="stepsList.OffsitePpa"></neo-offsite-ppa>
+      <neo-offsite-ppa-private *ngSwitchCase="stepsList.OffsitePpaPrivate"></neo-offsite-ppa-private>
+      <neo-carbon-offset *ngSwitchCase="stepsList.CarbonOffset"></neo-carbon-offset>
+      <neo-eac-purchasing *ngSwitchCase="stepsList.EacPurchasing"></neo-eac-purchasing>
+      <neo-efficiency-audit *ngSwitchCase="stepsList.EfficiencyAudit"></neo-efficiency-audit>
+      <neo-efficiency-measures *ngSwitchCase="stepsList.EfficiencyEquipmentMeasures"></neo-efficiency-measures>
+      <neo-emerging-technologies *ngSwitchCase="stepsList.EmergingTechnologies"></neo-emerging-technologies>
+      <neo-ev-charging *ngSwitchCase="stepsList.EvCharging"></neo-ev-charging>
+      <neo-renewable-electricity *ngSwitchCase="stepsList.RenewableRetail"></neo-renewable-electricity>
+      <neo-green-tariff *ngSwitchCase="stepsList.UtilityGreenTariff"></neo-green-tariff>
+
+      <neo-project-overview *ngSwitchCase="stepsList.Overview"></neo-project-overview>
+    </ng-container>
+  </form>
+
+  <aside class="sidebar flex-column">
+    <p class="title neo-arial pb-24 mb-24">
+      {{ 'onboarding.progressLabel' | translate }}
+    </p>
+
+    <div class="steps">
+      <ul>
+        <li
+          [class.active]="(addProjectService.currentStep$ | async) === stepsList.ProjectType"
+          [class.filled]="(addProjectService.currentStep$ | async) !== stepsList.ProjectType"
+          class="mb-38 d-flex align-center">
+          <div class="decor mr-12"></div>
+
+          {{ 'projects.addProject.projectTypeLabel' | translate }}
+        </li>
+
+        <li
+          [class.active]="(addProjectService.currentStep$ | async) === stepsList.Technologies"
+          [class.filled]="
+            (addProjectService.currentStep$ | async) !== stepsList.ProjectType &&
+            (addProjectService.currentStep$ | async) !== stepsList.Technologies
+          "
+          class="mb-38 d-flex align-center">
+          <div class="decor mr-12"></div>
+          {{ 'projects.addProject.technologiesLabel' | translate }}
+        </li>
+
+        <li
+          [class.active]="(addProjectService.currentStep$ | async) === stepsList.ProjectGeography"
+          [class.filled]="
+            (addProjectService.currentStep$ | async) !== stepsList.Technologies &&
+            (addProjectService.currentStep$ | async) !== stepsList.ProjectGeography &&
+            (addProjectService.currentStep$ | async) !== stepsList.ProjectType
+          "
+          class="mb-38 d-flex align-center">
+          <div class="decor mr-12"></div>
+          {{ 'projects.addProject.projectGeographiesLabel' | translate }}
+        </li>
+
+        <li
+          *ngIf="!(projectName?.includes('PPA') || projectName?.includes('Power Purchase Agreement'))"
+          [class.active]="
+            (addProjectService.currentStep$ | async) !== stepsList.Overview &&
+            (addProjectService.currentStep$ | async) !== stepsList.Technologies &&
+            (addProjectService.currentStep$ | async) !== stepsList.ProjectGeography &&
+            (addProjectService.currentStep$ | async) !== stepsList.ProjectType && 
+            (addProjectService.currentStep$ | async) !== stepsList.OffSitePrivatePPA
+          "
+          [class.filled]="(addProjectService.currentStep$ | async) === stepsList.Overview"
+          class="mb-38 d-flex align-center">
+          <div class="decor mr-12"></div>
+          {{ 'projects.addProject.projectDetailsLabel' | translate }}
+        </li>
+
+        <li
+          *ngIf="projectName?.includes('PPA') || projectName?.includes('Power Purchase Agreement')"
+          [class.active]="
+          (addProjectService.currentStep$ | async) === stepsList.OffsitePpa
+          "
+          [class.filled]="
+          (addProjectService.currentStep$ | async) !== stepsList.Technologies &&
+          (addProjectService.currentStep$ | async) !== stepsList.ProjectGeography &&
+          (addProjectService.currentStep$ | async) !== stepsList.ProjectType && 
+          (addProjectService.currentStep$ | async) !== stepsList.OffSitePrivatePPA &&
+          (addProjectService.currentStep$ | async) !== stepsList.OffsitePpa"
+          class="mb-38 d-flex align-center">
+          <div class="decor mr-12"></div>
+          {{ 'projects.addProject.projectPublicDetailsLabel' | translate }}
+        </li>
+
+        <li
+          *ngIf="projectName?.includes('PPA') || projectName?.includes('Power Purchase Agreement')"
+          [class.active]="
+          (addProjectService.currentStep$ | async) === stepsList.OffsitePpaPrivate
+          "
+          [class.filled]="(addProjectService.currentStep$ | async) === stepsList.Overview"
+          class="mb-38 d-flex align-center">
+          <div class="decor mr-12"></div>
+          {{ 'projects.addProject.projectPrivateDetailsLabel' | translate }}
+        </li>
+
+        <li
+          [class.active]="(addProjectService.currentStep$ | async) === stepsList.Overview"
+          class="mb-38 d-flex align-center">
+          <div class="decor mr-12"></div>
+          {{ 'projects.addProject.overviewLabel' | translate }}
+        </li>
+      </ul>
+    </div>
+  </aside>
+</div>

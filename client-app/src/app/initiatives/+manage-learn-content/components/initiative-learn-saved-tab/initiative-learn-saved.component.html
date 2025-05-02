@@ -1,0 +1,31 @@
+<div class="tile-container" *ngIf="responseData?.dataList?.length">
+  <div class="tile c-pointer" *ngFor="let tile of responseData?.dataList; let i = index">
+    <neo-learn-item [article]="tile" [isSavedArticle]="true" [initiativeId]="initiativeId" (selectedArticle)="showRemoveModal($event)"></neo-learn-item>
+  </div>
+</div>
+
+<ng-container *ngIf="!responseData?.dataList?.length && hasDataLoaded">
+  <div class="flex-column no-saved-container">
+    <svg-icon class="book-icon" key="book"></svg-icon>
+    <h3 class="pt-20">{{ 'initiative.viewInitiative.noSavedArticleContentTitle' | translate }}</h3>
+    <div class="pt-20 no-saved-description">
+      {{ 'initiative.viewInitiative.noSavedContentDescription' | translate }}
+    </div>
+  </div>
+</ng-container>
+
+<neo-pagination *ngIf="paging?.total > defaultPageItems" (changePage)="changePage($event)" [defaultItemPerPage]="12" [paging]="paging" class="pt-24 mb-64"></neo-pagination>
+
+<neo-modal (closed)="closeDeletePopup()" *ngIf="showDeleteModal" size="medium" [title]="'initiative.viewInitiative.deleteSavedContentPopUpTitle' | translate" class="title-h2">
+  <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+    {{ 'initiative.viewInitiative.deleteSavedContentPopUpSubTitle' | translate }}
+  </p>
+  <div class="popup-controls mt-10 d-flex">
+    <button (click)="closeDeletePopup()" class="btn-cancel blue-50-frame mr-16 w-50">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button (click)="confirmDelete()" class="btn-confirm w-50">
+      {{ 'messages.deleteModal.confirmLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

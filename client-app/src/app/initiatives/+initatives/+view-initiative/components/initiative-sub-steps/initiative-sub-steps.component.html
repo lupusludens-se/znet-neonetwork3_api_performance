@@ -1,0 +1,63 @@
+<ng-container *ngIf="initiativeStep">
+  <div class="title mb-32">{{ initiativeStep.description }}</div>
+  <div *ngIf="!isContentAvailable">
+    <div
+      *ngFor="let subStep of initiativeStep.subSteps; let index = index"
+      [ngClass]="{ 'substep-background': 0 !== index % 2 }"
+      class="substep">
+      <div class="d-flex">
+        <div class="flex-column justify-center w-90">
+          <span>
+            {{ subStep.title }}
+          </span>
+        </div>
+        <div [ngClass]="{'disabled-div' : isAdmin, disabled : isAdmin}" class="w-10 align-end flex-column justify-center checkbox-wrapper">
+          <label>
+            <input
+              [id]="subStep.id"
+              [value]="subStep.isChecked"
+              [checked]="subStep.isChecked"
+              type="checkbox"
+              (change)="subStepClick(subStep)" />
+              <span
+              class="d-flex align-center text-s"
+              [class.checked]="subStep.isChecked">
+              <svg-icon
+                class="check-icon"
+                key="blue-checkmark"></svg-icon>
+            </span>
+              
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isContentAvailable">
+    <span class="substep substep-background d-flex justify-start">
+      {{ initiativeStep.subSteps[0].content }}
+    </span>
+    <div class="d-flex substep">
+      <div class="flex-column justify-center w-90">
+        <span> {{ 'initiative.contentMessage' | translate }} </span>
+      </div>
+      <div [ngClass]="{'disabled-div' : isAdmin, disabled : isAdmin}" class="w-10 align-end flex-column justify-center checkbox-wrapper">
+        <label>
+          <input
+            [id]="initiativeStep.subSteps[0].id"
+            [value]="initiativeStep.subSteps[0].isChecked"
+            [checked]="initiativeStep.subSteps[0].isChecked"
+            type="checkbox"
+            (change)="subStepClick(initiativeStep.subSteps[0])"/>
+            <span
+            class="d-flex align-center text-s"
+            [class.checked]="initiativeStep.subSteps[0].isChecked">
+            <svg-icon
+              class="check-icon"
+              key="blue-checkmark"></svg-icon>
+          </span>
+            
+        </label>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,28 @@
+<div class="align-center">
+  <div class="pb-12 m-5-percent mt-mb-3-percent">
+    <ng-container>
+      <p class="text-subtitle text-s pb-16 ml-4-percent">
+        {{ 'thankyouInterest.subtitle' | translate }}
+      </p>
+      <div class="separator w-90 ml-4-percent"></div>
+
+      <div class="flex-column pt-24">
+
+
+        <button [routerLink]="['sign-up']" [queryParams]="{ source: signTrackingSourceEnum }" class="btn-l green w-90 ml-4-percent">
+          {{ 'thankyouInterest.createAccountLabel' | translate }}
+        </button>
+
+        <div class="flex-center pt-24 align-self-center">
+          <p class="text-s text-neo-purple">
+            {{ 'signUp.alreadyHaveAnAccountLabel' | translate }}
+          </p>
+
+          <button (click)="logIn()" class="link underline text-s text-neo-purple ml-4">
+            {{ 'landing.header.loginLabel' | translate }}
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

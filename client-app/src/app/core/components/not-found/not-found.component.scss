@@ -1,0 +1,25 @@
+@use 'colors';
+
+.not-found-wrapper {
+  padding: 80px 120px;
+  height: 100vh;
+
+  img {
+    width: 187px;
+  }
+
+  h1 {
+    font-size: 56px;
+    width: 75%;
+  }
+
+  .vector {
+    width: 60%;
+    top : 370px;
+    left: 500px;
+  }
+
+  .text-not-found{
+    color: colors.$dark-gray-750;
+  }
+}

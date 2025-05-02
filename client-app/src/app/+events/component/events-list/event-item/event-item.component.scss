@@ -1,0 +1,236 @@
+@use 'colors';
+@use 'breakpoints';
+@use 'mixins';
+@import 'events';
+
+:host {
+  position: relative;
+  margin: 0 16px 16px 0;
+  width: calc(50% - 8px);
+
+  @media (breakpoints.$medium) {
+    width: calc(33% - 13px);
+    margin: 0 24px 24px 0;
+  }
+
+  &:hover {
+    filter: drop-shadow(0px 4px 12px rgba(0, 31, 81, 0.12));
+  }
+}
+
+.width-30:host {
+  width: 32% !important;
+  .info-wrapper {
+    height: auto !important;
+    .location {
+      height: fit-content;
+      -webkit-line-clamp: 1 !important;
+    }
+    .title {
+      height: 85px !important;
+    }
+  }
+  .event-item {
+    min-height: auto !important;
+    padding: 10px 16px 8px;
+    @media (breakpoints.$medium) {
+      padding: 16px 26px 8px 24px;
+    }
+    .location {
+      width: 70% !important;
+    }
+    .read-more {
+      padding: 0 !important;
+    }
+  }
+}
+
+.event-item {
+  width: auto;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 2px;
+  background-color: colors.$white;
+  padding: 10px 16px 16px;
+  min-height: 160px;
+  border: 1px solid colors.$dark-gray-200;
+  background: var(--primary-white, colors.$dark-gray-30);
+
+  @media (breakpoints.$medium) {
+    min-height: 180px;
+    padding: 16px 26px 24px 24px;
+  }
+
+  .event-date-labels {
+    min-width: 0;
+
+    svg-icon {
+      line-height: 130%;
+    }
+
+    .more-dates-count {
+      height: 19px;
+      padding: 0 5px;
+    }
+  }
+
+  .date-time {
+    font-weight: bold;
+    font-size: 12px;
+    color: colors.$dark-gray-590;
+
+    .date,
+    .time {
+      height: 18px;
+
+      svg-icon {
+        min-width: 14px;
+        min-height: 14px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .time {
+      min-width: 0;
+    }
+
+    .date {
+      margin-right: 10px;
+
+      @media (breakpoints.$medium) {
+        margin-right: 16px;
+      }
+    }
+  }
+
+  .title {
+    max-height: 46px;
+
+    @media (breakpoints.$medium) {
+      font-size: 18px;
+    }
+  }
+
+  .location {
+    max-height: 36px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .attending {
+    font-size: 12px;
+    line-height: 15px;
+    font-family: 'Arial Rounded MT Bold', serif;
+
+    .default {
+      color: colors.$dark-gray-590;
+      text-align: center;
+      font-size: 14px;
+      font-family: Arial Rounded MT Bold;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 150%;
+      text-transform: capitalize;
+      border-radius: 6px;
+      border: 1px solid var(--blue-50, colors.$blue-50);
+      padding: 8px 12px;
+
+      &:hover {
+        background: colors.$dark-gray-250;
+      }
+    }
+
+    .border.selected {
+      padding: 13px 12px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      background: colors.$zeigo-purple;
+      color: colors.$dark-gray-40;
+
+      &:hover {
+        background: colors.$purple-400;
+      }
+    }
+
+    .selected:not(.border) {
+      &:hover {
+        border-radius: 8px;
+        background: colors.$dark-gray-250;
+        padding: 13px 12px;
+      }
+    }
+
+    .attend-btn {
+      width: 45px;
+      max-height: 46px;
+      max-width: 65px;
+
+      //&:not(.selected)
+      .sky-blue {
+        padding: 18px 12px;
+        border-radius: 8px;
+        background: colors.$zeigo-purple;
+      }
+    }
+  }
+
+  .read-more {
+    padding: 9px 0 9px 12px;
+    color: colors.$aqua-400;
+    font-size: 14px;
+    line-height: 150%;
+    text-transform: capitalize;
+
+    &:hover {
+      color: colors.$neo-blue !important;
+    }
+  }
+
+  .info-wrapper {
+    height: 80px;
+
+    .title,
+    .location {
+      @include mixins.text-lines-overflow(2);
+      height: fit-content;
+    }
+  }
+
+  .title {
+    &:hover {
+      text-decoration: underline;
+      color: colors.$zeigo-purple;
+      text-decoration-color: colors.$zeigo-purple;
+    }
+  }
+
+  .today-label {
+    font-size: 11px;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    background-color: colors.$aqua-400;
+    color: colors.$white;
+    padding: 0 5px;
+    height: 18px;
+    margin-right: 4px;
+    border-radius: 2px;
+
+    @media (breakpoints.$medium) {
+      margin-right: 8px;
+    }
+  }
+
+  .edit-button {
+    padding: 7px;
+    color: colors.$dark-gray-590;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border: none;
+
+    svg-icon {
+      color: colors.$dark-gray-590;
+    }
+  }
+}

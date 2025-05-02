@@ -1,0 +1,120 @@
+@use 'colors';
+@use 'breakpoints';
+@use 'mixins';
+
+:host {
+  min-width: calc((100% / 5) - 10px);
+}
+
+:host.selected {
+  .tool-wrapper {
+    border: 2px solid colors.$purple-300;
+    border-radius: 8px;
+  }
+}
+
+.tool-wrapper {
+  transition: all 0.05s ease-in-out;
+  background: colors.$white;
+  border: 1px solid colors.$dark-gray-200;
+  border-radius: 6px;
+  padding: 12px 24px;
+
+  &:hover {
+    box-shadow: 0px 2px 8px rgba(134, 132, 141, 0.16);
+    background: colors.$blue-5;
+    border: 1px solid #e2e1e1;
+    border-radius: 8px;
+  }
+
+  .title-wrapper {
+    .tool-title {
+      font-size: 16px;
+      color: colors.$dark-gray-750;
+      font-family: 'Arial Rounded MT Bold';
+      @include mixins.text-lines-overflow(1);
+    }
+
+    .tick-mark {
+      position: absolute;
+      top: 9%;
+      left: 1%;
+      z-index: 3;
+      width: 20px;
+      height: 15px;
+
+      @media (breakpoints.$fullHd) {
+        top: 9%;
+        left: 1%;
+      }
+    }
+
+    .overlay-polygon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-style: solid;
+      border-width: 0 50px 50px 0;
+      border-color: transparent colors.$purple-300 transparent transparent;
+      transform: rotate(270deg);
+      z-index: 2;
+
+      @media (breakpoints.$fullHd) {
+        border-width: 0 60px 60px 0;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .description {
+      overflow: hidden;
+      color: colors.$dark-gray-580;
+      text-overflow: ellipsis;
+      font-size: 15px;
+      font-family: Arial;
+      @include mixins.text-lines-overflow(1);
+    }
+
+    .purple {
+      color: colors.$zeigo-purple;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .eye-icon {
+      margin-right: 7px;
+      width: 15px;
+      height: 12px;
+    }
+
+    .icon {
+      min-width: 36px;
+      width: 36px;
+      height: 36px;
+    }
+  }
+}
+
+.new-icon-corner {
+  pointer-events: none;
+  z-index: 9;
+  width: 96px;
+  .favorite-icon {
+    pointer-events: all;
+    margin-left: 10px;
+    top: 3px;
+    right: 5px;
+    color: colors.$white;
+    cursor: pointer;
+    min-width: 40px;
+    min-height: 22px;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+
+    path {
+      stroke: colors.$white;
+      fill: transparent;
+    }
+  }
+}

@@ -1,0 +1,126 @@
+@use 'colors';
+@import 'breakpoints';
+
+
+.top-panel {
+  height: 250px;
+  padding: 40px;
+  background: colors.$aqua-400;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0px 0px 19px rgba(164, 163, 163, 0.25);
+  border-radius: 12px;
+
+
+  @media ($medium) {
+    height: 244px;
+  }
+
+  .left {
+    color: colors.$white;
+
+   .ufo-icon {
+    width: 60px;
+    height: 165px;
+    @media ($medium) {
+      margin-right: 44px;
+    }
+  }
+    .title {
+      font-size: 28px;
+      line-height: 120%;
+      color: colors.$dark-gray-30;
+      font-style: normal;
+      max-width: 591px;
+    }
+
+    .text {
+      width: 583px;
+      height: 36px;
+      font-size: 14px;
+      line-height: 130%;
+      letter-spacing: 0.01em;
+      color: colors.$dark-gray-30;
+    }
+
+    a {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 150%;
+      color: colors.$blue-10;
+      font-family: 'Arial Rounded MT Bold';
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .right {
+    z-index: 1;
+    height: fit-content;
+
+    .connect-wrapper {
+      color: colors.$white;
+
+      .grey-text {
+        font-size: 10px;
+        line-height: 120%;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        opacity: 0.7;
+        color: colors.$dark-gray-420;
+
+        @media ($medium) {
+          margin-bottom: 12px;
+        }
+      }
+
+      .white-text {
+        font-size: 16px;
+        line-height: 120%;
+        color: colors.$blue-10;
+
+        @media ($medium) {
+          margin-bottom: 24px;
+        }
+      }
+
+      .btn-connect {
+        width: 253px;
+        height: 45px;
+        background: colors.$lime;
+        border-radius: 2px;
+
+        font-size: 14px;
+        text-transform: uppercase;
+
+        &:hover {
+          background: colors.$lime-green-hover;
+        }
+      }
+    }
+  }
+
+  .lines-decor {
+    position: absolute;
+    width: 761.41px;
+    height: 265.4px;
+    right: 0;
+    top: 0;
+    opacity: 0.22;
+    z-index: 0;
+  }
+}
+
+.project-catalog-top-panel-btn{
+  padding: 14px 24px;
+  line-height: 150%;
+  gap: 8px;
+}
+
+.img{
+  position: absolute;
+  width: 599px;
+  height: 249px;
+  left: 290px;
+  top: 43px;
+}

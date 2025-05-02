@@ -1,0 +1,120 @@
+@import 'colors';
+
+:host {
+  display: table-row;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 4px 12px;
+  border-radius: 25px;
+  font-size: 12px;
+  gap: 4px;
+  justify-content: center;
+  width: 78px;
+  height: 32px;
+
+  background: #D9F3EE;
+  color: #0E9888;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-right: 3px;
+    background: #0E9888;
+  }
+
+  &.inactive {
+    background: #FFE5E5;
+    color: $red-100;
+    padding: 8px;
+    width: 78px;
+    height: 32px;
+
+    &:before {
+      background: $red-100;
+    }
+  }
+
+  &.deleted {
+    background: rgba(112, 132, 164, 0.06);
+    color: $blue-400;
+
+    &:before {
+      background: $blue-400;
+    }
+  }
+}
+
+.role {
+  max-width: 150px;
+  padding: 8px;
+  border-radius: 25px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 140%;
+
+  &.corporation {
+    background-color: rgba(58, 36, 86, 0.05);
+    color: $zeigo-purple;
+  }
+
+  &.solution {
+    color: $aqua-400;
+    background-color: $blue-20;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.btn-options {
+  width: 37px;
+  height: 37px;
+  border: 1px solid $dark-gray-200;
+  border-radius: 2px;
+  color: $neo-blue;
+  font-size: 24px;
+}
+
+.role-cell {
+  width: 200px;
+  min-width: 200px;
+}
+
+.status-cell {
+  width: 160px;
+  min-width: 160px;
+}
+
+.options-cell {
+  width: 75px;
+  min-width: 75px;
+  position: relative;
+}
+
+.company-cell {
+  max-width: 300px;
+
+  .company-name {
+    min-width: 0;
+    max-width: 550px;
+  }
+}
+
+td {
+  vertical-align: middle;
+
+  &.transparent {
+    opacity: 0.5;
+  }
+} 

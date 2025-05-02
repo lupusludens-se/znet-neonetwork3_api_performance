@@ -1,0 +1,27 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+.tracker-layout {
+  padding: 32px;
+  gap: 32px;
+  border-radius: 8px 0px 0px 0px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+  background-color: colors.$white;
+  border-radius: 8px;
+  border: 1px solid colors.$dark-gray-300;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 33.6px;
+  text-align: left;
+}
+
+.btn {
+padding: 12px 12px 12px 12px;
+font-size: 14px;
+border-radius: 8px;
+}

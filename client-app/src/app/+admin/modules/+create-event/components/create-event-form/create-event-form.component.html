@@ -1,0 +1,200 @@
+<h3 class="title mb-24">{{ 'events.createAnEventLabel' | translate }}</h3>
+
+<div class="container mb-96">
+  <form [formGroup]="createEventForm">
+    <div class="control-wrapper">
+      <label>
+        {{ 'events.eventNameLabel' | translate }}
+        <span class="counter">{{ createEventForm.controls['subject'].value?.length }}/60</span>
+
+        <neo-text-input
+          class="mt-12"
+          formControlName="subject"
+          [showLabel]="false"
+          maxLength="60"
+          [labelName]="'events.eventNameLabel' | translate"
+          [submitted]="formSubmitted"
+          [placeholder]="'events.eventNameLabel' | translate">
+        </neo-text-input>
+      </label>
+
+      <div class="mt-12 d-flex">
+        <neo-blue-checkbox
+          (selectCheckbox)="
+            createEventForm.get('isHighlighted').patchValue(!createEventForm.get('isHighlighted').value)
+          "
+          [checked]="createEventForm.get('isHighlighted').value"
+          [name]="'events.highlightEventLabel' | translate"
+          [textSize]="'text-m'">
+        </neo-blue-checkbox>
+        <neo-blue-checkbox
+          (selectCheckbox)="            
+            changeVisibilityInPublicDashboard()
+          "
+          [checked]="createEventForm.get('showInPublicSite').value"
+          [name]="'events.visibleOnPublicDashboardLabel' | translate"
+          [textSize]="'text-m'">
+        </neo-blue-checkbox>
+      </div>
+    </div>
+
+    <div class="control-wrapper">
+      <label> Event Type </label>
+      <neo-radio-control
+        (valueChanged)="changeEventType($event)"
+        [list]="eventTypes"
+        [submitted]="formSubmitted"
+        class="mt-12"
+        formControlName="eventType"
+        [flexDirection]="'row'"
+        id="eventTypeId">
+      </neo-radio-control>
+    </div>
+
+    <neo-event-dates
+      *ngIf="currentUser$ | async as currentUser"
+      [selectedTimezoneId]="currentUser.timeZoneId"
+      [formSubmitted]="formSubmitted">
+    </neo-event-dates>
+
+    <div class="control-wrapper">
+      <label>
+        {{ 'events.locationLabel' | translate }}
+      </label>
+
+      <span class="controls-wrapper d-flex mt-12">
+        <button
+          (click)="changeLocationType(eventLocationType.Virtual)"
+          [class.selected]="createEventForm.get('locationType').value === eventLocationType.Virtual"
+          class="location-select mr-8 mb-8">
+          {{ 'events.virtualLabel' | translate }}
+        </button>
+
+        <button
+          (click)="changeLocationType(eventLocationType.InPerson)"
+          [class.selected]="createEventForm.get('locationType').value === eventLocationType.InPerson"
+          class="location-select mb-8">
+          {{ 'events.inPersonLabel' | translate }}
+        </button>
+      </span>
+
+      <neo-text-input
+        [placeholder]="
+          createEventForm.get('locationType').value === eventLocationType.Virtual
+            ? ('general.urlLabel' | translate)
+            : ('events.addressLabel' | translate)
+        "
+        [labelName]="'events.locationLabel' | translate"
+        [showLabel]="false"
+        formControlName="location"
+        [submitted]="formSubmitted">
+      </neo-text-input>
+    </div>
+
+    <div class="control-wrapper">
+      <div class="label">
+        <div class="d-flex mb-12 align-center">
+          <div class="d-flex align-center">{{ 'events.userRegistrationLabel' | translate }}</div>
+          <div class="sub-label optional ml-6">{{ 'events.inputVariesLabel' | translate }}</div>
+        </div>
+
+        <neo-text-input
+          formControlName="userRegistration"
+          [placeholder]="'events.urlTextLabel' | translate"
+          [showLabel]="false"
+          [labelName]="'events.eventNameLabel' | translate"
+          [submitted]="formSubmitted">
+        </neo-text-input>
+      </div>
+    </div>
+
+    <div class="control-wrapper">
+      <div class="label mb-12">
+        <div class="d-flex align-center">
+          <div class="d-flex align-center">{{ 'events.descriptionOfEventLabel' | translate }}</div>
+          <div class="sub-label optional ml-6">({{ 'general.optionalLabel' | translate }})</div>
+        </div>
+      </div>
+
+      <neo-textarea-control
+        formControlName="description"
+        height="176px"
+        [placeholder]="'events.descriptionLabel' | translate"
+        [showLabel]="false"
+        [submitted]="formSubmitted">
+      </neo-textarea-control>
+    </div>
+
+    <neo-highlights></neo-highlights>
+    <neo-moderators [formSubmitted]="formSubmitted"></neo-moderators>
+    <neo-tags-step [formSubmitted]="formSubmitted"></neo-tags-step>
+    <neo-content-links
+      [linksError]="linksError"
+      [formSubmitted]="formSubmitted">
+    </neo-content-links>
+  </form>
+</div>
+
+<neo-event-side-panel [stepsValue]="createEventForm.value"></neo-event-side-panel>
+
+<neo-form-footer
+  (cancel)="onCancel()"
+  (save)="goToInvite()"
+  [submitButtonName]="'events.invite' | translate"
+  icon="right-arrow"
+  class="form-footer">
+</neo-form-footer>
+
+<neo-modal
+  *ngIf="publicEventModal"
+  padding="p-32"
+  (closed)="toggleModal()"
+  class="modal"
+  size="extra-medium" title=" "> 
+
+  <h3 class="delete-label pr-24">{{ 'events.visibleToAllLabel' | translate }}</h3>
+
+  <p class="description-label pt-8">{{ 'general.doYouWantToContinueLabel' | translate }}</p>
+
+  <div class="separator mt-20 mb-32"></div>
+
+  <div class="d-flex align-center justify-end gap-16">
+    <button
+      class="btn btn-cancel"
+      (click)="toggleModal()">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button
+      class="btn btn-delete"
+      (click)="makeEventPublic()">
+      {{ 'general.yesProceedLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>
+
+<neo-modal
+  *ngIf="showInPublicModal"
+  padding="p-32"
+  (closed)="togglePublicEventModal()"
+  class="modal"
+  size="extra-medium" title=" ">  
+
+  <h3 class="delete-label pr-24">{{ 'events.showInPublicDashboardLabel' | translate }}</h3>
+
+  <p class="description-label pt-8">{{ 'general.doYouWantToContinueLabel' | translate }}</p>
+
+  <div class="separator mt-20 mb-32"></div>
+
+  <div class="d-flex align-center justify-end gap-16">
+    <button
+      class="btn btn-cancel"
+      (click)="togglePublicEventModal()">
+      {{ 'general.cancelLabel' | translate }}
+    </button>
+    <button
+      class="btn btn-delete"
+      (click)="showEventInPublic()">
+      {{ 'general.yesProceedLabel' | translate }}
+    </button>
+  </div>
+</neo-modal>

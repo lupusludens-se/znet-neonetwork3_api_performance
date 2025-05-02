@@ -1,0 +1,17 @@
+<div class="content flex-column">
+  <h2 class="title mb-32 neo-arial">{{'onboarding.roleStepLabel' | translate}}?</h2>
+
+  <div class="control-wrapper">
+		<neo-text-input
+			formControlName="jobTitle"
+			[placeholder]="'onboarding.sidebar.roleLabel' | translate"
+			[labelName]="'onboarding.sidebar.roleLabel' | translate"
+			[submitted]="formSubmitted">
+		</neo-text-input>
+  </div>
+</div>
+
+<neo-wizard-nav-controls
+  (goNext)="changeStep()"
+  [showBackBtn]="false">
+</neo-wizard-nav-controls>

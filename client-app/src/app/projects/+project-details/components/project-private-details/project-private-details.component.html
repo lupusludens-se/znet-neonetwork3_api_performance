@@ -1,0 +1,167 @@
+<div class="private-details-modal">
+  <div class="content">
+    <div class="d-flex flex-row flex-between mb-18">
+      <h3 class="modal-title neo-arial">View Private Details</h3>
+      <svg-icon
+        class="btn-close mr-10 text-blue-200"
+        height="22px"
+        key="close"
+        width="22px"
+        (click)="closeModal.emit()"></svg-icon>
+    </div>
+    <div class="info-wrapper">
+      <div class="d-flex flex-row flex-wrap flex-start">
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.settlementTypeName">
+          <p class="param mr-6">{{ 'projects.addProject.settlementTypeLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.settlementTypeName }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.settlementHubOrLoadZoneName">
+          <p class="param mr-6">{{ 'projects.addProject.settlementHubLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.settlementHubOrLoadZoneName }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.forAllPriceEntriesCurrencyName">
+          <p class="param mr-6">{{ 'projects.addProject.currencyForPriceEntriesLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.forAllPriceEntriesCurrencyName }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.contractPricePerMWh">
+          <p class="param mr-6">
+            {{ 'projects.addProject.contractPriceLabel' | translate }} ({{
+              'projects.addProject.perMWhLabel' | translate
+            }})
+          </p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.contractPricePerMWh }}
+          </p>
+        </div>
+
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.projectMWCurrentlyAvailable">
+          <p class="param mr-6">Project MW Currently Available</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.projectMWCurrentlyAvailable }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.floatingMarketSwapIndexDiscount">
+          <p class="param mr-6">{{ 'projects.addProject.floatingMarketSwapLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.floatingMarketSwapIndexDiscount }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.floatingMarketSwapFloor">
+          <p class="param mr-6">{{ 'projects.addProject.floatingMarketSwapFloorLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.floatingMarketSwapFloor }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.floatingMarketSwapFloor">
+          <p class="param mr-6">{{ 'projects.addProject.floatingMarketSwapCapLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.floatingMarketSwapCap }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.pricingStructureName">
+          <p class="param mr-6">{{ 'projects.addProject.pricingStructureLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.pricingStructureName }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.discountAmount">
+          <p class="param mr-6">
+            {{ 'projects.addProject.discountAmountLabel' | translate }} ({{
+              'projects.addProject.inCurrencyProvidedLabel' | translate
+            }})
+          </p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.discountAmount }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.upsidePercentageToDeveloper">
+          <p class="param mr-6">{{ 'projects.addProject.upsidePercentDevLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.upsidePercentageToDeveloper }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.upsidePercentageToOfftaker">
+          <p class="param mr-6">{{ 'projects.addProject.upsidePercentOfftakerLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.upsidePercentageToOfftaker }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.eacName">
+          <p class="param mr-6">{{ 'projects.addProject.eacTypeLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.eacName }}
+          </p>
+        </div>
+
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.eacValue">
+          <p class="param mr-6">{{ 'projects.addProject.eacValueLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.eacValue }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.settlementPriceIntervalName">
+          <p class="param mr-6">{{ 'projects.addProject.settlementPriceIntervalLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.settlementPriceIntervalName }}
+          </p>
+        </div>
+        <div
+          class="info-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.settlementCalculationIntervalName">
+          <p class="param mr-6">{{ 'projects.addProject.settlementCalculationIntervalLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.settlementCalculationIntervalName }}
+          </p>
+        </div>
+      </div>
+      <div class="d-flex flex-row mt-8">
+        <div
+          class="notes-item mb-16 d-flex"
+          *ngIf="projectDetails?.projectDetails?.additionalNotesForSEOperationsTeam">
+          <p class="param mr-6 w-40">{{ 'projects.projectDetails.notesForSEOpsLabel' | translate }}</p>
+          <p class="param-value text-s">
+            {{ projectDetails?.projectDetails?.additionalNotesForSEOperationsTeam }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <p class="modal-text mt-8 mb-14">{{ 'projects.projectDetails.privateDetailsViewLabel' | translate }}</p>
+  </div>
+</div>

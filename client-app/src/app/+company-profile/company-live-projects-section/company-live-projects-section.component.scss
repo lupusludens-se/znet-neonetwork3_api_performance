@@ -1,0 +1,113 @@
+
+@use 'colors';
+
+.project-item {
+    box-sizing: border-box;
+    border-radius: 8px;
+    height: 135px;
+    border: 1px solid colors.$dark-gray-200;
+    background: colors.$white;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    margin-bottom: 24px;
+  
+    &:hover {
+      border: 1px solid colors.$dark-gray-850;
+      cursor: pointer;
+    }
+  
+    &.highlight {
+      border-left: 4px solid colors.$purple-200;
+      background-color: colors.$dark-gray-200;
+    }
+  
+    .actions {
+  
+      .action {
+        color: colors.$dark-gray-590;
+        margin-left: 6px;
+        width: 30px;
+        height: 30px;
+        line-height: 32px;
+
+        &:not(.pinned-item):hover {
+          color: colors.$aqua-400;
+          background-color: colors.$blue-20;
+          border-radius: 50%;
+        }
+  
+        &.remove {
+          &:hover {
+            color: colors.$red;
+          }
+        }
+  
+        .save-item-icon {
+          margin-top: -1px;
+        }
+      }
+    }
+  
+    .text {
+      font-size: 14px;
+      line-height: 130%;
+      letter-spacing: 0.01em;
+      color: colors.$dark-gray-590;
+      overflow-wrap: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+  
+    .logo {
+      max-width: 84px;
+      max-height: 30px;
+      object-fit: contain;
+    }
+  }
+  
+  .left-section {
+    width: 25%;
+    padding-right: 12px;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 6px 0px 0px 6px;
+      object-fit: fill;
+    }
+  }
+  
+  .right-section {
+    width: 75%;
+    letter-spacing: 0.14px;
+    line-height: 130%;
+    padding:12px;
+  
+    .text-ellipsis {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      width: 100%;
+      padding-right: 12px;
+    }
+  
+    .title-height {
+      max-height: 50px;
+    }
+  
+    .title {
+      font-size: 18px;
+      font-family: 'Arial Rounded MT Bold';
+      line-height: 130%;
+      color: colors.$near-black-400;
+      overflow-wrap: break-word;
+      max-width: 628px;
+    }
+  
+  }
+  

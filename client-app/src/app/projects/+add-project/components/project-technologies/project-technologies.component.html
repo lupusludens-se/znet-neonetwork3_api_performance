@@ -1,0 +1,43 @@
+<div class="content flex-column">
+  <div class="top flex-between align-center mb-32 flex-column">
+    <div class="text-wrapper flex-between w-100 mb-8">
+      <h3 class="text-neo-near-black">{{ 'projects.addProject.whatTechnologiesLabel' | translate }}</h3>
+
+      <button class="btn-all green-frame flex-center" [class.selected-all]="selectedAll" (click)="selectAll()">
+        <svg-icon [key]="selectedAll ? 'cross' : 'plus'" class="mr-10" size="md"> </svg-icon>
+        {{ (selectedAll ? 'onboarding.clearAllLAbel' : 'projects.addProject.applyAllLabel') | translate }}
+      </button>
+    </div>
+
+    <p class="text-m text-dark-gray-580  w-100">{{ 'projects.addProject.selectAllLabel' | translate }}.</p>
+  </div>
+
+  <div *ngIf="technologiesList" class="controls-wrapper d-flex flex-wrap gap-8">
+    <button
+      (click)="selectTechnology(tech)"
+      *ngFor="let tech of technologiesList"
+      [class.selected]="tech.selected"
+      class="d-flex flex-center neo-arial checkbox-wrapper">
+
+      <svg-icon
+        [key]="tech.selected ? 'cross' : 'plus'"
+        class="plus-icon mr-8"
+        height="14px"
+        width="14px"
+        fontSize="14px">
+			</svg-icon>
+      {{ tech.name }}
+    </button>
+  </div>
+</div>
+
+<neo-form-footer
+  (backButtonClick)="changeStep(stepsList.ProjectType)"
+  (cancel)="addProjectService.exitFlow()"
+  (save)="changeStep(stepsList.ProjectGeography)"
+  [backButton]="true"
+  [disabled]="controlContainer.control.get('technologies').invalid"
+  backButtonIcon="footer-left-arrow-thin"
+  icon="add-project-thin-right-arrow"
+  submitButtonName="Next">
+</neo-form-footer>

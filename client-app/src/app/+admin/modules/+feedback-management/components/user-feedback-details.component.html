@@ -1,0 +1,122 @@
+<ng-container *ngIf="!!feedback">
+  <button
+  (click)="goBack()"
+  class="back-btn d-flex align-center pb-4">
+  <svg-icon
+    class="pr-4 back-btn-img-s"
+    key="left-arrow"></svg-icon>
+  Back
+</button>
+  <div class="title-wrapper">
+    <h1 class="title mb-24">{{ 'feedbackManagement.viewUserFeebackTitleLabel' | translate }}</h1>
+  </div>
+
+  <div
+    [class.disabled]="feedback.feedbackUser?.statusId === userStatuses.Deleted"
+    class="content-wrapper flex-column">
+    <div class="bottom d-flex">
+      <div class="mr-32 ml-32">
+        <div class="ml-2">
+          <div
+            *ngIf="feedback.feedbackUser"
+            [class.inactive]="feedback.feedbackUser?.statusId === userStatuses.Inactive"
+            class="avatar flex-center">
+            <neo-user-avatar
+              imageSize="size96"
+              [user]="feedback.feedbackUser"></neo-user-avatar>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            feedback.feedbackUser?.statusId !== userStatuses.Onboard &&
+            feedback.feedbackUser?.statusId !== userStatuses.Deleted &&
+            feedback.feedbackUser?.statusId !== userStatuses.Expired
+          "
+          class="mt-12">
+          <button
+            [routerLink]="'/user-profile/' + feedback.feedbackUser?.id"
+            class="btn-view-profile green-frame flex-center">
+            {{ 'userManagement.form.viewProfileLabel' | translate }}
+            <svg-icon
+              class="ml-8"
+              key="right-arrow"></svg-icon>
+          </button>
+        </div>
+      </div>
+      <form [formGroup]="form">
+        <div class="controls-row flex-between mb-24 flex-wrap">
+          <neo-text-input
+            class="editUserDisabledControl"
+            [labelName]="'userManagement.form.firstNameLabel' | translate"
+            formControlName="firstName"
+            [disabled]="true">
+          </neo-text-input>
+
+          <neo-text-input
+          class="editUserDisabledControl"
+            [labelName]="'userManagement.form.lastNameLabel' | translate"
+            formControlName="lastName"
+            [disabled]="true">
+          </neo-text-input>
+        </div>
+        <div class="controls-row roleI flex-between mb-24 flex-wrap">
+          <neo-text-input
+            class="mb-24 editUserDisabledControl"
+            [labelName]="'userManagement.form.companyLabel' | translate"
+            formControlName="company"
+            [disabled]="true">
+          </neo-text-input>
+          <div class="role-controls">
+            <label
+            class="mb-18 text-input-label neo-arial w-50 display-inline flex-between"
+            *ngIf="feedback?.roles">
+            {{'feedbackManagement.table.roleCol' | translate}}
+          </label>
+            <span
+              *ngFor="let role of feedback?.roles"
+              class="role {{ getClassNamesBasedonRole(role) }}">
+              {{ role?.name }}
+            </span>
+          </div>
+        </div>
+        <div class="controls-row flex-between mb-24 flex-wrap">
+          <div class="role-controls">
+            <label
+            class="mb-18 text-input-label neo-arial w-50 display-inline flex-between"
+            *ngIf="feedback?.rating">
+            {{'feedbackManagement.table.ratingsCol' | translate}}
+          </label>
+          <span class="ratings">
+            <div class="d-flex">
+              <svg-icon
+                *ngFor="let star of [1,2,3,4,5]"
+                class="feedback-star"
+                [key]="star <= feedback.rating ? 'feedback-star-filled' : 'feedback-star'"
+                fontSize="16px"
+                [ngClass]="{ selected: star <= feedback.rating }"></svg-icon>
+            </div>
+          </span>
+          </div>
+        </div>
+
+
+        <label
+          class="mb-18 text-input-label neo-arial w-50 display-inline flex-between"
+          *ngIf="feedback.comments">
+          {{ 'feedbackManagement.table.commentsCol' | translate }}
+        </label>
+        <neo-message-control 
+          *ngIf="feedback.comments"
+          [displayAttachments]="false"          
+          formControlName="comments"
+          id="comments"          
+          maxHeight="200px"
+          [editable]="false"
+          classes="p-0 text-s">
+        </neo-message-control>
+
+
+      </form>
+    </div>
+  </div>
+</ng-container>

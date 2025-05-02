@@ -1,0 +1,65 @@
+@use 'colors';
+@use 'variables';
+@use 'breakpoints';
+
+.content {
+  height: auto !important;
+  overflow-y: hidden; 
+
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 94px;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Arial Rounded MT Bold', serif;
+      font-size: 16px;
+      line-height: 130%;
+      color: colors.$near-black-400;
+      position: relative;
+
+      .counter {
+        font-size: 16px;
+        color: colors.$dark-gray-590;
+        background: none;
+        position: absolute;
+        right: 0;
+        font-family: 'Arial', sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.16px;
+        line-height: 130%;
+      }
+    }
+
+    .div-section {
+      background-color: colors.$white;
+      padding: 24px 32px 24px 32px;
+      margin-bottom: 25px;
+      margin-top: 20px;
+    }
+
+    .error-msg {
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      margin-top: 2px;
+      line-height: 140%;
+      color: colors.$error-red;
+      margin-left: 20px;
+    }
+  }
+
+  .modal {
+    .btn-close {
+      color: colors.$dark-gray-590;
+      background: colors.$dark-gray-450;
+      border-radius: 8px;
+
+      &:hover {
+        background: colors.$dark-gray-250;
+      }
+    }
+  } 
+}
+ 

@@ -1,0 +1,138 @@
+@use 'colors';
+@use 'breakpoints';
+
+.left {
+  width: 100%;
+
+  .banner {
+    background: linear-gradient(0deg, rgba(0, 29, 75, 0.4), rgba(0, 29, 75, 0.4)) no-repeat center;
+    background-size: cover;
+    height: 244px;
+    padding: 70px 48px;
+    color: colors.$white;
+
+    .banner-overlay {
+      background: rgba(33, 33, 33, 0.5);
+    }
+
+    .title {
+      font-size: 24px;
+      line-height: 120%;
+      text-transform: capitalize;
+      color: colors.$dark-gray-30;
+      font-weight: 400;
+      align-items: center;
+    }
+
+    .sub-title {
+      font-size: 18px;
+      line-height: 150%;
+      text-transform: capitalize;
+      color: colors.$white;
+    }
+  }
+
+  .opportunity-wrapper {
+    background-color: colors.$dark-gray-450;
+  }
+
+  .provider-wrapper {
+    background-color: colors.$white;
+  }
+
+  .links-wrapper {
+    .link {
+      padding: 12px;
+      font-size: 12px;
+      text-transform: capitalize;
+      color: colors.$aqua-400;
+      font-family: 'Arial', serif;
+      font-style: normal;
+      background: colors.$light-blue-20;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-weight: 400;
+
+      &:hover {
+        box-shadow: 0px 4px 12px rgba(0, 31, 81, 0.12);
+        transition: all 0.2s ease;
+      }
+    }
+  }
+
+  .connect {
+    height: 92px;
+    background: colors.$aqua-400;
+    border: 1px solid colors.$dark-gray-200;
+    border-radius: 2px;
+
+    .logo-wrapper {
+      height: 42px;
+      margin-top: 2px;
+      margin-bottom: 2px;
+    }
+
+    .btn-connect {
+      padding: 14px 24px;
+    }
+  }
+}
+
+.line-of-legal {
+  font-size: 12px;
+  line-height: 130%;
+  font-style: italic;
+}
+
+.section-title {
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: colors.$near-black-400;
+}
+
+.right {
+  max-width: 308px;
+  min-width: 308px;
+}
+.btn-initiative {
+  font-family: Arial Rounded MT;
+  font-weight: 800;
+  text-align: left;
+  font-size: 14px;
+  color: colors.$purple-200;
+  line-height: 150%;
+  border: 1px solid colors.$purple-300;
+  box-shadow: 0 1px 3px rgba(0, 31, 81, 0.07);
+  border-radius: 8px;
+  padding: 6px;
+  gap: 8px;
+  cursor: pointer;
+
+  &.disabled {
+    pointer-events: none;
+  }
+
+  &:hover {
+    border: 1px solid colors.$purple-500;
+    color: colors.$purple-500;
+    background: colors.$white;
+  }
+}
+
+.section-content {
+  background: colors.$white;
+  border-radius: 2px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 22px;
+
+  .section-line {
+    height: 0px;
+    border-radius: 4px;
+    border-bottom: 6px solid colors.$violet-5;
+    max-width: 100%;
+  }
+}

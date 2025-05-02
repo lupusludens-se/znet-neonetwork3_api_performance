@@ -1,0 +1,169 @@
+@use 'colors';
+
+.defaultCalendarDatepicker {
+  max-width: 248px;
+  box-shadow: 0 5px 20px rgba(7, 30, 53, 0.3);
+  border-radius: 2px;
+  border: none;
+
+  &.editEventDates {
+    margin-right: -17px;
+  }
+
+  .e-header.e-month,
+  .e-header.e-year,
+  .e-header.e-decade {
+    padding: 18px 6px 0 12px;
+  }
+
+  .e-header {
+    &.e-month {
+      .e-day.e-title {
+        color: transparent;
+
+        .e-header-month-text {
+          color: colors.$black;
+          font-weight: 400;
+          font-family: 'Arial Rounded MT Bold';
+        }
+      }
+    }
+
+    .e-day.e-title {
+      font-family: 'Arial';
+      font-weight: 700;
+      line-height: 130%;
+      margin-left: 0;
+      color: colors.$neo-blue;
+      display: flex;
+
+      .e-header-year-text {
+        margin-left: 8px;
+        font-style: normal;
+        font-weight: 400;
+        font-family: 'Arial Rounded MT Bold';
+        color: colors.$black;
+      }
+    }
+
+    .e-icon-container {
+      margin-top: -11px;
+
+      button {
+        width: 32px;
+        transform: rotate(-90deg);
+
+        .e-icons:before {
+          color: colors.$blue-200;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .e-content {
+    font-family: 'Arial';
+
+    &:not(.e-month) {
+      .e-cell {
+        &:hover {
+          background-color: transparent;
+
+          .e-day {
+            background-color: colors.$dark-green-hover;
+          }
+        }
+      }
+    }
+
+    &.e-month {
+      td.e-today span.e-day {
+        background-color: colors.$white;
+        border-radius: 0px;
+        border-color: colors.$black;
+        color: colors.$black;
+      }
+
+      table {
+        border-spacing: 0 4px;
+
+        .e-week-header tr th {
+          font-size: 12px;
+          color: colors.$dark-gray-585;
+        }
+      }
+
+      td {
+        height: 24px;
+        padding: 0;
+        border-radius: 50px;
+      }
+    }
+
+    td.e-focused-date span.e-day {
+      //border-radius: 50px;
+    }
+
+    td span.e-day {
+      color: colors.$black;
+      font-size: 14px;
+      font-weight: 400;
+      height: 30px;
+      width: 30px;
+    }
+
+    td.e-focused-date.e-today span.e-day{
+      border: 1px solid colors.$zeigo-purple;
+
+      &:hover{
+        background: #C9E9F6;
+        border: none;
+      color: #434343;
+      }
+    }
+
+    td.e-selected span.e-day {
+      color: colors.$white !important;
+      border-radius: 0px;
+      background-color: colors.$aqua-400 !important;
+
+      &:hover{
+        border-radius: 0px;
+      }
+    }
+
+    td.e-disabled span.e-day {
+      color: colors.$blue-100;
+      border-radius: 0px;
+    }
+
+    td:not(.e-disabled):hover {
+      background: #C9E9F6;
+      border-radius: 0px;
+
+      span.e-day {
+        color: colors.$black;
+        background-color: transparent;
+      }
+    }
+
+    button.e-button-done {
+      margin: -10px 12px 14px;
+      float: right;
+      padding: 8px 12px;
+      background: colors.$zeigo-purple;
+      border-radius: 8px;
+      font-family: 'Arial Rounded MT Bold';
+      font-size: 12px;
+      line-height: 130%;
+      color: colors.$dark-gray-40;
+
+      &:hover {
+        background: colors.$purple-400;
+      }
+
+      &:focus {
+        background: colors.$zeigo-purple;
+      }
+    }
+  }
+}

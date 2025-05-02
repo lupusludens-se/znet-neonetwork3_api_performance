@@ -1,0 +1,137 @@
+@use 'colors';
+@use 'breakpoints';
+
+.title {
+  font-size: 28px;
+  line-height: 120%;
+  font-family: 'Arial Rounded MT Bold';
+  font-style: normal;
+  font-weight: 400;
+}
+
+.btn-add {
+  width: fit-content;
+  height: 47px;
+  font-size: 14px;
+  padding: 12px;
+  color: colors.$dark-gray-40;
+}
+
+.table-wrapper {
+  width: 100%;
+}
+
+.table {
+  cursor: default;
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background-color: colors.$dark-gray-450;
+    text-transform: uppercase;
+    color: #1d122b;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+
+    td {
+      height: 40px;
+
+      .caret {
+        transition: all 0.2s ease;
+        vertical-align: middle;
+        margin-bottom: 2px;
+
+        &.up {
+          transform: rotate(180deg);
+          transition: all 0.2s ease;
+        }
+      }
+    }
+
+    .click-area {
+      width: fit-content;
+      cursor: pointer;
+    }
+  }
+
+  tbody {
+    background-color: colors.$white;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    /* identical to box height, or 21px */
+
+    color: colors.$dark-gray-515;
+  }
+}
+
+// columns styles
+.type {
+  width: 170px;
+}
+
+.location {
+  width: 142px;
+}
+
+.publishedBy {
+  width: 174px;
+}
+
+.posted {
+  width: 137px;
+}
+
+.company {
+  width: 170px;
+}
+
+.status {
+  width: 128px;
+}
+
+.options {
+  width: 75px;
+}
+
+td {
+  height: 56px;
+}
+
+neo-projects-table-row {
+  &.red {
+    background-color: #fff8f8;
+  }
+}
+
+neo-empty-page {
+  display: block;
+  margin-top: -24px;
+}
+
+.sorthighlight {
+  color: #209cd1;
+}
+
+.btn-export-project {
+  font-size: 14px;
+  background: colors.$dark-gray-40;
+  text-transform: capitalize;
+  border-radius: 8px;
+  border: 1px solid colors.$purple-300;
+  box-shadow: 0 1px 3px rgba(0, 31, 81, 0.07);
+  color: colors.$purple-200;
+  padding: 10px;
+
+  &:hover {
+    border: 1px solid colors.$purple-500;
+    color: colors.$purple-500;
+  }
+
+}

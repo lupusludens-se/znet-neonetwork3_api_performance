@@ -1,0 +1,30 @@
+@font-face {
+  font-family: 'Arial Rounded MT Bold';
+  src: local('Arial Rounded MT Bold'), url('../assets/fonts/arial-rounded-mt-bold.otf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Arial Rounded MT';
+  src: local('Arial Rounded MT'), url('../assets/fonts/arial-rounded-mt.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Arial Rounded MT Light';
+  src: local('Arial Rounded MT'), url('../assets/fonts/arial-rounded-mt-light.ttf') format('truetype');
+}
+
+.neo-arial {
+  font-family: 'Arial Rounded MT Bold', serif;
+}
+
+.neo-arial-regular {
+  font-family: 'Arial Rounded MT', serif;
+}
+
+.neo-arial-light {
+  font-family: 'Arial Rounded MT Light', serif;
+}
+
+.arial {
+  font-family: Arial, serif;
+}

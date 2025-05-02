@@ -1,0 +1,59 @@
+<div class="filter-wrapper {{ expandedState }}" neoClickOutside (clickOutside)="closeExpansion()">
+  <button (click)="changeExpandingState()" class="filter-btn text-neo-near-black d-flex align-center justify-between">
+    <span class="d-flex align-center flex-grow-1">
+      <span *ngIf="showIcon" class="icon-wrapper p-6 flex-center mr-10">
+        <svg-icon key="{{ icon }}"></svg-icon>
+      </span>
+
+      {{ name }}
+    </span>
+
+
+    <ng-container *ngIf="getSelectedNumber">
+      <span class="counter text-xxs  text-xxs text-neo-aqua fw-700 flex-center p-2 ml-10">
+        {{ getSelectedNumber }}
+      </span>
+    </ng-container>
+
+    <svg-icon class="arrow text-blue-200" key="down-arrow" size="xxl">
+    </svg-icon>
+  </button>
+
+  <div *ngIf="filterState?.parameter" [class.horizontal]="horizontalLayout"
+    class="filter-body flex-column hierarchical">
+    <div *ngFor="let data of filterState?.parameter[taxonomy]; let i = index"
+      class="flex-column parent-wrapper {{ data.expandedState }}">
+      <div class="flex-column justify-center parent-title-wrapper">
+        <div [ngClass]="{
+            'pb-8': data.childElements.length && data.expandedState === 'expanded'
+          }" class="d-flex child-wrapper justify-between">
+          <div class="pb-4 pt-4 d-flex align-center">
+            <neo-blue-checkbox (selectCheckbox)="click(i)" [checked]="data.checked" [disabled]="data.disabled"
+              [name]="data.name" [value]="data.id" class="mr-8 h-initial label-grey" textSize="text-s">
+            </neo-blue-checkbox>
+          </div>
+
+          <svg-icon (click)="changeChildExpandingState(i)" *ngIf="data.childElements.length"
+            class="parent-expanding text-blue-200" key="down-arrow" size="xxl">
+          </svg-icon>
+        </div>
+
+        <neo-search-bar (clearInput)="input(null, i)" (inputChange)="input($event, i)" [isRemoveBg]="true" [value]="data.filterSearch"
+          *ngIf="data.childElements.length && data.expandedState === 'expanded'" size="small">
+        </neo-search-bar>
+      </div>
+
+      <div *ngIf="data.childElements.length" class="flex-column parent-body-wrapper">
+        <ng-container *ngFor="let child of data.childElements; let childIndex = index">
+          <div *ngIf="!child.hide" [ngClass]="{ 'align-center': data.childElements.length }" class="pb-4 pt-4 d-flex">
+
+            <neo-blue-checkbox (selectCheckbox)="click(i, childIndex)" [checked]="child.checked"
+              [disabled]="child.disabled" [name]="child.name" [value]="child.id" class="mr-8 h-initial label-grey"
+              textSize="text-s">
+            </neo-blue-checkbox>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

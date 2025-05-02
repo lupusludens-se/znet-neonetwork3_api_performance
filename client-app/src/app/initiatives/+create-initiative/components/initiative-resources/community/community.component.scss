@@ -1,0 +1,60 @@
+@use 'colors';
+@use 'breakpoints';
+@use 'variables';
+
+.tile-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .splitter {
+    padding: 5px 8px;
+    border-bottom: 1px solid colors.$dark-gray-200;
+  }
+
+  .tile {
+    width: 49%;
+    background: colors.$white-10;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+    margin: 4px;
+
+    &:hover {
+      background: colors.$blue-5;
+      border: 1px solid #e2e1e1;
+      border-radius: 8px;
+      box-shadow: 0px 2px 8px rgba(134, 132, 141, 0.16);
+
+      .splitter {
+        border: none;
+      }
+    }
+
+    &.selected {
+      border: 2px solid colors.$purple-300;
+      border-radius: 8px;
+    }
+  }
+}
+
+.section-content {
+  background: colors.$white;
+  border-radius: 2px;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.section-line {
+  height: 0px;
+  border-radius: 4px;
+  border-bottom: 6px solid colors.$violet-5;
+}
+.section-line-big {
+  max-width: 100%;
+}
+
+.section-content-5 {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+

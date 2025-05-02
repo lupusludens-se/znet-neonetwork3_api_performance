@@ -1,0 +1,54 @@
+{
+  "testCases": [
+    {
+      "testCaseId": 1,
+      "projectType": "EV Charging & Fleet Electrification",
+      "technology": ["EV charging"],
+      "regions": ["Africa (=All)"],
+      "minimumChargingStationsRequired": "enter a numeric value",
+      "contractStructures": ["=All"],
+      "minimumTermLength": "enter a numeric value",
+      "valueProvided": ["=All"],
+      "timeUrgencyConsiderations": "enter a string or alphanumeric value",
+      "additionalComments": "enter a string or alphanumeric value",
+      "projectTitle": "enter a alpha numeric value",
+      "subTitle": "enter a alphanumeric value",
+      "describeOpportunity": "enter a alpha numeric value",
+      "aboutTheProvider": "should be auto populated from the company description page",
+      "action": "Publish"
+    },
+    {
+      "testCaseId": 2,
+      "projectType": "EV Charging & Fleet Electrification",
+      "technology": ["EV charging"],
+      "regions": ["Asia (Indonesia, India, Bhutan, Nepal, Pakistan, Afghanistan)"],
+      "minimumChargingStationsRequired": "enter a numeric value",
+      "contractStructures": ["PPA", "Lease"],
+      "minimumTermLength": "enter a numeric value",
+      "valueProvided": ["=All"],
+      "timeUrgencyConsiderations": "enter a string or alphanumeric string",
+      "additionalComments": "enter a string or alphanumeric string",
+      "projectTitle": "enter a alpha numeric value",
+      "subTitle": "enter a alphanumeric value",
+      "describeOpportunity": "enter a alpha numeric value",
+      "aboutTheProvider": "should be auto populated from the company description page",
+      "action": "Publish"
+    },
+    {
+      "testCaseId": 3,
+      "projectType": "EV Charging & Fleet Electrification",
+      "technology": ["EV charging"],
+      "regions": ["Africa (=All)", "Oceania (=All)", "Asia (Indonesia)"],
+      "minimumChargingStationsRequired": "enter a numeric value",
+      "contractStructures": ["Lease", "Cash Purchase", "Shared Savings", "Guaranteed Savings"],
+      "valueProvided": ["=All"],
+      "timeUrgencyConsiderations": "enter a string or alphanumeric string",
+      "additionalComments": "enter a string or alphanumeric string",
+      "projectTitle": "enter a alpha numeric value",
+      "subTitle": "enter a alphanumeric value",
+      "describeOpportunity": "enter a alpha numeric value",
+      "aboutTheProvider": "should be auto populated from the company description page",
+      "action": "Publish"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+<div class="content flex-column">
+  <div class="top flex-between align-center mb-24">
+    <div class="text-wrapper">
+      <h3 class="text-neo-near-black mb-8">
+        {{ 'projects.addProject.whichRegionLabel' | translate }}
+      </h3>
+      <p class="text-m text-dark-gray-580">{{ 'projects.addProject.selectAllLabel' | translate }}.</p>
+    </div>
+  </div>
+
+  <div class="controls-wrapper">
+    <neo-geographic-interest
+      (selectedRegionsChange)="updateForm($event)"
+      [continents]="continents"
+      [preSelectedRegions]="controlContainer.control.get('regions').value">
+    </neo-geographic-interest>
+  </div>
+</div>
+
+<neo-form-footer
+  (backButtonClick)="goBack()"
+  (cancel)="addProjectService.exitFlow()"
+  (save)="proceed()"
+  [backButton]="true"
+  [disabled]="controlContainer.control.get('regions').invalid"
+  backButtonIcon="footer-left-arrow-thin"
+  icon="add-project-thin-right-arrow"
+  submitButtonName="Next">
+</neo-form-footer>

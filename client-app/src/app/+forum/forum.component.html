@@ -1,0 +1,88 @@
+<div class="flex-between align-center">
+  <h2 class="forum-label">{{ 'forum.forumLabel' | translate }}</h2>
+
+  <button class="btn-l green d-flex align-center start-discussion-btn" routerLink="start-a-discussion">
+    <svg-icon class="mr-10 chat-icon" key="chat-fill" size="xxl"></svg-icon>
+    {{ 'forum.startDiscussionLabel' | translate }}
+  </button>
+</div>
+
+<div class="pt-24 pb-24">
+  <neo-search-bar [value]="requestData.search" (clearInput)="search(null)" (inputChange)="search($event)"
+    (selectedResult)="navigateToDiscussion($event)" [pageSearchControl]="true" [showResults]="showSearchResults"
+    [results]="searchResults">
+  </neo-search-bar>
+</div>
+
+<main class="w-100 d-flex">
+  <div class="flex-column filter">
+    <neo-filter-header (clearFilters)="clearFilters()" [showClearButton]="showClearButton">
+    </neo-filter-header>
+
+    <neo-filter-state></neo-filter-state>
+
+    <div class="filters-wrapper flex-column ml-10">
+      <neo-filter-button (clicked)="setMainFilterCategory($event, parameterEnum.ForYou)" [isActive]="title" class="mb-8 mr-10"
+        icon="filter-user-checked" name="{{ 'general.forYouLabel' | translate }}">
+      </neo-filter-button>
+
+      <neo-filter-button (clicked)="setMainFilterCategory($event, parameterEnum.Saved)" [isActive]="title"
+        [name]="'general.savedLabel' | translate" class="mb-8 mr-10" icon="filter-star">
+      </neo-filter-button>
+
+      <neo-filter-button (clicked)="setMainFilterCategory($event, parameterEnum.YourDiscussion)" [isActive]="title"
+        [name]="'forum.yourDiscussionsLabel' | translate" class="mb-8 mr-10" icon="filter-forum">
+      </neo-filter-button>
+
+      <neo-filter-button (clicked)="setMainFilterCategory($event, parameterEnum.AllDiscussions)" [isActive]="title"
+        [name]="'forum.allDiscussionsLabel' | translate" class="mb-20 mr-10" icon="lines-in-message-forumlist">
+      </neo-filter-button>
+
+      <div class="separator mb-10"></div>
+      <div class="pt-4">
+        <neo-taxonomy-filter class="w-96 mr-10" [name]="'filter.solutionsLabel' | translate"
+          [taxonomy]="taxonomyEnum.solutions" icon="flash">
+        </neo-taxonomy-filter>
+      </div>
+
+      <div class="pt-2">
+        <neo-taxonomy-filter class="w-96 mr-10" [name]="'filter.categoryLabel' | translate"
+          [taxonomy]="taxonomyEnum.categories" icon="projects">
+        </neo-taxonomy-filter>
+      </div>
+
+      <div class="pt-2 pb-12">
+        <neo-taxonomy-filter class="w-96 mr-10" [name]="'filter.regionLabel' | translate" [taxonomy]="taxonomyEnum.regions"
+          icon="filter-location">
+        </neo-taxonomy-filter>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="text-xs text-uppercase neo-arial pb-12 suggested-label">
+      {{ postsTitle | translate }}
+    </div>
+
+    <div class="flex-column gap-12 h-100 pb-64">
+      <neo-forum-topic (deleted)="forumData.dataList.splice(index, 1)" (liked)="topic.firstMessage.isLiked = $event"
+        (pinClick)="topic.isPinned = $event" (saveClick)="topic.isSaved = $event; removeFromSaved(index)"
+        (userFollowClick)="topic.firstMessage.user.isFollowed = $event"
+        *ngFor="let topic of forumData?.dataList; let index = index" [topic]="topic">
+      </neo-forum-topic>
+
+      <neo-pagination (changePage)="changePage($event)" *ngIf="forumData?.count > defaultItemPerPage"
+        [paging]="requestData">
+      </neo-pagination>
+
+      <neo-no-results *ngIf="!forumData?.count && this.requestData.search" [searchedStr]="this.requestData.search">
+      </neo-no-results>
+
+      <neo-empty-page *ngIf="forumData && forumData.count === 0 && !this.requestData.search"
+        [headlinePart1]="'general.emptyStatesHeadline1' | translate"
+        [headlinePart2]="'general.emptyStatesHeadline2' | translate"
+        [line2TextClass]="'text-m'" [iconKey]="'forum'">
+      </neo-empty-page>
+    </div>
+  </div>
+</main>

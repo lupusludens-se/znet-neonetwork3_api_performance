@@ -1,0 +1,57 @@
+@use 'colors';
+
+.notification {
+  &.show-wrapper {
+    background: colors.$white;
+    padding: 20px 16px;
+    border: 1px solid colors.$dark-gray-200;
+    border-radius: 2px;
+
+    .icon {
+      width: 40px;
+      min-width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: colors.$dark-gray-200;
+    }
+  }
+
+  .icon {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: colors.$dark-gray-200;
+  }
+
+  .line-1,
+  .line-2 {
+    height: 10px;
+    background: colors.$dark-gray-200;
+    background: linear-gradient(to right, colors.$dark-gray-200 0%, colors.$white 50%, colors.$dark-gray-200 100%);
+    background-size: 800px 800px;
+    animation: wave-lines 1s infinite ease-out;
+  }
+
+  .line-2 {
+    width: 80%;
+  }
+}
+
+@keyframes wave-lines {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+@keyframes wave-squares {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}

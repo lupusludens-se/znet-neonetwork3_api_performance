@@ -1,0 +1,38 @@
+@use 'colors';
+@use 'breakpoints';
+@use 'variables';
+
+.decarbonization-initiatives-wrapper{
+    .top-panel-spacing {
+        padding: 44px 38px;
+      }
+
+      .title{
+        h2{
+          margin-bottom: 10px;
+          color: colors.$dark-gray-30; 
+        }
+      }
+
+      .btn-tab {
+        max-height: 45px;
+        padding: 10px 34px;
+        font-size: 14px;
+        line-height: 17px;
+        text-transform: capitalize;
+        width: 18%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .active {
+        color: colors.$zeigo-purple;
+        border-bottom: 2px solid colors.$zeigo-purple;
+      }
+      
+      .inactive {
+        color: colors.$purple-40;
+        border-bottom: 2px solid colors.$purple-40;
+      }
+}

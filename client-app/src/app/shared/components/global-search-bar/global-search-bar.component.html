@@ -1,0 +1,42 @@
+<div
+  class="d-flex align-center pl-16 h-80 w-100 search-input">
+  <svg-icon
+    class="search-icon"
+    key="search"
+    size="xl"></svg-icon>
+
+  <input
+    #searchInput
+    [(ngModel)]="value"
+    (input)="search()"
+    (click)="search()"
+    class="w-100 h-100"
+    placeholder="{{ 'general.globalSearchPlaceHolder' | translate }}"
+    type="text" 
+    (keydown.enter)="getAll()"/>  
+</div>
+
+<div *ngIf="showResult && results" class="p-absolute-important results-wrapper">
+  <div *ngIf="results?.length > 0 && value?.length > 2" class="results pt-8 pb-8" >    
+    <div (mouseout)="showArrow = null" (mouseover)="showArrow = result.id" *ngFor="let result of results"
+      class="c-pointer flex-between align-center result" [routerLink]="getLink(result)" (click)="clearSearch()">
+      <div class="d-flex">
+        <svg-icon [key]="getKey(result)" class="mr-16 text-aqua-400" size="18px"></svg-icon>
+        <span class="text-zeigo-purple"> {{ result.title }}</span>
+      </div>
+      <svg-icon key="chevron-right" class="mr-16" size="lg"></svg-icon>
+    </div>
+
+    <div class="result c-pointer flex-between justify-center" (click)="getAll()">
+      <div class="d-flex text-zeigo-purple">
+        <span> {{ 'general.globalSearchViewAll' | translate }} <svg-icon key="right-arrow" class="ml-8" size="md"></svg-icon></span>
+      </div>
+    </div>  
+  </div>
+  <div *ngIf="results?.length === 0 && value?.length > 2 && !clickOutside" class="results">
+    <div class="result c-pointer flex-between justify-center align-center">
+      <div class="d-flex align-center text-zeigo-purple">
+        <span> {{ 'general.globalSearchNoResults' | translate }} '{{ value }}' </span>
+      </div>
+    </div>
+</div>

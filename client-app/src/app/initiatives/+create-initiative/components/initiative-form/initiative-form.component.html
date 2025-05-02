@@ -1,0 +1,86 @@
+<div class="content flex-column">
+  <div class="top flex-between align-center">
+    <div class="text-wrapper">
+      <h3 class="text-neo-near-black mb-12">{{ 'initiative.createInitiative.formContent.title' | translate }}</h3>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <div class="controls-wrapper">
+      <form [formGroup]="initiativeForm">
+        <div class="div-section">
+          <label>
+            {{ 'initiative.createInitiative.formContent.nameLabel' | translate }}
+            <span class="counter">{{ initiativeForm.controls['name'].value?.length }}/{{ maxInitiativeTitleLength
+              }}</span>
+            <neo-text-input class="text-zeigo-near-black" formControlName="name" [maxLength]="maxInitiativeTitleLength"
+              [labelForError]="'initiative.createInitiative.formContent.validationMessages.name' | translate"
+              [submitted]="formSubmitted">
+            </neo-text-input>
+          </label>
+        </div>
+
+        <div class="div-section">
+          <neo-dropdown [submitted]="formSubmitted" [dropdownOptions]="projectTypesList"
+            [labelName]="'initiative.createInitiative.formContent.projectTypeLabel' | translate"
+            [placeholderText]="'initiative.createInitiative.formContent.selectProjectTypeLabel' | translate"
+            [labelForError]="'initiative.createInitiative.formContent.validationMessages.projectType' | translate"
+            class="long-input text-zeigo-near-black" dropdownSize="175px" formControlName="projectType">
+          </neo-dropdown>
+        </div>
+
+        <div class="div-section">
+          <neo-dropdown (chosenOption)="onScaleChange($event)" [submitted]="formSubmitted"
+            [dropdownOptions]="initiativeScalesList"
+            [labelName]="'initiative.createInitiative.formContent.scaleLabel' | translate"
+            [placeholderText]="'initiative.createInitiative.formContent.selectInitiativeScaleLabel' | translate"
+            [labelForError]="'initiative.createInitiative.formContent.validationMessages.scale' | translate"
+            class="long-input text-zeigo-near-black" dropdownSize="150px" formControlName="scale">
+          </neo-dropdown>
+        </div>
+
+        <div id="regionsListControl">
+          <neo-initiative-geographic-scale formControlName="regions" class="initiative-content-wrapper"
+            *ngIf="initiativeForm.get('scale').value.length !== 0" [continents]="continents"
+            [title]="initiativeScaleCustomTitle" [geographicScaleValue]="initiativeForm.get('scale').value.id"
+            (selectedRegionsChange)="updateRegions($event)">
+          </neo-initiative-geographic-scale>
+
+          <div
+            *ngIf="initiativeForm.get('scale').value.length !== 0 && initiativeRegions?.length === 0 && formSubmitted"
+            class="error-msg">
+            {{ 'initiative.createInitiative.formContent.validationMessages.region' | translate }}
+          </div>
+        </div>
+        <div id="userListControl" *ngIf="userList">
+          <neo-user-collaborator formControlName="users" class="initiative-content-wrapper"
+            [userList]="userList" [title]="'initiative.createInitiative.formContent.selectUserLabel' | translate" 
+            [subTitle]="'initiative.createInitiative.formContent.collaborateLabel' | translate" 
+            (selectedUsersUpdated)="updateCollaborator($event)">
+          </neo-user-collaborator>       
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <neo-form-footer (cancel)="cancel()" (save)="save()" [submitButtonName]="'general.saveAndContinueLabel' | translate"
+    icon="right-arrow" class="form-footer">
+  </neo-form-footer>
+
+  <neo-modal [title]="'initiative.createInitiative.formContent.discardModal.title' | translate" size="medium"
+    class="title-h2 modal" (closed)="close()" *ngIf="showModal">
+    <p class="text-dark-gray-515 text-m pt-6 pb-12">
+      {{ 'initiative.createInitiative.formContent.discardModal.subTextLabel' | translate }}
+    </p>
+
+    <div class="separator"></div>
+    <div class="d-flex justify-end w-100 pt-26">
+      <button (click)="close()" class="btn-m cancel mr-16 w-min-initial w-50 btn-close">
+        {{ 'initiative.createInitiative.formContent.discardModal.noContinueLabel' | translate }}
+      </button>
+
+      <button (click)="goToDashboard()" class="btn-m w-min-initial w-50 green">
+        {{ 'initiative.createInitiative.formContent.discardModal.yesCancelLabel' | translate }}
+      </button>
+    </div>
+  </neo-modal>
+</div>

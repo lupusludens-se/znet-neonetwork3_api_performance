@@ -1,0 +1,37 @@
+<div class="filter-wrapper {{ expandedState }}" neoClickOutside (clickOutside)="closeExpansion()">
+  <button (click)="changeExpandingState()" class="filter-btn text-neo-near-black d-flex align-center justify-between">
+    <span class="d-flex align-center flex-grow-1">
+      <span *ngIf="showIcon" class="icon-wrapper p-6 flex-center mr-10">
+        <svg-icon key="{{ icon }}"></svg-icon>
+      </span>
+      
+      {{ name }}      
+    </span>
+    <ng-container *ngIf="getSelectedNumber">
+      <span class="counter text-xxs text-neo-aqua fw-700 flex-center p-2 ml-10" >
+        {{ getSelectedNumber }}
+      </span>
+    </ng-container>
+    <svg-icon class="text-blue-200" key="down-arrow" size="xxl"></svg-icon>
+  </button>
+
+  <div id="filter-body" *ngIf="filtersState?.parameter" [class.horizontal]="horizontalLayout" class="filter-body">
+    
+    <ng-container *ngFor="let value of filtersState?.parameter[taxonomy]; let i = index" >
+    <div *ngIf="!value?.hide" class="pb-4 pt-4 d-flex align-center dropdown neo-filters"
+    >
+      <neo-blue-checkbox
+        (selectCheckbox)="click(i)"
+        [checked]="value.checked"
+        [disabled]="value.disabled"
+        [name]="value.name"
+        [value]="value.id"
+        [parentControlName]="taxonomy"
+        class="mr-8 h-initial label-grey"
+        textSize="text-s"
+      ></neo-blue-checkbox>
+    </div>
+    
+  </ng-container>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+<form
+  [formGroup]="form"
+  class="time-wrapper d-flex flex-wrap">
+  <div class="start d-flex">
+    <div
+      neoClickOutside
+      (clickOutside)="closeStartListOnOutside()"
+      [ngClass]="{ 'c-pointer': !disabled }"
+      class="p-relative d-flex align-center time-control">
+      <input
+        (click)="showStartList = !showStartList"
+        [readonly]="true"
+        class="w-100 c-pointer"
+        [class.opened]="showStartList"
+        formControlName="start"
+        type="text" />
+
+      <svg-icon
+        (click)="toggleStartList()"
+        [class.opened]="showStartList"
+        key="caret-down"></svg-icon>
+
+      <div
+        [class.opened]="showStartList"
+        class="dropdown-wrapper">
+        <div class="dropdown-container">
+          <div class="scroll-container scroll-list-default">
+            <div
+              (click)="changeTime(hour, 'start', i); showStartList = false"
+              *ngFor="let hour of hoursList; let i = index"
+              [ngClass]="{ selected: hour.name === form.get('start').value }"
+              class="dropdown-item">
+              {{ hour.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button
+      (click)="setDayPart('start', 'am')"
+      [class.selected]="eventTime.start.dayPart === 'am'"
+      [disabled]="disabled"
+      class="day-part flex-center mr-8 ml-8"
+      type="button">
+      AM
+    </button>
+    <button
+      (click)="setDayPart('start', 'pm')"
+      [class.selected]="eventTime.start.dayPart === 'pm'"
+      [disabled]="disabled"
+      class="day-part flex-center"
+      type="button">
+      PM
+    </button>
+  </div>
+
+  <div class="divider mr-24 ml-24 flex-center"></div>
+
+  <div class="end d-flex">
+    <div
+      neoClickOutside
+      (clickOutside)="closeEndListOnOutside()"
+      [ngClass]="{ 'c-pointer': !disabled }"
+      class="p-relative d-flex align-center time-control">
+      <input
+        (click)="showEndList = !showEndList"
+        [readonly]="true"
+        class="w-100 c-pointer"
+        [class.opened]="showEndList"
+        formControlName="end"
+        type="text" />
+
+      <svg-icon
+        (click)="toggleEndList()"
+        [class.opened]="showEndList"
+        key="caret-down"></svg-icon>
+
+      <div
+        [class.opened]="showEndList"
+        class="dropdown-wrapper">
+        <div class="dropdown-container">
+          <div class="scroll-container scroll-list-default">
+            <ng-container *ngFor="let hour of hoursList">
+              <div
+                *ngIf="showEndListItem(hour)"
+                (click)="changeTime(hour, 'end'); showEndList = false"
+                [ngClass]="{ selected: hour.name === form.get('end').value }"
+                class="dropdown-item">
+                {{ hour.name }}
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button
+      (click)="setDayPart('end', 'am')"
+      [class.selected]="eventTime.end.dayPart === 'am'"
+      [disabled]="disabled"
+      class="day-part flex-center mr-8 ml-8"
+      type="button">
+      AM
+    </button>
+    <button
+      (click)="setDayPart('end', 'pm')"
+      [class.selected]="eventTime.end.dayPart === 'pm'"
+      [disabled]="disabled"
+      class="day-part flex-center"
+      type="button">
+      PM
+    </button>
+  </div>
+
+  <button
+    (click)="removeTimeSlot.emit(true)"
+    [disabled]="disabled"
+    class="btn-remove ml-24"
+    type="button">
+    <svg-icon
+      [fontSize]="22"
+      key="delete-icon"></svg-icon>
+  </button>
+</form>

@@ -1,0 +1,47 @@
+<div>
+  <button (click)="goBack()" class="btn-connect back-btn d-flex align-center pb-4">
+    <svg-icon class="pr-4 back-btn-img-s" key="left-arrow"></svg-icon>
+    {{ 'general.backLabel' | translate }}
+  </button>
+  <div class="d-flex mt-24">
+    <div class="d-flex w-50 align-center">
+      <svg-icon class="community-icon mr-10 mt-2" key="community"></svg-icon>
+      <h2 class="header">{{ 'title.communityLabel' | translate }}</h2>
+    </div>
+    <div class="justify-end d-flex w-50">
+      <button class="btn-save-selection" (click)="saveSelectedContents()" [disabled]="counter === 0">
+        {{ 'general.saveLabel' | translate }} {{ counter === 0 ? '' : '(' + counter + ')' }}
+        {{ counter > 1 ? ('general.selectionsLabel' | translate) : ('general.selectionLabel' | translate) }}
+      </button>
+    </div>
+  </div>
+  <div class="mt-24">
+    <p class="subtext">
+      {{
+      selectedTab === 1
+      ? ('initiative.viewInitiative.communityRecommendedTabSubtextLabel' | translate)
+      : ('initiative.viewInitiative.communityInitiativeSubTextLabel' | translate)
+      }}
+    </p>
+  </div>
+  <div class="d-flex mt-24">
+    <button (click)="changeTab(1)" [ngClass]="{ active: selectedTab === 1, inactive: selectedTab === 2 }"
+      class="btn-tab neo-arial d-flex align-center mr-4">
+      {{ 'general.recommendedLabel' | translate }}
+      <div *ngIf="communityUserRecommendationsCounter !== ''" class="initiative-counter">{{
+        communityUserRecommendationsCounter }}</div>
+    </button>
+    <button (click)="changeTab(2)" [ngClass]="{ inactive: selectedTab === 1, active: selectedTab === 2 }"
+      class="btn-tab neo-arial d-flex align-center">
+      {{ 'general.savedLabel' | translate }}
+    </button>
+  </div>
+  <div *ngIf="selectedTab === 1" class="mt-16">
+    <neo-initiative-community-recommended [initiativeId]="initiativeId"
+      (updateRecommendationsCounterforCommunity)="updateCommunityRecommendationsCounter($event)"
+      (selectedItemsCounter)="handleCounterChange($event)"></neo-initiative-community-recommended>
+  </div>
+  <div *ngIf="selectedTab === 2" class="mt-16">
+    <neo-initiative-community-saved [initiativeId]="initiativeId"></neo-initiative-community-saved>
+  </div>
+</div>

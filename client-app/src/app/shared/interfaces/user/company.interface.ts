@@ -1,0 +1,40 @@
+import { TagInterface } from 'src/app/core/interfaces/tag.interface';
+import { ProjectLocationInterface } from '../projects/project-location.interface';
+import { ImageInterface } from '../image.interface';
+import { CountryInterface } from 'src/app/shared/interfaces/user/country.interface';
+
+export interface CompanyInterface {
+  availableSites: unknown[];
+  contracts: string;
+  eac: boolean;
+  id: number;
+  installedLocation: string;
+  location: ProjectLocationInterface[];
+  image: ImageInterface;
+  name: string;
+  paybackPeriod: string;
+  statusId: number;
+  statusName: string;
+  typeName: string;
+  tags: string[];
+  technologyField: string;
+  termLength: string;
+  webSiteLink: string;
+  title: string;
+  typeId: number;
+  imageLogo: string;
+  companyUrl: string;
+  linkedInUrl: string;
+  mdmKey: string;
+  about: string;
+  countryId: number;
+  country: CountryInterface;
+  categories: TagInterface[];
+  roles: TagInterface[];
+  industryId: number;
+  industryName: string;
+  urlLinks: { urlLink: string; urlName: string }[];
+  offsitePPAs: TagInterface[];
+  isActive: boolean;
+  zip: unknown;
+}

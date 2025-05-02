@@ -1,0 +1,14 @@
+<div [ngClass]="{'lock-icon':!isPublic}" class="d-flex discover-key-content-wrapper w-100 " neoLockClick>
+    <div *ngIf="!isPublic" >
+      <svg-icon 
+      class="lock text-aqua-400 svg-no-pointer-events"
+      key="lock-private-content"
+      ></svg-icon></div>
+    <div class="title ml-6">
+      {{publicOrPrivateContent?.title}}
+    </div>
+    <div class="icon">
+      <svg-icon key="chevron-right"></svg-icon>
+    </div> 
+  </div>
+  

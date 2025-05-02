@@ -1,0 +1,5 @@
+<div class="control-wrapper">
+  <h4 class="label mb-12">{{ 'events.usersInterestedInLabel' | translate }}</h4>
+
+  <neo-interests-topic (selectedTopics)="addCategory($event)" [topics]="categoriesList"> </neo-interests-topic>
+</div>

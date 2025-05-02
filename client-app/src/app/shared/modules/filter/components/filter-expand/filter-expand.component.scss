@@ -1,0 +1,29 @@
+@use '../../../../styles/filters-common';
+@use 'colors';
+
+:host {
+  position: relative;
+}
+
+.filter-wrapper {
+  &.expanded {
+    .horizontal {
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+      background: colors.$white;
+      box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+    }
+
+    .text-blue-100 {
+      transform: rotate(180deg);
+    }
+  }
+
+  .filter-btn{
+    &.active{
+      border-right: 4px solid colors.$zeigo-purple;
+    }
+  }
+  }
+

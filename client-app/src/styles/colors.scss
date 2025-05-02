@@ -1,0 +1,171 @@
+// Whites and Grays
+$white: #fff;
+$off-white: #FCFAFF;
+$white-10: #FFFFFF;
+$white-20: #FDFCFD;
+$white-30: #FCFCFC;
+$white-40: #D4D4D4;
+$white-50: #C7B0CE;
+$white-60: #F0EFF3;
+
+$light-gray: #bbbbbb;
+$light-gray-10: #eeecec;
+$light-gray-200: #F2F2F2;
+$light-gray-300:#e2e1e1;
+$gray: #f3f6fb;
+$gray-hover: #edf2f9;
+$gray-hover-light: #f9fbff;
+$gray-70: #6D6D6D;
+$gray-80: #d9d9d9;
+
+$dark-gray-900: #222428;
+$dark-gray-850: #2a1a2f;
+$dark-gray-800: #43454a;
+$dark-gray-750: #171717;
+$dark-gray-700: #626469;
+$dark-gray-650:#626569;
+$dark-gray-600: #76787d;
+$dark-gray-590: #6F6E77;
+$dark-gray-585: #696969;
+$dark-gray-580: #6F6F6F;
+$dark-gray-545: #76797E;
+$dark-gray-515: #86848D;
+$dark-gray-510: #908E96; // textbox hover state
+$dark-gray-505: #A0A2A7;
+$dark-gray-500: #9fa1a7;
+$dark-gray-450: #F4F2F4;
+$dark-gray-420: #DCDBDD;
+$dark-gray-410: #D0D5DD; // textbox normal state
+$dark-gray-405: #BEC1C6;
+$dark-gray-400: #bec0c6;
+$dark-gray-350: #8F8F8F;
+$dark-gray-300: #e1e3e9;
+$dark-gray-280: #C8C7CB;
+$dark-gray-250: #EEEDEF;
+$dark-gray-200: #eef0f6;
+$dark-gray-150: #eff2fb;
+$dark-gray-120: #f8f8f8;
+$dark-gray-100: #f3f6fc;
+$dark-gray-80: #f7f9fc;
+$dark-gray-70: #868686;
+$dark-gray-50: #f8fbff;
+$dark-gray-40: #FDFCFF; // dropdown item hover state
+$dark-gray-30: #FEFEFE;
+$dark-gray-20: #FAFAFA;
+$dark-gray-10: #6f6f70;
+$dark-gray-320: #9d9d9d;
+
+// Blacks
+$black: #000000;
+$zeigo-black: #18191B;
+$near-black-500: #0E0E0E;
+$near-black-400: #1A1523;
+$near-black-600: #333333;
+
+// Reds
+$red: #d25151;
+$error-red: #E5484D;
+$red-opacity: rgba(210, 81, 81, 0.2);
+$error-input: #f9a4a4;
+$red-100: #DC3D43;
+$red-90: #CD2B31;
+$red-10: #EEEEEE;
+$red-5:#f5f5f5;
+$red-80:#D55B5B;
+$red-70:#D25151;
+$red-15:#FFF2F2;
+$red-20:#dca5a5;
+
+// Greens
+$light-green: rgba(61, 205, 88, 0.1);
+$light-green-hover: rgba(61, 205, 88, 0.15);
+$lime: #9ee6ab;
+$lime-green-hover: #adf3ba;
+$life-green: #3dcd58;
+$dark-green: #009530;
+$dark-green-hover: #1fb04e;
+$green-700: #0E9888;
+$green-100: #D9F3EE;
+
+// Life Green
+$life-green-900: #006f00;
+$life-green-800: #008f0a;
+$life-green-700: #00a01c;
+$life-green-600: #00b32a;
+$life-green-500: #00c334;
+$life-green-400: #3dcd58;
+$life-green-300: #6ad778;
+$life-green-200: #9ae2a0;
+$life-green-100: #c3edc5;
+$life-green-50: #e6f8e8;
+
+// Blues
+$neo-blue: #0b3b6b;
+$sky-blue: #42b4e6;
+$skeleton-blue: #4c6c9b;
+$blue-1000: #082A39;
+$blue-950: #011e4c;
+$blue-900: #14274b;
+$blue-850: #4963EA;
+$blue-800: #1D122B;
+$blue-700: #224170;
+$blue-650: #0F8AB2;
+$blue-600: #2a4a7b;
+$blue-550: #3a9abf;
+$blue-500: #305283;
+$blue-400: #516a93;
+$blue-380: #0F8AB2;
+$blue-350: #0894B3;
+$blue-300: #7084a4;
+$blue-200: #97a6be;
+$blue-100: #bfc9d9;
+$blue-50: #dae1ec;
+$blue-45: #ede6ef;
+$blue-40: #E6F4F2;
+$blue-30: #F3F4FD;
+$blue-25: #f2f6ff;
+$blue-20: #F3FBFF;
+$blue-15: #F1EBF9;
+$blue-10: #F9F8F9;
+$blue-5: #FAF7FA;
+$blue-2:#E8E8EA;
+$blue-1: #eff1fb;
+
+// Light Blue
+$light-blue-20: #DDF2FA;
+
+// Purples
+$zeigo-purple: #3A2456;
+$purple-650: #383A3D;
+$purple-600: #18191B;
+$purple-550: #1D122B;
+$purple-500: #2A1A2F;
+$purple-400: #684299;
+$purple-390: #7046a4;
+$purple-350: #7E498F;
+$purple-300: #9460A4;
+$purple-250: #910DB2;
+$purple-200: #643B72;
+$purple-180: #b997e7;
+$purple-160: #c6b2cd;
+$purple-150: #DECFF2;
+$purple-40: #3a245666;
+$purple-20: #F6F4F7;
+$purple-15: #f7eff9;
+$purple-10: #F6F2FC;
+
+// Aqua
+$aqua-700: #209cd1;
+$aqua-600: #0083bc;
+$aqua-400: #0F84B2;
+
+// Violet
+$violet-10: #EFECF4;
+$violet-5: #E4E2E4;
+
+// Miscellaneous
+$skeleton-gray: #ebf0f9;
+$zeigo-bight-gray: #E9E8EA;
+$warning: #FF9900;
+$warning-5: #fdf1df;
+$zeigo-dark-grey: var(--Typography-Medium, #545454);

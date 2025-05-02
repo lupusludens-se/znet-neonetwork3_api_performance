@@ -1,0 +1,29 @@
+<div
+  class="avatar flex-center neo-arial"
+  [class]="imageSize">
+  <ng-container *ngIf="user; else defaultCase">
+    <ng-container *ngIf="user.image?.uri || user?.displayImage; else placeholder">
+      <img
+        [src]="user.image?.uri || user?.displayImage"
+        [alt]="user.firstName + user.lastName + 'image'" />
+    </ng-container>
+
+    <ng-template #placeholder>
+      <ng-container
+        *ngIf="imageSize !== 'size16' && imageSize !== 'size20' && imageSize !== 'size24'; else defaultAvatar">
+        {{ user.firstName | slice: 0:1 }}{{ user.lastName | slice: 0:1 }}
+      </ng-container>
+
+      <ng-template #defaultAvatar>
+        <img
+          src="assets/icons/default-avatar.png"
+          [alt]="user.firstName + user.lastName + 'image'" />
+      </ng-template>
+    </ng-template>
+  </ng-container>
+  <ng-template #defaultCase>
+    <img
+      src="assets/icons/default-avatar.png"
+      alt="default_avatar" />
+  </ng-template>
+</div>

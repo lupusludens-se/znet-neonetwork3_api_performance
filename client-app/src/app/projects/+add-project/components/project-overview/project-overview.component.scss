@@ -1,0 +1,53 @@
+@use 'colors';
+
+.general-wrapper {
+  background: colors.$off-white;
+  border-radius: 2px;
+  border: none !important;
+  padding-right: 16px;
+
+  label {
+    font-size: 16px;
+  }
+}
+
+.controls-wrapper {
+  label {
+    font-size: 16px;
+  }
+}
+
+.general-wrapper-inner {
+  overflow-y: scroll;
+  max-height: 250px;
+  padding-right: 32px;
+  scrollbar-color: #d9d9d9 colors.$off-white !important;
+  &::-webkit-scrollbar-track {
+    background: colors.$off-white !important;
+  }
+}
+
+.counter {
+  font-size: 14px;
+  line-height: 140%;
+  color: colors.$dark-gray-590;
+}
+
+.hint-info {
+  font-size: 14px;
+  line-height: 130%;
+  color: colors.$dark-gray-590;
+  margin-right: 8px;
+}
+
+.sub-title-control {
+  height: 80px;
+}
+
+neo-users-search {
+  width: 360px;
+}
+
+.noscroll {
+  overflow-y: auto !important;
+}

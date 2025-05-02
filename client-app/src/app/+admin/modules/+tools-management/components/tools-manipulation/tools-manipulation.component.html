@@ -1,0 +1,262 @@
+<div class="flex-column mb-96">
+  <h2 class="title pb-24">
+    {{ (isAdd ? 'toolsManagement.addToolLabel' : 'toolsManagement.editToolLabel') | translate }}
+  </h2>
+
+  <div class="d-flex form-wrapper">
+    <div class="flex-column align-center">
+      <div class="icon-wrapper">
+        <div class="flex-center mt-32">
+          <img
+            [alt]="formData?.title"
+            [src]="formData?.icon?.uri ? formData?.icon?.uri : 'assets/images/default-tool-icon.png'"
+            class="w-100" />
+        </div>
+        <p
+        [class.text-error]="imageLarge"
+        [innerHTML]="'toolsManagement.iconDescriptionLabel' | translate"
+        class="text-image pt-6 pb-12 text-center"></p>
+  
+      <p
+        *ngIf="hasError('iconName')"
+        class="text-error text-xs">
+        {{ 'form.iconLabel' | translate }}
+        {{ 'general.requiredLabel' | translate }}
+      </p>
+      </div>
+
+      <input
+        #fileInput
+        (change)="onFileSelect($event)"
+        (click)="fileInput.value = ''"
+        accept="image/png, image/gif, image/jpeg"
+        class="d-none"
+        type="file" />
+
+      <button
+        (click)="fileInput.click()"
+        class="btn-s btn-upload mt-20 flex-center">
+        <svg-icon
+          class="mr-10"
+          key="upload-image"></svg-icon>
+        {{
+          (toolFormGroup?.get('iconName')?.value
+            ? 'toolsManagement.changeIconLabel'
+            : 'toolsManagement.uploadIconLabel'
+          ) | translate
+        }}
+      </button>
+
+      <button
+        (click)="removeIcon()"
+        *ngIf="formData?.icon?.uri"
+        class="text-s flex-center arial fw-400 btn-remove neo-arial mt-20">
+        <svg-icon
+          class="mr-8"
+          key="trash-can"></svg-icon>
+        {{ 'toolsManagement.removeIconLabel' | translate }}
+      </button>
+    </div>
+
+    <form
+      [formGroup]="toolFormGroup"
+      class="flex-column w-100 pl-32">
+      <div
+        *ngIf="formData"
+        class="d-flex w-100 justify-end">
+        <neo-status-change
+          (statusChanged)="toolFormGroup.get('isActive').patchValue($event)"
+          [activeStatusValue]="true"
+          [currentStatus]="toolFormGroup.get('isActive').value"
+          [inactiveStatusValue]="false"></neo-status-change>
+      </div>
+
+      <div class="flex-column pt-20">
+        <label class="label neo-arial fw-800 pb-8 flex-between">
+          {{ 'form.titleLabel' | translate }}
+
+          <span class="sub-label">
+            {{ toolFormGroup?.get('title')?.value?.length || 0 }}/{{ titleMaxLength }}
+          </span>
+        </label>
+
+        <neo-text-input
+          [labelName]="'form.titleLabel' | translate"
+          [showLabel]="false"
+          formControlName="title"
+          [maxLength]="80"
+          [submitted]="hasError('title') && !titleApiError">
+        </neo-text-input>
+
+        <p
+          *ngIf="titleApiError"
+          class="text-error text-xs pt-8">
+          {{ titleApiError | translate }}
+        </p>
+      </div>
+
+      <div class="flex-column pt-20">
+        <label
+          class="label neo-arial fw-800 pb-8 flex-between"
+          for="description">
+          {{ 'form.descriptionLabel' | translate }}
+          <span class="sub-label">
+            {{ toolFormGroup?.get('description')?.value?.length || 0 }}/{{ descriptionMaxLength }}
+          </span>
+        </label>
+
+        <textarea
+          [class.error]="hasError('description')"
+          [maxLength]="400"
+          class="p-16"
+          formControlName="description"
+          id="description"></textarea>
+
+        <p
+          *ngIf="hasError('description')"
+          class="text-error text-xs pt-8">
+          {{ 'form.descriptionLabel' | translate }}
+          {{ 'general.requiredLabel' | translate }}
+        </p>
+      </div>
+
+      <div class="flex-column pt-20">
+        <label class="label neo-arial fw-800 pb-8">
+          {{ 'general.linkLabel' | translate }}
+        </label>
+
+        <neo-text-input
+          [labelName]="'general.linkLabel' | translate"
+          [showLabel]="false"
+          formControlName="toolUrl"
+          [submitted]="hasError('toolUrl')">
+        </neo-text-input>
+      </div>
+
+      <div class="flex-column pt-20">
+        <label class="label neo-arial fw-800 pb-8">
+          {{ 'toolsManagement.toolHeightLabel' | translate }}
+        </label>
+
+        <neo-number-input
+          width="162px"
+          formControlName="toolHeight"
+          [minLength]="1"
+          [labelName]="'toolsManagement.toolHeightLabel' | translate"
+          [showLabel]="false"
+          [submitted]="hasError('toolHeight')"
+          [thousandsSeparator]="false">
+        </neo-number-input>
+
+        <p
+          *ngIf="hasToolHeightRangeError()"
+          class="text-error text-xs pt-8">
+          {{ 'toolsManagement.toolHeightRange' | translate }}
+        </p>
+      </div>
+
+      <div   
+        class="flex-column">
+        <h6 class="label pt-32 pb-12">
+          {{ 'form.userRoleLabel' | translate }}
+        </h6>
+
+        <ng-container *ngIf="roles$ | async as roles">
+          <neo-blue-checkbox
+            (selectCheckbox)="setRole(role)"
+            *ngFor="let role of roles"
+            [checked]="toolFormGroup?.get('roleIds')?.value?.includes(role?.id)"
+            [disabled]="(role?.name !== 'All' && enableRoles) || 
+                        (toolFormGroup?.get('companyIds')?.value?.length >= 1)"
+            [name]="role?.name"
+            value="{{ role?.id }}">
+          </neo-blue-checkbox>
+        </ng-container>
+
+        <p
+          *ngIf="roleCompanyIncorrect"
+          class="d-flex text-error text-xs pt-8 align-center">
+          {{ 'toolsManagement.userRoleRequiredLabel' | translate }}
+        </p>
+      </div>
+
+      <div class="w-100 d-flex align-center pt-20">
+        <div class="separator"></div>
+
+        <span class="ml-10 mr-10 text-s text-dark-gray-590">
+          {{ 'general.orLabel' | translate }}
+        </span>
+
+        <div class="separator"></div>
+      </div>
+
+      <div
+        [class.disabled]="toolFormGroup?.get('roleIds')?.value?.length >= 1"
+        class="flex-column">
+        <h6 class="label pt-20 pb-12">
+          {{ 'form.companiesLabel' | translate }}
+        </h6>
+
+        <div class="d-flex w-100">
+          <div class="flex-column companies-filter-wrapper w-50">
+            <div class="search-bar-wrapper">
+              <neo-search-bar
+                (clearInput)="findCompanies(null)"
+                (inputChange)="findCompanies($event)"
+                [placeholder]="'form.searchCompaniesLabel' | translate"
+                size="small"></neo-search-bar>
+            </div>
+
+            <div class="flex-column">
+              <ng-container *ngIf="companies?.length > 0">
+                <neo-blue-checkbox
+                  (selectCheckbox)="setCompany(company)"
+                  *ngFor="let company of companies"
+                  [checked]="toolFormGroup?.get('companyIds')?.value.includes(company?.id)"
+                  [disabled]="company?.id !== -1 && disableCompanies"
+                  [name]="company?.name"
+                  class="mt-8 dropdown-hover"
+                  value="{{ company?.id }}">
+                </neo-blue-checkbox>
+              </ng-container>
+            </div>
+          </div>
+
+          <div
+            *ngIf="toolFormGroup?.get('roleIds')?.value?.length === 0"
+            class="flex-column selected-companies-wrapper pl-20 w-50">
+            <neo-filter-header
+              (clearFilters)="clearSelectedCompanies()"
+              [filterName]="'form.companiesLabel' | translate"
+              [showClearButton]="toolFormGroup.get('companyIds').value?.length > 0"></neo-filter-header>
+
+            <div class="separator-light"></div>
+
+            <div class="d-flex flex-wrap gap-8 pt-8 selected-companies">
+              <ng-container *ngFor="let company of selectedCompanies">
+                <div class="filter-state flex-center text-xs">
+                  {{ company.name }}
+                  <svg-icon
+                    (click)="setCompany(company)"
+                    class="ml-4 c-pointer"
+                    key="close-snackbar"></svg-icon>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <p
+          *ngIf="roleCompanyIncorrect"
+          class="d-flex text-error text-xs pt-8 align-center">
+          {{ 'toolsManagement.companyRequiredLabel' | translate }}
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<neo-form-footer
+  (cancel)="cancelClick()"
+  (save)="saveData()"
+  [submitButtonName]="(isAdd ? 'toolsManagement.addToolLabel' : 'general.saveChangesLabel') | translate"
+  class="neo-form-footer"></neo-form-footer>

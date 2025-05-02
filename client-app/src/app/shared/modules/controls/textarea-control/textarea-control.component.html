@@ -1,0 +1,19 @@
+<label class="input-label d-flex mb-8" *ngIf='showLabel'>
+  {{ labelName }}
+
+  <span class="optional ml-4" *ngIf="optionalText">({{ optionalText }})</span>
+</label>
+
+<textarea
+  [(ngModel)]="value"
+  [rows]="rows"
+  [style.height]="height"
+  [class.error]="errors && submitted"
+  [tabindex]="tabInd"
+  [placeholder]="placeholder"
+  autocomplete="off"
+  [maxlength]="maxLength > 0 ? maxLength : null"
+  [disabled]="disabled">
+</textarea>
+
+<neo-control-error [errors]="errors" [fieldName]="labelName" [submitted]="submitted"></neo-control-error>

@@ -1,0 +1,67 @@
+<aside class="sidebar flex-column p-relative">
+  <img class="logo mb-64" src="assets/images/onboarding/onboarding-sidebar-zeigo-logo.svg" alt="neo-navbar-logo" />
+
+  <p class="title neo-arial pb-24 mb-24">{{ 'onboarding.progressLabel' | translate }}</p>
+
+  <div class="steps">
+    <!--        !! possible refactoring with ngfor-->
+    <ul>
+      <li [class.active]="(onboardingWizardService.currentStep$ | async) === stepsList.Role"
+        [class.filled]="(onboardingWizardService.currentStep$ | async) !== stepsList.Role"
+        class="mb-34 d-flex align-center">
+        <div class="decor mr-12"></div>
+        {{ 'onboarding.sidebar.roleLabel' | translate }}
+      </li>
+      <li *ngIf="corporationFlow"
+        [class.active]="(onboardingWizardService.currentStep$ | async) === stepsList.Responsibilities" [class.filled]="
+          (onboardingWizardService.currentStep$ | async) !== stepsList.Role &&
+          (onboardingWizardService.currentStep$ | async) !== stepsList.Responsibilities
+        " class="mb-34 d-flex align-center">
+        <div class="decor mr-12"></div>
+        {{ 'onboarding.sidebar.responsibilitiesLabel' | translate }}
+      </li>
+      <li [class.active]="(onboardingWizardService.currentStep$ | async) === stepsList.Location" [class.filled]="
+          (onboardingWizardService.currentStep$ | async) !== stepsList.Role &&
+          (onboardingWizardService.currentStep$ | async) !== stepsList.Responsibilities &&
+          (onboardingWizardService.currentStep$ | async) !== stepsList.Location
+        " class="mb-34 d-flex align-center">
+        <div class="decor mr-12"></div>
+        {{ 'onboarding.sidebar.locationLabel' | translate }}
+      </li>
+      <li [class.active]="(onboardingWizardService.currentStep$ | async) === stepsList.PersonalInfo" [class.filled]="
+          (onboardingWizardService.currentStep$ | async) === stepsList.GeographicalPurview ||
+          (onboardingWizardService.currentStep$ | async) === stepsList.Interests ||
+          (onboardingWizardService.currentStep$ | async) === stepsList.DecarbonizationSolutions ||
+          (onboardingWizardService.currentStep$ | async) === stepsList.Finish
+        " class="mb-34 d-flex align-center">
+        <div class="decor mr-12"></div>
+        {{ 'onboarding.sidebar.personalInfoLabel' | translate }}
+      </li>
+      <li [class.active]="(onboardingWizardService.currentStep$ | async) === stepsList.GeographicalPurview"
+        [class.filled]="
+        (onboardingWizardService.currentStep$ | async) === stepsList.DecarbonizationSolutions ||
+          (onboardingWizardService.currentStep$ | async) === stepsList.Interests ||
+          (onboardingWizardService.currentStep$ | async) === stepsList.Finish
+        " class="mb-34 d-flex align-center">
+        <div class="decor mr-12"></div>
+        {{ 'onboarding.sidebar.geographicalLabel' | translate }}
+      </li>
+      <li [class.active]="(onboardingWizardService.currentStep$ | async) === stepsList.Interests" [class.filled]="
+      (onboardingWizardService.currentStep$ | async) === stepsList.DecarbonizationSolutions ||      
+      (onboardingWizardService.currentStep$ | async) === stepsList.Finish" class="mb-34 d-flex align-center">
+        <div class="decor mr-12"></div>
+        {{
+        (corporationFlow ? 'onboarding.sidebar.interestsLabel' : 'onboarding.sidebar.projectTypeLabel') | translate
+        }}
+      </li>
+      <li [class.active]="(onboardingWizardService.currentStep$ | async) === stepsList.DecarbonizationSolutions"
+        [class.filled]="(onboardingWizardService.currentStep$ | async) === stepsList.Finish"
+        class="mb-34 d-flex align-center">
+        <div class="decor mr-12"></div>
+        {{'onboarding.sidebar.welcomeSeries' | translate}}
+      </li>
+    </ul>
+  </div>
+
+  <img class="p-absolute bottom-0 right-0" src="assets/images/onboarding/sidebar-vector.png" alt="sidebar vector" />
+</aside>

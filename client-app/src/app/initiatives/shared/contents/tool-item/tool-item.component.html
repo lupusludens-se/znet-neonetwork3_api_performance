@@ -1,0 +1,51 @@
+<div class="tool-wrapper c-pointer flex-column align-center w-100 h-100 p-relative">
+  <div class="title-wrapper w-100 d-flex align-center justify-between">
+    <svg-icon key="selection-tick-mark" *ngIf="tool.isSelected" class="tick-mark"></svg-icon>
+    <div class="overlay-polygon" *ngIf="tool.isSelected"></div>
+    <div class="d-flex align-center w-100">
+      <div class="icon d-flex align-center">
+        <img
+          [src]="tool?.imageUrl.uri || 'assets/images/default-tool-icon.png'"
+          alt="title"
+          class="w-100" />
+      </div>
+
+      <div [ngClass]="{'w-90' : isSavedTool}" class="flex-column pl-20"  (click)="openTool()">
+        <div class="tool-title-container w-100">
+          <div class="d-flex mb-4">
+            <div class="tool-title">
+              {{ tool?.title }}
+            </div>
+            <div class="new-icon-corner" *ngIf="tool?.isNew">
+              <svg-icon (click)="$event.stopPropagation()" key="new-icon" class="favorite-icon"></svg-icon>
+            </div>
+          </div>
+
+          <p class="text-xs description text-blue-600">
+            {{ tool?.description }}
+          </p>
+        </div>
+
+        <div class="d-flex align-self-start pt-10">
+          <a
+            *ngIf="!isSavedTool"
+            class="purple"
+            href="tools/{{ tool?.id }}"
+            target="_blank"
+            (click)="$event.stopPropagation(); trackToolActivity()">
+            <svg-icon key="eye" class="mr-5 eye-icon"></svg-icon>
+            <span class="view-link">{{ 'general.viewLabel' | translate }}</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="three-dots w-10 d-flex justify-end" *ngIf="isSavedTool">
+        <button>
+          <neo-menu (optionClick)="optionClick($event)" [options]="options" activeIcon="cross" cssClasses="flex-center"
+            class="saved-article" icon="vertical-three-dots">
+          </neo-menu>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

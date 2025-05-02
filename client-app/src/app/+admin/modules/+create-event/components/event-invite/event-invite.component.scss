@@ -1,0 +1,75 @@
+@use 'colors';
+@use 'breakpoints';
+
+form {
+  width: 660px;
+
+  @media (breakpoints.$medium) {
+    width: 852px;
+  }
+}
+
+.title {
+  line-height: 120%;
+  font-size: 24px;
+  color: colors.$near-black-400;
+}
+
+.container {
+  width: 660px;
+
+  @media (breakpoints.$medium) {
+    width: 852px;
+  }
+}
+
+.types-wrapper {
+  input {
+    display: none;
+  }
+
+  .select-button {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    height: 42px;
+    border: 1px solid colors.$red-10;
+    border-radius: 4px;
+    padding: 9.5px 16px;
+    font-size: 14px;
+    color: colors.$zeigo-purple;
+    background-color: colors.$dark-gray-40;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid colors.$zeigo-purple;
+      box-shadow: 0px 2px 8px rgba(111, 110, 119, 0.5);  
+    }
+
+    &.active,
+    &.selected {
+      background: colors.$violet-10;
+      border: 1px solid colors.$purple-300;
+    }
+  }
+}
+
+.sections-divider {
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: 0.14px;
+  color: colors.$dark-gray-590;
+  margin: 27px 0;
+
+  .text {
+    min-width: fit-content;
+  }
+
+  .line {
+    display: inline-block;
+    height: 1px;
+    width: 100%;
+    background-color: colors.$blue-50;
+    margin-left: 12px;
+  }
+}

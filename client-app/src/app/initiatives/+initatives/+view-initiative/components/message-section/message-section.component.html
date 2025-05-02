@@ -1,0 +1,77 @@
+<div class="container w-100 flex-column">
+    <div class="d-flex section-header" ngClass="{{ savedMessages?.dataList?.length > 0 ? 'pl-10 pr-10' : 'pb-10'}}">
+        <div class="w-50 d-flex align-center">
+            <svg-icon class="communication-icon" key="communication-bubble" fontSize="38px"></svg-icon>
+            <div class="section-title">{{ 'messages.messagesLabel' | translate }}</div>
+        </div>
+        <div *ngIf="!isAdminOrTeamMember" class="w-50 d-flex justify-end" (click)="viewMessages()">
+            <button class="view-all-btn d-flex btn-tertiary"  [ngClass]="{'pr-10': messageRecommendationsCounter === ''}">
+                <svg-icon key="eye" class="eye-icon"></svg-icon>
+                {{ savedMessages.dataList.length > 0 ?
+                ('initiative.viewInitiative.viewAllLabel' | translate) :
+                ('initiative.viewInitiative.viewRecommendationLabel' | translate) }}
+                <sup class="initiative-section-counter counter-p-4" *ngIf="messageRecommendationsCounter!==''"><span>{{messageRecommendationsCounter}}</span></sup>
+            </button>
+        </div>
+    </div>
+    <div class="load-content-wrapper justify-center" *ngIf="isLoading === true ; else messagesList">
+        <neo-section-spinner></neo-section-spinner>
+    </div>
+    <ng-template #messagesList>
+    <div class="msg-saved-section" *ngIf="savedMessages.dataList.length > 0">
+        <ng-container>
+            <div class="card" neoInfiniteSectionScroll infiniteScrollThreshold="90%" [infiniteScrollDisabled]="false"
+                (loadMoreData)="onLoadMoreData()">
+                <div class="flex-column section" *ngFor="let dataItem of savedMessages.dataList; let last = last; let first = first">
+                    <div class="d-flex">
+                        <div class="align-center d-flex w-100 border" [class.message-wrapper-last]="last" [class.message-wrapper-first]="first">
+                            <neo-message-item [message]="dataItem" class="align-center d-flex w-98"
+                                [isSavedMessage]="true" [currentUser]="currentUser" [initiativeId]="initiativeId"></neo-message-item>
+                            <div *ngIf="!isAdminOrTeamMember" class="three-dots">
+                                <button>
+                                    <neo-menu (optionClick)="optionClick(dataItem?.id)" [options]="options"
+                                        activeIcon="cross" class="messages-section" icon="vertical-three-dots">
+                                    </neo-menu>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</ng-template>
+</div>
+<ng-container *ngIf="savedMessages?.dataList?.length <= 0 && isLoading === false && !hasAccessToInitiative(currentUser)" >
+    <neo-initiative-no-content [section]="'messages.messagesLabel' | translate" [subTitleSection]="'messages.messagesLabel' | translate" [isAdminOrTeamMemberTemplate]="isAdminOrTeamMember"></neo-initiative-no-content>
+</ng-container>
+<ng-container *ngIf="hasAccessToInitiative(currentUser)">
+  <div class="team-section d-flex flex-column mb-20 border">
+    <div class="d-flex lock-icon mt-4">
+      <svg-icon
+        class="lock text-aqua-400" 
+        key="lock-private-content">
+      </svg-icon>
+    </div>   
+    <div class="d-flex justify-center mb-20 mt-8">
+      <h4 class="header w-100">
+        {{ 'initiative.viewInitiative.teamLabelText' | translate }}
+      </h4>
+    </div>
+  </div>
+</ng-container>
+
+<neo-modal (closed)="closeDeletePopup()" *ngIf="showDeleteModal" size="medium"
+    [title]="'initiative.viewInitiative.deleteSavedConversationPopUpTitle' | translate" class="title-h2">
+    <p class="text-s text-dark-gray-580 mb-12 pt-6 mr-16 mt-6">
+        {{ 'initiative.viewInitiative.deleteSavedContentPopUpSubTitle' | translate }}
+    </p>
+    <div class="popup-controls mt-10 d-flex">
+        <button (click)="closeDeletePopup()" class="btn-cancel blue-50-frame mr-16 w-50">
+            {{ 'general.cancelLabel' | translate }}
+        </button>
+        <button (click)="confirmDelete()" class="btn-confirm w-50">
+            {{ 'messages.deleteModal.confirmLabel' | translate }}
+        </button>
+    </div>
+</neo-modal>

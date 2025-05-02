@@ -1,0 +1,21 @@
+  <div class="not-found-wrapper flex-column">
+    <img alt="Zeigo Network" class="c-pointer" routerLink="/" src="assets/images/zeigo-purple-logo.jpg" />
+  
+    <div class="d-flex align-center pt-96 z-index-2">
+      <img alt="404" src="assets/images/400s/404.png" />
+  
+      <div class="flex-column pl-96">
+        <h1 class="text-not-found pb-48">
+          {{ 'general.notFoundLabel' | translate }}
+        </h1>
+  
+        <button class="btn-l green d-flex align-center w-fit-content" routerLink="/">
+          {{ 'general.returnToDashboardLabel' | translate }}
+          <svg-icon class="ml-14" key="right-arrow"></svg-icon>
+        </button>
+      </div>
+    </div>
+  
+    <img alt="Zeigo Network" class="p-absolute vector" src="assets/images/400s/vector.svg" /> 
+</div>
+

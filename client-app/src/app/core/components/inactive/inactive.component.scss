@@ -1,0 +1,33 @@
+@use 'colors';
+
+.forbidden-wrapper {
+  padding: 50px 120px;
+  height: 100vh;
+  width: 100vw;
+
+  img {
+    width: 187px;
+  }
+
+  .not-active-label{
+    color: colors.$dark-gray-750;
+    font-size: 40px;
+    line-height: 120%;
+    width: 600px;
+  }
+  
+  .user-forbidden {
+    width: 96px;
+  }
+
+  .vector {
+    width: 60%;
+    top:380px;
+    left: 550px;
+  }
+
+  .background {
+    height: 100vh;
+    width: 35vw;
+  }
+}

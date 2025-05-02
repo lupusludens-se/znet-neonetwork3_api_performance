@@ -1,0 +1,260 @@
+﻿@model SE.Neo.EmailTemplates.Models.CompleteRegistrationEmailTemplatedModel;
+@{
+    var emptyText = "<span>&#160;</span>";
+}
+
+<!DOCTYPE HTML PUBLIC>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:v="urn:schemas-microsoft-com:vml" 
+      xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>...</title>
+    <!-- CSS Reset --><!--[if (gte mso 9)|(IE)]>
+        <style type="text/css">
+            table {
+                border-collapse: collapse;
+            }
+        </style>
+    <![endif]-->
+    <!--[if gte mso 9]>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:AllowPng/>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    <![endif]-->
+    <style type="text/css">
+        @@font-face {
+
+            font-family: 'Arial Rounded MT';
+            mso-font-alt: 'Arial';
+            src: url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.eot"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.woff") format("woff"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/af37a17ad53d1410778d941a0951508b.svg#Arial Rounded MT Std") format("svg"); }
+        
+        @@font-face {
+            font-family: 'Arial Rounded MT Bold';
+            mso-font-alt: 'Arial';
+            src: url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.eot"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.woff") format("woff"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/ef6bdf5ef216552c7e9869841e891ca0.svg#Arial Rounded MT Bold") format("svg"); }
+
+        .zeigo-arial-rounded-bold {
+            font-family: "Arial Rounded MT Bold", "Arial", sans-serif !important;
+            font-weight: 400 !important;
+        }
+        
+        .zeigo-arial-rounded {
+            font-family: "Arial Rounded MT", "Arial", sans-serif !important;
+        }
+
+        .zeigo-arial {
+            font-family: "Arial Rounded MT", sans-serif !important;
+        }
+
+        img {
+            user-select: none  !important;
+            object-fit: fill  !important;
+        }
+
+        h2, h4, h5, p, span {
+            margin: 0  !important;
+        }
+
+        h2 {
+            font-size: 28px  !important;
+            line-height: 30px  !important;
+            font-weight: 400  !important;
+        }
+
+        h4 {
+            font-size: 18px  !important;
+            line-height: 24px  !important;
+            font-weight: 400  !important;
+        }
+
+        h5 {
+            font-size: 16px  !important;
+            line-height: 20px  !important;
+        }
+
+        .text-m {
+            font-size: 16px  !important;
+            line-height: 22px  !important;
+        }
+
+        .text-s {
+            font-size: 14px  !important;
+            line-height: 20px  !important;
+        }
+
+        .text-neo-blue {
+            color: #0B3B6B  !important;
+        }
+
+        .text-grey {
+            color: #171717 !important;
+        }
+
+        .text-grey-800 {
+            color: #43454A !important;
+        }
+
+        .text-white {
+            color: #FDFCFF !important;
+        }
+
+        .h-6 {
+            height: 6px  !important;
+            line-height: 6px  !important;
+        }
+
+        .h-24 {
+            height: 24px  !important;
+            line-height: 24px  !important;
+        }
+
+        .w-32 {
+            width: 32px  !important;
+        }
+
+        .h-32 {
+            height: 32px  !important;
+            line-height: 32px  !important;
+        }
+
+        .body {
+            width: 100%  !important;
+            font-family: "Arial", sans-serif  !important;
+            background-color: #FAFAFA !important;
+            min-width: 320px  !important;
+            width: 654px;
+        }
+
+        .container {
+            background-color: #FFFFFF !important;
+            border-bottom-left-radius: 0  !important;
+            border-bottom-right-radius: 0  !important;
+            border-top-left-radius: 4px  !important;
+            border-top-right-radius: 4px  !important;
+            max-width: 580px  !important;
+            width: 580px  !important;
+        }
+
+        .button {
+            border-bottom-left-radius: 8px  !important;
+            border-bottom-right-radius: 8px  !important;
+            border-top-left-radius: 8px  !important;
+            border-top-right-radius: 8px  !important;
+            padding-top: 12px !important;
+            padding-bottom: 12px !important;
+            padding-left: 24px !important;
+            padding-right: 24px !important;
+            font-family: 'Arial Rounded MT Bold', serif;
+            box-shadow: none;
+            background: none;
+            background-color: #3A2456 !important;
+        }
+    </style>
+</head>
+<body>
+<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%" class="body">
+    <tr>
+        <td align="center" valign="top">
+            <div class="h-32">@emptyText</div>
+            <table cellpadding="0" cellspacing="0" border="0" class="container">
+                <tr style="background-color: #FAFAFA;">
+                    <td class="w-32"></td>
+                    <td align="left" valign="top">
+                        <div class="h-24">@emptyText</div>
+                        <img width="240" height="110" src="@Model.LogoUrl" alt="zeigo logo"/>
+                        <div class="h-24">@emptyText</div>
+                    </td>
+                    <td class="w-32"></td>
+                </tr>
+
+                    <tr>
+                        <td class="w-32"></td>
+                    <td>
+                        <div class="h-24">@emptyText</div>
+                            <h2 class="zeigo-arial-rounded text-grey" style="color: #171717;">Hello, @Model.FirstName</h2>
+                        <!--[if !mso]>--><div class="h-6">@emptyText</div><!--<![endif]-->
+                            <h4 class="zeigo-arial-rounded text-grey" style="color: #171717;">You’re In!</h4>
+                    </td>
+                    <td class="w-32"></td>
+                </tr>
+
+                    <tr>
+                    <td></td>
+                    <td>
+                        <div class="h-24">@emptyText</div>
+                            <div class="h-24" style="border-top: 1px solid #9FA0A4;">
+                                @emptyText
+                            </div>
+                    </td>
+                    <td></td>
+                </tr>
+
+
+                    <tr>
+                    <td class="w-32"></td>
+                    <td class="zeigo-arial-rounded">
+                        <!--email body-->
+                            <p class="text-m text-grey-800" style="color: #43454A">
+                                We would like to officially welcome you to the leading network of clean energy change makers.
+                        </p>
+                        <div class="h-24">@emptyText</div>
+                        <!--end email body-->
+                    </td>
+                    <td class="w-32"></td>
+                </tr>
+
+                    <tr style="height: 47px;" >
+                    <td class="w-32"></td>
+                        <td align="left" valign="middle" style="mso-height-rule: exactly;">
+                        <div>
+                            <!--[if mso]>
+                                <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+                                             xmlns:w="urn:schemas-microsoft-com:office:word"
+                                             href="@Model.Link"
+                                                 style="display:inline-block;height:47px;v-text-anchor:middle;width:247px;text-decoration: none;;font-color: #171717;"
+                                             arcsize="2%"
+                                             strokecolor="#3A2456" strokeweight="8px" fillcolor="#3A2456">
+                                <w:anchorlock/>
+                                                <center class="zeigo-arial-rounded-bold" style="color:#FDFCFF;padding: 10px;background-color: #3A2456;font-size:14px;line-height: 21px;vertical-align:middle;"
+                                        ">Set Password</center>
+
+                                        </v:roundrect>
+                            <![endif]-->
+                                <!--[if !mso]><!-->
+                            <a href="@Model.Link" class="text-s"
+                                   style="text-decoration: none; mso-hide:all; width: fit-content; display: block !important;">
+                                <div class="text-s text-white button zeigo-arial-rounded-bold"
+                                         style="width: fit-content; background-color: #3A2456;padding: 10px;color: #FDFCFF;-webkit-text-size-adjust:none;mso-hide:all;">
+                                    Set Password
+                                </div>
+                            </a>
+                                <!--<![endif]-->
+                        </div>
+                    </td>
+                    <td class="w-32"></td>
+                </tr>
+
+                    <tr class="h-32"></tr>
+
+                <tr style="height:84px; background: #F3F3F3;">
+                    <td class="w-32"></td>
+                        <td class="zeigo-arial" style="height:20px;">
+                        <div class="h-32">@emptyText</div>
+                            <p class="text-s text-grey" style="color: #171717;">&copy; @DateTime.Now.Year Zeigo by Schneider Electric</p>
+                        <div class="h-32">@emptyText</div>
+                    </td>
+                        <td class="w-32"></td>
+                </tr>
+            </table>
+
+                <div class="h-32">@emptyText</div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<div *ngIf="(auth.isLoggedIn() || auth.needSilentLogIn())">
+  <div [routerLink]="['/tools/' + id]" (click)="toolClick.emit()" [style.height]="tileHeight"
+    class="pinned-tool-wrapper c-pointer d-flex align-center w-100 h-100 p-relative {{ size }}">
+    <svg-icon (click)="$event.stopPropagation(); pinClick.emit()" *ngIf="showFavoriteButton" [class.pinned]="pinned"
+      fontSize="18px" width="18px" height="18px" [key]="pinned ? 'pin-active' : 'pin-inactive'"
+      class="pin-icon p-absolute top-8 right-8 text- c-pointer"></svg-icon>
+
+    <div class="title-wrapper w-100 d-flex align-center justify-between" [ngClass]="{
+        'justify-center': size === 'medium',
+        'justify-between': (size === 'wide' || size === 'fixed')
+      }">
+      <div class="d-flex align-center w-100" [ngClass]="{ 'flex-column justify-center': size === 'medium' }">
+        <div class="icon d-flex align-center" [class.medium]="!showButton && size === 'medium'">
+          <img [src]="icon || 'assets/images/default-tool-icon.png'" alt="title" class="w-100" />
+        </div>
+
+        <div class="w-100" [ngClass]="{
+            'pl-20 pr-56': (size === 'wide' || size === 'fixed') && showButton,
+            'pl-30 pr-56': (size === 'wide' || size === 'fixed') && !showButton,
+            'pr-12': showButton
+          }">
+          <div class="container">
+            <div class="row">
+              <div class="justify-content-end align-items-center">
+
+                <div [class.text-center]="titleCenter" [class.w-initial]="!showFavoriteButton" [class.wrap]="wrapTitle"
+                  [style.fontSize]="titleSize" class="tool-title text-blue-200 pr-20">
+                  {{ title }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p *ngIf="description" class="pt-4 text-xs description text-blue-600">
+            {{ description }}
+          </p>
+        </div>
+      </div>
+
+      <button *ngIf="showButton" class="d-flex align-center justify-center">
+        <svg-icon fontSize="14px" key="dashboard-thin-right-arrow"></svg-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf=" !(auth.isLoggedIn() || auth.needSilentLogIn())" [src]="activityTypeEnum" [data]="{toolId:id  }"
+  neoLockClick>
+
+  <div class="lock-icon pinned-tool-wrapper c-pointer d-flex align-center w-100 h-100 p-relative {{ size }}">
+    <div class="title-wrapper w-100 d-flex align-center justify-between " [ngClass]="{
+          'justify-center': size === 'medium',
+          'justify-between': (size === 'wide' || size === 'fixed')
+        }">
+      <div class="d-flex align-center w-100 lock-icon" [ngClass]="{ 'flex-column justify-center': size === 'medium' }">
+        <div class="icon d-flex align-center lock-icon" [class.medium]="!showButton && size === 'medium'">
+          <img [src]="icon || 'assets/images/default-tool-icon.png'" alt="title" class="w-100 lock-icon">
+        </div>
+
+        <div class="w-100" [ngClass]="{
+              'pl-20 pr-56': (size === 'wide' || size === 'fixed') && showButton,
+              'pl-30 pr-56': (size === 'wide' || size === 'fixed') && !showButton,
+              'pr-12': showButton
+            }">
+          <div class="container lock-icon">
+            <div class="row lock-icon">
+              <div class="d-flex justify-content-end align-items-center lock-icon">
+                <div class="flex-column pr-4 lock-icon">
+                  <div class="lock-icon">
+                    <svg-icon class="lock text-aqua-400 svg-no-pointer-events" key="lock-private-content"></svg-icon>
+                  </div>
+                </div>
+                <div [class.text-center]="titleCenter" [class.w-initial]="!showFavoriteButton" [class.wrap]="wrapTitle"
+                  [style.fontSize]="titleSize" class=" tool-title text-blue-200 pr-20 lock-icon">
+                  {{ title }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p title="{{description}}" *ngIf="description" class="pt-4 text-xs description text-blue-600 pl-20 lock-icon">
+            {{ description }}
+          </p>
+        </div>
+      </div>
+
+      <button *ngIf="showButton" class="d-flex align-center justify-center">
+        <svg-icon fontSize="14px" key="dashboard-thin-right-arrow"></svg-icon>
+      </button>
+    </div>
+  </div>
+</div>

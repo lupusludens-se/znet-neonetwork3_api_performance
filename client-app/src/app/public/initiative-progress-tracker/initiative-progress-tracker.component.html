@@ -1,0 +1,26 @@
+<div class="progress pt-8 pb-8">
+    <div *ngFor="let pair of stepData" class="d-flex flex-row "
+        [ngClass]="{'w-25': pair.id !=='STEP 6' ,'w-10':pair.id==='STEP 6'}">
+        <div class="d-flex flex-column" style="width:100%">
+            <div class="d-flex">
+                <div class="w-15 d-flex" [ngClass]="{'is-active-border':pair.id==='STEP 2'}">
+                    <span class="progress-step mr-2"
+                        [ngClass]="{'is-complete': pair.id ==='STEP 1','is-active': pair.id ==='STEP 2','is-inactive': pair.id ==='STEP 6'}">
+                        <svg-icon *ngIf="pair.id==='STEP 1'" fontsize="20px" key="check-mark"
+                            class="svg-icon-check-mark" style="font-size: 20px;"></svg-icon>
+                    </span>
+                </div>
+                <div *ngIf="pair.id!=='STEP 6'" class="progress-track ml-12 mr-12">
+                    <div class="track-height" [ngClass]="{'is-complete':pair.id==='STEP 1'}" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12">
+                <div class="step-title">{{pair.id}}</div>
+            </div>
+            <div class="mt-5">
+                <div class="title">{{pair.name}} </div>
+            </div>
+        </div>
+    </div>
+</div>

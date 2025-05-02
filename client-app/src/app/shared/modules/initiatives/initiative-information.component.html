@@ -1,0 +1,141 @@
+<div class="initiative-wrapper" *ngIf="currentUser$ | async as currentUser">
+  <ng-container *ngIf="hasLoaded else loadSkeleton">
+    <div class="no-intiatives" *ngIf="initiativesData && initiativesData.count === 0">
+      <svg-icon class="initiative-icon" [key]="'initiatives-dashboard'"></svg-icon>
+        <div class="title" *ngIf="initiativeSource === 1">{{ 'initiative.dashboard.noTeamInitiativesCreatedLabel' | translate }}</div>
+        <div class="title" *ngIf="initiativeSource !== 1">{{ 'initiative.dashboard.noInitiativesCreatedLabel' | translate }}</div>
+      <button *ngIf="initiativeSource !== 1" class="btn-l green d-flex align-center" (click)="trackCreateInitiativeActivity()">
+        {{ 'initiative.dashboard.createInitiativeLabel' | translate }}
+      </button>
+    </div>
+
+    <div class="initiative-item mb-10" *ngFor="let initiative of initiativesData?.dataList"
+      (click)="redirectToInitiative(initiative.initiativeId, initiative.title)">
+      <div class="d-flex justify-between w-100 align-center">
+        <span class="fg-1 d-flex flex-column max-w-50 mr-2">
+          <h4 class="ellipsis">{{ initiative.title }}</h4>
+        </span>
+        <div class="status-wrapper max-w-fit ml-12">
+          <span class="status-label">{{ 'initiative.dashboard.statusLabel' | translate }}:</span>
+          <span class="status">{{ getCurrentStep(initiative.steps, initiative.currentStepId) }}</span>
+        </div>
+      </div>
+
+      <div class="d-flex">
+        <div class="d-flex">
+          <span class="tooltip">
+            <div *ngIf="currentUser?.id === initiative?.user?.id" class="initiativeOwner">
+              {{ 'general.yourInitiativeLabel' | translate }}
+            <div *ngIf="currentUser?.id !== initiative?.user?.id">{{initiative?.user?.firstName}} {{initiative?.user?.lastName}}'s {{'initiative.initiativeLabel' | translate}}</div>
+            <svg-icon class="initiative-leaf-icon"  font-size="12px" [key]="'initiative-leaf-icon-without-background'"></svg-icon>
+          </div>
+            <span *ngIf="currentUser?.id === initiative?.user?.id" class="tooltiptext text-xs">
+              {{'initiative.dashboard.yourInitiativeTooltip' | translate}}
+            </span>
+            <span *ngIf="currentUser?.id !== initiative?.user?.id" class="tooltiptext text-xs">
+              {{'initiative.dashboard.teamInitiativeTooltip' | translate}}
+            </span>
+          </span>
+        </div>
+        <ng-container *ngIf="currentUser?.id === initiative?.user?.id">
+          <div
+          class="user-image-wrapper c-pointer p-relative flex-center"
+          [style.z-index]="i"
+          *ngFor="let collaborator of initiative.collaborators; let i = index">
+          <neo-user-avatar
+            [user]="collaborator"
+            (click)="$event.stopPropagation(); openUserProfile(collaborator)"
+            imageSize="size32">
+          </neo-user-avatar>
+
+          <p class="user-tooltip text-xs fw-700 text-white p-absolute">
+            <a routerLink="/user-profile/{{ collaborator.id }}">
+              {{ collaborator?.firstName }} {{ collaborator?.lastName }}
+            </a>
+          </p>
+        </div>        
+      </ng-container>
+      </div>
+
+      <div class="w-100">
+        <neo-progress-stepper [initiativeprogressdetails]="initiative" [currentStep]="initiative.currentStepId"
+          [canHideStepDescription]="true">
+        </neo-progress-stepper>
+      </div>
+      <div class="flex-container w-100">
+        <div class="d-flex pt-12 gap-4 initiative-footer">
+          <neo-content-tag *ngIf="initiative?.category" fontSize="12" [isOpenInNewTab]="true"
+            [tag]="initiative.category" class="initiative-tag" [type]="type.Category">
+          </neo-content-tag>
+          <neo-content-location (click)="$event.stopPropagation();" [isOpenInNewTab]="true"
+            [regions]="getRegions(initiative)">
+          </neo-content-location>
+          <span *ngIf="initiative.regions.length >= 3" class="tag-wrapper d-flex c-pointer"
+            (click)="redirectToInitiative(initiative.initiativeId, initiative.title)">
+            + {{ initiative.regions.length - 2 }}
+          </span>
+          <div class="d-flex date pl-20 pt-2">
+            <label for="createdDate" class="date">{{ 'initiative.dashboard.createdLabel' | translate }}</label>
+            {{ initiative?.createdOn | date : 'MM/dd/yyyy' }}
+          </div>
+          <div class="d-flex date pl-20 pt-2" *ngIf="(initiative?.createdOn) !== (initiative?.modifiedOn)">
+            <label for="updatedDate" class="date">{{ 'initiative.dashboard.updatedLabel' | translate }}</label>
+            {{ initiative?.modifiedOn | timeAgo : 'MM/dd/yyyy' }}
+          </div>
+        </div>
+        <div class="p-relative">
+          <ng-container *ngIf="initiative.allNewExceptMessageRecommendationsCount">
+            <svg-icon class="notification pt-12 gap-4" key="light-bulb"></svg-icon>
+            <span [ngClass]="initiative.allNewMessageUnreadCount?'r-45':''"
+              class="flex-center badge text-xs p-absolute ng-star-inserted">
+              {{ initiative.allNewExceptMessageRecommendationsCount }}
+            </span>
+          </ng-container>
+          <ng-container *ngIf="initiative.allNewMessageUnreadCount">
+            <svg-icon class="notification pt-12 gap-4" key="communication-recommendation-count-icon">
+            </svg-icon>
+            <span class="flex-center badge text-xs p-absolute ng-star-inserted">
+              {{ initiative.allNewMessageUnreadCount }}
+            </span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex initiative-create-message" *ngIf="initiativeSource !== 1 && initiativesData && initiativesData.count > 0">
+      <div>
+        <svg-icon class="initiative-icon" [key]="'initiatives-dashboard'"></svg-icon>
+      </div>
+      <div class="flex-column" [ngClass]="((initiativeSource === 2 && yourInitiativesCount < 3) || (initiativeSource !== 2 && initiativesData.count < 3)) ? 'fg-1' :'w-80 pl-20'">
+        <div class="title mb-2">
+          {{((initiativeSource === 2 && yourInitiativesCount < 3) || (initiativeSource !== 2 && initiativesData.count < 3)) ? ('initiative.dashboard.createMaxInitiativeDescriptionLabel' | translate) :
+            ('initiative.dashboard.maxInitiativeLimitReachedLabel' | translate) }} </div>
+            <div *ngIf="((initiativeSource === 2 && yourInitiativesCount < 3) || (initiativeSource !== 2 && initiativesData.count < 3))" class="sub-title">
+              {{ 'initiative.dashboard.ensureCreateMoreInitiativesLabel' | translate }}
+            </div>
+        </div>
+        <button *ngIf=" (initiativeSource === 2 && yourInitiativesCount < 3) || (initiativeSource !== 2 && initiativesData.count < 3)" class="btn-l green d-flex align-center"
+          (click)="trackCreateInitiativeActivity()" [routerLink]="'/create-initiative'">
+          {{ 'initiative.dashboard.createInitiativeLabel' | translate }}
+        </button>
+      </div>
+  </ng-container>
+
+  
+  <ng-template #loadSkeleton>
+
+    <div class="d-flex gap-12 mb-48">
+      <div class="section-content section-content-5 flex-grow-1">
+        <div class="section-line section-line-big mb-24"></div>
+        <div class="section-line section-line-big mb-24"></div>
+      </div>
+    </div>
+
+  </ng-template>
+
+  <neo-pagination
+        *ngIf=" initiativeSource === 1 && initiativesData?.dataList?.length > 0 && paging && paging.total > defaultItemPerPage"
+        [paging]="paging"
+        [defaultItemPerPage]="defaultItemPerPage"
+        (changePage)="changePage($event)"  class="pt-24 mb-64">
+  </neo-pagination>
+</div>

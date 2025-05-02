@@ -1,0 +1,63 @@
+@use 'colors';
+
+.confirm-announcement-modal-wrapper{
+  background-color: colors.$white;
+}
+.btn-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: colors.$blue-200;
+}
+
+.title {
+  color: colors.$near-black-400;
+}
+
+.alert-icon {
+  color: colors.$red;
+}
+
+ul {
+  border-bottom: 1px solid colors.$violet-5;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      min-width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: colors.$neo-blue;
+      margin-right: 12px;
+    }
+  }
+}
+
+.controls {
+  button {
+    width: 264px;
+    height: 47px;
+    padding: 12px 16px;
+    border-radius: 8px;
+  }
+
+  .btn-edit { 
+    background: colors.$dark-gray-450;
+    color: colors.$dark-gray-590;
+    &:hover{
+      background: colors.$dark-gray-250;
+    }
+  }
+}
+
+.close-hover{
+  &:hover{
+    color: colors.$near-black-400;
+  }
+}

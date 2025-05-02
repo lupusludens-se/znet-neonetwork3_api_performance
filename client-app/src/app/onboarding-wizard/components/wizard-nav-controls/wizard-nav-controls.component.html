@@ -1,0 +1,11 @@
+<div [class.flex-end]="!showBackBtn" class="bottom flex-between">
+  <button (click)="goBack.emit(true)" *ngIf="showBackBtn" class="btn-back mr-16 blue-50-frame flex-center">
+    <svg-icon class="mr-12" key="left-arrow-thin" size="md"></svg-icon>
+    Back
+  </button>
+
+  <button (click)="goNext.emit(true)" [class.disabled]="nextDisabled" class="btn-next green flex-center">
+    {{ nextText }}
+    <svg-icon class="ml-12 right-arrow" key="arrow-thin-right" size="md"></svg-icon>
+  </button>
+</div>

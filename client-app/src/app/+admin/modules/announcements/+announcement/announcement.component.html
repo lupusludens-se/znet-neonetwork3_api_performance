@@ -1,0 +1,79 @@
+<div class="top flex-between align-center mb-24">
+  <h1 class="title">{{ 'announcement.announcementsLabel' | translate }}</h1>
+
+  <div class="buttons-wrapper d-flex">
+    <button class="green btn-add-user flex-center" routerLink="./add">
+      <svg-icon class="mr-12" height="16px" key="plus" width="16px"></svg-icon>
+      {{ 'announcement.newAnnouncementLabel' | translate }}
+    </button>
+  </div>
+</div>
+
+<div class="content mt-32 d-flex">
+  <div class="table-wrapper flex-column">
+    <table class="table mb-24" *ngIf="announcementsList && announcementsList.length">
+      <thead>
+        <tr>
+          <td class="pl-24 name">
+            <div
+              (click)="sortCriteriaSelection('nameAsc', sortingCriteria.name, 'statusAsc', 'audienceAsc')"
+              class="click-area">
+              {{ 'userProfile.titleLabel' | translate }}
+              <svg-icon [class.sorthighlight]="nameAsc" class="text-blue-200 ml-6 caret"
+              key="table-row-sort-up" size="md"></svg-icon>
+              <svg-icon [class.sorthighlight]="tdTitleClick ===  sortingCriteria.name && !nameAsc"
+              class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+            </div>
+          </td>
+
+          <td class="pl-18 audience">
+            <div
+              (click)="sortCriteriaSelection('audienceAsc', sortingCriteria.audience, 'nameAsc', 'statusAsc')"
+              class="click-area">
+              {{ 'announcement.audienceLabel' | translate }}
+              <svg-icon [class.sorthighlight]="audienceAsc" class="text-blue-200 ml-6 caret"
+              key="table-row-sort-up" size="md"></svg-icon>
+              <svg-icon [class.sorthighlight]="tdTitleClick ===  sortingCriteria.audience && !audienceAsc"
+              class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+            </div>
+          </td>
+
+          <td class="pl-20 status">
+            <div
+              (click)="sortCriteriaSelection('statusAsc', sortingCriteria.isactive, 'audienceAsc', 'nameAsc')"
+              class="click-area">
+              {{ 'userManagement.table.statusCol' | translate }}
+
+              <svg-icon [class.sorthighlight]="statusAsc" class="text-blue-200 ml-6 caret"
+              key="table-row-sort-up" size="md"></svg-icon>
+              <svg-icon [class.sorthighlight]="tdTitleClick ===  sortingCriteria.isactive && !statusAsc"
+              class="text-blue-200 ml-1 caret" key="table-row-sort-down" size="md"></svg-icon>
+            </div>
+          </td>
+          <td class="pl-24 options"></td>
+        </tr>
+      </thead>
+
+      <tbody>
+        <neo-announcement-table-row
+          (updateAnnouncements)="getAnnouncements()"
+          *ngFor="let announcement of announcementsList"
+          [announcement]="announcement">
+        </neo-announcement-table-row>
+      </tbody>
+    </table>
+
+    <neo-pagination
+      (changePage)="updatePaging($event)"
+      *ngIf="paging && paging.total > defaultItemPerPage"
+      [paging]="paging">
+    </neo-pagination>
+
+    <neo-empty-page
+      class="empty-page"
+      *ngIf="announcementsList && !announcementsList.length"
+      [headlinePart1]="'general.emptyStateLabel' | translate"
+      iconKey="topic">
+    </neo-empty-page>
+  </div>
+</div>

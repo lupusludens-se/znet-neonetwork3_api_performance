@@ -1,0 +1,23 @@
+<div class="flex-column p-24">
+  <p class="text-xxl text-neo-blue neo-arial">
+    {{ 'landing.cookies.titleLabel' | translate }}
+  </p>
+
+  <p class="text-s text-blue-400 pt-8">
+    {{ 'landing.cookies.descriptionLabel' | translate }}
+  </p>
+
+  <div class="d-flex align-center gap-12 pt-24">
+    <a
+      class="btn-m neo-arial-regular policy"
+      href="https://www.se.com/ww/en/about-us/legal/data-privacy.jsp">
+      {{ 'landing.footer.privacyPolicyLabel' | translate }}
+    </a>
+
+    <button
+      (click)="acceptCookiesClick.emit()"
+      class="btn-m green">
+      {{ 'landing.cookies.acceptAllCookiesLabel' | translate }}
+    </button>
+  </div>
+</div>

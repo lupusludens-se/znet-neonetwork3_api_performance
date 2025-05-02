@@ -1,0 +1,15 @@
+<div class="topics-wrapper d-flex flex-wrap pb-24 mb-24">
+  <button
+    (click)="updateSelection(ind)"
+    *ngFor="let topic of topics; let ind = index"
+    [class.disabled]="topic.preSelected"
+    [class.selected]="topic.selected"
+    class="select-button">
+    <svg-icon
+      [class.selected]="topic.selected"
+      [key]="topic.preSelected ? 'block' : topic.selected ? 'cross' : 'plus'"
+      [ngClass]="topic.selected && !topic.preSelected ? 'text-blue-100' : 'text-neo-purple'">
+    </svg-icon>
+    {{ topic.name }}
+  </button>
+</div>

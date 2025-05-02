@@ -1,0 +1,60 @@
+<div
+  class="p-relative w-100 d-flex align-center search-input"
+  [ngClass]="{ 'page-search': pageSearchControl, error: error }">
+  <svg-icon
+    *ngIf="!searchWithMention"
+    class="p-absolute left-16 search-icon text-dark-gray-590"
+    size="xl"
+    key="search"></svg-icon>
+
+  <neo-user-avatar
+    [user]="preSelectedModerator"
+    imageSize="size24"
+    *ngIf="preSelectedModerator?.userId"
+    class="p-absolute left-16">
+  </neo-user-avatar>
+
+  <input
+    #searchEl
+    [ngClass]="{ 'pl-48 pr-44': !searchWithMention || preSelectedModerator?.userId }"
+    class="w-100 {{ size }}"
+    placeholder="{{ placeholder | translate }}"
+    type="text"
+    [(ngModel)]="displayName"
+    [readonly]="searchWithMention && preSelectedModerator?.userId" />
+
+  <svg-icon
+    class="p-absolute right-16 close-icon"
+    [key]="error ? 'alert-filled' : 'cross'"
+    [class.error]="error"
+    fontSize="12px"
+    *ngIf="displayName?.length > 0 && (showClearButton || preSelectedModerator?.userId)"
+    (click)="clear()"></svg-icon>
+  <div
+    class="results-container"
+    *ngIf="resultsList?.length > 0 && displayName?.length > 0">
+    <div class="results-wrapper">
+      <div
+        class="text-dark-gray-750 neo-arial text-s c-pointer d-flex align-center"
+        *ngFor="let result of resultsList"
+        (click)="selectItem(result)">
+        <neo-user-avatar
+          [user]="result"
+          imageSize="size24"
+          class="mr-10"></neo-user-avatar>
+        <p class="name">
+          <span>
+            {{ result.firstName }}
+          </span>
+          <span [innerHTML]="result.name"></span>
+          <span>, {{ result.company?.name }}</span>
+        </p>
+
+        <svg-icon
+          key="right-arrow"
+          size="md"
+          *ngIf="pageSearchControl && showArrow === result.id"></svg-icon>
+      </div>
+    </div>
+  </div>
+</div>

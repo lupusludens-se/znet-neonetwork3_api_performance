@@ -1,0 +1,280 @@
+@use 'colors';
+
+:host.search-border-radius-large {
+  input {
+    border-radius: 12px;
+  }
+}
+
+:host.search-border {
+  .search-input {
+    input {
+      &:hover {
+        border-color: colors.$zeigo-purple;
+      }
+    }
+  }
+}
+
+.search-input {
+
+  &.page-search {
+    .results-wrapper {
+      top: 56px;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+  }
+
+  &.error {
+    input {
+      border: 1px solid colors.$error-input;
+    }
+  }
+
+  &.active {
+    .btn-s {
+      background: colors.$zeigo-purple;
+      color: colors.$white;
+
+      &:hover {
+        background: colors.$purple-400;
+      }
+    }
+  }
+
+  // TODO: these styles are not encapsulated and for ex. affect on global search input
+  //input:not(:disabled):not(:read-only):focus {
+  //  outline: colors.$blue-200 solid 1px;
+  //}
+
+  .btn-s {
+    background: colors.$dark-gray-450;
+    color: colors.$dark-gray-505;
+    border-radius: 8px;
+    font-size: 12px;
+  }
+
+  &.error {
+    input {
+      border: 1px solid colors.$error-input;
+    }
+  }
+}
+
+.close-icon {
+  cursor: pointer;
+  color: colors.$dark-gray-590;
+
+  &.error {
+    cursor: default;
+    color: colors.$red;
+  }
+
+  &:not(.error) {
+    &:hover {
+      color: colors.$zeigo-purple;
+    }
+  }
+}
+
+.results-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 8px;
+  left: 0;
+  background-color: colors.$white;
+  height: fit-content;
+  max-height: 230px;
+  overflow: auto;
+  width: 100%;
+  z-index: 1;
+
+  &::-webkit-scrollbar {
+    width: 3px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #d9d9d9;
+    border-radius: 10px;
+  }
+
+  .text-dark-gray-750,
+  .text-blue-300 {
+    padding: 8px 16px;
+    height: 33px;
+    padding-left: 0px;
+    padding: 8px;
+
+    &:hover {
+      //background: rgba(58, 36, 86, 0.05);
+      background: colors.$dark-gray-450;
+      border-radius: 4px;
+    }
+  }
+
+  .results {
+    height: 175px;
+    overflow-y: scroll;
+  }
+}
+
+.results-container {
+  transition: opacity 0.2s ease-in-out;
+  max-height: 230px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  /* right: initial; */
+  z-index: 2;
+  width: 100%;
+  top: 51px;
+  /* right: initial; */
+  background-color: colors.$white;
+  position: absolute;
+  border-radius: 10px;
+  border: 1.5px solid colors.$zeigo-purple;
+  box-shadow: 0 4px 12px rgba(0, 31, 81, 0.12);
+}
+
+
+
+:host.forum-search {
+  .search-input {
+    padding: 24px 32px;
+    height: 126px;
+    background: colors.$dark-gray-30;
+    border: 1px solid colors.$dark-gray-200;
+    border-radius: 2px;
+    font-family: 'Arial Rounded MT Bold';
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .openDiscussionsLabel {
+    color: colors.$dark-gray-580;
+    font-family: Arial;
+    letter-spacing: 0.16px;
+    padding: 5px;
+    padding-bottom: 12px;
+    padding-left: 10px;
+    line-height: 130%;
+  }
+
+  .results-wrapper {
+    top: 102px !important;
+    border-radius: 4px;
+
+    .text-dark-gray-590 {
+      justify-content: space-between;
+      align-items: center;
+      padding: 1px 8px 8px 20px;
+
+      :hover {
+        background: colors.$off-white;
+        border-radius: 2px;
+      }
+    }
+
+    div.text-dark-gray-590:hover {
+      background: colors.$off-white;
+      border-radius: 2px;
+    }
+
+
+    .response {
+      color: colors.$purple-400;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+    }
+  }
+}
+
+:host.msg-project-search-box {
+  .results-wrapper {
+    div:hover {
+      background: colors.$blue-5;
+    }
+
+    .text-s {
+      font-size: 16px;
+    }
+  }
+
+  .search-input {
+    input.ng-valid.ng-dirty {
+      background: colors.$white;
+      border: 1.5px solid colors.$zeigo-purple;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    }
+
+    input.ng-touched.ng-dirty {
+      border-color: colors.$dark-gray-300;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    }
+  }
+}
+
+.search-input-border-radius {
+  input.small {
+    background-color: colors.$purple-10;
+    border-radius: 2px;
+    font-size: 12px;
+    line-height: 140%;
+    color: colors.$dark-gray-750;
+    border: none;
+  }
+}
+
+.remove-bg {
+  input.small {
+    border-radius: 7px;
+    border: 1px solid colors.$dark-gray-300;
+    background: colors.$white;
+
+    &:hover {
+      border: 1px solid colors.$zeigo-purple;
+      background: colors.$white;
+    }
+
+    &:focus {
+      border: 1px solid colors.$zeigo-purple;
+      background: colors.$white;
+    }
+  }
+}
+
+:host.disabledState {
+  input {
+    opacity: 0.9;
+  }
+
+  .disabled {
+    opacity: 0.9;
+  }
+}
+
+:host.new-message {
+  .results-container {
+    max-height: 130px !important;
+  }
+}
+
+:host.company-search{
+  .text-dark-gray-750,
+  .text-blue-300 {
+    height: fit-content;
+    padding: 4px;
+
+    &:hover {
+      min-width: 100%;
+      width: fit-content;
+      background: colors.$dark-gray-450;
+      border-radius: 4px;
+    }
+  }
+}

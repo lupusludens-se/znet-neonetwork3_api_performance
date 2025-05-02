@@ -1,0 +1,41 @@
+<div class="control-wrapper">
+  <label>
+    {{ 'events.tagsLabel' | translate }}
+
+    <neo-search-bar
+      (inputChange)="searchTag($event)"
+      (selectedResult)="selectTag($event)"
+      [clearOnSelect]="true"
+      [submitted]="formSubmitted"
+      [showErrorIcon]="false"
+      [error]="formSubmitted && !!controlContainer.control.get('categories')?.errors"
+      [results]="categoriesListResult"
+      [placeholder]="'events.searchTagsLabel' | translate"
+      class="mt-12">
+    </neo-search-bar>
+  </label>
+
+  <div
+    *ngIf="selectedCategories.length"
+    class="tags-wrapper mt-12 d-flex flex-wrap">
+    <div
+      *ngFor="let category of selectedCategories; let i = index"
+      class="tag mr-8 mb-8 flex-center">
+      {{ category.name }}
+
+      <button
+        (click)="removeCategory(i, category)"
+        class="btn-clear ml-6 flex-center">
+        <svg-icon
+          key="cross"
+          size="sm"></svg-icon>
+      </button>
+    </div>
+  </div>
+
+  <neo-control-error
+    [errors]="controlContainer.control.get('categories')?.errors"
+    [fieldName]="'events.tagsLabel' | translate"
+    [submitted]="formSubmitted">
+  </neo-control-error>
+</div>

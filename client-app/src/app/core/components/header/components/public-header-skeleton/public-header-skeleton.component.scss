@@ -1,0 +1,47 @@
+@use 'colors';
+
+:host {
+  width: 100%;
+}
+
+.rectangle {
+  height: 47px;
+  border-radius: 8px;
+}
+
+.rectangle-violet-5 {
+  background: colors.$violet-5;
+}
+
+.rectangle-light-gray{
+    background-color: #eee;
+}
+
+.rectangle-small {
+  width: 67px;
+}
+
+.rectangle-big {
+  width: 107px;
+}
+
+.line {
+  height: 0px;
+  border-bottom: 4px solid colors.$violet-5;
+  border-radius: 4px;
+}
+
+.vertical-line{
+    height: 41px;
+    border-radius: 4px;
+    border-right: 4px solid colors.$violet-5;
+}
+
+.breadcrumb-line,
+.username-line {
+  width: 96px;
+}
+
+.company-line {
+  width: 72px;
+}

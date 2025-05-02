@@ -1,0 +1,27 @@
+<div class="tile-container" *ngIf="responseData?.dataList?.length > 0">
+  <div
+    class="tile c-pointer"
+    *ngFor="let tile of responseData?.dataList; let i = index"
+    [class.selected]="tile.isSelected"
+    (click)="toggleSelection(tile)">
+    <neo-learn-item [article]="tile" [initiativeId]="initiativeId"></neo-learn-item>
+  </div>
+</div>
+<ng-container *ngIf="responseData?.count === 0">
+  <div class="flex-column no-saved-container">
+    <svg-icon
+      class="book-icon"
+      key="book"></svg-icon>
+    <h3 class="pt-20">{{ 'initiative.viewInitiative.emptyRecommendedLearnLabel' | translate }}</h3>
+    <div class="pt-20 no-saved-description">
+      {{ 'initiative.viewInitiative.emptyRecommendedLearnSubLabel' | translate }}
+    </div>
+  </div>
+</ng-container>
+
+<neo-pagination
+  *ngIf="paging && paging.total > defaultPageItems"
+  (changePage)="changePage($event)"
+  [defaultItemPerPage]="12"
+  [paging]="paging"
+  class="pt-24 mb-64"></neo-pagination>

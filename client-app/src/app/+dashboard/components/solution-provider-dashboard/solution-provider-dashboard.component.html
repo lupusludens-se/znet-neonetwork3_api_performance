@@ -1,0 +1,107 @@
+<ng-container>
+  <neo-dashboard-private-skeleton *ngIf="!loading"> </neo-dashboard-private-skeleton>
+<ng-container *ngIf="!!loading && currentUser$ | async as currentUser">
+  <div class="w-100">
+    <neo-sp-project-carousal [projectsCountPerSlide]="3" [circlesArr]="trendingProgressPositions" [totalSlides]="3"
+      [projects]="projects" [loading]="loading" [isShowAddProject]="isShowAddProject"
+      [isNoProjects]="isNoProjects"[projectsCount]="projectCount"></neo-sp-project-carousal>
+  </div>
+  <div class="d-flex">
+    <div class="w-70"*ngIf="loading">
+      <neo-title-section class="tools-sp-dashboard" (buttonClick)="onCustomizeToolsClick()"
+        [linkText]="'dashboard.customizeLabel' | translate" [title]="'dashboard.pinnedToolsLabel' | translate"
+        icon="plus" iconSize="md">
+      </neo-title-section>
+
+      <div class="d-flex w-100">
+        <ng-container *ngIf="loading && pinnedTools$ | async as pinnedTools">
+          <div *ngIf="!pinnedTools?.length" class="tools-empty-wrapper pt-32 pb-32 w-100 flex-center">
+            <button (click)="onAddToolsClick()" class="link text-dark-gray-545 text-s fw-400 flex-center">
+              <svg-icon class="text-blue-200 mr-14" key="plus-in-transparent-circle" size="l"></svg-icon>
+              {{ 'dashboard.pinToolToDashboard' | translate }}
+            </button>
+          </div>
+
+          <div *ngIf="pinnedTools?.length" class="d-flex gap-12 w-100">
+            <neo-tool *ngFor="let pinnedTool of pinnedTools" (toolClick)="onToolClick(pinnedTool.id)"
+              [id]="pinnedTool.id"
+              [icon]="pinnedTool?.icon ? pinnedTool?.icon.uri : 'assets/images/default-tool-icon.png'"
+              [showButton]="pinnedTools?.length < 3" [size]="pinnedTools?.length < 3 ? 'wide' : 'medium'"
+              [titleCenter]="pinnedTools?.length >= 3" [tileHeight]="pinnedTools?.length < 3 ? '70px' : '109px'"
+              [titleSize]="pinnedTools?.length < 3 ? '16px' : '12px'" [title]="pinnedTool?.title" [wrapTitle]="true"
+              class="w-100">
+            </neo-tool>
+          </div>
+        </ng-container>
+      </div>
+
+      <neo-modal (closed)="showToolsModal = false" *ngIf="showToolsModal" class="title-h2-purple"
+        [title]="'dashboard.pinnedToolsLabel' | translate" size="large">
+        <ng-container *ngIf="tools$ | async as tools">
+          <div class="flex-between w-100 pb-12 pt-12">
+            <span class="text-s text-subtitle" *ngIf="selectedItems?.length !== 5">
+              {{ 'dashboard.selectUpTo5' | translate }}
+            </span>
+            <span class="text-s text-subtitle" *ngIf="selectedItems?.length === 5">
+              {{ 'dashboard.maxLimitReached' | translate }}
+            </span>
+
+            <span class="text-s text-dark-gray-505">0{{ selectedItems.length }}/05</span>
+          </div>
+
+          <div class="separator"></div>
+
+          <div class="d-flex flex-wrap pt-32 pb-32 gap-8 inner-wrapper">
+            <div (click)="pinTool(i)" *ngFor="let tool of tools.dataList; let i = index" [ngClass]="{
+            active: tool.isPinned,
+            disabled: selectedItems.length >= 5 && !tool.isPinned
+          }" class="flex-center tool-wrapper c-pointer text-s neo-arial">
+              <svg-icon *ngIf="tool.isPinned" class="icon mr-12" key="thin-close-icon" size="sm"></svg-icon>
+
+              <svg-icon *ngIf="!tool.isPinned && !(selectedItems.length >= 5)" class="icon mr-12" key="plus" size="sm">
+              </svg-icon>
+
+              <svg-icon *ngIf="!tool.isPinned && selectedItems.length >= 5" class="icon mr-12" key="block" size="sm">
+              </svg-icon>
+
+              {{ tool.title }}
+            </div>
+          </div>
+
+          <div class="separator"></div>
+
+          <div class="d-flex justify-end w-100 pt-32">
+            <button (click)="closed()" class="btn-m blue-100-frame btnCancel mr-16 w-min-initial w-50">
+              {{ 'general.cancelLabel' | translate }}
+            </button>
+
+            <button (click)="savePinnedTools()" class="btn-m green w-min-initial w-50">
+              {{ 'general.saveLabel' | translate }}
+            </button>
+          </div>
+        </ng-container>
+
+      </neo-modal>
+      <ng-container *ngIf="newAndNoteworthyArticles !== null && newAndNoteworthyArticles.length > 0">
+        <neo-title-section *ngIf="loadArticles && loading"
+          class="title-section-wrapper-new-noteworthy subTitle-new-noteworthy view-all-btn-new-noteworthy"
+          [linkText]="'general.viewAllLabel' | translate" [subTitle]="'dashboard.newAndNoteworthySubLabel' | translate"
+          [title]="'general.newAndNoteworthyLabel' | translate" iconSize="md" link="/learn"
+          (elementClick)="elementClick.emit($event)">
+        </neo-title-section>
+
+        <div class="container">
+          <div [class.second]="i%2 != 0" *ngFor="let article of newAndNoteworthyArticles; index as i"
+            (click)="onArticleClick(article.id,  article.title, 'learn/' + article?.id)">
+            <neo-new-and-noteworthy [newAndNoteworthyData]="article"> </neo-new-and-noteworthy>
+          </div>
+        </div>
+
+
+
+      </ng-container>
+    </div>
+    <div *ngIf="loading" class="w-30">
+      <ng-content></ng-content>
+    </div>
+  </div>
