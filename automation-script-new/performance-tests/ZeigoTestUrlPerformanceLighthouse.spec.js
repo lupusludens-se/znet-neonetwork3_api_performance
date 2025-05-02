@@ -28,7 +28,7 @@ test('Zeigo Network Performance Audit', async ({ page }) => {
         csv: true
       },
       name: 'lighthouse-test-report',
-      directory: 'C:\\Users\\SESA751855\\Documents\\GitHub\\working_folder\\znet-neonetwork3\\automation-script-new\\performance-tests\\test-reports'  // Windows path with escaped backslashes
+      directory: 'C:\\Users\\SESA751855\\Documents\\GitHub\\working_folder\\znet-neonetwork3_api_performance\\automation-script-new\\performance-tests\\test-reports'  // Windows path with escaped backslashes
     },
     config: {
       extends: 'lighthouse:default',

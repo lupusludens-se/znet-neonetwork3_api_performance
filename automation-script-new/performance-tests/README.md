@@ -6,7 +6,7 @@ This directory contains automated performance tests using Playwright and Lightho
 ## Test Structure
 ```
 performance-tests/
-├── lighthouse-reports/     # Generated test reports (HTML, JSON, CSV)
+├── test-reports/     # Generated test reports (HTML, JSON, CSV)
 ├── playwright-lighthouse-mcp.js    # MCP configuration for Lighthouse
 └── ZeigoPerformanceLighthouse.spec.js    # Performance test specifications
 ```
@@ -45,7 +45,7 @@ The tests are configured in `playwright-lighthouse-mcp.js` with:
   - CPU slowdown: 1x
 
 ## Reports
-Test results are automatically generated in `lighthouse-reports/` in three formats:
+Test results are automatically generated in `test-reports/` in three formats:
 - HTML: Visual report with detailed metrics
 - JSON: Raw data for programmatic analysis
 - CSV: Tabular data for spreadsheet analysis
@@ -64,15 +64,26 @@ npx playwright test ZeigoTestUrlPerformanceLighthouse.spec.js
 - Review generated reports in `test-reports/` for detailed analysis
 - HTML reports provide visual breakdowns and improvement suggestions
 
-To view the HTML reports, use these commands from the performance-tests directory:
+To view the test reports, use these commands:
 ```powershell
-cd C:\Users\SESA751855\Documents\GitHub\working_folder\znet-neonetwork3\automation-script-new\performance-tests
-Invoke-Item test-reports\lighthouse-test-report.html
-Invoke-Item test-reports\lighthouse-preprod-report.html
+# Open HTML reports
+cd 
+C:\Users\SESA751855\Documents\GitHub\working_folder\znet-neonetwork3\automation-script-new\pe
+rformance-tests
+Invoke-Item "C:\Users\SESA751855\Documents\GitHub\working_folder\znet-neonetwork3_api_performance\automation-script-new\performance-tests\test-reports\lighthouse-test-report.html"
+Invoke-Item "C:\Users\SESA751855\Documents\GitHub\working_folder\znet-neonetwork3_api_performance\automation-script-new\performance-tests\test-reports\lighthouse-preprod-report.html"
+
+# Or from the performance-tests directory
+cd "C:\Users\SESA751855\Documents\GitHub\working_folder\znet-neonetwork3_api_performance\automation-script-new\performance-tests"
+Invoke-Item "test-reports\lighthouse-test-report.html"
+Invoke-Item "test-reports\lighthouse-preprod-report.html"
+
+# View JSON reports
+Invoke-Item "C:\Users\SESA751855\Documents\GitHub\working_folder\znet-neonetwork3_api_performance\automation-script-new\performance-tests\test-reports\lighthouse-test-report.json"
 ```
 
 ## Maintenance
 When updating tests:
 1. Maintain thresholds in `playwright-lighthouse-mcp.js`
-2. Keep reports organized in `lighthouse-reports/`
+2. Keep reports organized in `test-reports/`
 3. Follow existing patterns for new test cases 
