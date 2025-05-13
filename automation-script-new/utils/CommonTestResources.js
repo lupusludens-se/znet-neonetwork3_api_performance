@@ -1,6 +1,6 @@
-import "dotenv/config";
+require("dotenv/config");
 
-export class CommonTestResources {
+class CommonTestResources {
   constructor() {
     // Store static Test Data
     this.TEST_URL = process.env.TEST_URL;
@@ -82,4 +82,4 @@ export class CommonTestResources {
 
 // Export Singleton Instance
 const resources = new CommonTestResources();
-export default resources;
+module.exports = resources;

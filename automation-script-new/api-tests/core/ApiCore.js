@@ -1,12 +1,12 @@
-import { request } from "@playwright/test";
-import resources from "../../utils/CommonTestResources.js"; 
-import { faker } from "@faker-js/faker";
-import fs from "fs";
+const { request } = require("@playwright/test");
+const resources = require("../../utils/CommonTestResources.js"); 
+const { faker } = require("@faker-js/faker");
+const fs = require("fs");
 
 /**
  * Core class for handling API and UI interactions.
  */
-export class ApiCore {
+class ApiCore {
   constructor(browser, baseURL) {
     this.baseApiURL = baseURL.slice(0, baseURL.lastIndexOf("dashboard")) + "api";
     this.baseURL = baseURL;
@@ -248,6 +248,7 @@ export class ApiCore {
       page: this.session.page,
       bearerToken: this.session.bearerToken,
     };
+    
     return returnObj;
   }
 
@@ -290,3 +291,6 @@ export class ApiCore {
     expect(Object.hasOwn(jsonBody, "title") && jsonBody.title === projectTitle, `API GET ${uri} JSON body: title !== (${projectTitle})`).toBeTruthy();
   }
 }
+
+// Export the class using CommonJS module.exports
+module.exports = { ApiCore };

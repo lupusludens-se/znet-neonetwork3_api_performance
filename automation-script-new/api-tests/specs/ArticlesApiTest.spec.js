@@ -1,5 +1,5 @@
-import { expect, test } from "@playwright/test";
-import { ApiCore } from "../core/ApiCore";
+const { expect, test } = require("@playwright/test");
+const { ApiCore } = require("../core/ApiCore");
 
 /**
  * Test suite for articles API tests.

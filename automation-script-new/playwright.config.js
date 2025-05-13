@@ -1,7 +1,7 @@
 // @ts-check
 const { defineConfig, devices } = require('@playwright/test');
-import path from "path";
-import dotenv from "dotenv";
+const path = require("path");
+const dotenv = require("dotenv");
 
 /**
  * Read environment variables from file.
@@ -14,7 +14,7 @@ if (path.resolve("env")) {
   });
 }
 
-import resources from "./utils/CommonTestResources.js";
+const resources = require("./utils/CommonTestResources.js");
 
 /**
  * @see https://playwright.dev/docs/test-configuration
